@@ -19,6 +19,7 @@
 	- otrzymuje (null),(null) zamiast zaznaczen
 	- wlasciwa zawartosc schowka pojawia sie dopiero po kliknieciu _w_ oknie, nie na ramce
 	- to NIE jest wina KDE, przy twm te¿ wystêpuje
+	- to CHYBA wina Qt (3.3.040205) - kpwndict ze starym kodem clipboard wcale nie wyskakuje
     - chyba nie ma szans na dzia³anie gdy jest w³±czony klipper :(
 - mozliwosc zmiany ikony/ustawiania jej z poziomu aplikacji (to co kiedys AP wywalil)
 - wykrywanie juz uruchomionej instancji i ustawianie jej fokusa
