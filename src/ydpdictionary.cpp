@@ -19,33 +19,20 @@
 #define color3 cnf->kFontKolor3
 #define color4 cnf->kFontKolor4
 
-#define TABLE_CP_ISO { \
-  128, 129, 130, 131, 132, 133, 134, 135, \
-  136, 137, 138, 139, 166, 141, 142, 172, \
-  144, 145, 146, 147, 148, 149, 150, 151, \
-  152, 153, 154, 155, 182, 157, 158, 188, \
-  160, 161, 162, 163, 164, 161, 166, 167, \
-  168, 169, 170, 171, 172, 173, 174, 175, \
-  176, 177, 178, 179, 180, 181, 182, 183, \
-  184, 177, 186, 187, 188, 189, 190, 191, \
-  192, 193, 194, 195, 196, 197, 198, 199, \
-  200, 201, 202, 203, 204, 205, 206, 207, \
-  208, 209, 210, 211, 212, 213, 214, 215, \
-  216, 217, 218, 219, 220, 221, 222, 223, \
-  224, 225, 226, 227, 228, 229, 230, 231, \
-  232, 233, 234, 235, 236, 237, 238, 239, \
-  240, 241, 242, 243, 244, 245, 246, 247, \
-  248, 249, 250, 251, 252, 253, 254, 255 }
+#define T_PL 1
+#define T_CM 2
+#define T_PN_L 4
+#define T_PN_R 8
 
 #define TABLE_PHONETIC_ISO { \
   ".", ".", "<img src=\"f2\">", "<img src=\"f3\">", ".", "<img src=\"f5\">", "e", "<img src=\"f6\">", \
-  "<img src=\"f1\">", "<img src=\"f8\">", "<img src=\"f4\">", "<img src=\"f7\">", ".", ":", "´", ".", \
+  "<img src=\"f1\">", "<img src=\"f8\">", "<img src=\"f4\">", "<img src=\"f7\">", "¦", ":", "´", ".", \
   "&#331;", ".", ".", ".", ".", ".", ".", "&#240;", \
   "&#230;", ".", ".", ".", "¶", ".", ".", "¼", \
   " ", "¡", "¢", "£", "¤", "¥", "¦", "§", \
   "¨", "©", "ª", "«", "¬", "­", "®", "¯", \
   "°", "±", "²", "³", "´", "µ", "¶", "·", \
-  "¸", "¹", "º", "»", "¼", "½", "¾", "¿", \
+  "¸", "±", "º", "»", "¼", "½", "¾", "¿", \
   "À", "Á", "Â", "Ã", "Ä", "Å", "Æ", "Ç", \
   "È", "É", "Ê", "Ë", "Ì", "Í", "Î", "Ï", \
   "Ð", "Ñ", "Ò", "Ó", "Ô", "Õ", "Ö", "×", \
@@ -54,7 +41,6 @@
   "è", "é", "ê", "ë", "ì", "í", "î", "ï", \
   "ð", "ñ", "ò", "ó", "ô", "õ", "ö", "÷", \
   "ø", "ù", "ú", "û", "ü", "ý", "þ", "ÿ" } \
-
 
 ydpDictionary::ydpDictionary(kydpConfig *config, QListBox *listBox) {
 	dictList = listBox;
@@ -133,7 +119,6 @@ void ydpDictionary::CloseDictionary()
 QString ydpDictionary::convert_cp1250(char *tekst, long int size)
 {
     const char *table_cp_phonetic[]=TABLE_PHONETIC_ISO;
-    unsigned const char table_cp_iso[]=TABLE_CP_ISO;
     unsigned char *input;
     unsigned char ch;
     long int i,j;
@@ -147,7 +132,6 @@ QString ydpDictionary::convert_cp1250(char *tekst, long int size)
 		    j=0;
 		    do {
 			ch=table_cp_phonetic[*input-128][j];
-			if (ch > 127) ch=table_cp_iso[ch-128];
 			out +=ch;
 			j++;
 		    } while (table_cp_phonetic[*input-128][j]!='\0');
@@ -178,7 +162,7 @@ void ydpDictionary::FillWordList()
 
   indexes = new unsigned long [wordCount+2];
 
-  progress.setTotalSteps(wordCount / 200);
+  progress.setTotalSteps(wordCount / 256);
   progress.setMinimumDuration(500);
   progress.show();
 
@@ -192,7 +176,7 @@ void ydpDictionary::FillWordList()
   /* read index table */
   do {
     if ((current % 256)==0) 
-	progress.setProgress(current / 200);
+	progress.setProgress(current / 256);
 //  this is a trick - instead of fssek(cur+4), read ulong we read ulong twice
 //  and throw out first 4 bytes
     fIndex.readBlock((char*)&index[0], 4+4);
@@ -298,7 +282,7 @@ QString tag_on,tag_off;
 char *def;
 (const char*)def=definition;
 list.clear();
-list += "<qt><font face=Arial, Helvetica, sans-serif color=" + color4 +">";
+list += "<qt><font color=" + color4 +">";
 list += "</font></qt>";
 for(level=15;level>=0;level--)
 	tag_num[level] = 0;
@@ -546,47 +530,44 @@ QString ydpDictionary::insertTip(QString raw_input)
 {
 	static QString input_tip[] = {"", "adj", "adv", "conj", "perf", "m(f", "fus", "inv", "pron","nt", "npl", "cpd", "pl", "vb", "vi", "vt", "sg", \
 	"abbr", "nom","acc", "dat", "gen", "infin", "instr", "loc", "irreg", "prep", "aux", "pt", "pp", "m", "n", "f", "post", "nvir", \
-	"vir", "num", "decl", "excl", "inf!", "inf", "pej", "cmp", "pot!", "pot", "vr", "attr", "part", "fml", "(im)perf", "dimin","ADMIN", "ANAT", "AUT", \
+	"vir", "num", "decl", "excl", "inf!", "inf", "pej", "cmp", "pot!", "pot", "vr", "attr", "part", "fml", "im)perf", "dimin","ADMIN", "ANAT", "AUT", \
 	"AVIAT", "BIO", "BOT", "BRIT", "CHEM", "COMM", "COMPUT", "CULIN", "ELEC", "FIN", "JUR", "LING", "MATH", "MED", "MIL", \
 	"MUS", "NAUT", "POL", "PSYCH", "RAIL", "REL", "SCOL", "SPORT", "TECH", "TEL", "THEAT", "TYP", "US", "ZOOL", "fig", "lit", \
-	"GEOG", "ARCHIT", "FIZ", "PHYSIOL", "imp", "GEOL", "art", "indef", "def", "PHOT", "ELEKTR", "EKON", "ECON", "GEOM", "JÊZ ", \
+	"GEOG", "ARCHIT", "FIZ", "PHYSIOL", "imp", "GEOL", "art", "indef", "def", "PHOT", "ELEKTR", "EKON", "ECON", "GEOM", "JÊZ", \
 	"KULIN", "KOMPUT", "LOT", "MAT", "MOT", "MUZ", "SZKOL", "WOJSK", "¯EGL", "BUD", "METEO", "HIST", "DRUK", "ROL", "pref", \
-	"ASTRON", "PHYS", "etc", "AGR", "CONSTR", "ups!"};
+	"ASTRON", "PHYS", "etc", "AGR", "CONSTR", "suff", "LIT", "UNIV", "ups!"};
 
-	QString str_start = "", str_end = "";
-	bool col = FALSE, plus = FALSE;
-
+	int tags = 0, pos = 0;
+	QString output, fullOutput, number, proposition;
+	
 	QString input = raw_input.simplifyWhiteSpace();
-
-	if(input.startsWith("(")) {
-		str_start = "(";
-		input = input.right(input.length()-1);
-	}
-
-	if(input.endsWith(")")) {
-		str_end = ")";
-		input = input.left(input.length()-1);
-	}
-
-	int pos = 0;
-	QString output, number, proposition;
 
 	while(TRUE) {
 		QString tmp = input.section(' ', pos, pos);
 
+		if(tmp.startsWith("(")) {
+			tags |= T_PN_L;
+			tmp = tmp.right(tmp.length()-1);
+		}
+
+		if(tmp.endsWith(")")) {
+			tags |= T_PN_R;
+			tmp = tmp.left(tmp.length()-1);
+		}
+
 		if(tmp.endsWith(",")) {
-			col = TRUE;
+			tags |= T_CM;
 			tmp  = tmp.left(tmp.length()-1);
 		}
 
 		if(tmp.startsWith("+")) {
-			plus = TRUE;
+			tags |= T_PL;
 			tmp  = tmp.right(tmp.length()-1);
 		}
 
 		proposition = tmp;
 
-		for(int i = 0; i < 121; i++) {
+		for(int i = 0; i < 124; i++) {
 			if (!QString::compare(tmp, input_tip[i])) {
 				number.sprintf("%d", i);
 				proposition = "<a href=\"tips.html#" + number + "\">" + tmp + "</a>";
@@ -594,28 +575,33 @@ QString ydpDictionary::insertTip(QString raw_input)
 			}
 		}
 
-		output += proposition;
+		output = proposition;
 
-		if(col) {
-			col = FALSE;
-			output +=",";
-		}
+		if(tags & T_CM)
+			output += ",";
 
-		if(plus) {
-			plus = FALSE;
-			output ="+" + output;
-		}
+		if(tags & T_PL)
+			output = "+" + output;
 
+		if(tags & T_PN_L)
+			fullOutput += "(";
+
+		fullOutput += output;
+
+		if(tags & T_PN_R)
+			fullOutput += ")";
+
+		tags = 0;
 		pos++;
+
 		if( input.section(' ', pos, pos).isEmpty() )
 			break;
-		output +=" ";
+		fullOutput +=" ";
 	}
 
-	output = str_start + output + str_end;
 	if(raw_input.startsWith(" "))
-		output = " " + output;
+		fullOutput = " " + fullOutput;
 	if(raw_input.endsWith(" "))
-		output += " ";
-	return output;
+		fullOutput += " ";
+	return fullOutput;
 }

@@ -184,3 +184,9 @@ Kydpdict 0.5.2 (28.6.2003)
 - uporzadkowana sprawa slownikow: (bool)useEnglish-->(int)language
 - uaktualnione tlumaczenie, poprawienie bledow jezykowych, literowek
 - uaktualniona dokumentacja
+
+=====================================================================
+Kydpdict 0.5.3pre1 (12.7.2003)
+- ³ata na obs³ugê tipsów z nawiasami (AP)
+- usuniêcie tablicy CP_ISO, konwersja '¶¦' w CP_PHONETIC (AP)
+- nowe pozycje w TODO
