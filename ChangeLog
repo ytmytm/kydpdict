@@ -324,7 +324,7 @@ Kydpdict 0.5.10 (20.2.2004)
 - nowy sposób obs³ugi clipboard (Jacek Jaworski)
 
 =====================================================================
-Kydpdict 0.6.0pre (xx.xx.2004)
+Kydpdict 0.6.0 (12.03.2004)
 - s³owa trzymane w postaci char*, dictList tylko do wy¶wietlania, scrollBar jako oddzielny
   widget
 - nowy, szybszy loader s³ownika, usuniety progressbar
