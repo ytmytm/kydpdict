@@ -27,25 +27,5 @@
 - opcja: po przechwyceniu schowka - na wierzch ale bez focusa na siebie (opcja?)
 
 nowe nowe nowe
-    + rozmiary i odswiezanie
-    + wycieki (nie zwalniane words[])
-    + przechwytywanie kursor up/down nad dictlist zeby scrollowac
-    + procedury scrollowania
-    + updatehistory w paru miejscach (chyba wszystko ok)
-    + nie kasowac words[], nie ladowac words[] - przeniesc to, wordCount i indexes do
-      struktury cache indeksowanej jezykiem i kierunkiem tlumaczenia
-    + scrollbar
-    + wyszukiwanie (zeby rozmyte bylo)
-	- optymalizacja (jaka?)
-    + usunac ostrzezenia gcc
-    + w samej obsludze clipa szuka przez dictList->findItem, ale jako¶ dzia³a
-	(dlatego nie wyskakiwa³ na top)
-    + wywalic printfy albo zrobic opcjonalne
-    + gdy wordInput jest pusty - nie robic ListRefresh!
-    - wersja z mmap
-
-do odswiezenia po 0.5.10
-    - obs³uga escape
-    - clipboard od jaworskiego
     - UpdateHistory wcale nie potrzebuje swojego parametru
-    - rebuild configure
+    - wersja z mmap
