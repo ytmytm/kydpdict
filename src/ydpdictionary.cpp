@@ -996,7 +996,7 @@ QString ydpDictionary::insertHyperText(QString raw_input, int level)
 				proposition = "<a href="+ direction + tmp2+">"+tmp2+"</a>";
 			}
 
-			output2 = proposition;
+			output2 += proposition;
 
 			pos2++;
 
