@@ -97,7 +97,7 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 	wordInput->setEditable(true);
 	wordInput->setInsertionPolicy(QComboBox::AtTop);
 
-	cb =  QApplication::clipboard();
+	cb = QApplication::clipboard();
 
 	menu = menuBar();
 
@@ -532,7 +532,7 @@ void Kydpdict::ShowAboutQt()
 {
 	cb->blockSignals( TRUE );
 	QMessageBox::aboutQt(this, "Kydpdict");
-	cb->blockSignals( FALSE);
+	cb->blockSignals( FALSE );
 }
 
 void Kydpdict::ToggleClipTracking()
