@@ -292,7 +292,7 @@ Kydpdict 0.5.7 (21.12.2003)
   foncie
 
 =====================================================================
-Kydpdict 0.5.8 (xx.xx.xxxx)
+Kydpdict 0.5.8 (27.12.2003)
 - ikonka w tray'u (kod wziêty z kadu, dziêki!)
 - zapamiêtywany stan toolbara (w³±czony/wy³±czony)
 - klikniêcie na ikonke od czyszczenia wordinput ustawia fokus na ten¿e (ElPablo)
@@ -300,3 +300,6 @@ Kydpdict 0.5.8 (xx.xx.xxxx)
 - ¶ledzenie schowka - widaæ w traymenu, czy jest w³±czone
 - zmiana ¶ledzenia w dialogu teraz jest uwidoczniona na toolbarze i w traymenu
 - ESCape czy¶ci wordinput
+
+=====================================================================
+Kydpdict 0.5.9 (xx.xx.xxxx)
