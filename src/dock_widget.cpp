@@ -8,7 +8,6 @@
  ***************************************************************************/
 
 #include <qapplication.h>
-#include <qcursor.h>
 #include <qobject.h>
 #include <qtimer.h>
 #include <qtooltip.h>
@@ -83,8 +82,6 @@ static bool send_message(
 TrayIcon::TrayIcon(QWidget *parent, const char *name)
 	: QLabel(0,"TrayIcon", WMouseNoMask | WRepaintNoErase | WType_TopLevel | WStyle_Customize | WStyle_NoBorder | WStyle_StaysOnTop)
 {
-//	if (!config.dock)
-//		return;
 
 	QPixmap pix = QPixmap(babelfish_xpm);
 	setBackgroundMode(X11ParentRelative);
@@ -153,18 +150,6 @@ TrayIcon::~TrayIcon()
 	delete hint;
 }
 
-void TrayIcon::setDictWidget(Kydpdict *newDict) {
-
-    dict = newDict;
-
-}
-
-void TrayIcon::setPopupMenu(QPopupMenu *newMenu) {
-
-    popUp = newMenu;
-
-}
-
 QPoint TrayIcon::trayPosition()
 {
 	return mapToGlobal(QPoint(0,0));
@@ -218,9 +203,6 @@ void TrayIcon::enterEvent(QEvent* e)
 
 void TrayIcon::mousePressEvent(QMouseEvent * e) {
 
-//	if (!config.dock)
-//		return;
-
 	if (e->button() == MidButton) {
 		emit mousePressMidButton();
 //		kdebug("midbutton\n");
@@ -230,28 +212,14 @@ void TrayIcon::mousePressEvent(QMouseEvent * e) {
 	if (e->button() == LeftButton) {
 		emit mousePressLeftButton();
 //		kdebug("left button\n");
-		if (dict->isMinimized()) {
-		    dict->showNormal();
-		} else {
-		    switch (dict->isVisible()) {
-			case 0:
-			    dict->show();
-			    dict->setFocus();
-			    dict->setActiveWindow();
-			    break;
-			case 1:
-			    dict->hide();
-			    break;
-		    }
-		}
+		return;
 	}
 
 	if (e->button() == RightButton) {
 		emit mousePressRightButton();
 //		kdebug("right button\n");
-		popUp->exec(QCursor::pos());
 		return;
-		}
+	}
 }
 
 /* Hint class below */

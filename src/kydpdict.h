@@ -106,6 +106,9 @@ class Kydpdict : public QMainWindow
 		void handleLink( const QString & href );
 		void handleTip( const QString & href );
 		void onEscaped();
+		void trayIconLeftClick();
+		void trayIconRightClick();
+
 
     protected:
 		void windowActivationChange( bool oldActive );

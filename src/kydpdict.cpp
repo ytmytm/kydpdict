@@ -23,6 +23,7 @@
 #include <qtextcodec.h>
 #include <qgrid.h>
 #include <qaccel.h>
+#include <qcursor.h>
 
 #define COMBO_HISTORY_SIZE	25
 #define TIMER_PERIOD		1000
@@ -270,8 +271,8 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 #ifndef WITHOUT_X11
 	if (config->dock) {
 	    trayicon = new TrayIcon(this,"trayicon");
-	    trayicon->setDictWidget(this);
-	    trayicon->setPopupMenu(trayMenu);
+	    connect(trayicon,SIGNAL(mousePressLeftButton()),this,SLOT(trayIconLeftClick()));
+	    connect(trayicon,SIGNAL(mousePressRightButton()),this,SLOT(trayIconRightClick()));
 	    trayicon->show();
 	}
 #endif
@@ -342,6 +343,29 @@ void Kydpdict::onEscaped()
 	    wordInput->clearEdit();
 	    escTimer->start(LAST_ESC_PERIOD,TRUE);
 	}
+}
+
+void Kydpdict::trayIconLeftClick()
+{
+    if (this->isMinimized()) {
+	this->showNormal();
+    } else {
+	switch (this->isVisible()) {
+	    case 0:
+		this->show();
+		this->setFocus();
+		this->setActiveWindow();
+	    break;
+	    case 1:
+		this->hide();
+	    break;
+	}
+    }
+}
+
+void Kydpdict::trayIconRightClick()
+{
+	trayMenu->exec(QCursor::pos());
 }
 
 void Kydpdict::windowActivationChange(bool oldActive)

@@ -6,9 +6,6 @@
 #include <qtextbrowser.h>
 #include <qstringlist.h>
 #include <qpixmap.h>
-#include <qpopupmenu.h>
-
-#include "kydpdict.h"
 
 /**
 	Klasa reprezentuj±ca ikonkê w obszarze powiadamiania
@@ -21,8 +18,6 @@ class TrayIcon : public QLabel
 		friend class TrayHint;
 		QWidget* WMakerMasterWidget;
 		TrayHint *hint;
-		Kydpdict *dict;
-		QPopupMenu *popUp;
 
 	protected:
 		virtual void resizeEvent(QResizeEvent* e);
@@ -34,15 +29,10 @@ class TrayIcon : public QLabel
 		~TrayIcon();
 		QPoint trayPosition();
 		void show();
-		void connectSignals();
 		void showHint(const QString&, const QString&, int index);
 		void showErrorHint(const QString&);
 		void reconfigHint();
 		void setPixmap(const QPixmap& pixmap);
-		void setDictWidget(Kydpdict *newDict);
-		void setPopupMenu(QPopupMenu *newMenu);
-
-//	public slots:
 
 	signals:
 		void mousePressMidButton();
