@@ -419,3 +419,4 @@ Kydpdict 0.6.6 (27.09.2004)
 Kydpdict 0.6.7 (xx.xx.2004)
 - usuniête callbacki z dockwidget, po co te ohydniki je¶li mamy sygna³y/sloty z Qt
 - drobne optymalizacje, które nic nie wnosz±, ale daj± spokojny sen
+- usuniêty setModal dla fuzzysearch (nic nie zmienia³, a wymaga³by #ifdef dla Qt 3.1) (MZ)

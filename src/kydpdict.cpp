@@ -115,8 +115,7 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 
  	myDict = new ydpDictionary(config,dictList);
 
-	mySearch = new ydpFuzzySearch(parent);
-	mySearch->setModal(FALSE);
+	mySearch = new ydpFuzzySearch(parent);	// if exchanged with 'this' -> is always over kydpdict window
 	// this has to be before OpenDictionary so the notification will be passed
 	connect(myDict, SIGNAL(dictionaryChanged(const int, char **)), mySearch, SLOT(updateDictionary(const int, char **)));
 	connect(mySearch, SIGNAL(textChanged(const QString&)), this, SLOT(newFromLine(const QString&)));
