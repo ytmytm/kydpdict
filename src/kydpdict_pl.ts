@@ -132,6 +132,19 @@ Do zobaczenia!</translation>
     </message>
 </context>
 <context>
+    <name>TrayIcon</name>
+    <message>
+        <source>Left click - hide/show window
+Right click - open menu</source>
+        <translation>Lewy - pokaż/schowaj okno
+Prawy - otwórz menu</translation>
+    </message>
+    <message>
+        <source>Error: </source>
+        <translation>Błąd:</translation>
+    </message>
+</context>
+<context>
     <name>ydpConfigure</name>
     <message>
         <source>Configure Kydpdict</source>

@@ -92,7 +92,7 @@ TrayIcon::TrayIcon(QWidget *parent, const char *name)
 	QLabel::setPixmap(pix);
 	resize(pix.size());
 	setMouseTracking(true);
-	QToolTip::add(this, tr("Left click - hide/show window\nMiddle click or Left click- next message"));
+	QToolTip::add(this, tr("Left click - hide/show window\nRight click - open menu"));
 	update();
 
 	Display *dsp = x11Display();

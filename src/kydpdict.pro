@@ -1,5 +1,5 @@
 
-HEADERS = kydpdict.h ydpdictionary.h ydpconfigure.h kydpconfig.h kdynamictip.h
-SOURCES = kydpdict.cpp ydpdictionary.cpp ydpconfigure.cpp main.cpp kydpconfig.cpp kdynamictip.cpp
+HEADERS = kydpdict.h ydpdictionary.h ydpconfigure.h kydpconfig.h kdynamictip.h dock_widget.h
+SOURCES = kydpdict.cpp ydpdictionary.cpp ydpconfigure.cpp main.cpp kydpconfig.cpp kdynamictip.cpp dock_widget.cpp
 TRANSLATIONS = kydpdict_pl.ts
 
