@@ -27,6 +27,7 @@
 #include <qaccel.h>
 
 #define COMBO_HISTORY_SIZE	25
+#define TIMER_PERIOD		1000
 
 /* 16x16 */
 #include "../icons/conf.xpm"
@@ -114,7 +115,9 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 	splitterV->setSizes(splittersizesV);
 
  	m_checkTimer = new QTimer(this, "timer");
-	m_checkTimer->start(1000, FALSE);
+	m_checkTimer->start(TIMER_PERIOD, FALSE);
+	slastSelection = "";
+	slastClipboard = "";
 
 	int a;
 
@@ -213,8 +216,6 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 	connect (listclear, SIGNAL(clicked()), wordInput, SLOT(clearEdit()));
 	connect (listclear, SIGNAL(clicked()), wordInput, SLOT(setFocus()));
  	connect (RTFOutput, SIGNAL(highlighted( const QString & )), this, SLOT(updateText( const QString & )));
- 	connect (cb, SIGNAL(selectionChanged() ), SLOT(slotSelectionChanged()));
- 	connect (cb, SIGNAL(dataChanged() ), SLOT( slotClipboardChanged() ));
  	connect (m_checkTimer, SIGNAL(timeout()), this, SLOT(newClipData()));
 	connect (toolBar, SIGNAL(visibilityChanged(bool)), this, SLOT(ToolbarShowHide(bool)));
 
@@ -305,80 +306,91 @@ void Kydpdict::windowActivationChange(bool oldActive)
 	wordInput->setFocus();
 }
 
-void Kydpdict::clipboardSignalArrived( bool selectionMode )
-{
-	cb->setSelectionMode( selectionMode );
-	QString text = cb->text();
-
-	checkClipData( text );
-}
-
-void Kydpdict::checkClipData( const QString& text )
-{
-	static QString m_lastString;
-
-	if (text != m_lastString) {
-		m_lastString = text;
-		if(config->clipTracking)
-			PasteClipboard(m_lastString);
-	}
-}
-
 void Kydpdict::newClipData()
 {
-	cb->setSelectionMode( true );
-	QString clipContents = cb->text().stripWhiteSpace();
+    // do nothing if minimized
+    if (this->isMinimized())
+        return;
+    // do nothing if it comes from us
+    if (((RTFOutput->hasSelectedText())||(wordInput->lineEdit()->hasSelectedText())) && (config->ignoreOwnSelection))
+        return;
 
-	checkClipData( clipContents );
+    // get selection - if selection and clipboard are changed simultaneously selection
+    // is chosen an clipboard is ignored
+    QString lnewEntry = cb->text(QClipboard::Selection).stripWhiteSpace(); 
+    if (lnewEntry.length() && lnewEntry != slastSelection)
+	slastSelection = lnewEntry;
+    else
+	lnewEntry = "";
+
+    if (lnewEntry.isEmpty()) {
+	// get clipboard if selection empty or unchanged
+	lnewEntry = cb->text(QClipboard::Clipboard).stripWhiteSpace();    
+	if(lnewEntry.length() && lnewEntry != slastClipboard) {
+	    slastClipboard = lnewEntry;
+	    if(slastSelection == slastClipboard)
+		lnewEntry = "";
+	} else
+	    lnewEntry = "";
+    } else
+	slastClipboard = cb->text(QClipboard::Clipboard).stripWhiteSpace();
+	// prevent from spurious apperance (in next second after selection was shown)
+
+    if(lnewEntry.isEmpty())
+	return;
+
+    lnewEntry = lnewEntry.simplifyWhiteSpace();
+    lnewEntry.truncate(20);
+    QListBoxItem *lentry = dictList->findItem(lnewEntry, Qt::ExactMatch);
+    if(!lentry) {
+	int ldown = 0;
+	int lup = lnewEntry.length() + 1;
+	QListBoxItem *lresult = NULL;
+
+	while (lup - ldown > 1) {
+	    lresult = dictList->findItem(lnewEntry.left((lup + ldown) / 2));
+	    if (lresult) {
+		lentry = lresult;
+		ldown = (lup + ldown) / 2;
+	    } else
+		lup = (lup + ldown) / 2;
+	}
+	if (!lentry)
+	    return;
+    }
+
+    dictList->setCurrentItem(lentry);
+    dictList->ensureCurrentVisible();
+    this->setActiveWindow ();
+    this->raise();
+    this->show();
+
+    wordInput->blockSignals(TRUE);
+    if (lnewEntry.length()>0)
+	UpdateHistory(dictList->currentItem());
+    wordInput->setEditText(lnewEntry);
+    wordInput->setFocus();
+    wordInput->blockSignals(FALSE);
+    if(config->autoPlay)
+	PlaySelected(dictList->currentItem());
 }
 
-void Kydpdict::PasteClipboard(QString haslo)
+void Kydpdict::showMinimized()
 {
-	int index;
-	QListBoxItem *result, *tmp_result;
+    QMainWindow::showMinimized();
+    m_checkTimer->stop();
+}
 
-	// do nothing if minimized
-	if (this->isMinimized())
-	    return;
+void Kydpdict::showEvent(QShowEvent *ashowEvent)
+{
+    static bool sfirstStart = true;
 
-	// do nothing if it comes from us
-	if (((RTFOutput->hasSelectedText())||(wordInput->lineEdit()->hasSelectedText())) && (config->ignoreOwnSelection))
-	    return;
-
-	QString contents = haslo.simplifyWhiteSpace();
-
-	contents.truncate(20);
-
-	if(!(result = dictList->findItem(contents, Qt::ExactMatch))) {
-		int down = 0;
-		int up = contents.length() + 1;
-
-		while(up - down > 1) {
-			if((tmp_result = dictList->findItem(contents.left((up+down)/2)))) {
-				result = tmp_result; //tylko wtedy uaktualniaj gdy jest takie s³owo
-				down = (up + down)/2;
-			}
-			else
-				up = (up + down)/2;
-		}
-	}
-
-	if ((index=dictList->index(result)) >= 0) {
-		if (index!=dictList->currentItem())
-			dictList->setCurrentItem(index);
-		dictList->ensureCurrentVisible();
-		this->setActiveWindow ();
-		this->raise();
-		//
-		this->show();
-		this->setFocus();
-	}
-
-	UpdateHistory(index);
-	wordInput->setEditText(contents);
-
-	if(config->autoPlay)
-		PlaySelected (index);
+    if (sfirstStart)
+	sfirstStart = false;
+    else
+	newClipData();
+    QMainWindow::showEvent(ashowEvent);
+    m_checkTimer->start(TIMER_PERIOD, FALSE);
 }
 
 void Kydpdict::NewDefinition (int index)
@@ -390,18 +402,22 @@ void Kydpdict::NewDefinition (int index)
 
 void Kydpdict::NewFromLine (const QString &newText)
 {
-	int index;
-	QListBoxItem *result;
+    int index;
+    QListBoxItem *result = dictList->findItem(newText, Qt::ExactMatch);
 
-	if(!(result = dictList->findItem(newText, Qt::ExactMatch)))
-		if(!(result = dictList->findItem(newText)))
-			return;
+    // prevent spurious aperance when user starts writing immediately after Kydpdict gets focus
+    slastSelection = cb->text(QClipboard::Selection).stripWhiteSpace();
+    slastClipboard = cb->text(QClipboard::Clipboard).stripWhiteSpace();
 
-	if ((index=dictList->index(result)) >= 0) {
-		if (index!=dictList->currentItem())
-			dictList->setCurrentItem(index);
-		dictList->ensureCurrentVisible();
-	}
+    if (!result)
+	if (!(result = dictList->findItem(newText, Qt::BeginsWith)))
+	    return;
+
+    if ((index = dictList->index(result)) >= 0) {
+	if(index != dictList->currentItem())
+		dictList->setCurrentItem(index);
+	dictList->ensureCurrentVisible();
+    }
 }
 
 void Kydpdict::PlaySelected (int index)
@@ -567,7 +583,7 @@ void Kydpdict::Configure(bool status)
 	else
 	    cb->clear(QClipboard::Clipboard);
 	cb->blockSignals( FALSE );
-	m_checkTimer->start(1000, FALSE);
+	m_checkTimer->start(TIMER_PERIOD, FALSE);
 }
 
 void Kydpdict::UpdateLook()

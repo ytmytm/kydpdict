@@ -36,6 +36,7 @@ class Kydpdict : public QMainWindow
     /** destructor */
     ~Kydpdict();
     void flushConfig(void);
+    void showMinimized();
 
     private:
 		void resizeEvent (QResizeEvent *);
@@ -44,6 +45,7 @@ class Kydpdict : public QMainWindow
 		void UpdateLook ();
 		void SwapLang(bool direction, int lang);
 		void PasteClipboard (QString haslo);
+		void showEvent(QShowEvent *ashowEvent);
 
 		// global configuration
 		kydpConfig *config;
@@ -61,14 +63,18 @@ class Kydpdict : public QMainWindow
 		// dictionary class
 		ydpDictionary *myDict;
 
-		//and others
-		QClipboard  *cb;
-		QTimer *m_checkTimer;
+		// and others
 		DynamicTip * t;
 		QSplitter *splitterH, *splitterV;
 		QToolBar *toolBar;
 		QToolButton *but_EnPl, *but_PlEn, *but_DePl, *but_PlDe, *but_Play;
 		QToolButton *but_SwapLang, *but_Clipboard, *but_Settings;
+
+		// clipboard shit
+		QClipboard  *cb;
+		QTimer *m_checkTimer;
+		QString slastSelection;
+		QString slastClipboard;
 
     private slots:
 		void NewDefinition (int index);       		/* word list highlited */
@@ -88,19 +94,10 @@ class Kydpdict : public QMainWindow
 		void ToolbarShowHide (bool visible);
 		void ShowToolbar ();
 		void updateText( const QString & href );
-
-		void slotSelectionChanged() {
-			clipboardSignalArrived( true );
-		}
-		void slotClipboardChanged() {
-			clipboardSignalArrived( false );
-		}
 		void newClipData();
 		void onEscaped();
 
     protected:
-    		void clipboardSignalArrived( bool selectionMode );
-		void checkClipData( const QString& text );
 		void windowActivationChange( bool oldActive );
 
 };

@@ -321,3 +321,4 @@ Kydpdict 0.5.10 (xx.xx.2004)
 - Ctrl+` na zmianê kierunku t³umaczenia (Ctrl+Tab odpada z przyczyn oczywistych a ` jest blisko)
 - ESCESC(ESC) na szybkie ukrycie s³ownika (Jacek Jaworski)
 - ignoruje równie¿ zaznaczenia z wordInput
+- nowy sposób obs³ugi clipboard (Jacek Jaworski)
