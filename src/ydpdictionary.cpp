@@ -63,9 +63,26 @@ struct dictionaryCache {
 
 #include "tips.h"
 
+int ydpDictionary::GetTipNumber(int type) {
+    switch (type) {
+	case 0:
+	    return I_size+II_size;
+	    break;
+	case 1:
+	    return I_size;
+	    break;
+	case 2:
+	    return II_size;
+	    break;
+	default:
+	    return -1;
+	    break;
+    }
+}
+
 QString ydpDictionary::GetInputTip(int index) {
 static QString input_tip[] = INPUT_TIP;
-    if (index <= I_size+II_size)
+    if (index <= GetTipNumber(0))
 	return input_tip[index];
     else
 	return QString("");
@@ -73,7 +90,7 @@ static QString input_tip[] = INPUT_TIP;
 
 QString ydpDictionary::GetOutputTip(int index) {
 static QString output_tip[] = OUTPUT_TIP;	// guess what happens with 'ñ' when this is not private...
-    if (index <= I_size+II_size)
+    if (index <= GetTipNumber(0))
 	return output_tip[index];
     else
 	return QString("");

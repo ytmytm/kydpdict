@@ -27,6 +27,7 @@ public:
 	int CheckDictionary(kydpConfig *config);
 	int CheckDictionary(QString path, QString index, QString def);
 	int Play (int index, kydpConfig *config);
+	int GetTipNumber(int type);
 	QString GetInputTip(int index);
 	QString GetOutputTip(int index);
 	void CloseDictionary(void);

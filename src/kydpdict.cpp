@@ -715,9 +715,6 @@ void Kydpdict::UpdateLook()
 	scrollBar->setMaxValue(myDict->wordCount);
 }
 
-// XXX: only to get size of input_, output_ tables (get rid of it!)
-#include "tips.h"
-
 void Kydpdict::handleLink( const QString & href )
 {
 	QString link = href;
@@ -730,14 +727,14 @@ void Kydpdict::handleLink( const QString & href )
 		QString output = "<h2>Skróty wystêpuj±ce w t³umaczeniach</h2>";
 		output += "<h3>Czê¶æ I - GRAMATYKA</h3>";
 
-		for(i=0; i<I_size; i++) {
+		for(i=0; i<myDict->GetTipNumber(1); i++) {
 			tmp.sprintf("%d", i);
 			output += "<a name=\""+ tmp + "\"></a><h4><font color=\"red\">"+ myDict->GetInputTip(i) + "</font></h4>" + myDict->GetOutputTip(i) + "<hr>";
 		}
 
 		output += "<h3>Czê¶æ II - DZIEDZINY</h3>";
 
-		for(i=I_size; i<I_size+II_size; i++) {
+		for(i=myDict->GetTipNumber(1); i<myDict->GetTipNumber(0); i++) {
 			tmp.sprintf("%d", i);
 			output += "<a name=\""+ tmp + "\"></a><h4><font color=\"red\">"+ myDict->GetInputTip(i) + "</font></h4>" + myDict->GetOutputTip(i) + "<hr>";
 		}
@@ -758,7 +755,7 @@ void Kydpdict::handleTip( const QString & href )
 
     if (tmp.startsWith("2")) {
 	tmp = tmp.remove(0,1);
-	if(tmp.toInt() >= 0 && tmp.toInt() < I_size + II_size)
+	if(tmp.toInt() >= 0 && tmp.toInt() < myDict->GetTipNumber(0))
 	    myDynamicTip->tekst = myDict->GetOutputTip(tmp.toInt());
     } else
 	myDynamicTip->tekst = "";
