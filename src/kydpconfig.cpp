@@ -23,11 +23,13 @@ kydpConfig::kydpConfig()
     QDir dir;
     QFile f;
 
-	cfgname = getenv("HOME");
-	cfgname += "/";
-	cfgname += getenv("CONFIG_DIR");
-	cfgname += "/";
-	cfgname += ".kydpdict";
+	cfgname = getenv("HOME_ETC");
+	if (cfgname == "") {
+	    cfgname = getenv("HOME");
+	    cfgname += "/";
+	    cfgname += getenv("CONFIG_DIR");
+	}
+	cfgname += "/.kydpdict";
 
 	// get rid of old config file (otherwise stuff would go to ~/.qt
         f.setName(cfgname);

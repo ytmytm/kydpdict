@@ -338,3 +338,4 @@ Kydpdict 0.6.0pre (xx.xx.2004)
 - poprawione wyszukiwanie
 - ./configure nie szuka ju¿ moc2
 - fix16/32 dla systemów bigendian
+- w³±czona obs³uga HOME_ETC

@@ -33,8 +33,10 @@ ju¿ pojawia³.
 Jedn± z zalet jest tak¿e ³atwa konfiguracja programu: ¶cie¿ek dostêpu do plików s³ownika,
 ¶cie¿ki do plików z wymow± (oryginalne pliki wav lub zakodowane do mp3/ogg), a tak¿e kolorów
 tekstu t³umaczenia i t³a aplikacji. Te i inne parametry programu (np pozycja na ekranie, wielko¶æ
-okna s± przechowywane w katalogu .kydpdict w Twoim katalogu konfiguracyjnym. Bêdzie to
-katalog domowy lub katalog poni¿ej niego okre¶lony przez zmienn± $CONFIG_DIR.
+okna s± przechowywane w katalogu .kydpdict w Twoim katalogu konfiguracyjnym. Bêdzie to katalog
+okre¶lony przez bezwzglêdn± ¶cie¿kê ze zmiennej $HOME_ETC lub katalog domowy lub katalog poni¿ej
+niego okre¶lony przez zmienn± $CONFIG_DIR (testowane w tej kolejno¶ci).
+
 Kilka najwa¿niejszych skrótów klawiaturowych:
 - ESC pozwala szybko wpisaæ z klawiatury nowy wyraz - przenosi tam kursor i czy¶ci widget
   wprowadzania
