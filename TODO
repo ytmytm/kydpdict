@@ -16,3 +16,4 @@
     - makefiles (.po, .mo; sciezki;)
 - opcja: po przechwyceniu schowka - na wierzch ale bez focusa na siebie
 - FindWord napisac ³adniej
+- dodac -L/usr/X11R6/lib -lX11 ze wzglêdu na symbole z dock_widget.cpp (bêdê tego ¿a³owa³)
