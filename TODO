@@ -9,6 +9,9 @@
     - 'dynamics' - nie ma podpowiedzi do 'npl'
       'Fiji' - sprawdzic podpowiedzi
 - szukanie hasla w drugim slowniku (zamiana stron i wyszukanie)
+- wyszukiwanie w tre¶ci
+- dzielenie listy hase³ na grupy (np. 'run across', 'run away' itd. w grupie
+  'run' wizualnie oddzielonej a¿ do 'runabout' które jest now± grup±
 - optymalizacja ladowania indeksu
     - napisaæ sobie w³asny widget z QDict do trzymania danych
       najwiecej czasu zajmuje wstawianie nowych obiektów przy InsertItem (zawsze jest
@@ -17,3 +20,16 @@
 - przejscie z tlumaczeniem na gettext
     - makra, ¿eby nic w kodzie nie zmieniæ
     - makefiles (.po, .mo; sciezki;)
+- podac gdzies informacjê skad wziac slowniki (TW zmasakrowal opis programu :(,
+  nic dziwnego, ze prawie nikt nie pisuje na pld.devel.en; powtórzyæ informacjê
+  jak nazywa siê ten niemiecki)
+- napisaæ konwerter do mysql'a? zrobic z kydpdict frontend do obu typów?
+  (czytalem licencje, IMO nie ma przeciwwskazan) spychologia rz±dzi!
+  to stawia pod znakiem zapytania sens istnienia calego programu, bo opisy
+  przetrawione do qt-richtext (czy HTML) umieszone w bazie mozna odpytywac
+  glupim perlem czy php; ile osob ma *sql? ja tez nie mialem do czasu...
+  + wyszukiwanie na wiele sposobow
+  + szyyyybkosc
+  - koniecznosc posiadanie bazy/dostepu do bazy (dla samego k6t bym jej nie
+    instalowal)
+  albo zamiast *sql jakas inna baze? berkeley db4/3/2/1? gdbm?

@@ -6,7 +6,7 @@ systemu Linux.
 2. Co jest wymagane dla dzia³ania Kydpdict?
 Najwa¿niejsze jest posiadanie plików z danymi s³ownika z oryginalnej p³yty YDP.
 Chodzi o pliki dict*.idx oraz dict*.dat.
-Konieczne jest posiadanie biblioteki Qt w wersji > 3.0, je¶li kompilujemy program
+Konieczne jest posiadanie biblioteki Qt w wersji >=3.1, je¶li kompilujemy program
 konieczny bêdzie tak¿e pakiet Qt-devel. Kydpdict nie wymaga zainstalowanego
 ¶rodowiska KDE (wbrew swojej nazwie :).
 Do odtwarzania wymowy s³ów potrzebny bêdzie zewnêtrzny program. Mo¿e to byæ play do
