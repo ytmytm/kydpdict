@@ -27,5 +27,6 @@
 - gdy zminimalizowany - ma star± selekcjê i nie uznaje aktualnej za now± - po
   przywroceniu powinien pokazac wynik tlumaczenia aktualnej selekcji
 - usunac przycisk do kasowania (albo zminiejszyæ)
-- otrzymanie focus - zawsze na pole edycji hasla, z selekcja aktualnego (zeby usunac latwo)
+- gdy okno wyskakuje na wierzch - focus na wordInput
+    (prawie to, o co chodzi³o, jeszcze nie dok³adnie tak)
 - opcja: po przechwyceniu schowka - na wierzch ale bez focusa na siebie (opcja?)

@@ -237,6 +237,8 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 	    trayicon->setPopupMenu(trayMenu);
 	    trayicon->show();
 	}
+	setFocusProxy(wordInput);
+	RTFOutput->setFocusProxy(wordInput);
 }
 
 Kydpdict::~Kydpdict()
