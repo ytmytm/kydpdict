@@ -625,7 +625,7 @@ int ydpDictionary::FindWord(QString word)
 
     if (a!=b) {		// what was not a direct match
 	a=a-35; if (a<0) a=0;
-	max=a; maxs=a; smax=0; smaxs=0;
+	max=a; maxs=a; smax=0; smaxs=0; score=0; scores=0;
 	i=1;
 	while ((i<150) && (a+i<wordCount) && (smax<100)) {
 	    bstring = codec->toUnicode(words[a+i]).lower();
