@@ -175,3 +175,12 @@ Kydpdict 0.5.2pre3 (27.6.2003)
 - naprawiona obsluga tips.html w dowolnej sciezce (KYDPDATAPATH)
 - zapisywana/odczytywana zmienna tipsPath (nie ma mozliwosci jej edycji poza
   plikiem konfiguracyjnym)
+
+=====================================================================
+Kydpdict 0.5.2 (28.6.2003)
+- mala optymalizacja ladowania indeksu (brak fseek'ow)
+- cd2path i przyjaciele dla niemieckich dzwiekow
+- dodana nowa zakladka audio/dictionary do ydpconfigure
+- uporzadkowana sprawa slownikow: (bool)useEnglish-->(int)language
+- uaktualnione tlumaczenie, poprawienie bledow jezykowych, literowek
+- uaktualniona dokumentacja

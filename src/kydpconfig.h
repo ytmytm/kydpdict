@@ -12,13 +12,15 @@
 
 #include <qstring.h>
 
+enum { LANG_ENGLISH, LANG_DEUTSCH, LANG_LAST };
+
 class kydpConfig
 {
 public:
 	kydpConfig();
 	~kydpConfig();
 	
-	QString cdPath, topPath, tipsPath;
+	QString cdPath, cd2Path, topPath, tipsPath;
 	QString player;
 	QString kFontKolor1;
 	QString kFontKolor2;
@@ -27,7 +29,8 @@ public:
 	QString kBckgrndPix;
 	QString indexFName;
 	QString dataFName;
-	bool	toPolish, useEnglish;
+	bool	toPolish;
+	int language;
 	int kGeometryX, kGeometryY, kGeometryW, kGeometryH;
 	int spH1, spH2, spV1, spV2;
 	bool clipTracking, italicFont, toolTips, autoPlay;

@@ -1,17 +1,21 @@
+- przy braku prawid³owej konfiguracji ¶cie¿ek i wybranym 'anuluj' z okna konfiguracyjnego
+  wpada w pêtlê ( exit() w kydpdict.cpp nie konczy programu, czemu? )
 - podpowiedzi
     - niemieckie
-    - wywalic tips.html i generowac go sobie z tabelki tips'ow na starcie
+    - wywalic tips.html i generowac go sobie z tabelki tips'ow na starcie (albo odwrotnie
+      - generowac tabelke tipsow z tips.html)
+      <blah> - <blah> - powtorzone tooltips, powtorzona lista przypasowan
+      generowac jedno z drugiego, wladowac w QDict?
     - jesli podpowiedz znajduje sie w ostatniej linijce tekstu, to jest aktywna w
       pionie az do dolnej krawedzi okna
     - 'dynamics' - nie ma podpowiedzi do 'npl'
       'Fiji' - sprawdzic podpowiedzi
 - konfiguracja:
     - konfiguracja czcionek i/lub ich stylu
-    - ustawienie drugiej sciezki .wav dla drugiego slownika
-    - mozliwosc wylaczenia sprawdzania schowka (albo info, zeby zminimalizowac)
 - szukanie hasla w zasobach slownika
 - optymalizacja ladowania indeksu
+    - zastapic listbox przez listview?
 - przejscie z tlumaczeniem na gettext
     - makra, ¿eby nic w kodzie nie zmieniæ
     - makefiles (.po, .mo; sciezki;)
-- testy z wlasna implementacja wyszukiwania w indeksie
+- testy wlasnej implementacja wyszukiwania w indeksie

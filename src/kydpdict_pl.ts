@@ -29,15 +29,6 @@
         <translation>Ctrl+U</translation>
     </message>
     <message>
-        <source>&amp;Transcription</source>
-        <translation type="obsolete">&amp;Transkrypcja</translation>
-    </message>
-    <message>
-        <source>Ctrl+T</source>
-        <comment>Options|Transcription</comment>
-        <translation type="obsolete">Ctrl+T</translation>
-    </message>
-    <message>
         <source>&amp;Play sample</source>
         <translation>&amp;Odtwórz dźwięk</translation>
     </message>
@@ -75,10 +66,6 @@ Autorzy: Andrzej Para, Maciej Witkowiak.
 Program oparty na ydpdict Wojtka Kaniewskiego</translation>
     </message>
     <message>
-        <source>OK</source>
-        <translation type="obsolete">OK</translation>
-    </message>
-    <message>
         <source>Error</source>
         <translation>Błąd</translation>
     </message>
@@ -112,18 +99,6 @@ Do widzenia!</translation>
         <translation>Ścieżka do plików słownika</translation>
     </message>
     <message>
-        <source>Path to CDROM</source>
-        <translation type="obsolete">Ścieżka do CDROM-u</translation>
-    </message>
-    <message>
-        <source>Path to mp3 files</source>
-        <translation type="obsolete">Ścieżka do plików mp3</translation>
-    </message>
-    <message>
-        <source>Paths</source>
-        <translation>Ścieżki</translation>
-    </message>
-    <message>
         <source>Choose translation color</source>
         <translation>Kolor tłumaczenia</translation>
     </message>
@@ -152,44 +127,8 @@ Do widzenia!</translation>
         <translation>Kolor zwykłego tekstu</translation>
     </message>
     <message>
-        <source>Path to WAV player</source>
-        <translation type="obsolete">Ścieżka do odtwarzacza WAV</translation>
-    </message>
-    <message>
-        <source>Path to MP3 player</source>
-        <translation type="obsolete">Ścieżka do odtwarzacza MP3</translation>
-    </message>
-    <message>
-        <source>Path to OGG player</source>
-        <translation type="obsolete">Ścieżka do odtwarzacza OGG</translation>
-    </message>
-    <message>
-        <source>Players</source>
-        <translation type="obsolete">Odtwarzacze</translation>
-    </message>
-    <message>
         <source>Choose path to dictionaries</source>
         <translation>Wybierz ścieżkę do słowników</translation>
-    </message>
-    <message>
-        <source>Choose path to audio files</source>
-        <translation>Wybierz ścieżkę do plików audio</translation>
-    </message>
-    <message>
-        <source>Choose WAV player</source>
-        <translation type="obsolete">Wybierz odtwarzacz WAV</translation>
-    </message>
-    <message>
-        <source>Choose MP3 player</source>
-        <translation type="obsolete">Wybierz odtwarzacz MP3</translation>
-    </message>
-    <message>
-        <source>Choose OGG player</source>
-        <translation type="obsolete">Wybierz odtwarzacz OGG</translation>
-    </message>
-    <message>
-        <source>Path to audio files</source>
-        <translation>Ścieżka do plików audio</translation>
     </message>
     <message>
         <source>Path to audio player</source>
@@ -205,7 +144,7 @@ Do widzenia!</translation>
     </message>
     <message>
         <source>Enable italic font</source>
-        <translation>Używaj pochyłą czcionkę</translation>
+        <translation>Używaj pochyłej czcionki</translation>
     </message>
     <message>
         <source>Enable tooltips</source>
@@ -218,6 +157,30 @@ Do widzenia!</translation>
     <message>
         <source>Miscellaneous</source>
         <translation>Różne</translation>
+    </message>
+    <message>
+        <source>Dictionary</source>
+        <translation>Słownik</translation>
+    </message>
+    <message>
+        <source>Path to English audio files</source>
+        <translation>Ścieżka do ang. plików dźwiękowych</translation>
+    </message>
+    <message>
+        <source>Path to Deutsch audio files</source>
+        <translation>Ścieżka do niem. plików dźwiękowych</translation>
+    </message>
+    <message>
+        <source>Audio</source>
+        <translation>Audio</translation>
+    </message>
+    <message>
+        <source>Choose path to English audio files</source>
+        <translation>Wybierz ścieżkę do angielskich plików dźwiękowych</translation>
+    </message>
+    <message>
+        <source>Choose path to Deutsch audio files</source>
+        <translation>Wybierz ścieżkę do niemieckich plików dźwiękowych</translation>
     </message>
 </context>
 <context>

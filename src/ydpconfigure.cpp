@@ -38,7 +38,7 @@ ydpConfigure::ydpConfigure( kydpConfig *globalconfig, QWidget* parent,  const ch
 
     GroupBox1 = new QGroupBox( tab1, "GroupBox1" );
     GroupBox1->setTitle( tr("Path to dictionary files") );
-    GroupBox1->setGeometry(8,5,361,50);
+    GroupBox1->setGeometry(8,59,361,50);
 
     dictionaryUrl = new QLineEdit( GroupBox1, "dictionaryUrl" );
     dictionaryUrl->setFrameStyle( QFrame::Sunken | QFrame::Panel);
@@ -46,11 +46,14 @@ ydpConfigure::ydpConfigure( kydpConfig *globalconfig, QWidget* parent,  const ch
     dictionaryUrl->setGeometry( 10, 17, 290, 22 );
     changeDictionaryUrl = new QPushButton("...", GroupBox1, "changeDictionaryUrl");
     changeDictionaryUrl->setGeometry(310,17,40,22);
+	
+    TabWidget1->insertTab( tab1, tr("Dictionary") );
 
+	tab4 = new QWidget( TabWidget1, "tab4" );
 
-    GroupBox2 = new QGroupBox( tab1, "GroupBox2" );
-    GroupBox2->setTitle( tr("Path to audio files") );
-    GroupBox2->setGeometry(8,59,361,50);
+    GroupBox2 = new QGroupBox( tab4, "GroupBox2" );
+    GroupBox2->setTitle( tr("Path to English audio files") );
+    GroupBox2->setGeometry(8,5,361,50);
 
     audioUrl = new QLineEdit( GroupBox2, "audioUrl" );
     audioUrl->setFrameStyle( QFrame::Sunken | QFrame::Panel);
@@ -59,8 +62,18 @@ ydpConfigure::ydpConfigure( kydpConfig *globalconfig, QWidget* parent,  const ch
     changeAudioUrl = new QPushButton("...", GroupBox2, "changeAudioUrl");
     changeAudioUrl->setGeometry(310,17,40,22);
 
+	GroupBox4 = new QGroupBox( tab4, "GroupBox4" );
+    GroupBox4->setTitle( tr("Path to Deutsch audio files") );
+    GroupBox4->setGeometry(8,59,361,50);
 
-    GroupBox3 = new QGroupBox( tab1, "GroupBox3" );
+    audio2Url = new QLineEdit( GroupBox4, "audio2Url" );
+    audio2Url->setFrameStyle( QFrame::Sunken | QFrame::Panel);
+    audio2Url->setLineWidth( 1 );
+    audio2Url->setGeometry( 10, 17, 290, 22 );
+    changeAudio2Url = new QPushButton("...", GroupBox4, "changeAudio2Url");
+    changeAudio2Url->setGeometry(310,17,40,22);
+
+    GroupBox3 = new QGroupBox( tab4, "GroupBox3" );
     GroupBox3->setTitle( tr("Path to audio player") );
     GroupBox3->setGeometry(8,111,361,50);
 
@@ -71,10 +84,9 @@ ydpConfigure::ydpConfigure( kydpConfig *globalconfig, QWidget* parent,  const ch
     changePlayerUrl = new QPushButton("...", GroupBox3, "changePlayerUrl");
     changePlayerUrl->setGeometry(310,17,40,22);
 
-    TabWidget1->insertTab( tab1, tr("Paths") );
+    TabWidget1->insertTab( tab4, tr("Audio") );
 
-
-    tab2 = new QWidget( TabWidget1, "tab2" );
+	tab2 = new QWidget( TabWidget1, "tab2" );
 
     textLabel2 = new QLabel(tr("Choose qualificator color"), tab2, "textLabel2");
     textLabel2->setGeometry(6,36,150,22);
@@ -96,7 +108,7 @@ ydpConfigure::ydpConfigure( kydpConfig *globalconfig, QWidget* parent,  const ch
     changeFont4->setGeometry(162,10,40,22);
     changeBckgrndUrl = new QPushButton("...", tab2, "changeBckgrnd");
     changeBckgrndUrl->setGeometry(162,138,40,22);
-    
+
     checkBox1 = new QCheckBox(tr("Enable Background"), tab2, "checkBox1");
     checkBox1->setGeometry(6,117,150,16);
 
@@ -108,18 +120,18 @@ ydpConfigure::ydpConfigure( kydpConfig *globalconfig, QWidget* parent,  const ch
     exampleLabel1-> setReadOnly(TRUE);
 
     TabWidget1->insertTab( tab2, tr("Colors") );
-    
-     tab3 = new QWidget( TabWidget1, "tab3" );
-     checkBox2 = new QCheckBox(tr("Enable clipboard tracking"), tab3, "checkBox2");
-     checkBox2->setGeometry(10,14,350,20);
-     checkBox3 = new QCheckBox(tr("Enable italic font"), tab3, "checkBox3");
-     checkBox3->setGeometry(10,54,350,20);
-     checkBox4 = new QCheckBox(tr("Enable tooltips"), tab3, "checkBox4");
-     checkBox4->setGeometry(10,94,350,20);
-     checkBox5 = new QCheckBox(tr("Enable autoplay"), tab3, "checkBox5");
-     checkBox5->setGeometry(10,134,350,20);
-     
-     TabWidget1->insertTab( tab3, tr("Miscellaneous") );
+
+    tab3 = new QWidget( TabWidget1, "tab3" );
+    checkBox2 = new QCheckBox(tr("Enable clipboard tracking"), tab3, "checkBox2");
+    checkBox2->setGeometry(10,14,350,20);
+    checkBox3 = new QCheckBox(tr("Enable italic font"), tab3, "checkBox3");
+    checkBox3->setGeometry(10,54,350,20);
+    checkBox4 = new QCheckBox(tr("Enable tooltips"), tab3, "checkBox4");
+    checkBox4->setGeometry(10,94,350,20);
+    checkBox5 = new QCheckBox(tr("Enable autoplay"), tab3, "checkBox5");
+    checkBox5->setGeometry(10,134,350,20);
+
+    TabWidget1->insertTab( tab3, tr("Miscellaneous") );
 
     connect( ok, SIGNAL( clicked() ), this, SLOT( accept() ) );
     connect( cancel, SIGNAL( clicked() ), this, SLOT( reject() ) );
@@ -127,6 +139,7 @@ ydpConfigure::ydpConfigure( kydpConfig *globalconfig, QWidget* parent,  const ch
 
     connect( changeDictionaryUrl, SIGNAL( clicked() ), this, SLOT( NewDictUrl() ) );
     connect( changeAudioUrl, SIGNAL( clicked() ), this, SLOT( NewAudioUrl() ) );
+    connect( changeAudio2Url, SIGNAL( clicked() ), this, SLOT( NewAudio2Url() ) );
     connect( changeFont1, SIGNAL( clicked() ), this, SLOT( NewFontColor1() ) );
     connect( changeFont2, SIGNAL( clicked() ), this, SLOT( NewFontColor2() ) );
     connect( changeFont3, SIGNAL( clicked() ), this, SLOT( NewFontColor3() ) );
@@ -139,6 +152,7 @@ ydpConfigure::ydpConfigure( kydpConfig *globalconfig, QWidget* parent,  const ch
     playerUrl->setText(config->player);
     dictionaryUrl->setText(config->topPath);
     audioUrl->setText(config->cdPath);
+	audio2Url->setText(config->cd2Path);
     cFontKolor1 = config->kFontKolor1;
     cFontKolor2	= config->kFontKolor2;
     cFontKolor3 = config->kFontKolor3;
@@ -159,8 +173,16 @@ void ydpConfigure::NewAudioUrl()
 {
     QString tmp;
 
-    tmp = QFileDialog::getExistingDirectory("/", this , "path", tr("Choose path to audio files"));
+    tmp = QFileDialog::getExistingDirectory("/", this , "path", tr("Choose path to English audio files"));
     if (!tmp.isEmpty ()) audioUrl->setText(tmp);
+}
+
+void ydpConfigure::NewAudio2Url()
+{
+    QString tmp;
+
+    tmp = QFileDialog::getExistingDirectory("/", this , "path", tr("Choose path to Deutsch audio files"));
+    if (!tmp.isEmpty ()) audio2Url->setText(tmp);
 }
 
 void ydpConfigure::NewPlayerUrl()
@@ -273,6 +295,7 @@ void ydpConfigure::WriteDefaults()
 
     dictionaryUrl->setText(cnf->topPath);
     audioUrl->setText(cnf->cdPath);
+	audio2Url->setText(cnf->cd2Path);
     playerUrl->setText(cnf->player);
     cFontKolor1 = cnf->kFontKolor1;
     cFontKolor2 = cnf->kFontKolor2;
@@ -312,6 +335,7 @@ ydpConfigure::~ydpConfigure()
 		config->kBckgrndPix = cBckgrnd;
 		config->topPath = dictionaryUrl->text();
 		config->cdPath = audioUrl->text();
+		config->cd2Path = audio2Url->text();
 		config->player = playerUrl->text();
 		config->clipTracking = checkBox2->isChecked();
 		config->italicFont = checkBox3->isChecked();

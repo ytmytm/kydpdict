@@ -4,11 +4,17 @@ Umo¿liwia ³atwe i efektywne korzystanie z s³ownika w ¶rodowisku graficznym
 systemu Linux.
 
 2. Co jest wymagane dla dzia³ania Kydpdict?
-Konieczne jest posiadanie biblioteki qt w wersji > 3.0, je¶li kompilujemy program
+Najwa¿niejsze jest posiadanie plików z danymi s³ownika z oryginalnej p³yty YDP.
+Chodzi o pliki dict*.idx oraz dict*.dat.
+Konieczne jest posiadanie biblioteki Qt w wersji > 3.0, je¶li kompilujemy program
 konieczny bêdzie tak¿e pakiet Qt-devel. Kydpdict nie wymaga zainstalowanego
 ¶rodowiska KDE (wbrew swojej nazwie :).
 Do odtwarzania wymowy s³ów potrzebny bêdzie zewnêtrzny program. Mo¿e to byæ play do
 oryginalnych plików wav lub je¶li zosta³y przekodowane: mpg123, ogg123 i wiele innych.
+Odtwarzacz jest wspólny dla plików d¼wiêkowych obu jêzyków, wiêc musisz zadbaæ, aby
+by³y one w jednakowym formacie.
+Je¶li korzystasz z serwera d¼wiêku byæ mo¿e zamiast play trzeba bêdzie u¿yæ esdplay
+lub artsplay.
 
 3. Jakie s± najwa¿niejsze zalety Kydpdict?
 Korzystanie ze s³ownika nigdy nie by³o tak proste jak obecnie(przynajmniej dla mnie ; - ) ).
@@ -30,7 +36,22 @@ tekstu t³umaczenia i t³a aplikacji. Te i inne parametry programu (np pozycja na 
 okna s± przechowywane w pliku konfiguracyjnym w Twoim katalogu konfiguracyjnym. Bêdzie to
 katalog domowy lub katalog poni¿ej niego okre¶lony przez zmienn± $CONFIG_DIR.
 
-4. Jakie s± znane wady i b³êdy Kydpdict ?
+4. Konfiguracja
+W razie problemów po prostu skasuj swój plik konfiguracyjny. Program postara siê odtworzyæ
+go z domy¶lnych warto¶ci oraz korzystaj±c z /etc/ydpdict.conf je¶li korzystasz jednocze¶nie
+z konsolowego s³ownika.
+
+Krótki opis opcji konfiguracyjnych z zak³adki 'Ró¿ne'
+- 'W³±cz ¶ledzenie schowka' - okno s³ownika wyskakuj±ce na wierzch mo¿e przeszkadzaæ, w ten
+   sposób mo¿na wy³±czyæ takie zachowanie na sta³e. Tymczasow± metod± jest zminimalizowanie
+   okna.
+- 'U¿ywaj pochy³ej czcionki' - niektóre czcionki pochy³e wygl±daj± brzydko, tak mo¿na nieco
+   poprawiæ wygl±d i czytelno¶æ okna
+- 'W³±cz podpowiedzi' - opcja kontroluj±ca wy¶wietlanie wyja¶nieñ po najechaniu myszk± na
+   s³ownikowe skróty
+- 'Autoodtwarzanie d¼wiêku' - dotyczy tylko tekstu przechwyconego ze schowka.
+
+5. Jakie s± znane wady Kydpdict ?
 a) Aplikacja oparta jest o bibliotekê Qt i podczas wykonywania zajmuje sporo pamiêci (na mojej
 maszynie warto¶æ ta dochodzi nawet do 11MB). Nie jest to jednak wina kodu programu -
 nawet najprostsze aplikacje przyk³adowe Qt (dostêpne w pakiecie Qt-devel) podczas
@@ -40,5 +61,8 @@ pamiêci nie odczuje ¿adnego dyskomfortu.
 b) program szuka pliku z t³umaczeniem domyslnie w /usr/share/kydpdict
 Nie jest to poprawne rozwi±zanie ale na razie lepszego nie znamy.
 
-Wszelkie wykryte b³êdy, konstruktywn± krytykê, ciekawe pomys³y itd. wysy³ajcie na adres:
-kulozik@op.pl lub ytm@friko.onet.pl
+6. Co jest do zrobienia/jakie s± znane b³êdy ?
+Przeczytaj plik TODO.
+
+Wszelkie wykryte b³êdy, konstruktywn± krytykê, ciekawe pomys³y, gotowe ³aty itd. wysy³ajcie
+na adres: ytm@friko.onet.pl lub kulozik@op.pl

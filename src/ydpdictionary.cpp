@@ -111,17 +111,14 @@ int ydpDictionary::CheckDictionary(kydpConfig *config)
 
 int ydpDictionary::CheckDictionary(QString path, QString index, QString def)
 {
-    QFile fi, fd;
+    QFile f;
 
-    fi.setName( path + "/" + index);
-    fd.setName(path + "/" + def);
-
-    if ( !(fi.open(IO_ReadOnly)) )
+    f.setName( path + "/" + index);
+    if ( !(f.exists()) )
     	return 0;
-    fi.close();
-    if( !(fd.open(IO_ReadOnly)) )
+    f.setName( path + "/" + def);
+    if ( !(f.exists()) )
     	return 0;
-    fd.close();
     return 1;
 }
 
@@ -166,38 +163,40 @@ QString ydpDictionary::convert_cp1250(char *tekst, long int size)
 void ydpDictionary::FillWordList()
 {
   QString p;
-  QProgressDialog *g;
+  QProgressDialog progress;
   QTextCodec *codec = QTextCodec::codecForName("ISO8859-2");
 
   unsigned long pos;
+  unsigned long index[2];
   int current=0, bp;
   char buf[256], ch;
-
-  g = new QProgressDialog;
 
   /* read # of words */
   wordCount=0;
   fIndex.at(0x08);
   fIndex.readBlock((char*)&wordCount,2);
 
-  indexes = new unsigned long [wordCount];
+  indexes = new unsigned long [wordCount+2];
 
-  g->setTotalSteps(wordCount / 200);
-  g->setMinimumDuration(500);
-  g->show();
+  progress.setTotalSteps(wordCount / 200);
+  progress.setMinimumDuration(500);
+  progress.show();
 
   /* read index table offset */
   pos=0;
   fIndex.at(0x10);
-  fIndex.readBlock((char*)&pos, sizeof(unsigned long));
+  fIndex.readBlock((char*)&pos, 4);
   fIndex.at(pos);
 
   dictList->setAutoUpdate(FALSE);
   /* read index table */
   do {
-    if ((current % 200)==0) { g->setProgress(current / 200); };
-    fIndex.at(fIndex.at()+4);
-    fIndex.readBlock((char*)&indexes[current], sizeof(unsigned long));
+    if ((current % 256)==0) 
+	progress.setProgress(current / 200);
+//  this is a trick - instead of fssek(cur+4), read ulong we read ulong twice
+//  and throw out first 4 bytes
+    fIndex.readBlock((char*)&index[0], 4+4);
+    indexes[current]=index[1];
 
     bp=0;
     do {
@@ -210,8 +209,6 @@ void ydpDictionary::FillWordList()
     p = codec->toUnicode(p.fromAscii(p));
     dictList->insertItem(p);
   } while (++current < wordCount);
-
-  delete g;
 
   /* omijanie bledow w slowniku... */
   QListBoxItem *result;
@@ -243,14 +240,25 @@ int ydpDictionary::ReadDefinition(int index)
 
 int ydpDictionary::Play (int index, kydpConfig *config) {
 	QFile fd;
-	QString name, ext;
+	QString pathdir, name, ext;
 	static QProcess proc;
 
-	fd.setName(config->cdPath.latin1());
+	switch (config->language) {
+		case LANG_DEUTSCH:
+			pathdir = config->cd2Path;
+			break;
+		case LANG_ENGLISH:
+			pathdir = config->cdPath;
+			break;
+		default:
+			break;	// cos poszlo nie tak?
+	}
+
+	fd.setName(pathdir.latin1());
 	if (!(fd.exists()))
 		return 0;	// nie ma co tracic czasu jesli katalogu nie ma
 
-	name.sprintf("%s/s%.3d/%.6d.", config->cdPath.latin1(), index/1000, index+1);
+	name.sprintf("%s/s%.3d/%.6d.", pathdir.latin1(), index/1000, index+1);
 
 	ext = "wav";
 	fd.setName(name+ext);
@@ -268,7 +276,7 @@ int ydpDictionary::Play (int index, kydpConfig *config) {
 	fd.setName(config->player);
 	if (!(fd.exists()))
 		return 0;		// oh well...
-	
+
 	if (proc.isRunning()) {
 		proc.kill();		// nie ma litosci dla skurwysynow! BUM! BUM!
 	}
@@ -444,7 +452,7 @@ it++;
 			def--;
 			QString tmp = convert_cp1250(token, (long int) tp);
 
-			if((italic_tag || tip_tag ) && cnf->useEnglish && cnf->toolTips) {
+			if((italic_tag || tip_tag ) && (cnf->language == LANG_ENGLISH) && cnf->toolTips) {
 				tmp = insertTip(tmp);
 				tip_tag = FALSE;
 			}

@@ -36,11 +36,12 @@ private:
     QString GetNewBackgroundUrl(QString kolor);
 
     QTabWidget *TabWidget1;
-    QWidget *tab1, *tab2, *tab3;
-    QGroupBox *GroupBox1, *GroupBox2, *GroupBox3;
+    QWidget *tab1, *tab2, *tab3, *tab4;
+    QGroupBox *GroupBox1, *GroupBox2, *GroupBox3, *GroupBox4;
 
     QPushButton *changeDictionaryUrl;
     QPushButton *changeAudioUrl;
+	QPushButton *changeAudio2Url;
     QPushButton *changePlayerUrl;
     QPushButton *changeFont1;
     QPushButton *changeFont2;
@@ -67,6 +68,7 @@ private:
 
     QLineEdit *dictionaryUrl;
     QLineEdit *audioUrl;
+	QLineEdit *audio2Url;
     QLineEdit *playerUrl;
 
     QString cFontKolor1;
@@ -78,6 +80,7 @@ private:
 private slots:
     void NewDictUrl();
     void NewAudioUrl();
+	void NewAudio2Url();
     void NewFontColor1();
     void NewFontColor2();
     void NewFontColor3();

@@ -30,9 +30,10 @@ void kydpConfig::setDefaultConfiguration(void)
 {
 	topPath =  "/usr/share/ydpdict";
 	cdPath = "/mnt/cdrom";
+	cd2Path = "/mnt/cdrom";
 	tipsPath = KYDPDATADIR ;
 	toPolish = true;
-	useEnglish = true;
+	language = LANG_ENGLISH;
 	kGeometryX = 1;
 	kGeometryY = 1;
 	kGeometryW = 500;
@@ -84,6 +85,12 @@ void kydpConfig::load(void)
 					value = line.mid(pos+1);
 					cdPath = value.stripWhiteSpace();
 				}
+				pos = line.find("cd2path");
+				if (pos==0) {
+					pos = line.find('=');
+					value = line.mid(pos+1);
+					cd2Path = value.stripWhiteSpace();
+				}
 				pos = line.find("tipspath");
 				if (pos==0) {
 					pos = line.find('=');
@@ -96,11 +103,11 @@ void kydpConfig::load(void)
 					value = line.mid(pos+1);
 					toPolish = ( value.toInt() != 0);
 				}
-				pos = line.find("useenglish");
+				pos = line.find("language");
 				if (pos==0) {
 					pos = line.find('=');
 					value = line.mid(pos+1);
-					useEnglish = ( value.toInt() != 0);
+					language = value.toInt();
 				}
 				pos=line.find("geometry_x");
 				if (pos==0) {
@@ -237,13 +244,16 @@ void kydpConfig::save(void)
 	line += topPath;
 	line += "\ncdpath\t=\t";
 	line += cdPath;
+	line += "\ncd2path\t=\t";
+	line += cd2Path;
 	line += "\ntipspath\t=\t";
 	line += tipsPath;
 	line += "\ntopolish\t=\t";
 	if (toPolish) { line+="1"; } else { line+="0"; };
 
-	line += "\nuseenglish\t=\t";
-	if (useEnglish) { line+="1"; } else { line+="0"; };
+	line += "\nlanguage\t=\t";
+	tmp.sprintf("%d",language);
+	line += tmp;
 
 	line += "\ngeometry_x\t=\t";
 	tmp.sprintf("%d",kGeometryX);
@@ -342,12 +352,14 @@ void kydpConfig::readYDPConfig(void)
 
 void kydpConfig::updateFName(void)
 {
-	if (useEnglish) {
-		indexFName= toPolish ? "dict100.idx" : "dict101.idx";
-		dataFName = toPolish ? "dict100.dat" : "dict101.dat";
-	} else {
-		indexFName= toPolish ? "dict200.idx" : "dict201.idx";
-		dataFName = toPolish ? "dict200.dat" : "dict201.dat";
-	};
-
+	switch (language) {
+		case LANG_ENGLISH:
+		  indexFName= toPolish ? "dict100.idx" : "dict101.idx";
+		  dataFName = toPolish ? "dict100.dat" : "dict101.dat";
+		  break;
+		case LANG_DEUTSCH:
+		  indexFName= toPolish ? "dict200.idx" : "dict201.idx";
+		  dataFName = toPolish ? "dict200.dat" : "dict201.dat";
+		  break;
+	}
 }

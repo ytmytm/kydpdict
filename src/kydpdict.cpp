@@ -8,6 +8,7 @@
  ***************************************************************************/
 
 #include "kydpdict.h"
+#include "kydpconfig.h"
 
 #include <qmime.h>
 #include <qimage.h>
@@ -94,7 +95,9 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 	do {
 		if(!myDict->CheckDictionary(config)) {
 			//jesli nie ma tego co chcemy, to sprawdzamy drugi jezyk
-			config->useEnglish = !config->useEnglish;
+			config->language++;
+			if (config->language >= LANG_LAST)
+				config->language = LANG_ENGLISH;
 			config->save();
 			if(!myDict->CheckDictionary(config)) {
 				// buu, drugiego jezyka tez nie ma; moze user bedzie cos wiedzial na ten temat...
@@ -305,7 +308,7 @@ void Kydpdict::NewFromLine (const QString &newText)
 
 void Kydpdict::PlaySelected (int index)
 {
-	if ( (index>=0) && config->useEnglish && config->toPolish )
+	if ( (index>=0) && config->toPolish )
 	    myDict->Play(index,config);
 }
 
@@ -316,31 +319,31 @@ void Kydpdict::PlayCurrent ()
 
 void Kydpdict::SwapEngToPol ()
 {
-	SwapLang(1, 1);
+	SwapLang(1, LANG_ENGLISH);
 }
 
 void Kydpdict::SwapPolToEng ()
 {
-	SwapLang(0, 1);
+	SwapLang(0, LANG_ENGLISH);
 }
 
 void Kydpdict::SwapGerToPol ()
 {
-	SwapLang(1, 0);
+	SwapLang(1, LANG_DEUTSCH);
 }
 
 void Kydpdict::SwapPolToGer ()
 {
-	SwapLang(0, 0);
+	SwapLang(0, LANG_DEUTSCH);
 }
 
-void Kydpdict::SwapLang (bool direction, int lang ) //dir==1 toPolish
+void Kydpdict::SwapLang (bool direction, int language ) //dir==1 toPolish
 {
 	int a;
-	if(! ((config->toPolish == direction) && (config->useEnglish == lang)) ) {
+	if(! ((config->toPolish == direction) && (config->language == language)) ) {
 		myDict->CloseDictionary();
 		config->toPolish=direction;
-		config->useEnglish = lang;
+		config->language = language;
 		config->save();
 		do {
 			a=myDict->OpenDictionary(config);
@@ -390,7 +393,7 @@ void Kydpdict::Configure(bool status)
 		"Good bye!"));
 		if(myConf)
   			delete myConf;
-		qApp->quit();
+		qApp->exit(1);
 	}
 
 	if(myConf)
@@ -419,8 +422,8 @@ void Kydpdict::UpdateLook()
 	}
 	dictList->setPaletteForegroundColor ( QColor(config->kFontKolor4) );
 
-	switch (config->useEnglish) { //mozna dopisac kolejne case'y dla kolejnych jezykow
-		case 0:
+	switch (config->language) { //mozna dopisac kolejne case'y dla kolejnych jezykow
+		case LANG_DEUTSCH:
 			menu->setItemChecked(gerToPol, config->toPolish);
 			menu->setItemChecked(polToGer, !config->toPolish);
 			menu->setItemChecked(polToEng, FALSE);
@@ -430,7 +433,7 @@ void Kydpdict::UpdateLook()
 			else
 				this->setCaption("Pl -> De - Kydpdict");
 			break;
-		case 1:
+		case LANG_ENGLISH:
 			menu->setItemChecked(engToPol, config->toPolish);
 			menu->setItemChecked(polToEng, !config->toPolish);
 			menu->setItemChecked(gerToPol, FALSE);
@@ -477,14 +480,14 @@ void Kydpdict::updateText( const QString & href )
 	"compound - wyraz z³o¿ony", "plural - liczba mnoga", "verb - czasownik", "intransitive verb - czasownik nieprzechodni", \
 	"transitive verb - czasownik przechodni", "singular - liczba pojedyncza", \
 	"abbreviation - skrót", "nominative - mianownik", "accusative - biernik", "dative - celownik", \
-	"genitive - dope³niacz", "infinitiv - bezokolicznik", "instrumental - narzêdnik", "locative - miejscownik", \
+	"genitive - dope³niacz", "infinitive - bezokolicznik", "instrumental - narzêdnik", "locative - miejscownik", \
 	"irregular - nieregularny", "preposition - przyimek", "auxiliary - pomocniczy", "past tense - czas przesz³y", \
 	"past participle - imies³ów czasu przesz³ego", "masculine - mêski", "noun - rzeczownik", "feminine - ¿eñski", \
 	"postpositiv (does not immediately precede a noun) - nie wystêpuje bezpo¶rednio przed rzeczownikiem", "nonvirile - niemêskoosobowy", \
-	"virile - mêskoosobowy", "number - liczba", "declined - odmienny", "exclemation - wykrzyknik", \
+	"virile - mêskoosobowy", "number - liczba", "declined - odmienny", "exclamation - wykrzyknik", \
 	"offensiv - obra¼liwy, wulgarny", "informal - potocznie", "pejorative - pejoratywny", "compaund - wyraz z³o¿ony", \
 	"obra¼liwy - offensiv", "potoczny - informal", "reflexiv verb - czasownik zwrotny", "attribute - przydawka", \
-	"particle - partyku³a", "formal - formalny", "imperfect tens - czas przesz³y o aspekcie niedokonanym", \
+	"particle - partyku³a", "formal - formalny", "imperfect tense - czas przesz³y o aspekcie niedokonanym", \
 	"diminutive - zdrobnienie", "administration - administracja", \
 	"anatomy - anatomia", "automobiles - motoryzacja", "aviation - lotnictwo",  "biology - biologia", \
 	"botany - botanika", "British English - angielszczyzna brytyjska", "chemistry - chemia", "commerce - handel", \
