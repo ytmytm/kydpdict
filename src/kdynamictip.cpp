@@ -12,10 +12,9 @@
 
 #include "kdynamictip.h"
 
-DynamicTip::DynamicTip( QWidget * parent )
-    : QToolTip( parent )
+DynamicTip::DynamicTip( QWidget * parent ) : QToolTip( parent )
 {
-    // no explicit initialization needed
+
 }
 
 
