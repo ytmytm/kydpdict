@@ -51,7 +51,6 @@
 #include "../icons/configure.xpm"
 #include "../icons/loop.xpm"
 #include "../icons/player_play.xpm"
-#include "../icons/erase_right.xpm"
 #include "../icons/clipboard.xpm"
 #include "../icons/babelfish.xpm"
 
@@ -85,9 +84,6 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 	QHBox *hbox1 = new QHBox(splitterV);
 	QHBox *hbox2 = new QHBox(splitterV);
 	wordInput = new QComboBox( hbox1, "wordInput");
-	listclear = new QPushButton(QIconSet(QPixmap(erase_right_xpm)), QString::null, hbox1, "clear");
-	listclear->setMaximumWidth(26);
-	listclear->setFlat(TRUE);
 	hbox1->setMinimumHeight(20);
 	dictList = new QListBox( hbox2, "dictList" );
 	scrollBar = new QScrollBar( Qt::Vertical, hbox2, "scrollBar");
@@ -233,8 +229,6 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 	connect (dictList, SIGNAL(clicked(QListBoxItem*)), this, SLOT(newFromClick(QListBoxItem*)));
 	connect (wordInput, SIGNAL(textChanged(const QString&)), this, SLOT(newFromLine(const QString&)));
 	connect (wordInput, SIGNAL(activated(int)), this, SLOT(PlayCurrent()));
-	connect (listclear, SIGNAL(clicked()), wordInput, SLOT(clearEdit()));
-	connect (listclear, SIGNAL(clicked()), wordInput, SLOT(setFocus()));
 	connect (RTFOutput, SIGNAL(highlighted(const QString &)), this, SLOT(handleTip(const QString &)));
 	connect (RTFOutput, SIGNAL(linkClicked(const QString &)), this, SLOT(handleLink(const QString &)));
 	connect (m_checkTimer, SIGNAL(timeout()), this, SLOT(newFromSelection()));
