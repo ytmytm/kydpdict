@@ -52,7 +52,7 @@ kydpdict.moc.o: kydpdict.h
 kydpdict.o:
 		$(CXX) -c kydpdict.cpp $(X_CFLAGS) $(QT_INCLUDE) $(CXXFLAGS)
 
-ydpdictionary.o:
+ydpdictionary.o: tips.h
 		$(CXX) -c ydpdictionary.cpp $(QT_INCLUDE) $(CXXFLAGS)
 
 ydpdictionary.moc.o: ydpdictionary.h
@@ -93,7 +93,6 @@ install: kydpdict
 		install -m 755 -d $(DESTDIR)$(LOCALEDIR)
 		install -m 755 -d $(DESTDIR)$(KYDPDATADIR)
 		install -m 644 kydpdict_pl.qm $(DESTDIR)$(LOCALEDIR)
-		install -m 644 tips.html $(DESTDIR)$(KYDPDATADIR)
 
 clean:
 		-rm *.o *.moc.cpp *.qm .depend
