@@ -20,3 +20,7 @@ Instalacja programu.
 3. make install
 Program zostanie zainstalowany domy¶lnie do /usr/local lub innego drzewa okre¶lonego przez
 opcjê --prefix skryptu ./configure
+
+UWAGA! Do dzia³ania programu niezbêdne jest posiadanie plików z danymi s³ownika z oryginalnej
+p³yty YDP. Chodzi o pliki dict*.idx i dict*.dat. Nale¿y je umie¶ciæ gdzie¶ w dostêpnym miejscu
+(np. /usr/share/ydpdict/ lub /usr/share/kydpdict/ )

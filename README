@@ -14,7 +14,7 @@ oryginalnych plików wav lub je¶li zosta³y przekodowane: mpg123, ogg123 i wiele i
 Odtwarzacz jest wspólny dla plików d¼wiêkowych obu jêzyków, wiêc musisz zadbaæ, aby
 by³y one w jednakowym formacie.
 Je¶li korzystasz z serwera d¼wiêku byæ mo¿e zamiast play trzeba bêdzie u¿yæ esdplay
-lub artsplay.
+lub artsplay. (mplayer siê _nie nadaje_ - ¼le odtwarza krótkie pliki d¼wiêkowe)
 
 3. Jakie s± najwa¿niejsze zalety Kydpdict?
 Korzystanie ze s³ownika nigdy nie by³o tak proste jak obecnie(przynajmniej dla mnie ; - ) ).
