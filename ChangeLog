@@ -422,3 +422,4 @@ Kydpdict 0.6.7 (xx.xx.2004)
 - usuniêty setModal dla fuzzysearch (nic nie zmienia³, a wymaga³by #ifdef dla Qt 3.1) (MZ)
 - litera ¬ (du¿y ¼rebak) prawid³owo konwertowana
 - przy¶pieszenie wyszukiwania rozmytego (niezbêdne je¶li mia³oby siê staæ domy¶lnym)
+- koñcówka ¶cie¿ki do plików audio testowana na ma³e/du¿e (czê¶ciowy fix, tam jeszcze jest 's' po drodze)

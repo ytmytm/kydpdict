@@ -719,16 +719,29 @@ int ydpDictionary::Play (int index, kydpConfig *config)
 
     name.sprintf("%s/s%.3d/%.6d.", pathdir.latin1(), index/1000, index+1);
 
+    /* now, this is cute... BUT IT'S WRONG!!! (two stupid dogs) */
     ext = "wav";
     fd.setName(name+ext);
     if (!(fd.exists())) {
-	ext = "mp3";
+	ext = "WAV";
 	fd.setName(name+ext);
-	if(!(fd.exists())) {
-	    ext = "ogg";
+	if (!(fd.exists())) {
+	    ext = "mp3";
 	    fd.setName(name+ext);
-	    if(!(fd.exists()))
-		return 0;
+	    if (!(fd.exists())) {
+		ext = "MP3";
+		fd.setName(name+ext);
+		if (!(fd.exists())) {
+		    ext = "ogg";
+		    fd.setName(name+ext);
+		    if (!(fd.exists())) {
+			ext = "OGG";
+			fd.setName(name+ext);
+			if (!(fd.exists()))
+			    return 0;
+		    }
+		}
+	    }
 	}
     }
 

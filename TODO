@@ -30,3 +30,4 @@
 - prze³±czenie jêzyka ¼le uaktualnia scrollbar
     - czy powinno jednocze¶nie wyszukaæ aktualny wyraz w nowym s³owniku?
 - mo¿liwo¶æ podania ¶cie¿ki do katalogu s³owników przy ./configure (--datadir?)
+- testowanie ¶cie¿ek do audio tylkoma³ymi i TYLKODU¯YMI
