@@ -26,3 +26,4 @@
   wyrazu
 - konfigurowalne klawisze z --with-kde
 - wczytywanie wszystkich slow, ze slownikow w obie strony do jednej listy
+- prawdopodobnie mozna zawezic wyszukiwanie naiwne (chyba to blad w ScoreWord powodowal klopoty)
