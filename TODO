@@ -23,6 +23,6 @@
     - makra, ¿eby nic w kodzie nie zmieniæ
     - makefiles (.po, .mo; sciezki;)
 - zobaczyc co dobrego jest w windows-ydp
-- tray
-    - jako opcja?
+- tray jako opcja
 - F8 - cliboard tracking toggle
+- QClipboard::selectionChanged() - czemu nieuzywany?
