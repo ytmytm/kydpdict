@@ -153,7 +153,7 @@ void ydpDictionary::FillWordList()
 
   unsigned long curpos;
   unsigned char *indexBuffer;
-  int current=0, bp;
+  int current=0, bp, wordCount;
   char buf[256];
 
   /* read # of words */

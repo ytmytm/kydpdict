@@ -28,10 +28,10 @@
 #include <qtoolbar.h>
 
 /* 16x16 */
-#include "../icons/exit.xpm"
-#include "../icons/tux.xpm"
-#include "../icons/help.xpm"
 #include "../icons/conf.xpm"
+#include "../icons/exit.xpm"
+#include "../icons/babelfish_small.xpm"
+#include "../icons/help.xpm"
 /* glyphs */
 #include "../icons/f1.xpm"
 #include "../icons/f2.xpm"
@@ -50,12 +50,15 @@
 #include "../icons/loop.xpm"
 #include "../icons/player_play.xpm"
 #include "../icons/clear_left.xpm"
+#include "../icons/clipboard.xpm"
+#include "../icons/babelfish.xpm"
 
 #include "kydpdict.h"
 #include "kydpconfig.h"
 
 Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name)
 {
+
 	QToolBar *toolBar = new QToolBar(this, "toolbar");
 	toolBar->setLabel(tr("Kydpdict toolbar"));
 
@@ -137,18 +140,20 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 	Q_CHECK_PTR( settings );
 	settings->insertItem(QPixmap(conf_xpm), tr("&Settings"), this, SLOT(ConfigureKydpdict()), QKeySequence( tr("Ctrl+S", "Options|Settings") ) );
 	settings->insertSeparator();
+	but_PlEn = NULL; but_PlDe = NULL;
+	but_EnPl = NULL; but_DePl = NULL;
 	if(myDict->CheckDictionary(config->topPath, "dict100.idx", "dict100.dat") && myDict->CheckDictionary(config->topPath, "dict101.idx", "dict101.dat")) {
 		polToEng = settings->insertItem("POL --> ENG", this, SLOT(SwapPolToEng()), QKeySequence( tr("Ctrl+;", "Options|POL --> ENG") ) );
 		engToPol = settings->insertItem("ENG --> POL", this, SLOT(SwapEngToPol()), QKeySequence( tr("Ctrl+.", "Options|ENG --> POL") ) );
-		but_EnPl = new QToolButton(QIconSet(QPixmap(en_pl_xpm)), "ENG --> POL", QString::null, this, SLOT(SwapEngToPol()), toolBar, "butEnPl" );
 		but_PlEn = new QToolButton(QIconSet(QPixmap(pl_en_xpm)), "POL --> ENG", QString::null, this, SLOT(SwapPolToEng()), toolBar, "butPlEn" );
+		but_EnPl = new QToolButton(QIconSet(QPixmap(en_pl_xpm)), "ENG --> POL", QString::null, this, SLOT(SwapEngToPol()), toolBar, "butEnPl" );
 	}
 	if(myDict->CheckDictionary(config->topPath, "dict200.idx", "dict200.dat") && myDict->CheckDictionary(config->topPath, "dict201.idx", "dict201.dat")) {
 		settings->insertSeparator();
 		polToGer = settings->insertItem("POL --> GER", this, SLOT(SwapPolToGer()), QKeySequence( tr("Ctrl+:", "Options|POL --> GER") ) );
 		gerToPol = settings->insertItem("GER --> POL", this, SLOT(SwapGerToPol()), QKeySequence( tr("Ctrl+>", "Options|GER --> POL") ) );
-		but_DePl = new QToolButton(QIconSet(QPixmap(de_pl_xpm)), "GER --> POL", QString::null, this, SLOT(SwapGerToPol()), toolBar, "butDePl" );
 		but_PlDe = new QToolButton(QIconSet(QPixmap(pl_de_xpm)), "POL --> GER", QString::null, this, SLOT(SwapPolToGer()), toolBar, "butPlDe" );
+		but_DePl = new QToolButton(QIconSet(QPixmap(de_pl_xpm)), "GER --> POL", QString::null, this, SLOT(SwapGerToPol()), toolBar, "butDePl" );
 	}
 	settings->insertSeparator();
 	settings->insertItem( tr("Swap direction"), this, SLOT(SwapLanguages()), QKeySequence( tr("Ctrl+/", "Options|Swap direction") ) );
@@ -158,7 +163,7 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 
 	QPopupMenu *help = new QPopupMenu( this );
 	Q_CHECK_PTR( help );
-	help->insertItem(QPixmap(tux_xpm), tr("About"), this, SLOT(ShowAbout()));
+	help->insertItem(QPixmap(babelfish_small_xpm), tr("About"), this, SLOT(ShowAbout()));
 	help->insertItem(QPixmap(help_xpm), tr("About Qt"), this, SLOT(ShowAboutQt()));
 
 	Q_CHECK_PTR( menu );
@@ -172,6 +177,10 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 	but_SwapLang = new QToolButton(QIconSet(QPixmap(loop_xpm)), tr("Swap direction"), QString::null, this, SLOT(SwapLanguages()), toolBar, "but_swaplang" );
 	toolBar->addSeparator();
 	but_Play = new QToolButton(QIconSet(QPixmap(player_play_xpm)), tr("Play"), QString::null, this, SLOT(PlayCurrent()), toolBar, "but_play" );
+	toolBar->addSeparator();
+	but_Clipboard = new QToolButton(QIconSet(QPixmap(clipboard_xpm)), tr("Toggle clipboard tracking"), QString::null, this, SLOT(ToggleClipTracking()), toolBar, "but_clipboard");
+	but_Clipboard->setToggleButton(TRUE);
+	but_Clipboard->setOn(config->clipTracking);
 	toolBar->addSeparator();
 	but_Settings = new QToolButton(QIconSet(QPixmap(configure_xpm)), tr("Settings"), QString::null, this, SLOT(ConfigureKydpdict()), toolBar, "but_settings" );
 
@@ -200,7 +209,6 @@ Kydpdict::~Kydpdict()
 {
     	myDict->CloseDictionary();
  	delete t;
- 	t = 0;
  	delete m_checkTimer;
 	delete splitterH;
 }
@@ -276,6 +284,7 @@ void Kydpdict::PasteClipboard(QString haslo)
 	if (this->isMinimized())
 	    return;
 
+	// do nothing if it comes from us
 	if ((RTFOutput->hasSelectedText()) && (config->ignoreOwnSelection)) {
 	    return;
 	}
@@ -421,10 +430,16 @@ void Kydpdict::SwapLang (bool direction, int language ) //dir==1 toPolish
 void Kydpdict::ShowAbout()
 {
 	cb->blockSignals( TRUE );
-	QMessageBox::about( this, "Kydpdict",
-	tr("This is frontend to YDP Collins dictionary.\n"
-	"Authors: Andrzej Para , Maciej Witkowiak.\n"
-	"Program based on ydpdict by Wojtek Kaniewski"));
+	QMessageBox aboutBox;
+
+	aboutBox.setCaption("Kydpdict");
+	aboutBox.setText(
+	    tr("This is frontend to YDP Collins dictionary.\n"
+	    "Authors: Andrzej Para , Maciej Witkowiak.\n"
+	    "Program based on ydpdict by Wojtek Kaniewski"));
+	aboutBox.setIconPixmap(QPixmap(babelfish_xpm));
+	aboutBox.exec();
+
 	cb->blockSignals( FALSE );
 }
 
@@ -433,6 +448,13 @@ void Kydpdict::ShowAboutQt()
 	cb->blockSignals( TRUE );
 	QMessageBox::aboutQt(this, "Kydpdict");
 	cb->blockSignals( FALSE);
+}
+
+void Kydpdict::ToggleClipTracking()
+{
+	config->clipTracking=!config->clipTracking;
+	config->save();
+	but_Clipboard->setOn(config->clipTracking);
 }
 
 void Kydpdict::ConfigureKydpdict()
@@ -493,26 +515,38 @@ void Kydpdict::UpdateLook()
 	}
 	dictList->setPaletteForegroundColor ( QColor(config->kFontKolor4) );
 
+	if (but_EnPl!=NULL) but_EnPl->setEnabled(TRUE);
+	if (but_PlEn!=NULL) but_PlEn->setEnabled(TRUE);
+	if (but_DePl!=NULL) but_DePl->setEnabled(TRUE);
+	if (but_PlDe!=NULL) but_PlDe->setEnabled(TRUE);
+
 	switch (config->language) { //mozna dopisac kolejne case'y dla kolejnych jezykow
 		case LANG_DEUTSCH:
 			menu->setItemChecked(gerToPol, config->toPolish);
 			menu->setItemChecked(polToGer, !config->toPolish);
 			menu->setItemChecked(polToEng, FALSE);
 			menu->setItemChecked(engToPol, FALSE);
-			if(config->toPolish)
+			if(config->toPolish) {
 				this->setCaption("De --> Pl - Kydpdict");
-			else
+				but_DePl->setEnabled(FALSE);
+			
+			} else {
 				this->setCaption("Pl --> De - Kydpdict");
+				but_PlDe->setEnabled(FALSE);
+			}
 			break;
 		case LANG_ENGLISH:
 			menu->setItemChecked(engToPol, config->toPolish);
 			menu->setItemChecked(polToEng, !config->toPolish);
 			menu->setItemChecked(gerToPol, FALSE);
 			menu->setItemChecked(polToGer, FALSE);
-			if(config->toPolish)
+			if(config->toPolish) {
 				this->setCaption("En --> Pl - Kydpdict");
-			else
+				but_EnPl->setEnabled(FALSE);
+			} else {
 				this->setCaption("Pl --> En - Kydpdict");
+				but_PlEn->setEnabled(FALSE);
+			}
 			break;
 		default:
 			break; //cos jest nie tak

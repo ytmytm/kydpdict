@@ -11,6 +11,11 @@
 - szukanie hasla w drugim slowniku (zamiana stron)
 - szukanie hasla w zasobach slownika
 - optymalizacja ladowania indeksu
+    - ladowac oba indeksy?
+	- najpierw ten ktory ma siê pokazac w konfigu
+	- w podwatku - indeks w druga strone
+	- przelaczanie slownikow zablokowane dopoki podwatek nie skonczy
+	    (do 4 w menu i do 4 ikon)
     - napisaæ sobie w³asny widget z QDict do trzymania danych
       najwiecej czasu zajmuje wstawianie nowych obiektów przy InsertItem (zawsze jest
       tworzona kopia, wstawianie w³asnych z przygotowanej tablicy nic nie da)
@@ -18,4 +23,3 @@
 - przejscie z tlumaczeniem na gettext
     - makra, ¿eby nic w kodzie nie zmieniæ
     - makefiles (.po, .mo; sciezki;)
-- testy wlasnej implementacja wyszukiwania w indeksie

@@ -62,8 +62,8 @@ class Kydpdict : public QMainWindow
 		QTimer *m_checkTimer;
 		DynamicTip * t;
 		QSplitter *splitterH, *splitterV;
-		QToolButton *but_EnPl, *but_PlEn, *but_DePl, *but_PlDe, *but_SwapLang;
-		QToolButton *but_Settings, *but_Play;
+		QToolButton *but_EnPl, *but_PlEn, *but_DePl, *but_PlDe, *but_Play;
+		QToolButton *but_SwapLang, *but_Clipboard, *but_Settings;
 
     private slots:
 		void NewDefinition (int index);       		/* word list highlited */
@@ -78,7 +78,8 @@ class Kydpdict : public QMainWindow
 		void SwapGerToPol ();
 		void ShowAbout ();
 		void ShowAboutQt ();
-		void ConfigureKydpdict();
+		void ConfigureKydpdict ();
+		void ToggleClipTracking ();
 		void updateText( const QString & href );
 
 		void slotSelectionChanged() {

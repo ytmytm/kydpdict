@@ -251,3 +251,10 @@ Kydpdict 0.5.6pre1 (28.7.2003)
 - poprawiony b³±d psuj±cy ustawienie cliboard_tracking przy zmianie jêzyków
 - toolbar z ikonkami (flagi po¿yczone ze screenshotu AP)
 - p³aski pushbutton z ikonk± zamiast buttona Clear
+
+=====================================================================
+Kydpdict 0.5.6pre2 (28.7.2003)
+- wciskalny guzik na toolbarze od cliboard_tracking
+- zmiana ikony z Tuksa na Babelfish (¶liczna :)
+- usuniecie globalnych zmiennych z ydpdictionary
+- poprawiony segfaluting przy braku jednego z jezykow

@@ -106,11 +106,15 @@ Do widzenia!</translation>
     </message>
     <message>
         <source>Play</source>
-        <translation>Odtwórz</translation>
+        <translation>Odtwórz dźwięk</translation>
     </message>
     <message>
         <source>Settings</source>
         <translation>Ustawienia</translation>
+    </message>
+    <message>
+        <source>Toggle clipboard tracking</source>
+        <translation>Włącz/wyłącz śledzenie schowka</translation>
     </message>
 </context>
 <context>

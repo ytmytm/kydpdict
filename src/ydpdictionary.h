@@ -46,7 +46,6 @@ private:
 	// dictionary file variables
 	QFile fIndex;               /* index file descriptor */
 	QFile fData;                /* data file descriptor */
-	int wordCount;          	/* number of all words in dictionary */
 	unsigned long *indexes; 	/* indexes to definitions array */
 	QString curDefinition;		/* contains current definition (RTF)*/
 	QStringList::Iterator it;
