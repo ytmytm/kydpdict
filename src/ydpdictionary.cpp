@@ -269,7 +269,7 @@ int ydpDictionary::Play (int index, kydpConfig *config) {
 
 QString ydpDictionary::rtf2html (QString definition) {
 
-char token[128];
+char token[1024];
 int tp, level = 0;
 bool sa_tag = FALSE,br_tag = FALSE, tip_tag = FALSE, italic_tag = FALSE;
 QString tag_on,tag_off;

@@ -203,3 +203,7 @@ Kydpdict 0.5.3pre3 (13.7.2003)
 - k³ama³em powy¿ej - da³o siê usun±æ 40% czasu w porównaniu z 0.5.2
   ale wiêcej ju¿ naprawdê nie
 - kilka delete dla tablic napisane koszernie (prawdopodobnie memleaki usuniête)
+
+=====================================================================
+Kydpdict 0.5.3 (22.7.2003)
+- znaleziony winowajca segfault przy 'backbencher' (AP)

@@ -1,8 +1,8 @@
-- BACKBENCHER - segfault; b³±d powoduj± zmiany miêdzy 0.5.2pre2 a 0.5.2pre3 w ydpdictionary
 - nie reagowac na zmiany w schowku pochodzace z kydpdict (sprawdzenie pochodzenia jest wogole mozliwe?)
 - zmiana rozmiaru splittera poziomego ma zmieniaæ rozmiar guzika 'usun' i editboxa
 - combo z histori± ostatnich zamiach edita? (ma to sens?)
 - skrót klawiaturowy na zamianê jêzyków
+- skrót na zamkniêcie programu nie dzia³a w oknie edit
 - wiêkszy dialog konfiguracji, guziki 'ok','cancel' za niskie np. w stylu Keramik
 - przy braku prawid³owej konfiguracji ¶cie¿ek i wybranym 'anuluj' z okna konfiguracyjnego
   wpada w pêtlê ( exit() w kydpdict.cpp nie konczy programu, czemu? )
