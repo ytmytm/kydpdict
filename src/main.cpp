@@ -39,10 +39,10 @@ int main (int argc, char *argv[])
 	}
         a->installTranslator( &myapp );
 
+	QTextCodec::setCodecForCStrings(QTextCodec::codecForName("ISO8859-2"));
+
 	Kydpdict *kydpdict = new Kydpdict ();
 	a->setMainWidget (kydpdict);
-
-	QTextCodec::setCodecForCStrings(QTextCodec::codecForName("ISO8859-2"));
 
 	a->exec ();
 	kydpdict->flushConfig();

@@ -340,3 +340,4 @@ Kydpdict 0.6.0pre (xx.xx.2004)
 - w³±czona obs³uga HOME_ETC
 - buduje siê na Darwinie
 - zmieniony sposób budowania, dock_widget i stuff z X11 zale¿ny od '--without-x' z ./configure
+- poprawiony dawno znany bug - z³y font w pierwszej definicji
