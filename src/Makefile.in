@@ -1,7 +1,7 @@
 
 CC=@CC@
 CXX=@CXX@
-CXXFLAGS=@CXXFLAGS@ -Wall
+CXXFLAGS=@CXXFLAGS@ -Wall -I/usr/X11R6/include
 MOC=@MOC@
 LUPDATE=@LUPDATE@
 LRELEASE=@LRELEASE@
@@ -20,7 +20,8 @@ KYDPDATADIR=$(datadir)/$(PACKAGE_NAME)/
 
 # Do not touch below and above this line
 
-OBJECTS = kdynamictip.cpp kydpconfig.cpp kydpdict.cpp main.cpp ydpdictionary.cpp ydpconfigure.cpp
+OBJECTS = kdynamictip.cpp kydpconfig.cpp kydpdict.cpp main.cpp ydpdictionary.cpp ydpconfigure.cpp \
+	dock_widget.cpp
 
 ifeq (.depend,$(wildcard .depend))
 all : 	kydpdict translation
@@ -60,10 +61,17 @@ kydpconfig.o:
 kdynamictip.o:
 		$(CXX) -c kdynamictip.cpp $(QT_INCLUDE) $(CXXFLAGS)
 
-kydpdict: main.o kydpconfig.o kdynamictip.o kydpdict.o ydpdictionary.o ydpdictionary.moc.o ydpconfigure.o ydpconfigure.moc.o kydpdict.moc.o
+dock_widget.o:
+		$(CXX) -c dock_widget.cpp $(QT_INCLUDE) $(CXXFLAGS)
+
+dock_widget.moc.o:
+		$(MOC) dock_widget.h -o dock_widget.moc.cpp
+		$(CXX) -c dock_widget.moc.cpp $(QT_INCLUDE) $(CXXFLAGS)
+
+kydpdict: main.o kydpconfig.o kdynamictip.o kydpdict.o ydpdictionary.o ydpdictionary.moc.o ydpconfigure.o ydpconfigure.moc.o kydpdict.moc.o dock_widget.o dock_widget.moc.o
 		$(CC) -Wl,-call_shared main.o kydpconfig.o kdynamictip.o kydpdict.o ydpdictionary.o ydpdictionary.moc.o ydpconfigure.o \
-		  ydpconfigure.moc.o kydpdict.moc.o $(QT_LIBS) $(QT_LIB) \
-		  $(CXXFLAGS) -o kydpdict
+		dock_widget.o dock_widget.moc.o ydpconfigure.moc.o kydpdict.moc.o $(QT_LIBS) $(QT_LIB) \
+		$(CXXFLAGS) -o kydpdict
 
 translation: kydpdict.pro
 	$(LUPDATE) kydpdict.pro

@@ -55,6 +55,7 @@
 
 #include "kydpdict.h"
 #include "kydpconfig.h"
+#include "dock_widget.h"
 
 Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name)
 {
@@ -209,6 +210,10 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 
 	RTFOutput->mimeSourceFactory()->setFilePath( config->tipsPath );
 	RTFOutput->mimeSourceFactory()->setExtensionType("html", "text/html;charset=iso8859-2");
+
+	printf("will create tray\n");
+	trayicon = new TrayIcon(this,"trayicon");
+	trayicon->setDictWidget(this);
 }
 
 Kydpdict::~Kydpdict()
@@ -319,6 +324,9 @@ void Kydpdict::PasteClipboard(QString haslo)
 		dictList->ensureCurrentVisible();
 		this->setActiveWindow ();
 		this->raise();
+		//
+		this->show();
+		this->setFocus();
 	}
 
 	wordInput->blockSignals( TRUE );
