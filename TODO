@@ -1,3 +1,5 @@
+- COMBOBOX ROSNIE BEZ OGRANICZENIA - NIECH MI KTOS WYTLUMACZY PO CO JEST
+  maxCount ALBO POWIE JAK UZYWAC removeItem ZEBY SIE NIE PIEPRZYLO?!?
 - podpowiedzi
     - niemieckie
     - wywalic tips.html i generowac go sobie z tabelki tips'ow na starcie (albo odwrotnie
@@ -33,8 +35,5 @@
   - koniecznosc posiadanie bazy/dostepu do bazy (dla samego k6t bym jej nie
     instalowal)
   albo zamiast *sql jakas inna baze? berkeley db4/3/2/1? gdbm?
-- dziwne zachowanie przy wpisywania z palca s³ówek. np. goblet, a przy 'b'
-  zaczyna wpisywac inne slowo (dotyczy gdy focus jest na li¶cie s³ów)
-  co¶ zale¿nego od ostatnich dwóch liter i aktualnej pozycji oraz czasu
-  wpisywania (jakis timeout tam jest)
 - zobaczyc co dobrego jest w windows-ydp
+- zobaczyc w jaki sposób kadu l±duje w docku

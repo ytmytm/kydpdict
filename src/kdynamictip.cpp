@@ -21,9 +21,6 @@ DynamicTip::DynamicTip( QWidget * parent )
 
 void DynamicTip::maybeTip( const QPoint &pos )
 {
-    if ( !parentWidget()->inherits( "Kydpdict" ) )
-        return;
-
     if( tekst.isEmpty())
         return;
 

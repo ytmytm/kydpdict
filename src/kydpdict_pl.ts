@@ -54,12 +54,6 @@ Program oparty na ydpdict Wojtka Kaniewskiego</translation>
         <translation>Błąd</translation>
     </message>
     <message>
-        <source>Kydpdict can&apos;t work with incorrect path to dictionary files.
-Good bye!</source>
-        <translation>Kydpdict nie może pracować z złą ścieżką do plików słownika.
-Do widzenia!</translation>
-    </message>
-    <message>
         <source>Ctrl+.</source>
         <comment>Options|ENG --&gt; POL</comment>
         <translation>Ctrl+.</translation>
@@ -115,6 +109,26 @@ Do widzenia!</translation>
     <message>
         <source>Toggle clipboard tracking</source>
         <translation>Włącz/wyłącz śledzenie schowka</translation>
+    </message>
+    <message>
+        <source>Kydpdict can&apos;t work with incorrect path to dictionary files.
+In order to use this program you have to have data files from Windows
+dictionary installation. For more information please read README.
+A configuration window will be opened now, so you can set the path.</source>
+        <translation>Kydpdict nie może działać z nieprawidłową ścieżką do plików słownika
+Aby korzystać z programu musisz mieć pliki danych z programu dla Windows.
+Przeczytaj README, aby dowiedzieć się więcej.
+Teraz zostanie otwarte okno konfiguracji, aby można było ustawić ścieżki.</translation>
+    </message>
+    <message>
+        <source>Kydpdict can&apos;t work with incorrect path to dictionary files.
+In order to use this program you have to have data files from Windows
+dictionary installation. For more information please read README.
+Good bye!</source>
+        <translation>Kydpdict nie może działać z nieprawidłową ścieżką do plików słownika
+Aby korzystać z programu musisz mieć pliki danych z programu dla Windows.
+Przeczytaj README, aby dowiedzieć się więcej.
+Do zobaczenia!</translation>
     </message>
 </context>
 <context>

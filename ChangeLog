@@ -277,3 +277,16 @@ Kydpdict 0.5.7pre2 (3.10.2003)
 =====================================================================
 Kydpdict 0.5.7pre2 (3.10.2003)
 - uaktualnione TODO: nowy blad (wpisywanie z klawiatury na liscie wyrazow)
+
+=====================================================================
+Kydpdict 0.5.7 (21.12.2003)
+- font zmieniany nie tylko w oknie tlumaczenia, ale tez w dictlist i wordinput
+  (konieczne w srodowiskach wielo-wielojezycznych)
+  (Andrzej Peszyñski, <ap@optima.com.ua>)
+- tooltip dowiazany tylko do rtfoutput (mala optymalizacja)
+- usuniety blad, przez ktory combobox po zapelnieniu przeszkadzal przy
+  wlasnorecznym wpisywaniu wyrazu.
+  UWAGA! ALBO NIE ROZUMIEM OPISU QComboBox, ALBO W BIBLIOTECE JEST B£¡D
+  PRZEZ KTÓRY LISTA COMBO BÊDZIE ROS£A BEZ KOÑCA!!!
+- usuniêty b³±d, przez który pierwsze pokazywane t³umaczenie by³o w z³ym
+  foncie

@@ -124,6 +124,11 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 			config->save();
 			if(!myDict->CheckDictionary(config)) {
 				// buu, drugiego jezyka tez nie ma; moze user bedzie cos wiedzial na ten temat...
+			    QMessageBox::critical( this, tr("Error"),
+				tr( "Kydpdict can't work with incorrect path to dictionary files.\n"
+				    "In order to use this program you have to have data files from Windows\n"
+				    "dictionary installation. For more information please read README.\n"
+				    "A configuration window will be opened now, so you can set the path."));
 				Configure(TRUE);
 			}
 		}
@@ -171,7 +176,7 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 	menu->insertItem(  tr("&Options"), settings );
 	menu->insertItem(  tr("&Help"), help );
 
- 	t = new DynamicTip( this );
+ 	t = new DynamicTip( RTFOutput );
 
 	toolBar->addSeparator();
 	but_SwapLang = new QToolButton(QIconSet(QPixmap(loop_xpm)), tr("Swap direction"), QString::null, this, SLOT(SwapLanguages()), toolBar, "but_swaplang" );
@@ -197,9 +202,10 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 	QGridLayout *grid = new QGridLayout(centralFrame, 1, 1);
 	grid->addWidget(splitterH, 0, 0);
 
-	this->show();
-
 	UpdateLook();
+
+	this->show();
+	NewDefinition(1);
 
 	RTFOutput->mimeSourceFactory()->setFilePath( config->tipsPath );
 	RTFOutput->mimeSourceFactory()->setExtensionType("html", "text/html;charset=iso8859-2");
@@ -319,9 +325,6 @@ void Kydpdict::PasteClipboard(QString haslo)
 	if (((wordInput->listBox())->findItem(contents, Qt::ExactMatch) == 0)
 	    && (contents.length()>0)) {
 	    wordInput->insertItem(contents);
-	    /* maxCount is broken or ignored in Qt, has to be done manually */
-	    if (wordInput->count() > wordInput->maxCount())
-		wordInput->removeItem(0);
 	}
 	wordInput->setEditText(contents);
 	wordInput->blockSignals( FALSE );
@@ -334,10 +337,6 @@ void Kydpdict::NewDefinition (int index)
 {
 	UpdateHistory(index);
 	QString def = myDict->GetDefinition(index);
-/* to jest wlasciwie potrzebne tylko dla prawidlowego pokazania pierwszej def. */
-	QTextCodec *codec = QTextCodec::codecForName("ISO8859-2");
-	def = codec->toUnicode(def.fromAscii(def));
-/* z wyj±tkiem tej definicji dzia³a prawid³owo */
 	RTFOutput->setText(def);
 }
 
@@ -378,9 +377,6 @@ void Kydpdict::UpdateHistory(int index)
     if (((wordInput->listBox())->findItem(content, Qt::ExactMatch) == 0)
        && (content.length()>0)) {
 	    wordInput->insertItem(content);
-	    /* maxCount is broken or ignored in Qt, has to be done manually */
-	    if (wordInput->count() > wordInput->maxCount())
-		wordInput->removeItem(0);
     }
     wordInput->blockSignals( FALSE );
 }
@@ -477,7 +473,9 @@ void Kydpdict::Configure(bool status)
 	if (!(result == QDialog::Accepted) && status ) {
 		QMessageBox::critical( this, tr("Error"),
 		tr("Kydpdict can't work with incorrect path to dictionary files.\n"
-		"Good bye!"));
+		   "In order to use this program you have to have data files from Windows\n"
+		    "dictionary installation. For more information please read README.\n"
+		    "Good bye!"));
 		if(myConf)
   			delete myConf;
 		exit(1);
@@ -508,8 +506,7 @@ void Kydpdict::UpdateLook()
 		RTFOutput->setPaper( paper );
 		dictList->setPaletteBackgroundPixmap( pixmap );
 		dictList->setStaticBackground(TRUE);
-	}
-	else {
+	} else {
 		RTFOutput->setPaper( white );
 		dictList->setPaletteBackgroundColor(white);
 	}
@@ -575,6 +572,8 @@ void Kydpdict::UpdateLook()
 	QMimeSourceFactory::defaultFactory()->setImage( "f8", QImage(f8_xpm) );
 
 	RTFOutput->setFont(config->fontTransFont);
+	dictList->setFont(config->fontTransFont);
+	wordInput->setFont(config->fontTransFont);
 
 	NewDefinition(dictList->currentItem() < 0 ? 0 : dictList->currentItem() );
 }
