@@ -1,0 +1,5 @@
+*.moc.cpp
+.depend
+Makefile
+kydpdict
+kydpdict_pl.qm
