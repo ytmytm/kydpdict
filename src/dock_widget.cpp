@@ -179,8 +179,8 @@ void TrayIcon::show()
 		WMakerMasterWidget->hide();
 		return;
 	}
-	kdebug("show wmakermasterwidget\n");
-	WMakerMasterWidget->setGeometry(-20,-20,1,1);
+//	kdebug("show wmakermasterwidget\n");
+//	WMakerMasterWidget->setGeometry(-20,-20,1,1);
 	WMakerMasterWidget->show();
 	WMakerMasterWidget->setGeometry(-20,-20,1,1);
 };
