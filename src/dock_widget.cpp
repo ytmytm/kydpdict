@@ -223,13 +223,13 @@ void TrayIcon::mousePressEvent(QMouseEvent * e) {
 
 	if (e->button() == MidButton) {
 		emit mousePressMidButton();
-		kdebug("midbutton\n");
+//		kdebug("midbutton\n");
 		return;
 	}
 
 	if (e->button() == LeftButton) {
 		emit mousePressLeftButton();
-		kdebug("left button\n");
+//		kdebug("left button\n");
 		switch (dict->isVisible()) {
 		    case 0:
 			dict->show();
@@ -244,7 +244,7 @@ void TrayIcon::mousePressEvent(QMouseEvent * e) {
 
 	if (e->button() == RightButton) {
 		emit mousePressRightButton();
-		kdebug("right button\n");
+//		kdebug("right button\n");
 		popUp->exec(QCursor::pos());
 		return;
 		}
