@@ -406,7 +406,7 @@ Kydpdict 0.6.5 (18.09.2004)
 - kod wyszukiwania znowu zmieniony, tym razem jest zrozumia³y te¿ dla zwyk³ych dwunogów
 
 =====================================================================
-Kydpdict 0.6.6 (xx.xx.2004)
+Kydpdict 0.6.6 (27.09.2004)
 - KYDPDATADIR u¿ywane do czego¶ jednak
 - poprawiony b³±d wielokrotnego wklejania tego samego w edit, przeplatanego klikaniem na listê
 - TextCodec ustawiony wszêdzie na static - ma³y zysk na wydajno¶ci
