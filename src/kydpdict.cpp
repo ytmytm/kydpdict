@@ -259,7 +259,7 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 	this->show();
 	myDict->ListRefresh(0);
 	dictList->setCurrentItem(0);
-        wordInput->clearEdit();
+	wordInput->clearEdit();
 
 	RTFOutput->mimeSourceFactory()->setFilePath( config->tipsPath );
 	RTFOutput->mimeSourceFactory()->setExtensionType("html", "text/html;charset=iso8859-2");
@@ -486,7 +486,7 @@ void Kydpdict::UpdateHistory(void)
     wordInput->blockSignals( TRUE );
 
     if ((wordInput->listBox())->count() < COMBO_HISTORY_SIZE) {
-        wordInput->insertItem(content);
+	wordInput->insertItem(content);
     } else {
 	for (i=0;i<COMBO_HISTORY_SIZE;i++)
 	    (wordInput->listBox())->changeItem( (wordInput->listBox())->text(i+1), i );
