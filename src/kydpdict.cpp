@@ -364,6 +364,7 @@ void Kydpdict::NewDefinition (int index)
 	UpdateHistory(index);
 	QString def = myDict->GetDefinition(index);
 	RTFOutput->setText(def);
+	RTFOutput->setCursorPosition(0,0);
 }
 
 void Kydpdict::NewFromLine (const QString &newText)

@@ -28,8 +28,6 @@
   wyskakiwac na wierzch (opcja?)
 - gdy zminimalizowany - ma star± selekcjê i nie uznaje aktualnej za now± - po
   przywroceniu powinien pokazac wynik tlumaczenia aktualnej selekcji
-- po przewinieciu definicji i zmianie hasla nie resetuje pozycji textedit (dalej jest
-  przesunieta)
 - usunac przycisk do kasowania (albo zminiejszyæ)
 - otrzymanie focus - zawsze na pole edycji hasla, z selekcja aktualnego (zeby usunac latwo)
 - opcja: po przechwyceniu schowka - na wierzch ale bez focusa na siebie (opcja?)

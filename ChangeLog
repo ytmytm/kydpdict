@@ -312,3 +312,5 @@ Kydpdict 0.5.9 (24.1.2004)
 =====================================================================
 Kydpdict 0.5.10 (xx.xx.2004)
 - nieco przyspieszone ³adowanie s³ownika; ³adniejszy kod FillWordList (AP)
+- pozycja qtextedit jest resetowana (gdy by³y dwie d³ugie definicje, to suwak zostawa³ na
+  starej, przesuniêtej)
