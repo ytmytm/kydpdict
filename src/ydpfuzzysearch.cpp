@@ -98,12 +98,14 @@ int ydpFuzzySearch::editDistance(const char*slowo1, const char*slowo2)
 {
     int *row0, *row1, *row;
     int cost,i,j,m,n;
+    static int rowx[512];	// speedup!
+    static int rowy[512];
 
-    n = strlen(slowo1);
+    n = strlen(slowo1); if (n>510) n=510;	// n+1 is used
     m = strlen(slowo2);
 
-    row0 = new int[n+1];
-    row1 = new int[n+1];
+    row0 = rowx;
+    row1 = rowy;
 
     for (i=0;i<=n;i++)
 	row0[i] = i;
@@ -119,7 +121,5 @@ int ydpFuzzySearch::editDistance(const char*slowo1, const char*slowo2)
 	row1 = row;
     }
     cost = row0[n];
-    delete [] row0;
-    delete [] row1;
     return cost;
 }
