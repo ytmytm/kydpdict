@@ -56,7 +56,7 @@ void kydpConfig::load(void)
 	QString transFont;
 
 	if (topPath=="xyz") {
-	    topPath = "/usr/share/ydpdict";
+	    topPath = KYDPDATADIR;
 	    cdPath = "/mnt/cdrom";
 	    player = "/usr/bin/play";
 	    readYDPConfig();
