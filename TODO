@@ -14,8 +14,10 @@
    to... co? jak to mia³oby wygl±daæ?)
 - FindWord napisac ³adniej (potrzeba pomys³u! :)
 - bugreport clipboard/wyszukiwanie by Jamnik (dwuznaki? a jak siê zachowa przy innym locale?)
+- schowek / schowek+klipper
+    - po zmianie kierunku t³umaczenia nie wyskakuje na wierzch!
+    - chyba nie ma szans na dzia³anie gdy jest w³±czony klipper :(
 - mozliwosc zmiany ikony/ustawiania jej z poziomu aplikacji (to co kiedys AP wywalil)
-- numer wersji do info o programie
 - wykrywanie juz uruchomionej instancji i ustawianie jej fokusa
 - ... cos jeszcze od jamnika?
 - jesli sa wyswietlane tipsy to obsluzyc sygnal select z listy wyrazow jako zgloszenie nowego
