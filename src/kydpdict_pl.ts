@@ -130,6 +130,15 @@ Aby korzystać z programu musisz mieć pliki danych z programu dla Windows.
 Przeczytaj README, aby dowiedzieć się więcej.
 Do zobaczenia!</translation>
     </message>
+    <message>
+        <source>Show &amp;toolbar</source>
+        <translation>Pokaż &amp;pasek narzędziowy</translation>
+    </message>
+    <message>
+        <source>Ctrl+T</source>
+        <comment>Options|Settings</comment>
+        <translation>Ctrl+P</translation>
+    </message>
 </context>
 <context>
     <name>TrayIcon</name>

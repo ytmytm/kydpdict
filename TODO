@@ -29,7 +29,5 @@
 	- co dokladnie potrzeba
     - program nie moze zglaszac bledu jezeli jest tylko jeden jezyk
 	- juz nawet lepiej zeby user sam pokazywal jakich slownikow chce
-- brak zapisywania stanu toolbara (jesli uzytkownik go wylaczy), jak to potem wlaczyc?
-    - jak spradzic stan?
 - tray
     - jako opcja?

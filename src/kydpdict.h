@@ -18,6 +18,7 @@
 #include <qmainwindow.h>
 #include <qtimer.h>
 #include <qsplitter.h>
+#include <qtoolbar.h>
 #include <qtoolbutton.h>
 
 #include "ydpdictionary.h"
@@ -53,6 +54,7 @@ class Kydpdict : public QMainWindow
 		QPushButton *listclear;
 		QMenuBar  *menu;
 		int polToEng,engToPol, gerToPol, polToGer;
+		int toolBarMenuItem;
 
 		// dictionary class
 		ydpDictionary *myDict;
@@ -62,6 +64,7 @@ class Kydpdict : public QMainWindow
 		QTimer *m_checkTimer;
 		DynamicTip * t;
 		QSplitter *splitterH, *splitterV;
+		QToolBar *toolBar;
 		QToolButton *but_EnPl, *but_PlEn, *but_DePl, *but_PlDe, *but_Play;
 		QToolButton *but_SwapLang, *but_Clipboard, *but_Settings;
 
@@ -80,6 +83,8 @@ class Kydpdict : public QMainWindow
 		void ShowAboutQt ();
 		void ConfigureKydpdict ();
 		void ToggleClipTracking ();
+		void ToolbarShowHide (bool visible);
+		void ShowToolbar ();
 		void updateText( const QString & href );
 
 		void slotSelectionChanged() {

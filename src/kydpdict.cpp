@@ -25,7 +25,6 @@
 #include <qapplication.h>
 #include <qtextcodec.h>
 #include <qgrid.h>
-#include <qtoolbar.h>
 
 /* 16x16 */
 #include "../icons/conf.xpm"
@@ -60,8 +59,9 @@
 Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name)
 {
 
-	QToolBar *toolBar = new QToolBar(this, "toolbar");
+	toolBar = new QToolBar(this, "toolbar");
 	toolBar->setLabel(tr("Kydpdict toolbar"));
+	toolBar->setCloseMode(QToolBar::Undocked);
 
 	QFrame *centralFrame = new QFrame(this);
 	splitterH = new QSplitter(centralFrame, "splitter");
@@ -146,6 +146,7 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 	QPopupMenu *settings = new QPopupMenu( this );
 	Q_CHECK_PTR( settings );
 	settings->insertItem(QPixmap(conf_xpm), tr("&Settings"), this, SLOT(ConfigureKydpdict()), QKeySequence( tr("Ctrl+S", "Options|Settings") ) );
+	toolBarMenuItem = settings->insertItem(tr("Show &toolbar"), this, SLOT(ShowToolbar()), QKeySequence( tr("Ctrl+T", "Options|Settings") ) );
 	settings->insertSeparator();
 	but_PlEn = NULL; but_PlDe = NULL;
 	but_EnPl = NULL; but_DePl = NULL;
@@ -210,11 +211,15 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
  	connect (cb, SIGNAL(selectionChanged() ), SLOT(slotSelectionChanged()));
  	connect (cb, SIGNAL(dataChanged() ), SLOT( slotClipboardChanged() ));
  	connect (m_checkTimer, SIGNAL(timeout()), this, SLOT(newClipData()));
+	connect (toolBar, SIGNAL(visibilityChanged(bool)), this, SLOT(ToolbarShowHide(bool)));
 
 	QGridLayout *grid = new QGridLayout(centralFrame, 1, 1);
 	grid->addWidget(splitterH, 0, 0);
 
 	UpdateLook();
+
+	if (!config->toolBarVisible)
+	    toolBar->hide();
 
 	this->show();
 	NewDefinition(1);
@@ -477,6 +482,21 @@ void Kydpdict::ConfigureKydpdict()
 {
 	Configure(FALSE);
 	UpdateLook();
+}
+
+void Kydpdict::ToolbarShowHide(bool visible)
+{
+    menu->setItemEnabled(toolBarMenuItem, !visible);
+
+    if (visible != config->toolBarVisible) {
+	config->toolBarVisible = visible;
+	config->save();
+    }
+}
+
+void Kydpdict::ShowToolbar()
+{
+    toolBar->show();
 }
 
 void Kydpdict::Configure(bool status)

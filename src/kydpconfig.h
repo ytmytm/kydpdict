@@ -33,6 +33,7 @@ public:
 	QString dataFName;
 	QFont   fontTransFont;
 	bool	toPolish;
+	bool	toolBarVisible;
 	int language;
 	int kGeometryX, kGeometryY, kGeometryW, kGeometryH;
 	int spH1, spH2, spV1, spV2;
