@@ -3,8 +3,9 @@ Rozpakuj ¼ród³a do wybranego katalogu
 Kompilacja programu.
 1. wykonaj
     ./configure
-   ew. (zobacz ni¿ej komu mog³oby siê to przydaæ)
+   ewentualnie (zobacz ni¿ej komu mog³oby siê to przydaæ):
     ./configure --without-x
+
 2. wykonaj
     make
 
@@ -19,7 +20,8 @@ W razie k³opotów przeczytaj dokumentacje Qt (to o $QTDIR te¿ :).
 
 Je¶li wywo³asz ./configure --without-x, to program bêdzie bezpo¶rednio zale¿a³ tylko
 od biblioteki Qt. Mo¿e mieæ to zastosowanie na systemach, na których nie ma X11, ale
-jest dostêpne Qt (MacOS?).
+jest dostêpne Qt (MacOS X z natywnym Qt (nie-X11)?) oraz u tych purystów, którzy nie
+chc± w ogóle niczego zwi±zanego z ryb± na tacce systemowej.
 
 Instalacja programu.
 
