@@ -35,6 +35,9 @@ Jedn± z zalet jest tak¿e ³atwa konfiguracja programu: ¶cie¿ek dostêpu do plików 
 tekstu t³umaczenia i t³a aplikacji. Te i inne parametry programu (np pozycja na ekranie, wielko¶æ
 okna s± przechowywane w katalogu .kydpdict w Twoim katalogu konfiguracyjnym. Bêdzie to
 katalog domowy lub katalog poni¿ej niego okre¶lony przez zmienn± $CONFIG_DIR.
+Kilka najwa¿niejszych skrótów klawiaturowych:
+- ESC pozwala szybko wpisaæ z klawiatury nowy wyraz
+- Ctrl+` (nad Tab) pozwala szybko zamieniæ kierunek t³umaczenia
 
 4. Konfiguracja
 W razie problemów po prostu skasuj katalog z plikami konfiguracyjnymi.
@@ -65,6 +68,8 @@ pamiêci nie odczuje ¿adnego dyskomfortu. Bêdzie to równie¿ niezauwa¿alne je¿eli 
 programy korzystaj±ce z Qt bêd± ju¿ uruchomione.
 b) program szuka pliku z t³umaczeniem domyslnie w /usr/share/kydpdict
 Nie jest to poprawne rozwi±zanie ale na razie lepszego nie znamy.
+c) niektóre skróty klawiaturowe s± chore :), je¶li masz pomys³ na ³atwiejsze a jednocze¶nie nie
+koliduj±ce z domy¶lnymi skrótami managerów okien (np. Ctrl/Shift/Alt+Tab) - napisz
 
 6. Co jest do zrobienia/jakie s± znane b³êdy ?
 Przeczytaj plik TODO. Najwa¿niejszy problem to przyspieszenie ³adowania s³ownika.

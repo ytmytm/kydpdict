@@ -71,11 +71,6 @@ Program oparty na ydpdict Wojtka Kaniewskiego</translation>
         <translation>Pomo&amp;c</translation>
     </message>
     <message>
-        <source>Ctrl+/</source>
-        <comment>Options|Swap direction</comment>
-        <translation>Ctrl+/</translation>
-    </message>
-    <message>
         <source>Ctrl+;</source>
         <comment>Options|POL --&gt; ENG</comment>
         <translation>Ctrl+;</translation>
@@ -137,6 +132,11 @@ Do zobaczenia!</translation>
     <message>
         <source>Clipboard tracking</source>
         <translation>Śledzenie schowka</translation>
+    </message>
+    <message>
+        <source>Ctrl+`</source>
+        <comment>Options|Swap direction</comment>
+        <translation>Ctrl+`</translation>
     </message>
 </context>
 <context>
