@@ -1,9 +1,5 @@
 - podpowiedzi
     - niemieckie
-    - wywalic tips.html i generowac go sobie z tabelki tips'ow na starcie (albo odwrotnie
-      - generowac tabelke tipsow z tips.html)
-      <blah> - <blah> - powtorzone tooltips, powtorzona lista przypasowan
-      generowac jedno z drugiego, wladowac w QDict?
     - jesli podpowiedz znajduje sie w ostatniej linijce tekstu, to jest aktywna w
       pionie az do dolnej krawedzi okna
     - 'dynamics' - nie ma podpowiedzi do 'npl'
@@ -22,5 +18,4 @@
 - pomys³y Jamnika na zachowanie okna: pojawianie sie po zmianie pulpitu, autostick?
     - bah - minimalizacja<=>znikanie (do kpwndict tez)
 - skrót klawiaturowy na prze³±czanie ¶ledzenia schowka
-- set up/give up i pewnie inne ze spacj± ¼le wyszukiwane
 - obs³uga mouse wheel na li¶cie wyrazów

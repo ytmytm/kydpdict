@@ -566,7 +566,7 @@ int ydpDictionary::FindWord(QString word)
     }
 
     if (a!=b) {
-	i=1;
+	a=a-25; if (a<0) a=0; i=1;
 	b=a;
 	qcword = fromCodec->fromUnicode(word);
 	lword = word.length();
@@ -579,15 +579,15 @@ int ydpDictionary::FindWord(QString word)
 	    qbword = fromCodec->fromUnicode(toCodec->toUnicode(words[b]));
 	    sa = ScoreWord(qcword,qaword);
 	    sb = ScoreWord(qcword,qbword);
-	    if ((sa==lword)&&((int)strlen(words[a+i])==sa)) {
+	    if ((sa==lword)&&((int)strlen(words[a+i])<=sa)) {
 		b=a+i; i=260;
 	    } else {
-	    if (sa>sb) {
-		b=a+i;
-		if (!strcmp(words[b],qcword))
-		    i=260;
+		if (sa>sb) {
+		    b=a+i;
+		    if (!strcmp(words[b],qcword))
+			i=260;
+		}
 	    }
-	     }
 	    i++;
 	}
 	a=b;
