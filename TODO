@@ -1,7 +1,5 @@
 - podpowiedzi
     - niemieckie
-    - jesli podpowiedz znajduje sie w ostatniej linijce tekstu, to jest aktywna w
-      pionie az do dolnej krawedzi okna
 - dzielenie listy hase³ na grupy (np. 'run across', 'run away' itd. w grupie
   'run' wizualnie oddzielonej a¿ do 'runabout' które jest now± grup±
   (do zrobienia przy wpisywaniu nowych w ListRefresh je¿eli poprzedni zawiera³ jedn± spacjê,
