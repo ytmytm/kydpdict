@@ -297,7 +297,7 @@ void ydpConfigure::UpdateLabels()
 	paper.setPixmap(pixmap);
 	exampleLabel1->setPaper( paper );
     } else {
-    	exampleLabel1->setPaper( QColor(cBckgrndKol) );
+	exampleLabel1->setPaper( QColor(cBckgrndKol) );
     }
 
     label = "<qt type=\"page\"><font color=" + cFontKolor4 + "><b>ably</b> [eibli]<br><br><i><a href=\"pomoc\"><font color=" + cFontKolor2 + ">adv</font></a></i><br><font color=" +

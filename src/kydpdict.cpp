@@ -393,9 +393,9 @@ void Kydpdict::newClipData()
 	this->setActiveWindow();
 
     wordInput->setEditText(lnewEntry);	// this does search
-    UpdateHistory();
 
     result = myDict->topitem+dictList->currentItem();
+    UpdateHistory();
     if ((config->autoPlay) && (lastresult!=result))
 	PlaySelected (dictList->currentItem());
 
@@ -611,15 +611,15 @@ void Kydpdict::Configure(bool status)
 		    "dictionary installation. For more information please read README.\n"
 		    "Good bye!"));
 		if(myConf)
-  			delete myConf;
+		    delete myConf;
 		exit(1);
 	}
 
 	if(myConf)
-        	delete myConf;
+	    delete myConf;
 
 	if (result == QDialog::Accepted)	// just a performance gain
-		config->save();	
+	    config->save();
 
 	if (cb->supportsSelection())
 	    cb->clear(QClipboard::Selection);
