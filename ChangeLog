@@ -302,7 +302,7 @@ Kydpdict 0.5.8 (27.12.2003)
 - ESCape czy¶ci wordinput
 
 =====================================================================
-Kydpdict 0.5.9 (xx.xx.xxxx)
+Kydpdict 0.5.9 (24.1.2004)
 - g++ zamiast gcc do ostatecznego linkowania (na Aurox nie potrafi znale¼æ libstdc++)
 - nowe opcje - dock i kolor t³a (je¶li nie jest aktywne)
 - tray icon jako opcja
