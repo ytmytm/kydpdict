@@ -518,7 +518,7 @@ int ydpDictionary::ScoreWord(const char *w1, const char *w2)
 {
     int i=0;
     int score=0;
-    while (w1[i] && w2[i] && score <=0) {
+    while (w1[i] && w2[i] && (score <=0)) {
 	if (tolower(w1[i]) == tolower(w2[i]))
 	    score--;
 	else {
