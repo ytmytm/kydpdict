@@ -54,7 +54,7 @@ AC_DEFUN(QT_FIND_UIC,
 dnl Find the right moc in path/qt_cv_dir
 AC_DEFUN(QT_FIND_MOC,
 [
-	QT_FIND_PATH(moc2, ac_moc2, $qt_cv_dir/bin)
+dnl	QT_FIND_PATH(moc2, ac_moc2, $qt_cv_dir/bin)
 	QT_FIND_PATH(moc, ac_moc1, $qt_cv_dir/bin)
 
 	if test -n "$ac_moc1" -a -n "$ac_moc2"; then

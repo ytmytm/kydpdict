@@ -53,6 +53,31 @@ struct dictionaryCache {
   "ð", "ñ", "ò", "ó", "ô", "õ", "ö", "÷", \
   "ø", "ù", "ú", "û", "ü", "ý", "þ", "ÿ" } \
 
+unsigned long fix32(unsigned long x)
+{
+#ifndef WORDS_BIGENDIAN
+	return x;
+#else
+	return (unsigned long)
+		(((x & (unsigned long) 0x000000ffU) << 24) |
+                 ((x & (unsigned long) 0x0000ff00U) << 8) |
+                 ((x & (unsigned long) 0x00ff0000U) >> 8) |
+                 ((x & (unsigned long) 0xff000000U) >> 24));
+#endif		
+}
+
+unsigned short fix16(unsigned short x)
+{
+#ifndef WORDS_BIGENDIAN
+	return x;
+#else
+	return (unsigned short)
+		(((x & (unsigned short) 0x00ffU) << 8) |
+                 ((x & (unsigned short) 0xff00U) >> 8));
+#endif
+}
+
+
 ydpDictionary::ydpDictionary(kydpConfig *config, QListBox *listBox)
 {
     int i;
@@ -236,6 +261,7 @@ void ydpDictionary::FillWordList()
 {
     unsigned long pos;
     unsigned long index[2];
+    unsigned short wcount;
     int current=0;
     /* for mmap */
     int f;
@@ -246,7 +272,8 @@ void ydpDictionary::FillWordList()
     /* read # of words */
     wordCount=0;
     fIndex.at(0x08);
-    fIndex.readBlock((char*)&wordCount,2);
+    fIndex.readBlock((char*)&wcount,2);
+    wordCount = (int)fix16(wcount);
 
     indexes = new unsigned long [wordCount+2];
 
@@ -257,6 +284,7 @@ void ydpDictionary::FillWordList()
     pos=0;
     fIndex.at(0x10);
     fIndex.readBlock((char*)&pos, 4);
+    pos=fix32(pos);
 
     /* prepare mmap stuff */
     f = open(fIndex.name(), O_RDONLY);
@@ -267,6 +295,7 @@ void ydpDictionary::FillWordList()
     if ((int)filedata > 0) {
 	do {
 	    indexes[current] = *(int*)&filedata[pos+4];
+	    indexes[current] = fix32(indexes[current]);
 	    words[current] = new char [(filedata[pos])];
 	    strcpy(words[current], &filedata[pos+8]);
 	    pos += 8+1+strlen(words[current]);
@@ -277,7 +306,7 @@ void ydpDictionary::FillWordList()
 	//  trick - instead of fssek(cur+4), read ulong we read ulong twice
 	//  and throw out first 4 bytes
 	    fIndex.readBlock((char*)&index[0], 8);
-	    indexes[current]=index[1];
+	    indexes[current]=fix32(index[1]);
 	//  and another trick
 	//  we don't throw out first 4 bytes :)
 	    words[current] = new char [(index[0]&0xff)];
@@ -505,6 +534,7 @@ int ydpDictionary::ReadDefinition(int index)
     dsize=0;
     fData.at(indexes[index]);
     fData.readBlock((char*)&dsize, sizeof(unsigned long));
+    dsize=fix32(dsize);
 
     def = new char[dsize+1];
     if ((size = fData.readBlock(def,dsize)) !=dsize) return -1;
