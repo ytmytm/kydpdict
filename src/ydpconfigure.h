@@ -19,6 +19,7 @@
 #include <qlineedit.h>
 #include <qlabel.h>
 #include <qcheckbox.h>
+#include <qfont.h>
 
 #include "kydpconfig.h"
 
@@ -43,6 +44,7 @@ private:
     QPushButton *changeAudioUrl;
     QPushButton *changeAudio2Url;
     QPushButton *changePlayerUrl;
+    QPushButton *changeFont;
     QPushButton *changeFont1;
     QPushButton *changeFont2;
     QPushButton *changeFont3;
@@ -77,11 +79,13 @@ private:
     QString cFontKolor3;
     QString cFontKolor4;
     QString cBckgrnd;
+    QFont   cFont;
 
 private slots:
     void NewDictUrl();
     void NewAudioUrl();
     void NewAudio2Url();
+    void NewFont();
     void NewFontColor1();
     void NewFontColor2();
     void NewFontColor3();

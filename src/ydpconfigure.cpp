@@ -9,6 +9,7 @@
 
 #include <qpixmap.h>
 #include <qfiledialog.h>
+#include <qfontdialog.h>
 #include <qcolordialog.h>
 #include <qtextbrowser.h>
 
@@ -113,6 +114,10 @@ ydpConfigure::ydpConfigure( kydpConfig *globalconfig, QWidget* parent,  const ch
     checkBox1 = new QCheckBox(tr("Enable Background"), tab2, "checkBox1");
     checkBox1->setGeometry(6,117,150,16);
 
+    changeFont = new QPushButton("Font", tab2, "changeFont");
+    changeFont->setGeometry(162,117,40,22);
+
+
     exampleLabel1 = new QTextBrowser (tab2, "exampleLabel1");
     exampleLabel1->setAlignment( Qt::AlignCenter );
     exampleLabel1->setFrameStyle( QFrame::Box | QFrame::Plain);
@@ -143,6 +148,7 @@ ydpConfigure::ydpConfigure( kydpConfig *globalconfig, QWidget* parent,  const ch
     connect( changeDictionaryUrl, SIGNAL( clicked() ), this, SLOT( NewDictUrl() ) );
     connect( changeAudioUrl, SIGNAL( clicked() ), this, SLOT( NewAudioUrl() ) );
     connect( changeAudio2Url, SIGNAL( clicked() ), this, SLOT( NewAudio2Url() ) );
+    connect( changeFont, SIGNAL( clicked() ), this, SLOT( NewFont() ) );
     connect( changeFont1, SIGNAL( clicked() ), this, SLOT( NewFontColor1() ) );
     connect( changeFont2, SIGNAL( clicked() ), this, SLOT( NewFontColor2() ) );
     connect( changeFont3, SIGNAL( clicked() ), this, SLOT( NewFontColor3() ) );
@@ -162,6 +168,9 @@ ydpConfigure::ydpConfigure( kydpConfig *globalconfig, QWidget* parent,  const ch
     cFontKolor3 = config->kFontKolor3;
     cFontKolor4 = config->kFontKolor4;
     cBckgrnd = config->kBckgrndPix;
+    cFont = config->fontTransFont;
+
+    exampleLabel1->setFont(cFont);
 
 }
 
@@ -195,6 +204,16 @@ void ydpConfigure::NewPlayerUrl()
 
     tmp = QFileDialog::getOpenFileName("/", NULL, this , "player", tr("Choose audio player"));
     if (!tmp.isEmpty ()) playerUrl->setText(tmp);
+}
+
+void ydpConfigure::NewFont()
+{
+    bool accepted;
+    QFont myFont = QFontDialog::getFont( &accepted, cFont, 0 );
+    if (accepted) {
+	cFont = myFont;
+	UpdateLabels();
+    }
 }
 
 void ydpConfigure::NewFontColor1()
@@ -271,6 +290,8 @@ void ydpConfigure::UpdateLabels()
     cFontKolor1 + ">umiejêtnie</font>, <font color=" + cFontKolor1 + ">zrêcznie</font><br><table cellspacing=0><tr><td width=25></td><td><font color=" +
     cFontKolor3 + ">They were ably supported by the Communist Party.</font></td></tr></table></font></qt>";
     exampleLabel1->setText(label.fromLocal8Bit(label));
+    exampleLabel1->setFont(cFont);
+
 }
 
 QString ydpConfigure::GetNewColor(QString kolor)
@@ -354,5 +375,6 @@ ydpConfigure::~ydpConfigure()
 		config->italicFont = checkBox3->isChecked();
 		config->toolTips = checkBox4->isChecked();
 		config->autoPlay = checkBox5->isChecked();
+		config->fontTransFont = cFont;
 	}
 }

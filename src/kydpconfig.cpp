@@ -53,6 +53,7 @@ void kydpConfig::setDefaultConfiguration(void)
 	toolTips = true;
 	autoPlay = false;
 	ignoreOwnSelection = false;
+	transFont = "Helvetica";
 }
 
 void kydpConfig::load(void)
@@ -224,6 +225,14 @@ void kydpConfig::load(void)
 					value = line.mid(pos+1);
 					ignoreOwnSelection = ( value.toInt() != 0);
 				}
+				pos=line.find("transFont");
+				if (pos==0) {
+					pos = line.find('=');
+					value = line.mid(pos+1);
+					transFont = value.stripWhiteSpace();
+					fontTransFont.fromString(transFont);
+					transFont = fontTransFont.toString();
+				}
 			}
 		}
 	config.close();
@@ -316,6 +325,8 @@ void kydpConfig::save(void)
 	if (autoPlay) { line+="1"; } else { line+="0"; };
 	line += "\nignoreOwnSelection\t=\t";
 	if (ignoreOwnSelection) { line+="1"; } else { line+="0"; };
+	line += "\ntransFont\t=\t";
+	line += fontTransFont.toString();
 
 	line += "\n";
 

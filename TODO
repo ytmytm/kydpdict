@@ -1,4 +1,3 @@
-- zmiana rozmiaru splittera poziomego ma zmieniaæ rozmiar guzika 'usun' i comboboxa
 - skrót klawiaturowy na zamianê jêzyków
 - podpowiedzi
     - niemieckie
@@ -10,8 +9,6 @@
       pionie az do dolnej krawedzi okna
     - 'dynamics' - nie ma podpowiedzi do 'npl'
       'Fiji' - sprawdzic podpowiedzi
-- konfiguracja:
-    - konfiguracja czcionek i/lub ich stylu
 - szukanie hasla w drugim slowniku (zamiana stron)
 - szukanie hasla w zasobach slownika
 - optymalizacja ladowania indeksu

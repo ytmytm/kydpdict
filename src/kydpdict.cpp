@@ -408,8 +408,12 @@ void Kydpdict::ConfigureKydpdict()
 void Kydpdict::Configure(bool status)
 {
 	int result;
+	kydpConfig tempconf;
 
-	ydpConfigure *myConf = new ydpConfigure(config);
+	config->save();		// XXX this is ugly!!!
+	tempconf.load();
+	config->clipTracking = false;
+	ydpConfigure *myConf = new ydpConfigure(&tempconf);
 
 	m_checkTimer->stop();
 	cb->blockSignals( TRUE );
@@ -428,9 +432,16 @@ void Kydpdict::Configure(bool status)
 	if(myConf)
         	delete myConf;
 
-	if (result == QDialog::Accepted)	// just a performance gain
-		config->save();
-	cb->blockSignals( FALSE);
+	if (result == QDialog::Accepted) {	// just a performance gain
+		tempconf.save();	// XXX this is ugly!!!
+		config->load();
+		
+	}
+	if (cb->supportsSelection())
+	    cb->clear(QClipboard::Selection);
+	else
+	    cb->clear(QClipboard::Clipboard);
+	cb->blockSignals( FALSE );
 	m_checkTimer->start(1000, FALSE);
 }
 
@@ -497,6 +508,8 @@ void Kydpdict::UpdateLook()
 	QMimeSourceFactory::defaultFactory()->setImage( "f6", QImage(f6_xpm) );
 	QMimeSourceFactory::defaultFactory()->setImage( "f7", QImage(f7_xpm) );
 	QMimeSourceFactory::defaultFactory()->setImage( "f8", QImage(f8_xpm) );
+
+	RTFOutput->setFont(config->fontTransFont);
 
 	NewDefinition(dictList->currentItem() < 0 ? 0 : dictList->currentItem() );
 }

@@ -11,6 +11,7 @@
 #define KYDPCONFIG_H
 
 #include <qstring.h>
+#include <qfont.h>
 
 enum { LANG_ENGLISH, LANG_DEUTSCH, LANG_LAST };
 
@@ -29,6 +30,7 @@ public:
 	QString kBckgrndPix;
 	QString indexFName;
 	QString dataFName;
+	QFont   fontTransFont;
 	bool	toPolish;
 	int language;
 	int kGeometryX, kGeometryY, kGeometryW, kGeometryH;
@@ -41,6 +43,7 @@ public:
 
 private:
 	QString cfgname;
+	QString transFont;		// temporary fontname holder
 
 	void readYDPConfig(void);
 	void updateFName(void);

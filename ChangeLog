@@ -223,3 +223,8 @@ Kydpdict 0.5.4pre2 (26.7.2003)
 Kydpdict 0.5.4pre3 (26.7.2003)
 - nowa opcja: ignorowanie schowka jesli zaznaczenie pochodzi z kydpdict
 - polski skrót na Zakoñcz - Ctrl+K (Ctrl+Z to 'undo' i bez grzebania w combo->lineEdit to siê nie zmieni)
+
+=====================================================================
+Kydpdict 0.5.4pre4 (26.7.2003)
+- nowa opcja: font okna z t³umaczeniem
+- dialog do wyboru fontu t³umaczenia
