@@ -688,8 +688,7 @@ void Kydpdict::UpdateLook()
 
 	QString tmp = ".\tc " + config->kFontKolor4;
 
-	char *tst;
-	(const char *)tst = tmp;
+	char *tst = const_cast<char*>((const char*)tmp);
 	f1_xpm[2] = tst;
 	f2_xpm[2] = tst;
 	f3_xpm[2] = tst;

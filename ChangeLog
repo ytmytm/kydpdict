@@ -381,3 +381,4 @@ Kydpdict 0.6.3 (xx.xx.2004)
 - nowy kod obs³uguj±cy tipsy - wszystko klikalne, skoki miêdzy s³ownikami (AP)
 - toolbar jest w³±czany/wy³±czany przez menu
 - poprawiona konwersja z niby-rtf (AP)
+- poprawki dla gcc 3.4.0 (Marcin, skopi6@poczta.fm)
