@@ -2,8 +2,6 @@
     - niemieckie
     - jesli podpowiedz znajduje sie w ostatniej linijce tekstu, to jest aktywna w
       pionie az do dolnej krawedzi okna
-    - 'dynamics' - nie ma podpowiedzi do 'npl'
-      'Fiji' - sprawdzic podpowiedzi
 - dzielenie listy hase³ na grupy (np. 'run across', 'run away' itd. w grupie
   'run' wizualnie oddzielonej a¿ do 'runabout' które jest now± grup±
   (do zrobienia przy wpisywaniu nowych w ListRefresh je¿eli poprzedni zawiera³ jedn± spacjê,
@@ -19,3 +17,4 @@
     - bah - minimalizacja<=>znikanie (dla kpwndict tez) (jak?)
 - skrót klawiaturowy na prze³±czanie ¶ledzenia schowka (jaki?!?)
 - obs³uga mouse wheel na li¶cie wyrazów
+- 'provencial' - zrabane haslo
