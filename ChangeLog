@@ -308,3 +308,7 @@ Kydpdict 0.5.9 (24.1.2004)
 - tray icon jako opcja
 - jezeli t³o nie jest aktywne, to guzik wybiera kolor t³a
 - historia combo ma limit na 25 wyrazow. moze teraz nie bedzie sprawiac problemow
+
+=====================================================================
+Kydpdict 0.5.10 (xx.xx.2004)
+- nieco przyspieszone ³adowanie s³ownika; ³adniejszy kod FillWordList (AP)

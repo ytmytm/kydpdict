@@ -13,14 +13,14 @@
 - dzielenie listy hase³ na grupy (np. 'run across', 'run away' itd. w grupie
   'run' wizualnie oddzielonej a¿ do 'runabout' które jest now± grup±
 - optymalizacja ladowania indeksu
-    - napisaæ sobie w³asny widget z QDict do trzymania danych
-      najwiecej czasu zajmuje wstawianie nowych obiektów przy InsertItem (zawsze jest
-      tworzona kopia, wstawianie w³asnych z przygotowanej tablicy nic nie da)
-      oraz konwersja w convert_cp1250
+    - u¿yæ widgetu listy (jak teraz), ale nigdy nie przekraczaæ liczby widocznych elementów,
+      obok w³asny suwak; konwertowaæ tylko tyle ile widaæ korzystaj±c z listy s³ów i indeksu
+      za³adowanych bezpo¶rednio ze s³ownika
+      - jak przechwyciæ przewijanie klawiatur± góra/dó³?
 - przejscie z tlumaczeniem na gettext
     - makra, ¿eby nic w kodzie nie zmieniæ
     - makefiles (.po, .mo; sciezki;)
-- zobaczyc co dobrego jest w windows-ydp
+- zobaczyc co dobrego jest w windows-ydp (niewiele :)
 - F8 - cliboard tracking toggle
 - QClipboard::selectionChanged() - czemu nieuzywany?
 - za drugim dwuklikiem na tym samym nie odtwarza audio
@@ -30,8 +30,6 @@
   przywroceniu powinien pokazac wynik tlumaczenia aktualnej selekcji
 - po przewinieciu definicji i zmianie hasla nie resetuje pozycji textedit (dalej jest
   przesunieta)
-- usunac przycisk do kasowania
+- usunac przycisk do kasowania (albo zminiejszyæ)
 - otrzymanie focus - zawsze na pole edycji hasla, z selekcja aktualnego (zeby usunac latwo)
 - opcja: po przechwyceniu schowka - na wierzch ale bez focusa na siebie (opcja?)
-
-
