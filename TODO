@@ -27,7 +27,3 @@
 - a co je¶li wy¶wietlaæ zamiast pe³nej listy tylko wyrazy podobne/wyrazy blisko?
     - wróciæ do listboxa, przy fuzzy - wszystkie (automatyczny scrollbar), przy li¶cie
       tylko tyle, ile widac, bez scrollbara - zmiana w edit, klik - centruje widok na wyrazie
-- prze³±czenie jêzyka ¼le uaktualnia scrollbar
-    - czy powinno jednocze¶nie wyszukaæ aktualny wyraz w nowym s³owniku?
-- mo¿liwo¶æ podania ¶cie¿ki do katalogu s³owników przy ./configure (--datadir?)
-- testowanie ¶cie¿ek do audio tylkoma³ymi i TYLKODU¯YMI (dotyczy 'sXXX' oraz nazw w srodku)

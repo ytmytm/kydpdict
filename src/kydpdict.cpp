@@ -591,8 +591,8 @@ void Kydpdict::SwapLang (bool direction, int language ) //dir==1 toPolish
 			a=myDict->OpenDictionary(config);
 			if (a) Configure(TRUE);
 		} while (a);
-		wordInput->setEditText(word);
 		UpdateLook();
+		lastEdit = "";
 		newFromLine(word);
 	}
 }
@@ -776,6 +776,7 @@ void Kydpdict::UpdateLook()
 	dictList->setFont(config->fontTransFont);
 	wordInput->setFont(config->fontTransFont);
 
+	// this refresh is required for font update
 	int item;
 	item = dictList->currentItem();
 	myDict->ListRefresh(myDict->topitem);

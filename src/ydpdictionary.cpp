@@ -696,10 +696,44 @@ int ydpDictionary::ReadDefinition(int index)
     return 0;
 }
 
-int ydpDictionary::Play (int index, kydpConfig *config)
+QString ydpDictionary::SampleName(QString path, int index)
 {
     QFile fd;
-    QString pathdir, name, ext;
+    QString name, myname;
+
+    name.sprintf("/s%.3d/%.6d.", index/1000, index+1);
+
+    myname = name+"wav";
+    fd.setName(path+myname);
+    if (fd.exists())
+	return fd.name();
+    fd.setName(path+myname.upper());
+    if (fd.exists())
+	return fd.name();
+
+    myname = name+"mp3";
+    fd.setName(path+myname);
+    if (fd.exists())
+	return fd.name();
+    fd.setName(path+myname.upper());
+    if (fd.exists())
+	return fd.name();
+
+    myname = name+"ogg";
+    fd.setName(path+myname);
+    if (fd.exists())
+	return fd.name();
+    fd.setName(path+myname.upper());
+    if (fd.exists())
+	return fd.name();
+
+    return QString("");
+}
+
+int ydpDictionary::Play(int index, kydpConfig *config)
+{
+    QFile fd;
+    QString pathdir, samplename;
     static QProcess proc;
 
     switch (config->language) {
@@ -710,51 +744,27 @@ int ydpDictionary::Play (int index, kydpConfig *config)
 	    pathdir = config->cdPath;
 	    break;
 	default:
-	    break;	// cos poszlo nie tak?
+	    break;		// cos poszlo nie tak?
     }
 
     fd.setName(pathdir.latin1());
     if (!(fd.exists()))
-	return 0;	// nie ma co tracic czasu jesli katalogu nie ma
+	return 0;		// nie ma co tracic czasu jesli katalogu nie ma
 
-    name.sprintf("%s/s%.3d/%.6d.", pathdir.latin1(), index/1000, index+1);
-
-    /* now, this is cute... BUT IT'S WRONG!!! (two stupid dogs) */
-    ext = "wav";
-    fd.setName(name+ext);
-    if (!(fd.exists())) {
-	ext = "WAV";
-	fd.setName(name+ext);
-	if (!(fd.exists())) {
-	    ext = "mp3";
-	    fd.setName(name+ext);
-	    if (!(fd.exists())) {
-		ext = "MP3";
-		fd.setName(name+ext);
-		if (!(fd.exists())) {
-		    ext = "ogg";
-		    fd.setName(name+ext);
-		    if (!(fd.exists())) {
-			ext = "OGG";
-			fd.setName(name+ext);
-			if (!(fd.exists()))
-			    return 0;
-		    }
-		}
-	    }
-	}
-    }
+    samplename = SampleName(pathdir,index);
+    if (samplename.length() == 0)
+	return 0;		// pliku równie¿ mo¿e nie byæ
 
     fd.setName(config->player);
     if (!(fd.exists()))
-	return 0;		// oh well...
+	return 0;		// ani odtwarzacza...
 
     if (proc.isRunning())
 	proc.kill();		// nie ma litosci dla skurwysynow! BUM! BUM!
 
     proc.clearArguments();
     proc.addArgument( config->player );
-    proc.addArgument( name+ext );
+    proc.addArgument( samplename );
     proc.start();
 
     return 1;

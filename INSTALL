@@ -1,12 +1,12 @@
-Rozpakuj ¼ród³a do wybranego katalogu
+1. Rozpakuj ¼ród³a do wybranego katalogu
 
-Kompilacja programu.
-1. wykonaj
+2. Kompilacja programu.
+   wykonaj
     ./configure
    ewentualnie (zobacz ni¿ej komu mog³oby siê to przydaæ):
     ./configure --without-x
 
-2. wykonaj
+   wykonaj
     make
 
 Je¶li skrypt ./configure zakoñczy siê b³êdem, to prawdopodobnie nie mo¿e znale¼æ ¶cie¿ek
@@ -23,11 +23,14 @@ od biblioteki Qt. Mo¿e mieæ to zastosowanie na systemach, na których nie ma X11,
 jest dostêpne Qt (MacOS X z natywnym Qt (nie-X11)?) oraz u tych purystów, którzy nie
 chc± w ogóle niczego zwi±zanego z ryb± na tacce systemowej.
 
-Instalacja programu.
+3. Instalacja programu.
+   wykonaj
+    make install
 
-3. make install
 Program zostanie zainstalowany domy¶lnie do /usr/local lub innego drzewa okre¶lonego przez
-opcjê --prefix skryptu ./configure
+opcjê --prefix skryptu ./configure.
+Domy¶lnym katalogiem danych (z plikami s³ownika) jest /usr/local/share/kydpdict lub inny
+wskazany przez opcjê --datadir do ./configure (dla --datadir DIR bêdzie to DIR/kydpdict).
 
 UWAGA! Do dzia³ania programu niezbêdne jest posiadanie plików z danymi s³ownika z oryginalnej
 p³yty YDP. Chodzi o pliki dict*.idx i dict*.dat. Nale¿y je umie¶ciæ gdzie¶ w dostêpnym miejscu

@@ -46,6 +46,7 @@ private:
 	QString insertHyperText(QString raw_input, int level);
 	QString stripDelimiters(QString word);
 	int ScoreWord(QString w1, QString w2);
+	QString SampleName(QString path, int index);
 
 	// configuration holder
 	kydpConfig *cnf;

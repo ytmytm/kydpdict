@@ -423,3 +423,5 @@ Kydpdict 0.6.7 (xx.xx.2004)
 - litera ¬ (du¿y ¼rebak) prawid³owo konwertowana
 - przy¶pieszenie wyszukiwania rozmytego (niezbêdne je¶li mia³oby siê staæ domy¶lnym)
 - koñcówka ¶cie¿ki do plików audio testowana na ma³e/du¿e (czê¶ciowy fix, tam jeszcze jest 's' po drodze)
+- powinno dzia³aæ poprawnie na systemach, gdzie z CD/FAT32 widzi katalog tylko z du¿ymi literami
+- lista poprawnie uaktualnia siê przy prze³±czaniu jêzyków
