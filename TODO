@@ -11,8 +11,7 @@
 - wyszukiwanie w tre¶ci (co to w³a¶ciwie znaczy?)
 - dzielenie listy hase³ na grupy (np. 'run across', 'run away' itd. w grupie
   'run' wizualnie oddzielonej a¿ do 'runabout' które jest now± grup±
-  (do zrobienia przy wpisywaniu nowych w ListRefresh, wywalic wszystkie odwolania do
-   dictList przez tresc zaznaczonego - inne niz sprawdzanie indeksow)
+  (do zrobienia przy wpisywaniu nowych w ListRefresh je¿eli poprzedni zawiera³ jedn± spacjê, to...?)
 - przejscie z tlumaczeniem na gettext
     - makra, ¿eby nic w kodzie nie zmieniæ
     - makefiles (.po, .mo; sciezki;)
