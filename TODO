@@ -37,3 +37,7 @@
   albo zamiast *sql jakas inna baze? berkeley db4/3/2/1? gdbm?
 - zobaczyc co dobrego jest w windows-ydp
 - zobaczyc w jaki sposób kadu l±duje w docku
+- inaczej rozwiazac pierwsze uruchomienie:
+    - przy braku konfiguracji musi pokazac sie informacja o slownikach itp.
+    - program nie moze zglaszac bledu jezeli jest tylko jeden jezyk
+- brak zapisywania stanu toolbara (jesli uzytkownik go wylaczy), jak to potem wlaczyc?
