@@ -577,17 +577,20 @@ void Kydpdict::ConfigureKydpdict()
 
 void Kydpdict::ToolbarShowHide(bool visible)
 {
-    menu->setItemEnabled(toolBarMenuItem, !visible);
-
+    menu->setItemChecked(toolBarMenuItem, visible);
     if (visible != config->toolBarVisible) {
 	config->toolBarVisible = visible;
 	config->save();
+	if (config->toolBarVisible)
+	    toolBar->show();
+	else
+	    toolBar->hide();
     }
 }
 
 void Kydpdict::ShowToolbar()
 {
-    toolBar->show();
+    ToolbarShowHide(!config->toolBarVisible);
 }
 
 void Kydpdict::Configure(bool status)
