@@ -19,3 +19,4 @@
     - niewykonalne ³atwo? szukaæ okna klasy Kydpdict.Kydpdict? (niby jak?)
 - konfigurowalne klawisze z --with-kde
 - wczytywanie wszystkich slow, ze slownikow w obie strony do jednej listy
+- w Qt 3.1 nie ma qt_user_time!
