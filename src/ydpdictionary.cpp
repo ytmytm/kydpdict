@@ -971,17 +971,15 @@ QString ydpDictionary::insertHyperText(QString raw_input, int level)
 			tags |= T_PL;
 			tmp  = tmp.right(tmp.length()-1);
 		}
-		
+
 		pos2 = 0;
 		output2 = "";
 		QString direction;
 		direction_tab[level] == _native ? direction = "0" : direction = "1"; 
 		result = FALSE;
-		
+
 		while(TRUE) {
 			QString tmp2 = tmp.section('/', pos2, pos2);
-///////////////////////////////////////////////////////////////////////////////////////////			
-			
 
 			proposition = tmp2;
 
@@ -993,22 +991,22 @@ QString ydpDictionary::insertHyperText(QString raw_input, int level)
 					break;
 				}
 			}
-			
+
 			if(!result) {
 				proposition = "<a href="+ direction + tmp2+">"+tmp2+"</a>";
 			}
-			
+
 			output2 = proposition;
 
-///////////////////////////////////////////////////////////////////////////////////////////
 			pos2++;
-		
+
 			if(tmp.section('/', pos2, pos2).isEmpty())
 				break;
 			output2 += '/';
 		}
 
 		output += output2;
+		output2 = ""; //dodana linia, tak na wszelki wypadek
 
 		if(tags & T_CM)
 			output += ",";
