@@ -466,7 +466,7 @@ void ydpDictionary::ListRefresh(int index)
 		dictList->insertItem(QString("dummy"));
 	} else {
 	    int i,j;
-	    j = dictList->count()-dictList->numItemsVisible();
+	    j = dictList->count()-spacefor;
 	    for (i=0;i<j;i++)
 		dictList->removeItem(dictList->count()-1);
 	}

@@ -349,3 +349,5 @@ Kydpdict 0.6.0pre (xx.xx.2004)
 - potrafi znale¼æ i za³adowaæ pliki s³ownika o nazwach pisanych SAMYMY WIELKIMI LITERAMI
 - poprawiony krytyczny b³±d (wywala³o program zamiast pokazaæ info o nieznalezieniu plików)
 - lista wyrazów od¶wie¿ana po zmianie fontu
+- niepsute po³o¿enie listy po konfiguracji i zmianie rozmiarów
+- poprawiony b³±d za d³ugiej listy przy zmianie rozmiarów na mniejsze

@@ -291,12 +291,15 @@ void Kydpdict::flushConfig(void)
 void Kydpdict::resizeEvent(QResizeEvent *)
 {
  	QSize aRozmiar;
+	int item;
 
 	aRozmiar = this->size();
 	config->kGeometryW = aRozmiar.width();
 	config->kGeometryH = aRozmiar.height();
 
-	myDict->ListRefresh(dictList->currentItem());
+	item=dictList->currentItem();
+	myDict->ListRefresh(myDict->topitem);
+	dictList->setCurrentItem(item);
 	scrollBar->setPageStep(dictList->numItemsVisible());
 }
 
@@ -686,7 +689,10 @@ void Kydpdict::UpdateLook()
 
 	NewDefinition(dictList->currentItem() < 0 ? 0 : dictList->currentItem() );
 
-	myDict->ListRefresh(dictList->currentItem()+myDict->topitem);
+	int item;
+	item = dictList->currentItem();
+	myDict->ListRefresh(myDict->topitem);
+	dictList->setCurrentItem(item);
 
 	scrollBar->setMaxValue(myDict->wordCount);
 }
