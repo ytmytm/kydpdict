@@ -304,3 +304,6 @@ Kydpdict 0.5.8 (27.12.2003)
 =====================================================================
 Kydpdict 0.5.9 (xx.xx.xxxx)
 - g++ zamiast gcc do ostatecznego linkowania (na Aurox nie potrafi znale¼æ libstdc++)
+- nowe opcje - dock i kolor t³a (je¶li nie jest aktywne)
+- tray icon jako opcja
+- jezeli t³o nie jest aktywne, to guzik wybiera kolor t³a

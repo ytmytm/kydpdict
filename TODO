@@ -1,5 +1,7 @@
 - COMBOBOX ROSNIE BEZ OGRANICZENIA - NIECH MI KTOS WYTLUMACZY PO CO JEST
   maxCount ALBO POWIE JAK UZYWAC removeItem ZEBY SIE NIE PIEPRZYLO?!?
+  - dodawac itemy do count==10, a potem tylko przesuwac im nazwy nowa wstawiajac na pozycje 10
+    (szatanski plan)
 - podpowiedzi
     - niemieckie
     - wywalic tips.html i generowac go sobie z tabelki tips'ow na starcie (albo odwrotnie
@@ -23,6 +25,5 @@
     - makra, ¿eby nic w kodzie nie zmieniæ
     - makefiles (.po, .mo; sciezki;)
 - zobaczyc co dobrego jest w windows-ydp
-- tray jako opcja
 - F8 - cliboard tracking toggle
 - QClipboard::selectionChanged() - czemu nieuzywany?
