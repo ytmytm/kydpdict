@@ -364,3 +364,5 @@ Kydpdict 0.6.1 (xx.xx.2004)
 - wyszukiwanie wyrazów wreszcie powinno byæ niezawodne
 - updateTimestamp - od¶wie¿a informacje o sobie (na podstawie klippera+kapp+¼ród³a qt)
   znowu testowanie schowka dzia³a prawid³owo i nie k³óci siê z klipperem
+- je¶li tipsy s± widoczne, to klikniêcie na li¶cie wyrazów je chowa (równie¿ je¶li klik by³ na
+  aktualnym wyrazie)

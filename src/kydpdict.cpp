@@ -72,6 +72,7 @@ void updateUserTimestamp(void);
 Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name)
 {
 	updateUserTimestamp();
+	tipsVisible = false;
 
 	toolBar = new QToolBar(this, "toolbar");
 	toolBar->setLabel(tr("Kydpdict toolbar"));
@@ -226,11 +227,13 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 
 	connect (dictList, SIGNAL(highlighted(int)), this, SLOT(NewDefinition(int)));
 	connect (dictList, SIGNAL(selected(int)), this, SLOT(PlayCurrent()));
+	connect (dictList, SIGNAL(clicked(QListBoxItem*)), this, SLOT(NewClicked(QListBoxItem*)));
 	connect (wordInput, SIGNAL(textChanged(const QString&)), this, SLOT(NewFromLine(const QString&)));
 	connect (wordInput, SIGNAL(activated(int)), this, SLOT(PlayCurrent()));
 	connect (listclear, SIGNAL(clicked()), wordInput, SLOT(clearEdit()));
 	connect (listclear, SIGNAL(clicked()), wordInput, SLOT(setFocus()));
  	connect (RTFOutput, SIGNAL(highlighted( const QString & )), this, SLOT(updateText( const QString & )));
+	connect (RTFOutput, SIGNAL(linkClicked(const QString&)), this, SLOT(RTFLinkClicked(const QString&)));
  	connect (m_checkTimer, SIGNAL(timeout()), this, SLOT(newClipData()));
 	connect (toolBar, SIGNAL(visibilityChanged(bool)), this, SLOT(ToolbarShowHide(bool)));
  	connect (cb, SIGNAL(selectionChanged() ), SLOT(newClipData()));
@@ -421,8 +424,20 @@ void Kydpdict::showEvent(QShowEvent *ashowEvent)
     m_checkTimer->start(TIMER_PERIOD, FALSE);
 }
 
+void Kydpdict::RTFLinkClicked(const QString &link)
+{
+    tipsVisible = true;
+}
+
+void Kydpdict::NewClicked (QListBoxItem *lbi)
+{
+    if (tipsVisible)
+	NewDefinition(myDict->topitem+dictList->currentItem());
+}
+
 void Kydpdict::NewDefinition (int index)
 {
+    tipsVisible = false;
     UpdateHistory();
     RTFOutput->setText(myDict->GetDefinition(index+myDict->topitem));
     RTFOutput->setCursorPosition(0,0);

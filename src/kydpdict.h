@@ -51,6 +51,7 @@ class Kydpdict : public QMainWindow
 
 		// global configuration
 		kydpConfig *config;
+		bool tipsVisible;
 
 		// GUI widgets
 		QListBox *dictList;
@@ -83,6 +84,8 @@ class Kydpdict : public QMainWindow
 		void NewDefinition (int index);       		/* word list highlited */
 		void NewFromLine (const QString& newText);	/* new word entered */
 		void PlaySelected (int index);			/* dbl click or return to play */
+		void NewClicked(QListBoxItem *lbi);		/* click to go back from tips mode */
+		void RTFLinkClicked(const QString& link);	/* user selected link from browser */
 		void UpdateHistory (void);
 		void PlayCurrent ();
 		void SwapLanguages ();
