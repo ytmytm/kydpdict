@@ -376,7 +376,6 @@ void Kydpdict::showEntry(QString *aEntry, int aindex)
 	aindex = lindex - myDict->topitem;
     } else {
 	wordInput->setEditText(dictList->text(dictList->currentItem()));
-	wordInput->setFocus();
 	wordInput->lineEdit()->selectAll();
     }
 

@@ -16,8 +16,6 @@
     - bah - minimalizacja<=>znikanie (dla kpwndict tez) (jak?)
 - skróty klawiaturowe opisane w dymkach nad toolbarem
     - obecnie niewykonalne, te same skróty rozrzucone w kilku miejscach - trudno utrzymaæ
-- focus chyba nie powinien przeskakiwaæ z listy do edit? poruszanie siê kursorami robi siê
-    nieintuicyjne
 - ydpFuzzySearch
     - chyba powinno jako¶ fonty ustawiaæ (wtedy geometria listy i dialogu musi byæ zmienna)
     - poprawic uk³ad geometryczny dialogu?
