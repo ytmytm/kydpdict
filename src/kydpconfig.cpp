@@ -83,6 +83,7 @@ void kydpConfig::load(void)
 	kGeometryY = settings.readNumEntry("/y", 1);
 	kGeometryW = settings.readNumEntry("/w", 500);
 	kGeometryH = settings.readNumEntry("/h", 300);
+	kMaximized = settings.readBoolEntry("/maximized", FALSE);
 	kFontKolor1 = fixColour(settings.readEntry("/translation_text", "#C00000"));
 	kFontKolor2 = fixColour(settings.readEntry("/describe_text", "#0000FF"));
 	kFontKolor3 = fixColour(settings.readEntry("/example_text", "#736324"));
@@ -137,6 +138,7 @@ void kydpConfig::save(void)
 	settings.writeEntry("/y", kGeometryY);
 	settings.writeEntry("/w", kGeometryW);
 	settings.writeEntry("/h", kGeometryH);
+	settings.writeEntry("/maximized", kMaximized);
 	settings.writeEntry("/translation_text", fixColour(kFontKolor1));
 	settings.writeEntry("/describe_text", fixColour(kFontKolor2));
 	settings.writeEntry("/example_text", fixColour(kFontKolor3));

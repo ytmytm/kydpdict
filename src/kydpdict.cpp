@@ -70,6 +70,8 @@ extern Time qt_x_user_time;	// this is from Qt
 
 Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name)
 {
+    bool wasMaximized;
+
 	updateUserTimestamp();
 	tipsVisible = false;
 
@@ -116,6 +118,7 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 
  	myDict = new ydpDictionary(config,dictList);
 
+	wasMaximized = config->kMaximized;
 	setGeometry (config->kGeometryX, config->kGeometryY, config->kGeometryW, config->kGeometryH);
 
 	QValueList<int> splittersizes;
@@ -272,6 +275,9 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 #endif
 	setFocusProxy(wordInput);
 	RTFOutput->setFocusProxy(wordInput);
+
+	if (wasMaximized)
+	    this->showMaximized();
 }
 
 Kydpdict::~Kydpdict()
@@ -305,9 +311,13 @@ void Kydpdict::resizeEvent(QResizeEvent *)
  	QSize aRozmiar;
 	int item;
 
-	aRozmiar = this->size();
-	config->kGeometryW = aRozmiar.width();
-	config->kGeometryH = aRozmiar.height();
+	config->kMaximized = this->isMaximized();
+
+	if (! config->kMaximized) {
+	    aRozmiar = this->size();
+	    config->kGeometryW = aRozmiar.width();
+	    config->kGeometryH = aRozmiar.height();
+	}
 
 	item=dictList->currentItem();
 	myDict->ListRefresh(myDict->topitem);

@@ -37,6 +37,7 @@ public:
 	bool	toolBarVisible;
 	int language;
 	int kGeometryX, kGeometryY, kGeometryW, kGeometryH;
+	bool kMaximized;
 	int spH1, spH2, spV1, spV2;
 	bool clipTracking, italicFont, toolTips, autoPlay, ignoreOwnSelection, dock, setFocusOnSelf;
 
