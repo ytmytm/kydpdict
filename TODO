@@ -16,6 +16,3 @@
     - bah - minimalizacja<=>znikanie (dla kpwndict tez) (jak?)
 - skróty klawiaturowe opisane w dymkach nad toolbarem
     - obecnie niewykonalne, te same skróty rozrzucone w kilku miejscach - trudno utrzymaæ
-- wyszukiwanie powinno preferowaæ idealne dopasowanie od przybli¿onego
-  (np. 'for' znajduje 'f.o.r.', powinno byæ 'for')
-    - runabout!

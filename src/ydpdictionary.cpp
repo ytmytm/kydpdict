@@ -567,14 +567,17 @@ QString ydpDictionary::stripDelimiters(QString word)
 int ydpDictionary::FindWord(QString word)
 {
     QTextCodec *codec = QTextCodec::codecForName("CP1250");
-    QString midstring, astring;
-    int a,b,i;
+    QString midstring, wordorig;
+    int a,b;
     int middle,result;
-    unsigned int sa,sb,lword;
+    int lwordorig;
 
-    if (word.length() == 0)
+    lwordorig = word.length();
+
+    if (lwordorig == 0)
 	return 0;
 
+    wordorig = word.lower();
     word = stripDelimiters(word.lower());
     word.truncate(20);
 
@@ -600,30 +603,36 @@ int ydpDictionary::FindWord(QString word)
     }
 
     /* poniewa¿ indeksy nie s± idealnie posortowane - teraz wyszukujemy naiwnie;
-       nastêpuje cofniêcie o 35 hase³ i w¶ród 70 nastêpnych znalezienie tego z najwy¿szym
+       nastêpuje cofniêcie o 35 hase³ i w¶ród 150 nastêpnych znalezienie tego z najwy¿szym
        wynikiem ze ScoreWord (najwiêcej wspólnych znaków z wyszukiwanym has³em) */
 
-    if (a!=b) {
+    int i;
+    int max, maxs;	// index of max scored and max scored with strip delimiters
+    int smax, smaxs;	// scores of - '' -
+    int score, scores;
+    QString bstring;
+
+    if (a!=b) {		// what was not a direct match
 	a=a-35; if (a<0) a=0;
-	b=a;
+	max=a; maxs=a; smax=0; smaxs=0;
 	i=1;
-	lword = word.length();
-	while ((i<70) && (a+i<wordCount)) {
-	    astring = stripDelimiters(codec->toUnicode(words[a+i])).lower();
-	    sa = ScoreWord(word,astring);
-	    sb = ScoreWord(word,stripDelimiters(codec->toUnicode(words[b])).lower());
-	    if ((sa==lword)&&(astring.length()<=sa)) {
-		b=a+i; i=260;
-	    } else {
-		if (sa>sb) {
-		    b=a+i;
-		    if (QString::compare(stripDelimiters(codec->toUnicode(words[b])).lower(),word)==0)
-			i=260;
-		}
+	while ((i<150) && (a+i<wordCount) && (smax<100)) {
+	    bstring = codec->toUnicode(words[a+i]).lower();
+	    score  = ScoreWord(wordorig,bstring);
+	    scores = ScoreWord(word,stripDelimiters(bstring));
+	    if (score > smax) {
+		smax = score; max = a+i;
+		if (lwordorig == smax)
+		    smax +=100;				// extra bonus for direct match - break while
 	    }
-	    i++;
+	    if (scores > smaxs) {
+		smaxs = scores; maxs = a+i;
+	    }
+	    ++i;
 	}
-	a=b;
+	a = max;	// raw match preferred
+	if (smaxs > smax)
+	    a = maxs;	// unless stripped has better score
     }
 
     return a;
