@@ -51,7 +51,7 @@
 #include "../icons/configure.xpm"
 #include "../icons/loop.xpm"
 #include "../icons/player_play.xpm"
-#include "../icons/clear_left.xpm"
+#include "../icons/erase_right.xpm"
 #include "../icons/clipboard.xpm"
 #include "../icons/babelfish.xpm"
 
@@ -72,8 +72,8 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 	QHBox *hbox1 = new QHBox(splitterV);
 	QHBox *hbox2 = new QHBox(splitterV);
 	wordInput = new QComboBox( hbox1, "wordInput");
-	listclear = new QPushButton(QIconSet(QPixmap(clear_left_xpm)), QString::null, hbox1, "clear");
-	listclear->setMaximumWidth(40);
+	listclear = new QPushButton(QIconSet(QPixmap(erase_right_xpm)), QString::null, hbox1, "clear");
+	listclear->setMaximumWidth(26);
 	listclear->setFlat(TRUE);
 	hbox1->setMinimumHeight(20);
 	dictList = new QListBox( hbox2, "dictList" );
