@@ -646,6 +646,8 @@ void Kydpdict::UpdateLook()
 	} else {
 		RTFOutput->setPaper(QColor(config->kBckgrndKol));
 		dictList->setPaletteBackgroundColor(QColor(config->kBckgrndKol));
+		wordInput->setBackgroundMode(PaletteBase);
+		wordInput->setPaletteBackgroundColor(config->kBckgrndKol);
 	}
 
 	dictList->setPaletteForegroundColor ( QColor(config->kFontKolor4) );
