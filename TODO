@@ -21,3 +21,5 @@
 - wczytywanie wszystkich slow, ze slownikow w obie strony do jednej listy
 - pomys³y Jamnika na zachowanie okna: pojawianie sie po zmianie pulpitu, autostick?
 - ¯EGL na li¶cie kategorii ma co¶ nie tak z '¿', wywaliæ ups! z listy tipsów (albo nie pokazywaæ)
+    - prawdopodobnie jest popsute - w tej chwili jest w z³ym zestawie znaków,
+      przy wyszukiwaniu porównywane z³e ze z³ym
