@@ -412,7 +412,7 @@ void ydpDictionary::ListScrollUp(int offset) {
 	dictList->blockSignals(FALSE);
 	dictList->setCurrentItem(spacefor-1);	// restore correct item
     } else {
-	QTextCodec *codec = QTextCodec::codecForName("CP1250");
+	static QTextCodec *codec = QTextCodec::codecForName("CP1250");
 	dictList->setAutoUpdate(FALSE);
 	dictList->blockSignals(TRUE);
 	// przepisac o 1 w gore, w ostatni wpisac nowy, current ustawic na przedostatni
@@ -446,7 +446,7 @@ void ydpDictionary::ListScrollDown(int offset) {
 	ListRefresh(topitem-spacefor);
 	dictList->setCurrentItem(0);
     } else {
-	QTextCodec *codec = QTextCodec::codecForName("CP1250");
+	static QTextCodec *codec = QTextCodec::codecForName("CP1250");
 	dictList->setAutoUpdate(FALSE);
 	dictList->blockSignals(TRUE);
 	for (i=spacefor-1;i!=0;i--)
@@ -492,7 +492,7 @@ void ydpDictionary::ListScrollPageDown()
 void ydpDictionary::ListRefresh(int index)
 {
 /* refresh list so index is visible and dictList length is correct */
-    QTextCodec *codec = QTextCodec::codecForName("CP1250");
+    static QTextCodec *codec = QTextCodec::codecForName("CP1250");
     unsigned int spacefor,itemh;
     bool needRefresh=false;
     static unsigned int lastspacefor;
@@ -566,7 +566,7 @@ QString ydpDictionary::stripDelimiters(QString word)
 
 int ydpDictionary::FindWord(QString word)
 {
-    QTextCodec *codec = QTextCodec::codecForName("CP1250");
+    static QTextCodec *codec = QTextCodec::codecForName("CP1250");
     QString midstring, wordorig;
     int a,b;
     int middle,result;
