@@ -296,6 +296,10 @@ Prawy - otwórz menu</translation>
         <source>Choose qualifier color</source>
         <translation>Kolor opisów</translation>
     </message>
+    <message>
+        <source>Use Unicode characters</source>
+        <translation>Wyświetlaj znaki Unicode</translation>
+    </message>
 </context>
 <context>
     <name>ydpDictionary</name>

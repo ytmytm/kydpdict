@@ -66,6 +66,24 @@ Krótki opis opcji konfiguracyjnych z zak³adek 'Ró¿ne' i 'Schowek'
    takie zachowanie (wyj±tek: je¶li okno by³o niewidoczne - po trzykrotnym ESC, to zawsze
    dostanie focus)
 
+D³u¿szego omówienia wymaga opcja 'Wy¶wietlaj znaki Unicode'. Po jej w³±czeniu, znaki
+transkrypcji fonetycznej zamiast pochodziæ z wbudowanych plików graficznych (które nie
+zmieniaj± rozmiaru wraz z fontem) bêd± konwertowane na odpowiednie kody Unicode.
+Oznacza to, ¿e do prawid³owego wy¶wietlania niezbêdne jest posiadanie fontu, który
+te znaki posiada. Obecnie pod Linuksem nie ma ju¿ wiêkszego problemu z instalacj± nowych
+fontów TTF (i dlatego opis instalacji pominê i nie bêdê odpowiada³ na pytania w tej
+sprawie :) o ile siê je posiada. Oto kilka adresów, z których mo¿na ¶ci±gn±æ darmowe
+fonty obs³uguj±ce potrzebny w s³owniku zakres znaków:
+Lucida Sans Unicode:
+http://www.phon.ucl.ac.uk/home/wells/lsansuni.ttf
+Doulos:
+http://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=DoulosSILfont
+W poni¿szych brakuje znaku strza³ki w prawo - odsy³acza, poza tym s± bez zarzutu:
+Caslon:
+http://bibliofile.mc.duke.edu/gww/fonts/Unicode.html
+Gentium:
+http://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=gentium
+
 5. Jakie s± znane wady Kydpdict ?
 Je¶li wydaje ci siê, ¿e program nie potrafi zapamiêtaæ swojego po³o¿enia na ekranie, to
 wiedz, ¿e najprawdopodobniej jest to wina twojego managera okien, który sam wymusza po³o¿enie

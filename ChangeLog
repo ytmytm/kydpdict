@@ -412,3 +412,4 @@ Kydpdict 0.6.6 (xx.xx.2004)
 - TextCodec ustawiony wszêdzie na static - ma³y zysk na wydajno¶ci
 - inny ma³y zysk - ograniczona liczba porównañ je¶li StripDelimiters niczego nie zmienia
 - wyszukiwanie rozmyte - wzglêdem odleg³o¶ci redakcyjnej (edit distance), pomys³: M. Pilichowski
+- nowa opcja: transkrypcja fonetyczna via unicode (wymaga odpowiedniego fontu!)

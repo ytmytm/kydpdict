@@ -39,7 +39,7 @@ public:
 
 private:
 	int  ReadDefinition (int index);
-	QString convert_cp1250 (char *tekst, long int size);
+	QString convert_cp1250 (char *tekst, int size);
 	void FillWordList(void);
 	QString rtf2html (QString definition);
 	void disableTag (int tag_code, int level);

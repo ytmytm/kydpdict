@@ -134,6 +134,8 @@ ydpConfigure::ydpConfigure( kydpConfig *globalconfig, QWidget* parent,  const ch
     checkBox4->setGeometry(10,40,350,20);
     checkBox7 = new QCheckBox(tr("Enable tray icon"), tab3, "checkBox7");
     checkBox7->setGeometry(10,66,350,20);
+    checkBox9 = new QCheckBox(tr("Use Unicode characters"), tab3, "checkBox9");
+    checkBox9->setGeometry(10,92,350,20);
 
     TabWidget1->insertTab( tab3, tr("Miscellaneous") );
 
@@ -353,6 +355,7 @@ void ydpConfigure::WriteDefaults()
     checkBox7->setChecked(cnf->dock);
     checkBox5->setChecked(cnf->autoPlay);
     checkBox8->setChecked(cnf->setFocusOnSelf);
+    checkBox9->setChecked(cnf->unicodeFont);
     UpdateLabels();
     delete cnf;
 }
@@ -374,6 +377,7 @@ void ydpConfigure::showEvent ( QShowEvent * )
     checkBox7->setChecked(config->dock);
     checkBox5->setChecked(config->autoPlay);
     checkBox8->setChecked(config->setFocusOnSelf);
+    checkBox9->setChecked(config->unicodeFont);
     UpdateLabels();
 }
 
@@ -398,6 +402,7 @@ ydpConfigure::~ydpConfigure()
 		config->dock = checkBox7->isChecked();
 		config->autoPlay = checkBox5->isChecked();
 		config->setFocusOnSelf = checkBox8->isChecked();
+		config->unicodeFont = checkBox9->isChecked();
 		config->fontTransFont = cFont;
 	}
 }

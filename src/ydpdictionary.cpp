@@ -246,30 +246,64 @@ void ydpDictionary::CloseDictionary()
     fData.close();
 }
 
-QString ydpDictionary::convert_cp1250(char *tekst, long int size)
+QString ydpDictionary::convert_cp1250(char *tekst, int size)
 {
-    const char *table_cp_phonetic[]=TABLE_PHONETIC_ISO;
-    unsigned char *input;
-    unsigned char ch;
-    long int i,j;
-    char a;
     QString out;
+    unsigned char *input = (unsigned char *)tekst;
+    unsigned char ch;
+    char a;
+    int i;
 
-    input = (unsigned char *)tekst;
+    if (cnf->unicodeFont) {
+	// prawdopodobnie jesli to jest wlaczone, to czesc zabaw z lokalami jest zbedna
+	const static int table_cp_unicode[] = {
+	    0x002e, 0x002e, 0x0254, 0x0292, 0x002e, 0x0283, 0x0065, 0x028c,	// 80-87
+	    0x0259, 0x03b8, 0x026a, 0x0251, 0x015a, 0x02d0, 0x00b4, 0x002e,	// 88-8f
+	    0x014b, 0x002e, 0x002e, 0x002e, 0x002e, 0x002e, 0x002e, 0x00f0,	// 90-97
+	    0x00e6, 0x002e, 0x002e, 0x002e, 0x015b, 0x002e, 0x002e, 0x017a,	// 98-9f
+	    0x002e, 0x0104, 0x002e, 0x0141, 0x00a4, 0x013d, 0x015a, 0x00a7,	// a0-a7
+	    0x00a8, 0x0160, 0x015e, 0x0164, 0x0179, 0x00ad, 0x017d, 0x017b,	// a8-af
+	    0x00b0, 0x0105, 0x002e, 0x0142, 0x00b4, 0x013e, 0x015b, 0x002e,	// b0-b7
+	    0x00b8, 0x0105, 0x015f, 0x0165, 0x017a, 0x002e, 0x017e, 0x017c,	// b8-bf
+	    0x0154, 0x00c1, 0x00c2, 0x0102, 0x00c4, 0x013d, 0x0106, 0x00c7,	// c0-c7
+	    0x010c, 0x00c9, 0x0118, 0x00cb, 0x0114, 0x00cd, 0x00ce, 0x010e,	// c8-cf
+	    0x00d0, 0x0143, 0x0147, 0x00d3, 0x00d4, 0x00d5, 0x00d6, 0x00d7,	// d0-d7
+	    0x0158, 0x00d9, 0x00da, 0x00db, 0x00dc, 0x00dd, 0x0162, 0x00df,	// d8-df
+	    0x0155, 0x00e1, 0x00e2, 0x00e3, 0x00e4, 0x013e, 0x0107, 0x00e7,	// e0-e7
+	    0x010d, 0x00e9, 0x0119, 0x00eb, 0x00ec, 0x00ed, 0x00ee, 0x010f,	// e8-ef
+	    0x0111, 0x0144, 0x0148, 0x00f3, 0x00f4, 0x00f5, 0x00f6, 0x00f7,	// f0-f7
+	    0x0159, 0x00f9, 0x00fa, 0x00fb, 0x00fc, 0x00fd, 0x0163, 0x002e,	// f8-ff
+        };
 
-    for (i=0; i!=size; i++) {
-	if (*input > 127) {
-	    j=0;
-	    do {
-		ch=table_cp_phonetic[*input-128][j];
-		out +=ch;
-		j++;
-	    } while (table_cp_phonetic[*input-128][j]!='\0');
-	} else {
-	    a = *input;
-	    out += a;
+	for (i=0; i!=size; i++) {
+	    if (*input > 127) {
+		// bierzemy z tabeli
+		ch = *input;
+	        out += QChar(table_cp_unicode[*input-128]);
+	    } else {
+		a = *input;
+		out += a;
+	    }
+	    input++;
 	}
-	input++;
+    } else {
+	const static char *table_cp_phonetic[]=TABLE_PHONETIC_ISO;
+	int j;
+
+	for (i=0; i!=size; i++) {
+	    if (*input > 127) {
+		j=0;
+		do {
+		    ch = table_cp_phonetic[*input-128][j];
+		    out += ch;
+		    j++;
+		} while (table_cp_phonetic[*input-128][j]!='\0');
+	    } else {
+		a = *input;
+		out += a;
+	    }
+	    input++;
+	}
     }
     return out;
 }
@@ -897,7 +931,7 @@ it++;
 			}
     			token[tp] = '\0';
 			def--;
-			QString tmp = convert_cp1250(token, (long int) tp);
+			QString tmp = convert_cp1250(token, tp);
 
 			if((cnf->language == LANG_ENGLISH) && cnf->toolTips && link_tag) {
 				tmp = insertHyperText(tmp, level);

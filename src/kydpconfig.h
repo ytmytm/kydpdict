@@ -36,6 +36,7 @@ public:
 	QFont   fontTransFont;
 	bool	toPolish;
 	bool	toolBarVisible;
+	bool	unicodeFont;
 	int language;
 	int kGeometryX, kGeometryY, kGeometryW, kGeometryH;
 	bool kMaximized;

@@ -94,6 +94,7 @@ void kydpConfig::load(void)
 	spV1 = settings.readNumEntry("/splitterV_1", 30);
 	spV2 = settings.readNumEntry("/splitterV_2", 236);
 	transFont = settings.readEntry("/translation_font", "Helvetica");
+	unicodeFont = settings.readBoolEntry("/unicode_font", FALSE);
 	toolBarVisible = settings.readBoolEntry("/toolbar_visible", TRUE);
 	settings.endGroup();
 	settings.beginGroup("/behavior");
@@ -148,6 +149,7 @@ void kydpConfig::save(void)
 	settings.writeEntry("/splitterV_1", spV1);
 	settings.writeEntry("/splitterV_2", spV2);
 	settings.writeEntry("/translation_font", fontTransFont.toString());
+	settings.writeEntry("/unicode_font", unicodeFont);
 	settings.writeEntry("/toolbar_visible", toolBarVisible);
 	settings.endGroup();
 	settings.beginGroup("/behavior");

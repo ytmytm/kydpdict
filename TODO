@@ -18,7 +18,10 @@
     - obecnie niewykonalne, te same skróty rozrzucone w kilku miejscach - trudno utrzymaæ
 - focus chyba nie powinien przeskakiwaæ z listy do edit? poruszanie siê kursorami robi siê
     nieintuicyjne
-- ydpFuzzySearch jest uwik³ane (ten void* z konstruktora):
+- ydpFuzzySearch
     - chyba powinno jako¶ fonty ustawiaæ
     - poprawic uk³ad geometryczny dialogu?
     - niskie podobieñstwo chyba jest zbyt niskie (10 zmian ³apie chyba ca³y s³ownik)
+- weryfikacja tablicy konwersji unicode z ydpdict
+- w starej tablicy: 0x83 to '3' (f3), ale nie chodzi o '3' jak w 'bird' (bo w s³owniku YDP jest
+  tam schwa) tylko o '¿' (jak w pleasure), na obrazku inny ogonek; ten z kpwndict jest zbyt brzydki
