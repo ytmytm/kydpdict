@@ -47,6 +47,7 @@ class Kydpdict : public QMainWindow
 		void SwapLang(bool direction, int lang);
 		void PasteClipboard (QString haslo);
 		void showEvent(QShowEvent *ashowEvent);
+		void updateUserTimestamp(void);
 
 		// global configuration
 		kydpConfig *config;

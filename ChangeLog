@@ -362,3 +362,5 @@ Kydpdict 0.6.1 (xx.xx.2004)
 - LANG=pl_PL ustawione na sztywno (b³±d localeAwareCompare z Qt, byc moze przyczyna jest inna ale
   to pomog³o)
 - wyszukiwanie wyrazów wreszcie powinno byæ niezawodne
+- updateTimestamp - od¶wie¿a informacje o sobie (na podstawie klippera+kapp+¼ród³a qt)
+  znowu testowanie schowka dzia³a prawid³owo i nie k³óci siê z klipperem

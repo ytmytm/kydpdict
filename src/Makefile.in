@@ -50,7 +50,7 @@ kydpdict.moc.o: kydpdict.h
 		$(CXX) -c kydpdict.moc.cpp $(QT_INCLUDE) $(CXXFLAGS)
 
 kydpdict.o:
-		$(CXX) -c kydpdict.cpp $(QT_INCLUDE) $(CXXFLAGS)
+		$(CXX) -c kydpdict.cpp $(X_CFLAGS) $(QT_INCLUDE) $(CXXFLAGS)
 
 ydpdictionary.o:
 		$(CXX) -c ydpdictionary.cpp $(QT_INCLUDE) $(CXXFLAGS)

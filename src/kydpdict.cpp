@@ -60,8 +60,18 @@
 #include "kydpconfig.h"
 #include "dock_widget.h"
 
+#ifndef WITHOUT_X11
+// this is for updateUserTimestamp
+#include <X11/Xlib.h>
+#include <X11/Xatom.h>
+extern Time qt_x_user_time;	// this is from Qt
+#endif
+
+void updateUserTimestamp(void);
+
 Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name)
 {
+	updateUserTimestamp();
 
 	toolBar = new QToolBar(this, "toolbar");
 	toolBar->setLabel(tr("Kydpdict toolbar"));
@@ -338,6 +348,8 @@ void Kydpdict::newClipData()
 {
     int result;
     static int lastresult=-1;
+
+    updateUserTimestamp();
 
     // do nothing if clipboard tracking is disabled
     if (!(config->clipTracking))
@@ -738,4 +750,28 @@ void Kydpdict::updateText( const QString & href )
 
 	if(tmp.toInt() >= 0 && tmp.toInt() < 121)
 	t->tekst = tab[tmp.toInt()];
+}
+
+void Kydpdict::updateUserTimestamp(void) {
+#ifndef WITHOUT_X11
+#if defined Q_WS_X11
+    // this is from kapplication.cpp, as suggested by klipper.cpp, quote:
+    // QClipboard uses qt_x_user_time as the timestamp for selection operations.
+    // It is updated mainly from user actions, but Klipper polls the clipboard
+    // without any user action triggering it, so qt_x_user_time may be old,
+    // which could possibly lead to QClipboard reporting empty clipboard.
+    // Therefore, qt_x_user_time needs to be updated to current X server timestamp.
+    unsigned long time;
+    // get current X timestamp
+    Window w = XCreateSimpleWindow( qt_xdisplay(), qt_xrootwin(), 0, 0, 1, 1, 0, 0, 0 );
+    XSelectInput( qt_xdisplay(), w, PropertyChangeMask );
+    unsigned char data[ 1 ];
+    XChangeProperty( qt_xdisplay(), w, XA_ATOM, XA_ATOM, 8, PropModeAppend, data, 1 );
+    XEvent ev;
+    XWindowEvent( qt_xdisplay(), w, PropertyChangeMask, &ev );
+    time = ev.xproperty.time;
+    XDestroyWindow( qt_xdisplay(), w );
+    qt_x_user_time = time;
+#endif
+#endif
 }
