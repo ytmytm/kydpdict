@@ -210,7 +210,7 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 	menu->insertItem(  tr("&Options"), settings );
 	menu->insertItem(  tr("&Help"), help );
 
- 	t = new DynamicTip( RTFOutput );
+ 	myDynamicTip = new DynamicTip( RTFOutput );
 
 	toolBar->addSeparator();
 	but_SwapLang = new QToolButton(QIconSet(QPixmap(loop_xpm)), tr("Swap direction"), QString::null, this, SLOT(SwapLanguages()), toolBar, "but_swaplang" );
@@ -279,7 +279,7 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 Kydpdict::~Kydpdict()
 {
     	myDict->CloseDictionary();
- 	delete t;
+ 	delete myDynamicTip;
  	delete m_checkTimer;
 	delete escTimer;
 	delete splitterH;
@@ -766,7 +766,7 @@ void Kydpdict::updateText( const QString & href )
 	tmp.remove(0, 10);
 
 	if(tmp.toInt() >= 0 && tmp.toInt() < 121)
-	t->tekst = tab[tmp.toInt()];
+	myDynamicTip->tekst = tab[tmp.toInt()];
 }
 
 void Kydpdict::updateUserTimestamp(void) {

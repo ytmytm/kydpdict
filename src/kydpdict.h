@@ -68,7 +68,7 @@ class Kydpdict : public QMainWindow
 		ydpDictionary *myDict;
 
 		// and others
-		DynamicTip * t;
+		DynamicTip *myDynamicTip;
 		QSplitter *splitterH, *splitterV;
 		QToolBar *toolBar;
 		QToolButton *but_EnPl, *but_PlEn, *but_DePl, *but_PlDe, *but_Play;
