@@ -14,9 +14,6 @@
    to... co? jak to mia³oby wygl±daæ?)
 - FindWord napisac ³adniej (potrzeba pomys³u! :)
 - ludzie z pcola:
-    - zeby nie bylo 'A' zaraz po uruchomieniu
     - na Mdk10 robi floating point exception przy uruchomieniu
       (dzielenie przez 0!?! - zmiana rozmiaru? page_size?)
-    - zaraz po uruchomieniu czyscic schowek albo ignorowac pierwsza jego
-      zawartosc
-    - podobno nie dziala ignorowanie schowka
+    - tak, jak ydpdict - zwiekszac litery przy otwieraniu pliku?

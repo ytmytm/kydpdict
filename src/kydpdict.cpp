@@ -244,6 +244,7 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 	this->show();
 	myDict->ListRefresh(0);
 	dictList->setCurrentItem(0);
+        wordInput->clearEdit();
 
 	RTFOutput->mimeSourceFactory()->setFilePath( config->tipsPath );
 	RTFOutput->mimeSourceFactory()->setExtensionType("html", "text/html;charset=iso8859-2");
