@@ -21,9 +21,8 @@ class ydpFuzzySearch : public QDialog
 	Q_OBJECT
 
 public:
-    ydpFuzzySearch(void *ydpParent = 0, QWidget *parent = 0, const char* name = 0, bool modal = FALSE );
+    ydpFuzzySearch(QWidget *parent = 0, const char* name = 0, bool modal = FALSE);
     ~ydpFuzzySearch();
-    void update(const int wordnum = -1, char **words = NULL);
 
 private:
     int wordCount;
@@ -33,11 +32,16 @@ private:
     QSlider *distSlider;
     int min3(const int a, const int b, const int c);
     int editDistance(const char*slowo1, const char*slowo2);
-    void *ydpDict;
 
 private slots:
     void doSearch();
     void newFromClick(QListBoxItem *lbi);
+
+public slots:
+    void updateDictionary(const int wordnum = -1, char **words = NULL);
+
+signals:
+    void textChanged(const QString &);
 };
 
 #endif	// YDPFUZZYSEARCH_H

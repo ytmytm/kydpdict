@@ -14,14 +14,9 @@
 #include "ydpfuzzysearch.h"
 #include "kydpdict.h"
 
-ydpFuzzySearch::ydpFuzzySearch (void* ydpParent, QWidget *parent, const char* name, bool modal)
+ydpFuzzySearch::ydpFuzzySearch (QWidget *parent, const char* name, bool modal)
  : QDialog(parent, name, modal)
 {
-    if (ydpParent == 0)
-	return;
-
-    ydpDict = ydpParent;
-
     setFixedSize(400,260);
     setCaption(tr("Fuzzy search"));
 
@@ -62,7 +57,7 @@ ydpFuzzySearch::~ydpFuzzySearch()
 
 }
 
-void ydpFuzzySearch::update(const int wordnum, char **words)
+void ydpFuzzySearch::updateDictionary(const int wordnum, char **words)
 {
     if ((wordnum<0) || (words == NULL))
 	return;
@@ -88,7 +83,7 @@ void ydpFuzzySearch::doSearch()
 void ydpFuzzySearch::newFromClick(QListBoxItem *lbi)
 {
     QString result = listBox->text(listBox->currentItem());
-    ((Kydpdict*)ydpDict)->showEntry(&result);
+    emit textChanged(result);
 }
 
 int ydpFuzzySearch::min3(const int a, const int b, const int c)

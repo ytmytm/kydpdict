@@ -112,7 +112,13 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 	config = new kydpConfig;
 	config->load();
 
- 	myDict = new ydpDictionary(config,(void*)this,dictList);
+ 	myDict = new ydpDictionary(config,dictList);
+
+	mySearch = new ydpFuzzySearch(parent);
+	mySearch->setModal(FALSE);
+	// this has to be before OpenDictionary so the notification will be passed
+	connect(myDict, SIGNAL(dictionaryChanged(const int, char **)), mySearch, SLOT(updateDictionary(const int, char **)));
+	connect(mySearch, SIGNAL(textChanged(const QString&)), this, SLOT(newFromLine(const QString&)));
 
 	wasMaximized = config->kMaximized;
 	setGeometry (config->kGeometryX, config->kGeometryY, config->kGeometryW, config->kGeometryH);
@@ -164,7 +170,7 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 	QPopupMenu *file = new QPopupMenu( this );
 	Q_CHECK_PTR( file );
 	file->insertItem(QPixmap(exit_xpm), tr("&Quit"), qApp, SLOT(quit()), QKeySequence( tr("Ctrl+Q", "File|Quit") ) );
-	file->insertItem(tr("&Fuzzy search"), myDict, SLOT(FuzzySearch()), QKeySequence( tr("Ctrl+F", "File|Fuzzy search") ) );
+	file->insertItem(tr("&Fuzzy search"), this, SLOT(FuzzySearch()), QKeySequence( tr("Ctrl+F", "File|Fuzzy search") ) );
 
 	QPopupMenu *settings = new QPopupMenu( this );
 	Q_CHECK_PTR( settings );
@@ -482,6 +488,11 @@ void Kydpdict::showEvent(QShowEvent *ashowEvent)
 	newFromSelection();
     QMainWindow::showEvent(ashowEvent);
     m_checkTimer->start(TIMER_PERIOD, FALSE);
+}
+
+void Kydpdict::FuzzySearch()
+{
+    mySearch->show();
 }
 
 void Kydpdict::PlaySelected (int index)

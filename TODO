@@ -20,8 +20,5 @@
     nieintuicyjne
 - ydpFuzzySearch jest uwik³ane (ten void* z konstruktora):
     - chyba powinno jako¶ fonty ustawiaæ
-    - potrzebuje update z ydpDictionary, ale te¿
-    - potrzebuje showEntry z Kydpdict ¿eby uaktualniæ wynik (tylko po to w ydpDictionary leci void*)
-    - jako¶ ³adnie slotami/sygna³ami rozwi±zaæ (i tak potrzeba mieæ wska¼nik na obiekt...)
     - poprawic uk³ad geometryczny dialogu?
     - niskie podobieñstwo chyba jest zbyt niskie (10 zmian ³apie chyba ca³y s³ownik)

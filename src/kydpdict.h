@@ -27,6 +27,7 @@
 #include "kydpconfig.h"
 #include "ydpconfigure.h"
 #include "kdynamictip.h"
+#include "ydpfuzzysearch.h"
 
 class Kydpdict : public QMainWindow
 {
@@ -65,6 +66,7 @@ class Kydpdict : public QMainWindow
 
 		// dictionary class
 		ydpDictionary *myDict;
+		ydpFuzzySearch *mySearch;
 
 		// and others
 		DynamicTip *myDynamicTip;
@@ -97,6 +99,7 @@ class Kydpdict : public QMainWindow
 		void ShowAbout ();
 		void ShowAboutQt ();
 		void ConfigureKydpdict ();
+		void FuzzySearch();
 		void ToggleClipTracking ();
 		void ToolbarShowHide (bool visible);
 		void ShowToolbar ();
