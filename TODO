@@ -20,6 +20,7 @@
     - chyba powinno jako¶ fonty ustawiaæ (wtedy geometria listy i dialogu musi byæ zmienna)
     - poprawic uk³ad geometryczny dialogu?
     - niskie podobieñstwo chyba jest zbyt niskie (10 zmian ³apie chyba ca³y s³ownik)
+    - powinien znajdowaæ w¶ród rozmytych najlepsze dopasowanie i zaznaczaæ na li¶cie jako default
 - w starej tablicy: 0x83 to '3' (f3), ale nie chodzi o '3' jak w 'bird' (bo w s³owniku YDP jest
   tam schwa) tylko o '¿' (jak w pleasure), na obrazku inny ogonek; ten z kpwndict jest zbyt brzydki
 - sta³e 'przerysowywanie' ikonki w tray'u we fluxboksie, porównaæ z kadu
