@@ -686,6 +686,8 @@ void Kydpdict::UpdateLook()
 
 	NewDefinition(dictList->currentItem() < 0 ? 0 : dictList->currentItem() );
 
+	myDict->ListRefresh(dictList->currentItem()+myDict->topitem);
+
 	scrollBar->setMaxValue(myDict->wordCount);
 }
 

@@ -296,6 +296,10 @@ void ydpDictionary::FillWordList()
     /* prepare mmap stuff */
     f = open(fIndex.name(), O_RDONLY);
     page_size = (size_t)sysconf(_SC_PAGESIZE);
+    if (page_size==0) {
+	printf("codename: yellow page!!! mail this to ytm@elysium.pl\n");
+	page_size = 4096;
+    }
     length = ((fIndex.size() / page_size)+1)*page_size;
     filedata = (char*)mmap(NULL, length, PROT_READ, MAP_PRIVATE, f, 0);
 
@@ -336,9 +340,14 @@ void ydpDictionary::FillWordList()
 
 // offset == 1 - o linie, !=1 - o strone widoczna
 void ydpDictionary::ListScrollUp(int offset) {
-    int i,spacefor;
+    int i,spacefor,itemh;
 
-    spacefor=dictList->height()/dictList->itemHeight();
+    itemh = dictList->itemHeight();
+    if (itemh==0) {
+	printf("codename: upper larch!!! mail this to ytm@elysium.pl!!!\n");
+	itemh=10;
+    }
+    spacefor=dictList->height() / itemh;
 
     if (topitem+spacefor == wordCount)
 	return;
@@ -368,12 +377,17 @@ void ydpDictionary::ListScrollUp(int offset) {
 }
 
 void ydpDictionary::ListScrollDown(int offset) {
-    int i, spacefor;
+    int i, spacefor, itemh;
 
     if (topitem==0)
 	return;
 
-    spacefor=dictList->height()/dictList->itemHeight();
+    itemh = dictList->itemHeight();
+    if (itemh == 0) {
+	printf("codename: lower larch!!! mail this to ytm@elysium.pl!!!\n");
+	itemh=10;
+    }
+    spacefor=dictList->height()/itemh;
 
     if (offset != 1) {
 	ListRefresh(topitem-spacefor);
@@ -426,7 +440,7 @@ void ydpDictionary::ListRefresh(int index)
 {
 /* refresh list so index is visible and dictList length is correct */
     QTextCodec *codec = QTextCodec::codecForName("CP1250");
-    unsigned int spacefor;
+    unsigned int spacefor,itemh;
     bool needRefresh=false;
     static unsigned int lastspacefor;
     int i;
@@ -434,8 +448,14 @@ void ydpDictionary::ListRefresh(int index)
     if (index<0)
 	index=0;
 
+    /* now, before showing QMessageBox with bad paths error, ListRefresh gots called
+       and we have nothing yet, so we must quit. Moving connect signal lower should help,
+       but it wouldn't be obvious why one connect signal is in a different place */
+    itemh = dictList->itemHeight();
+    if (itemh==0)
+	return;
     /* handle size change */
-    spacefor=dictList->height()/dictList->itemHeight();
+    spacefor=dictList->height()/itemh;
     dictList->setAutoUpdate(FALSE);
     if (spacefor!=lastspacefor) {
 	needRefresh=true;
