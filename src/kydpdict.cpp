@@ -13,7 +13,6 @@
 #include <qframe.h>
 #include <qmessagebox.h>
 #include <qdialog.h>
-#include <qpushbutton.h>
 #include <qtextbrowser.h>
 #include <qhbox.h>
 #include <qvbox.h>

@@ -58,7 +58,6 @@ class Kydpdict : public QMainWindow
 		QListBox *dictList;
 		QComboBox *wordInput;
 		QTextBrowser *RTFOutput;
-		QPushButton *listclear;
 		QMenuBar *menu;
 		QScrollBar *scrollBar;
 		QPopupMenu *trayMenu;
