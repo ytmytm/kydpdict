@@ -310,7 +310,7 @@ Kydpdict 0.5.9 (24.1.2004)
 - historia combo ma limit na 25 wyrazow. moze teraz nie bedzie sprawiac problemow
 
 =====================================================================
-Kydpdict 0.5.10 (xx.xx.2004)
+Kydpdict 0.5.10 (20.2.2004)
 - nieco przyspieszone ³adowanie s³ownika; ³adniejszy kod FillWordList (AP)
 - pozycja qtextedit jest resetowana (gdy by³y dwie d³ugie definicje, to suwak zostawa³ na
   starej, przesuniêtej)
