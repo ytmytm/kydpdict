@@ -342,7 +342,7 @@ void Kydpdict::PasteClipboard(QString haslo)
 	    return;
 
 	// do nothing if it comes from us
-	if (((RTFOutput->hasSelectedText()||wordInput->hasSelectedText()) && (config->ignoreOwnSelection))
+	if (((RTFOutput->hasSelectedText())||(wordInput->lineEdit()->hasSelectedText())) && (config->ignoreOwnSelection))
 	    return;
 
 	QString contents = haslo.simplifyWhiteSpace();
