@@ -1,4 +1,5 @@
 - BACKBENCHER - segfault; b³±d powoduj± zmiany miêdzy 0.5.2pre2 a 0.5.2pre3 w ydpdictionary
+- nie reagowac na zmiany w schowku pochodzace z kydpdict (sprawdzenie pochodzenia jest wogole mozliwe?)
 - zmiana rozmiaru splittera poziomego ma zmieniaæ rozmiar guzika 'usun' i editboxa
 - combo z histori± ostatnich zamiach edita? (ma to sens?)
 - skrót klawiaturowy na zamianê jêzyków
@@ -19,9 +20,9 @@
     - konfiguracja czcionek i/lub ich stylu
 - szukanie hasla w zasobach slownika
 - optymalizacja ladowania indeksu
-    - wczytywaæ te ~6MB w jednym kawa³ku? (who cares? it runs Linux+Qt, must be a poweful one)
-    - zastapic listbox przez listview?
-    - napisaæ sobie w³asny widget z QDict do trzymania danych?
+    - napisaæ sobie w³asny widget z QDict do trzymania danych
+      (najwiecej czasu zajmuje tworzenie nowych obiektow przy InsertItem, moze lepiej to
+       zamienic na statyczna tablice QStringow tworzana tylko raz? wordcount jest znany)
 - przejscie z tlumaczeniem na gettext
     - makra, ¿eby nic w kodzie nie zmieniæ
     - makefiles (.po, .mo; sciezki;)

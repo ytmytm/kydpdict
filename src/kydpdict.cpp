@@ -7,9 +7,6 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "kydpdict.h"
-#include "kydpconfig.h"
-
 #include <qmime.h>
 #include <qimage.h>
 #include <qpixmap.h>
@@ -26,6 +23,7 @@
 #include <qvaluelist.h>
 #include <qapplication.h>
 #include <qtextcodec.h>
+#include <qgrid.h>
 
 #include "../icons/exit.xpm"
 #include "../icons/tux.xpm"
@@ -41,7 +39,8 @@
 #include "../icons/f7.xpm"
 #include "../icons/f8.xpm"
 
-#include <qgrid.h>
+#include "kydpdict.h"
+#include "kydpconfig.h"
 
 Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name)
 {

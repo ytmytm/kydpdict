@@ -190,3 +190,10 @@ Kydpdict 0.5.3pre1 (12.7.2003)
 - ³ata na obs³ugê tipsów z nawiasami (AP)
 - usuniêcie tablicy CP_ISO, konwersja '¶¦' w CP_PHONETIC (AP)
 - nowe pozycje w TODO
+- poprawione male oszustwo w progressbar przy ladowaniu indeksu
+
+=====================================================================
+Kydpdict 0.5.3pre2 (12.7.2003)
+- upiekszenie #includes :)
+- ladowanie indeksu przyspieszone o 20% (!), bez powaznych zmian lepiej
+  chyba sie nie da

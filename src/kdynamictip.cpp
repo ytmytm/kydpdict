@@ -7,9 +7,10 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "kdynamictip.h"
 #include <qapplication.h>
 #include <qcursor.h>
+
+#include "kdynamictip.h"
 
 DynamicTip::DynamicTip( QWidget * parent )
     : QToolTip( parent )

@@ -8,11 +8,12 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "ydpdictionary.h"
 #include <qmessagebox.h>
 #include <qprogressdialog.h>
 #include <qprocess.h>
 #include <qtextcodec.h>
+
+#include "ydpdictionary.h"
 
 #define color1 cnf->kFontKolor1
 #define color2 cnf->kFontKolor2
@@ -150,55 +151,49 @@ void ydpDictionary::FillWordList()
   QProgressDialog progress;
   QTextCodec *codec = QTextCodec::codecForName("ISO8859-2");
 
-  unsigned long pos;
-  unsigned long index[2];
+  unsigned long curpos;
+  unsigned char *indexBuffer;
   int current=0, bp;
-  char buf[256], ch;
-
+  char buf[256];
+ 
   /* read # of words */
+  indexBuffer = new unsigned char[fIndex.size()];
+  fIndex.readBlock((char*)indexBuffer,fIndex.size());
   wordCount=0;
-  fIndex.at(0x08);
-  fIndex.readBlock((char*)&wordCount,2);
-
+  wordCount = (indexBuffer[9] << 8) + indexBuffer[8];
   indexes = new unsigned long [wordCount+2];
 
+  /* setup visual side */
   progress.setTotalSteps(wordCount / 256);
   progress.setMinimumDuration(500);
   progress.show();
+  dictList->setAutoUpdate(FALSE);
 
   /* read index table offset */
-  pos=0;
-  fIndex.at(0x10);
-  fIndex.readBlock((char*)&pos, 4);
-  fIndex.at(pos);
+  curpos = *((long*)&indexBuffer[0x10]) + 4;
 
-  dictList->setAutoUpdate(FALSE);
   /* read index table */
   do {
     if ((current % 256)==0) 
 	progress.setProgress(current / 256);
-//  this is a trick - instead of fssek(cur+4), read ulong we read ulong twice
-//  and throw out first 4 bytes
-    fIndex.readBlock((char*)&index[0], 4+4);
-    indexes[current]=index[1];
 
-    bp=0;
-    do {
-	ch = fIndex.getch();
-	buf[bp < 255 ? bp++ : bp] = ch;
-    } while(ch);
-    buf[bp]=0;
+    indexes[current]=*((long*)&indexBuffer[curpos]);
+    curpos+=4;
+    strncpy(buf,(const char*)&indexBuffer[curpos],255);
+    bp = strlen(buf);
+    curpos+=bp+1+4;
 
-    p = convert_cp1250(buf,bp-1);
-    p = codec->toUnicode(p.fromAscii(p));
-    dictList->insertItem(p);
+    p = convert_cp1250(buf,bp);
+    dictList->insertItem(codec->toUnicode(p.fromAscii(p)));
   } while (++current < wordCount);
+
+  delete [] indexBuffer;
 
   /* omijanie bledow w slowniku... */
   QListBoxItem *result;
   if((result = dictList->findItem("Proven<")))
   	dictList->changeItem(QString("Provencial"), dictList->index(result));
-
+ 
   dictList->setCurrentItem(0);
   dictList->setAutoUpdate(TRUE);
   dictList->repaint();

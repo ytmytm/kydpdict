@@ -6,12 +6,13 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-#include "ydpconfigure.h"
 
 #include <qpixmap.h>
 #include <qfiledialog.h>
 #include <qcolordialog.h>
 #include <qtextbrowser.h>
+
+#include "ydpconfigure.h"
 
 ydpConfigure::ydpConfigure( kydpConfig *globalconfig, QWidget* parent,  const char* name, bool modal )
     : QDialog( parent, name, modal )
