@@ -18,7 +18,7 @@ distclean:
 	-rm config.log config.status aclocal.m4 configure Makefile
 
 install:
-	mkdir -p $(bindir)
-	mkdir -p $(datadir)/doc/$(PACKAGE_NAME)-$(PACKAGE_VERSION)
-	install -m 644 AUTHORS COPYING ChangeLog INSTALL README TODO $(datadir)/doc/$(PACKAGE_NAME)-$(PACKAGE_VERSION)
+	mkdir -p $(DESTDIR)$(bindir)
+	mkdir -p $(DESTDIR)$(datadir)/doc/$(PACKAGE_NAME)-$(PACKAGE_VERSION)
+	install -m 644 AUTHORS COPYING ChangeLog INSTALL README TODO $(DESTDIR)$(datadir)/doc/$(PACKAGE_NAME)-$(PACKAGE_VERSION)
 	$(MAKE) -C src install

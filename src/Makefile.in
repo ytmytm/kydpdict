@@ -89,11 +89,11 @@ translation: kydpdict.pro
 	$(LRELEASE) kydpdict.pro
 
 install: kydpdict
-		install -s -m 755 kydpdict $(bindir)
-		install -m 755 -d $(LOCALEDIR)
-		install -m 755 -d $(KYDPDATADIR)
-		install -m 644 kydpdict_pl.qm $(LOCALEDIR)
-		install -m 644 tips.html $(KYDPDATADIR)
+		install -s -m 755 kydpdict $(DESTDIR)$(bindir)
+		install -m 755 -d $(DESTDIR)$(LOCALEDIR)
+		install -m 755 -d $(DESTDIR)$(KYDPDATADIR)
+		install -m 644 kydpdict_pl.qm $(DESTDIR)$(LOCALEDIR)
+		install -m 644 tips.html $(DESTDIR)$(KYDPDATADIR)
 
 clean:
 		-rm *.o *.moc.cpp *.qm .depend

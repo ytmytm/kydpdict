@@ -370,3 +370,8 @@ Kydpdict 0.6.1 (22.04.2004)
 - minimalizacja programu nie ma wp³ywu na przechwytywanie schowka (je¶li muszê t³umaczyæ to
   zachowanie po raz n-ty, to ze mn± jest co¶ nie tak, nie z innymi lud¼mi :)
 - po zminimalizowaniu klikanie na rybê przywraca okno
+
+=====================================================================
+Kydpdict 0.6.2 (24.04.2004)
+- usuniêcie problemu z kompilacj± na Qt 3.x gdzie x=1,2 (Marcin Zaj±czkowski, mszpak@wp.pl)
+- make install honoruje DESTDIR (MZ)
