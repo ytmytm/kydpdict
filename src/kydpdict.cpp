@@ -62,9 +62,11 @@
 
 #ifndef WITHOUT_X11
 // this is for updateUserTimestamp
+#if QT_VERSION >= 0x030300
 #include <X11/Xlib.h>
 #include <X11/Xatom.h>
 extern Time qt_x_user_time;	// this is from Qt
+#endif
 #endif
 
 Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name)
@@ -771,6 +773,7 @@ void Kydpdict::updateText( const QString & href )
 
 void Kydpdict::updateUserTimestamp(void) {
 #ifndef WITHOUT_X11
+#if QT_VERSION >= 0x030300
 #if defined Q_WS_X11
     // this is from kapplication.cpp, as suggested by klipper.cpp, quote:
     // QClipboard uses qt_x_user_time as the timestamp for selection operations.
@@ -789,6 +792,7 @@ void Kydpdict::updateUserTimestamp(void) {
     time = ev.xproperty.time;
     XDestroyWindow( qt_xdisplay(), w );
     qt_x_user_time = time;
+#endif
 #endif
 #endif
 }
