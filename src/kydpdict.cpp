@@ -456,6 +456,10 @@ void Kydpdict::NewFromLine (const QString &newText)
 	result=myDict->FindWord(newText);
 	myDict->ListRefresh(result);
 	dictList->setCurrentItem(result-myDict->topitem);
+	// ugly hack, for some reason the signal highlighted from above setCurrentItem
+	// is not triggered/delivered with the very last word in the dictionary
+	if (result==myDict->wordCount-1)
+	    NewDefinition(result-myDict->topitem);
     }
 }
 
