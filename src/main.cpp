@@ -23,6 +23,8 @@ int main (int argc, char *argv[])
 {
 	QString locname;
 
+	putenv("LANG=pl_PL");	// otherwise localeAwareCompare fails miserably
+
 	a = new QApplication(argc, argv, "Kydpdict");
 
 	QTranslator myapp( 0 );
