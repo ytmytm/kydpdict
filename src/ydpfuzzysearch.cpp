@@ -75,15 +75,15 @@ void ydpFuzzySearch::doSearch()
     listBox->clear();
     int i;
     int distance = distSlider->value();
+    QCString tekst = codec->fromUnicode(wordEdit->text());
     for (i=0;i<wordCount;i++)
-	if (editDistance(codec->fromUnicode(wordEdit->text()),wordList[i]) < distance)
+	if (editDistance(tekst,wordList[i]) < distance)
 	    listBox->insertItem(codec->toUnicode(wordList[i]));
 }
 
 void ydpFuzzySearch::newFromClick(QListBoxItem *lbi)
 {
-    QString result = listBox->text(listBox->currentItem());
-    emit textChanged(result);
+    emit textChanged(listBox->text(listBox->currentItem()));
 }
 
 int ydpFuzzySearch::min3(const int a, const int b, const int c)
