@@ -18,6 +18,7 @@
 #include <qmainwindow.h>
 
 #include <qtimer.h>
+#include <qsplitter.h>
 
 #include "ydpdictionary.h"
 #include "kydpconfig.h"
@@ -59,6 +60,7 @@ class Kydpdict : public QMainWindow
 		QClipboard  *cb;
 		QTimer *m_checkTimer;
 		DynamicTip * t;
+		QSplitter *splitterH;
 
     private slots:
 		void NewDefinition (int index);       		/* word list highlited */

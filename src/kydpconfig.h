@@ -30,6 +30,7 @@ public:
 	QString dataFName;
 	bool	toPolish, useEnglish;
 	int kGeometryX, kGeometryY, kGeometryW, kGeometryH;
+	int spH1, spH2;
 
 	void load(void);
 	void save(void);

@@ -19,7 +19,6 @@
 #include <qdialog.h>
 #include <qpushbutton.h>
 #include <qtextbrowser.h>
-#include <qsplitter.h>
 #include <qhbox.h>
 #include <qvbox.h>
 #include <qlayout.h>
@@ -47,25 +46,22 @@
 Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name)
 {
 	QFrame *centralFrame = new QFrame(this);
-	QSplitter *splitter = new QSplitter(centralFrame);
-	QVBox *vbox1 = new QVBox(splitter);
-	vbox1->setMinimumWidth(QApplication::desktop()->width() / 8);
-	QHBox *hbox1 = new QHBox(vbox1);
+	splitterH = new QSplitter(centralFrame, "splitter");
+	QSplitter *splitter2 = new QSplitter(Qt::Vertical, splitterH);
+	QHBox *hbox1 = new QHBox(splitter2);
 	wordInput = new QLineEdit( hbox1, "wordInput");
 	listclear = new QPushButton(tr("Clear"), hbox1, "Clear");
-	vbox1->setSpacing(4);
-	wordInput->setMaximumHeight(20);
 	listclear->setMaximumWidth(40);
-	listclear->setMaximumHeight(20);
-	dictList = new QListBox( vbox1, "dictList" );
-	RTFOutput = new QTextBrowser (splitter, "RTFOutput");
+	hbox1->setMinimumHeight(20);
+	dictList = new QListBox( splitter2, "dictList" );
+	RTFOutput = new QTextBrowser (splitterH, "RTFOutput");
 	listclear->setAccel( QKeySequence( tr("Ctrl+X", "Clear") ) );
 	setCentralWidget(centralFrame);
 
-	QValueList<int> splittersizes;
-	splittersizes.append(1);
-	splittersizes.append(20);
-	splitter->setSizes(splittersizes);
+	QValueList<int> splittersizes2;
+	splittersizes2.append(20);
+	splittersizes2.append(350);
+	splitter2->setSizes(splittersizes2);
 
 	RTFOutput->setTextFormat( RichText );
 	RTFOutput->setReadOnly(TRUE);
@@ -88,6 +84,13 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
  	myDict = new ydpDictionary(config,dictList);
 
 	setGeometry (config->kGeometryX, config->kGeometryY, config->kGeometryW, config->kGeometryH);
+
+	QValueList<int> splittersizes;
+
+	splittersizes.append(config->spH1);
+	splittersizes.append(config->spH2);
+
+	splitterH->setSizes(splittersizes);
 
 	int a;
 
@@ -152,13 +155,15 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
  	connect(m_checkTimer, SIGNAL(timeout()), this, SLOT(newClipData()));
 
 	QGridLayout *grid = new QGridLayout(centralFrame, 1, 1);
-	grid->addWidget(splitter, 0, 0);
+	grid->addWidget(splitterH, 0, 0);
 
 	this->show();
 
 	UpdateLook();
 
- 	QMimeSourceFactory::defaultFactory()->setText( "Kydpdict", "Tutaj na razie nic nie ma, ale bêdzie lista wszystkich podpowiedzi" );
+
+	RTFOutput->mimeSourceFactory()->setFilePath( "./" );
+	RTFOutput->mimeSourceFactory()->setExtensionType("html", "text/html;charset=iso8859-2");
 }
 
 Kydpdict::~Kydpdict()
@@ -167,6 +172,7 @@ Kydpdict::~Kydpdict()
  	delete t;
  	t = 0;
  	delete m_checkTimer;
+	delete splitterH;
 }
 
 void Kydpdict::resizeEvent(QResizeEvent *)
@@ -176,6 +182,12 @@ void Kydpdict::resizeEvent(QResizeEvent *)
 	aRozmiar = this->size();
 	config->kGeometryW = aRozmiar.width();
 	config->kGeometryH = aRozmiar.height();
+
+	QValueList<int> list = splitterH->sizes();
+    	QValueList<int>::Iterator it = list.begin();
+	config->spH1 = *it;
+	it++;
+	config->spH2 = *it; //sa tylko 2, to nie ma co kombinowac z petla
 	config->save();
 }
 
@@ -375,7 +387,7 @@ void Kydpdict::Configure(bool status)
 	if (result == QDialog::Accepted)	// just a performance gain
 		config->save();
 	cb->blockSignals( FALSE);
- m_checkTimer->start(1000, FALSE);
+	m_checkTimer->start(1000, FALSE);
 }
 
 void Kydpdict::UpdateLook()
@@ -458,7 +470,7 @@ void Kydpdict::updateText( const QString & href )
 	"pp = past participle - imies³ów czasu przesz³ego", "m = masculine - mêski", "n = noun - rzeczownik", "f = feminine - ¿eñski", \
 	"post = postpositiv (does not immediately precede a noun) - nie wystêpuje bezpo¶rednio przed rzeczownikiem", "nvir = nonvirile - niemêskoosobowy", \
 	"vir = virile - mêskoosobowy", "num = number - liczba", "decl = declined - odmienny", "excl = exclemation - wykrzyknik", \
-	"inf! = offensiv - obra¼liwy, wulgarny", "inf = informal - potocznie", "pej = pejorative - pejoratywny", "perf = perfective verb - czasownik dokonany", \
+	"inf! = offensiv - obra¼liwy, wulgarny", "inf = informal - potocznie", "pej = pejorative - pejoratywny", "cmp = compaund - wyraz z³o¿ony", \
 	"pot! = obra¼liwy - offensiv", "pot = potoczny - informal", "vr = reflexiv verb - czasownik zwrotny", "attr = attribute - przydawka", \
 	"part = particle - partyku³a", "fml - formal - formalny", "(im)perf = imperfect tens - czas przesz³y o aspekcie niedokonanym", \
 	"dimin = diminutive - zdrobnienie", "ADMIN = administration - administracja", \
@@ -473,18 +485,19 @@ void Kydpdict::updateText( const QString & href )
 	"GEOG = geography - geografia", "ARCHIT = architecture - architektura", "FIZ = fizyka - physics", "PHYSIOL = physiology - fizjologia", \
 	"imp = imperative - tryb rozkazuj±cy", "GEOL = geology - geologia","art = article - rodzajnik" , "indef = indefinite - nieokre¶lony", \
 	"def = definite - okre¶lony", "PHOT = photography - fotografia", "ELEKTR = elektryczno¶æ - electricity", "EKON = ekonomia - economy", \
-	"FIZ = fizyka - physics", "GEOM = geometria - geometry", "JÊZ = jêzykoznawstwo - linguistic", "KULIN = kulinarny - culinary", \
+	"ECON - economy - ekonomia", "GEOM = geometria - geometry", "JÊZ = jêzykoznawstwo - linguistic", "KULIN = kulinarny - culinary", \
 	"KOMPUT = komputery - computers", "LOT = lotnictwo - aviation", "MAT = matematyka - mathematics", "MOT = motoryzacja - automobiles", \
 	"MUZ = muzyka - music", "SZKOL = szko³a - school", "WOJSK = wojskowo¶æ - military", "¯EGL = ¿egluga - nautical", "BUD = budownictwo - construction", \
 	"METEO = meteorology - meteorologia", "HIST = history - historia", "DRUK = poligrafia - printing", "ROL - rolnictwo - agriculture", \
-	"pref = prefix - przedrostek", "ASTRON = astronomy - astronomia", "ups!"};
+	"pref = prefix - przedrostek", "ASTRON = astronomy - astronomia", "PHYS = physics - fizyka", "etc = et cetera - itd.", "AGR - agriculture - rolnictwo", \
+	"CONSTR - construction - budownictwo", "ups!"};
 
 	//du¿o tego, mo¿e to jako¶ w pliku umie¶ciæ?
 
 	QString tmp = href;
 
-	tmp.remove(0,9);
+	tmp.remove(0, 10);
 
-	if(tmp.toInt() >= 0 && tmp.toInt() < 117)
+	if(tmp.toInt() >= 0 && tmp.toInt() < 121)
 	t->tekst = tab[tmp.toInt()];
 }

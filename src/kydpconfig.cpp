@@ -42,6 +42,8 @@ void kydpConfig::setDefaultConfiguration(void)
 	kFontKolor4 = "#000000";
 	kBckgrndPix = "NoBackground";
 	player = "/usr/bin/play";
+	spH1 = 200;
+	spH2 = 300;
 }
 
 void kydpConfig::load(void)
@@ -147,6 +149,18 @@ void kydpConfig::load(void)
 					value = line.mid(pos+1);
 					player = value.stripWhiteSpace();
 				}
+				pos=line.find("splitterH_1");
+				if (pos==0) {
+					pos = line.find('=');
+					value = line.mid(pos+1);
+					spH1 = value.toInt();
+				}
+				pos=line.find("splitterH_2");
+				if (pos==0) {
+					pos = line.find('=');
+					value = line.mid(pos+1);
+					spH2 = value.toInt();
+				}
 			}
 		}
 	config.close();
@@ -209,6 +223,13 @@ void kydpConfig::save(void)
 
 	line += "\nplayer\t=\t";
 	line += player;
+	
+	line += "\nsplitterH_1\t=\t";
+	tmp.sprintf("%d",spH1);
+	line += tmp;
+	line += "\nsplitterH_2\t=\t";
+	tmp.sprintf("%d",spH2);
+	line += tmp;
 	line += "\n";
 
 	config.writeBlock(line.latin1(), line.length());

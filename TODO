@@ -1,7 +1,8 @@
 - podpowiedzi
-    - cos do pokazania po kliknieciu (najlepiej jakos generowane z podpowiedzi
-      juz zaszytych w programie, zeby dwa razy nie pisac)
-    - insertTip/insertTip2 - przeszukiwanie tablicy stringów i wstawianie danych z
+    + cos do pokazania po kliknieciu
+      - najlepiej jakos generowane z podpowiedzi
+        juz zaszytych w programie, zeby dwa razy nie pisac)
+    + insertTip/insertTip2 - przeszukiwanie tablicy stringów i wstawianie danych z
       drugiej tablicy ALBO przeszukiwanie tablicy struktur { 'tip', 'kod' };
       zamiast spaghetti-code
       (to samo moze czekac ydpconfig)
@@ -10,7 +11,7 @@
     - wylacz podpowiedzi
     - wylacz sledzenie schowka
     - konfiguracja czcionek i/lub ich stylu
-    - zapisywac pozycje qsplittera? warto?
+    - wartosci qsplitterow z pliku konf nie sa ustawiane (?)
 - szukanie hasla w zasobach slownika
 - optymalizacja ladowania indeksu
 - przejscie z tlumaczeniem na gettext

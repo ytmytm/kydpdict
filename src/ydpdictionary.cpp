@@ -291,7 +291,7 @@ QString tag_on,tag_off;
 char *def;
 (const char*)def=definition;
 list.clear();
-list += "<qt title Kydpdict><font face=Arial, Helvetica, sans-serif color=" + color4 +">";
+list += "<qt><font face=Arial, Helvetica, sans-serif color=" + color4 +">";
 list += "</font></qt>";
 for(level=15;level>=0;level--)
 	tag_num[level] = 0;
@@ -537,12 +537,12 @@ QString ydpDictionary::insertTip(QString raw_input)
 {
 	static QString input_tip[] = {"", "adj", "adv", "conj", "perf", "m(f", "fus", "inv", "pron","nt", "npl", "cpd", "pl", "vb", "vi", "vt", "sg", \
 	"abbr", "nom","acc", "dat", "gen", "infin", "instr", "loc", "irreg", "prep", "aux", "pt", "pp", "m", "n", "f", "post", "nvir", \
-	"vir", "num", "decl", "excl", "inf!", "inf", "pej", "perf", "pot!", "pot", "vr", "attr", "part", "fml", "(im)perf", "dimin","ADMIN", "ANAT", "AUT", \
+	"vir", "num", "decl", "excl", "inf!", "inf", "pej", "cmp", "pot!", "pot", "vr", "attr", "part", "fml", "(im)perf", "dimin","ADMIN", "ANAT", "AUT", \
 	"AVIAT", "BIO", "BOT", "BRIT", "CHEM", "COMM", "COMPUT", "CULIN", "ELEC", "FIN", "JUR", "LING", "MATH", "MED", "MIL", \
 	"MUS", "NAUT", "POL", "PSYCH", "REIL", "REL", "SCOL", "SPORT", "TECH", "TEL", "THEAT", "TYP", "US", "ZOOL", "fig", "lit", \
-	"GEOG", "ARCHIT", "FIZ", "PHYSIOL", "imp", "GEOL", "art", "indef", "def", "PHOT", "ELEKTR", "EKON", "FIZ", "GEOM", "JÊZ ", \
+	"GEOG", "ARCHIT", "FIZ", "PHYSIOL", "imp", "GEOL", "art", "indef", "def", "PHOT", "ELEKTR", "EKON", "ECON", "GEOM", "JÊZ ", \
 	"KULIN", "KOMPUT", "LOT", "MAT", "MOT", "MUZ", "SZKOL", "WOJSK", "¯EGL", "BUD", "METEO", "HIST", "DRUK", "ROL", "pref", \
-	"ASTRPON", "ups!"};
+	"ASTRON", "PHYS", "etc", "AGR", "CONSTR", "ups!"};
 
 	QString str_start = "", str_end = "";
 	bool col = FALSE, plus = FALSE;
@@ -577,10 +577,10 @@ QString ydpDictionary::insertTip(QString raw_input)
 
 		proposition = tmp;
 
-		for(int i = 0; i < 117; i++) {
+		for(int i = 0; i < 121; i++) {
 			if (!QString::compare(tmp, input_tip[i])) {
 				number.sprintf("%d", i);
-				proposition = "<a href=\"Kydpdict#" + number + "\">" + tmp + "</a>";
+				proposition = "<a href=\"tips.html#" + number + "\">" + tmp + "</a>";
 				break;
 			}
 		}
