@@ -285,6 +285,15 @@ KeyEater::~KeyEater()
 
 bool KeyEater::eventFilter(QObject *o, QEvent *e) {
     QListBox *dictList = (QListBox*)o;
+    if ( e->type() == QEvent::Wheel ) {
+	QWheelEvent *k = (QWheelEvent *)e;
+	if (k->orientation() == Qt::Vertical) {
+	    if (k->delta() < 0)
+		myDict->ListScrollPageUp();
+	    else
+		myDict->ListScrollPageDown();
+	}
+    }
     if ( e->type() == QEvent::KeyPress ) {
 	QKeyEvent *k = (QKeyEvent *)e;
 	if ((dictList->currentItem()==0)&&((k->key()==Qt::Key_Up)||(k->key()==Qt::Key_Prior))) {
