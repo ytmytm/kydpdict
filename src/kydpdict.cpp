@@ -201,7 +201,7 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 	trayMenu->insertItem(QPixmap(conf_xpm), tr("&Settings"), this, SLOT(ConfigureKydpdict()) );
 	trayMenu->insertSeparator();
 	trayMenu->insertItem( tr("Swap direction"), this, SLOT(SwapLanguages()) );
-	trayMenuItemClipTrack = trayMenu->insertItem( tr("Clipboard tracking"), this, SLOT(ToggleClipTracking()) );
+	trayMenuItemClipTrack = trayMenu->insertItem( tr("C&lipboard tracking"), this, SLOT(ToggleClipTracking()), QKeySequence(tr("Ctrl+L", "Tray|Clipboard tracking")));
 	trayMenu->insertSeparator();
 	trayMenu->insertItem(QPixmap(babelfish_small_xpm), tr("About"), this, SLOT(ShowAbout()));
 	trayMenu->insertItem(QPixmap(exit_xpm), tr("&Quit"), qApp, SLOT(quit()) );

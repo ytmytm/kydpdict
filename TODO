@@ -14,8 +14,8 @@
 - wczytywanie wszystkich slow, ze slownikow (wybranych) do jednej listy
 - pojawianie sie po zmianie pulpitu, autostick? (zawsze widoczne/przypnij/whatever)
     - bah - minimalizacja<=>znikanie (dla kpwndict tez) (jak?)
-- skrót klawiaturowy na prze³±czanie ¶ledzenia schowka (jaki?!?)
-    Ctrl+S? (polski, angielski - Ctrl+'T' like 'T'racking?)
 - skróty klawiaturowe opisane w dymkach nad toolbarem
+    - obecnie niewykonalne, te same skróty rozrzucone w kilku miejscach - trudno utrzymaæ
 - wyszukiwanie powinno preferowaæ idealne dopasowanie od przybli¿onego
   (np. 'for' znajduje 'f.o.r.', powinno byæ 'for')
+    - runabout!

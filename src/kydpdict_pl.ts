@@ -130,13 +130,18 @@ Do zobaczenia!</translation>
         <translation>Ctrl+P</translation>
     </message>
     <message>
-        <source>Clipboard tracking</source>
-        <translation>Śledzenie schowka</translation>
-    </message>
-    <message>
         <source>Ctrl+`</source>
         <comment>Options|Swap direction</comment>
         <translation>Ctrl+`</translation>
+    </message>
+    <message>
+        <source>C&amp;lipboard tracking</source>
+        <translation>Ś&amp;ledzenie schowka</translation>
+    </message>
+    <message>
+        <source>Ctrl+L</source>
+        <comment>Tray|Clipboard tracking</comment>
+        <translation>Ctrl+L</translation>
     </message>
 </context>
 <context>
