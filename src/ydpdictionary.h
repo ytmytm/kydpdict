@@ -64,6 +64,8 @@ private:
 	unsigned long *indexes; 	/* indexes to definitions array */
 	char** words;			/* actual words */
 
+	int broken_entry;		/* index of a broken "Provencial" entry */
+
 public slots:
 	void ListRefresh (int index);
 	void ListScroll1Up();

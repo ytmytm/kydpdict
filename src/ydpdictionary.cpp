@@ -10,6 +10,7 @@
 #include <qmessagebox.h>
 #include <qprocess.h>
 #include <qtextcodec.h>
+#include <qregexp.h>
 
 #include <sys/mman.h>
 #include <fcntl.h>
@@ -386,6 +387,7 @@ void ydpDictionary::FillWordList()
 	delete [] words[current];
 	words[current] = new char [strlen("Provencial")];
 	strcpy(words[current],"Provencial");
+	broken_entry = current;
     }
 }
 
@@ -636,7 +638,9 @@ int ydpDictionary::ReadDefinition(int index)
     if ((size = fData.readBlock(def,dsize)) !=dsize) return -1;
     def[size] = 0;
     curDefinition=QString(def);
-
+    if (index == broken_entry) {
+	curDefinition.replace(QRegExp("Proven.al"),"Provencial");
+    }
     delete [] def;
     return 0;
 }
