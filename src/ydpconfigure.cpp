@@ -114,7 +114,7 @@ ydpConfigure::ydpConfigure( kydpConfig *globalconfig, QWidget* parent,  const ch
     checkBox1 = new QCheckBox(tr("Enable Background"), tab2, "checkBox1");
     checkBox1->setGeometry(6,117,150,16);
 
-    changeFont = new QPushButton("Font", tab2, "changeFont");
+    changeFont = new QPushButton(tr("Font"), tab2, "changeFont");
     changeFont->setGeometry(162,117,40,22);
 
 
@@ -320,8 +320,6 @@ QString ydpConfigure::GetNewBackgroundUrl(QString tlo)
 void ydpConfigure::WriteDefaults()
 {
     kydpConfig *cnf = new kydpConfig;
-
-    cnf->setDefaultConfiguration();
 
     dictionaryUrl->setText(cnf->topPath);
     audioUrl->setText(cnf->cdPath);

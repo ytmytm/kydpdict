@@ -8,10 +8,14 @@
  ***************************************************************************/
 
 #include <stdlib.h>
-#include <qfont.h>
 #include <qtranslator.h>
 #include <qtextcodec.h>
 #include "kydpdict.h"
+
+// for those qmake morons...
+#ifndef LOCALEDIR
+# define LOCALEDIR "/usr/share/kydpdict"
+#endif
 
 QApplication *a;
 

@@ -17,7 +17,7 @@
     <message>
         <source>Ctrl+Q</source>
         <comment>File|Quit</comment>
-        <translation>Ctrl+K</translation>
+        <translation>Ctrl+Q</translation>
     </message>
     <message>
         <source>&amp;Settings</source>
@@ -185,6 +185,10 @@ Do widzenia!</translation>
     <message>
         <source>Ignore own selection</source>
         <translation>Ignoruj własne zaznaczenia</translation>
+    </message>
+    <message>
+        <source>Font</source>
+        <translation>Font</translation>
     </message>
 </context>
 <context>

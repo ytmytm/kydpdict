@@ -33,13 +33,13 @@ ju¿ pojawia³.
 Jedn± z zalet jest tak¿e ³atwa konfiguracja programu: ¶cie¿ek dostêpu do plików s³ownika,
 ¶cie¿ki do plików z wymow± (oryginalne pliki wav lub zakodowane do mp3/ogg), a tak¿e kolorów
 tekstu t³umaczenia i t³a aplikacji. Te i inne parametry programu (np pozycja na ekranie, wielko¶æ
-okna s± przechowywane w pliku konfiguracyjnym w Twoim katalogu konfiguracyjnym. Bêdzie to
+okna s± przechowywane w katalogu .kydpdict w Twoim katalogu konfiguracyjnym. Bêdzie to
 katalog domowy lub katalog poni¿ej niego okre¶lony przez zmienn± $CONFIG_DIR.
 
 4. Konfiguracja
-W razie problemów po prostu skasuj swój plik konfiguracyjny. Program postara siê odtworzyæ
-go z domy¶lnych warto¶ci oraz korzystaj±c z /etc/ydpdict.conf je¶li korzystasz jednocze¶nie
-z konsolowego s³ownika.
+W razie problemów po prostu skasuj katalog z plikami konfiguracyjnymi.
+Program postara siê odtworzyæ go z domy¶lnych warto¶ci oraz korzystaj±c z
+/etc/ydpdict.conf je¶li korzystasz jednocze¶nie z konsolowego s³ownika.
 
 Krótki opis opcji konfiguracyjnych z zak³adki 'Ró¿ne'
 - 'W³±cz ¶ledzenie schowka' - okno s³ownika wyskakuj±ce na wierzch mo¿e przeszkadzaæ, w ten

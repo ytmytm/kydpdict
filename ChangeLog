@@ -228,3 +228,13 @@ Kydpdict 0.5.4pre3 (26.7.2003)
 Kydpdict 0.5.4pre4 (26.7.2003)
 - nowa opcja: font okna z t³umaczeniem
 - dialog do wyboru fontu t³umaczenia
+
+=====================================================================
+Kydpdict 0.5.5pre1 (26.7.2003)
+- 'Font' t³umaczony na polski jako 'Font'
+- przej¶cie z systemem konfiguracji na QSettings, zamiana pliku .kydpdict na katalog
+  z analogicznym plikiem; nie ma konwersji, program usuwa stary plik i zak³ada w
+  to miejsce katalog
+- ma³e u³atwienie dla upartych u¿ytkowników qmake
+- uaktualnienie README
+- polski skrót na Zakoñcz - Ctrl+Q (tak jest w wiêkszo¶ci KDE/Qt)

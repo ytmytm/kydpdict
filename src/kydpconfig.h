@@ -12,6 +12,7 @@
 
 #include <qstring.h>
 #include <qfont.h>
+#include <qsettings.h>
 
 enum { LANG_ENGLISH, LANG_DEUTSCH, LANG_LAST };
 
@@ -43,7 +44,6 @@ public:
 
 private:
 	QString cfgname;
-	QString transFont;		// temporary fontname holder
 
 	void readYDPConfig(void);
 	void updateFName(void);
