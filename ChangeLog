@@ -393,3 +393,4 @@ Kydpdict 0.6.4 (xx.xx.2004)
 - nowy wyraz w combo jest zaznaczony - mo¿na od razu skasowaæ (JJ)
 - usuniêty guzik do kasowania linii, chyba jest teraz dosyæ metod na skasowanie jej zawarto¶ci
 - usuniêty martwy kod z konfiguracji
+- zwiêkszone opó¼nienie miêdzy dwoma ESC-ESC

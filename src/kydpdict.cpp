@@ -26,7 +26,7 @@
 
 #define COMBO_HISTORY_SIZE	25
 #define TIMER_PERIOD		1000
-#define LAST_ESC_PERIOD		500
+#define LAST_ESC_PERIOD		750
 
 /* 16x16 */
 #include "../icons/conf.xpm"
