@@ -1,6 +1,6 @@
 
 AC_PREREQ(2.57)
-AC_INIT(kydpdict, 0.5.9, ytm@friko.onet.pl)
+AC_INIT(kydpdict, 0.5.10, ytm@friko.onet.pl)
 
 AC_PROG_CPP
 AC_PROG_CC
