@@ -581,8 +581,7 @@ int ydpDictionary::FindWord(QString word)
     a = 0; b = wordCount;
 
     setlocale(LC_COLLATE,"pl_PL");	// otherwise '¶win'->'z...' on at least one system :(
-					// afair - required for that localeAwareCompare below
-					// trzeba sprawdziæ u ¼ród³a jeszcze raz
+					// required for that localeAwareCompare below
 
     /* najpierw wyszukiwanie binarne zawê¿a zakres do 30 hase³ (warto¶æ wziêta z g³owy (mojej - MW)) */
 
