@@ -197,3 +197,9 @@ Kydpdict 0.5.3pre2 (12.7.2003)
 - upiekszenie #includes :)
 - ladowanie indeksu przyspieszone o 20% (!), bez powaznych zmian lepiej
   chyba sie nie da
+
+=====================================================================
+Kydpdict 0.5.3pre3 (13.7.2003)
+- k³ama³em powy¿ej - da³o siê usun±æ 40% czasu w porównaniu z 0.5.2
+  ale wiêcej ju¿ naprawdê nie
+- kilka delete dla tablic napisane koszernie (prawdopodobnie memleaki usuniête)

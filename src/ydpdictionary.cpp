@@ -114,7 +114,7 @@ void ydpDictionary::CloseDictionary()
 	dictList->clear();
 	fIndex.close();
 	fData.close();
-	if (indexes) delete (indexes);
+	if (indexes) delete [] indexes;
 }
 
 QString ydpDictionary::convert_cp1250(char *tekst, long int size)
@@ -147,7 +147,7 @@ QString ydpDictionary::convert_cp1250(char *tekst, long int size)
 
 void ydpDictionary::FillWordList()
 {
-  QString p;
+
   QProgressDialog progress;
   QTextCodec *codec = QTextCodec::codecForName("ISO8859-2");
 
@@ -155,13 +155,13 @@ void ydpDictionary::FillWordList()
   unsigned char *indexBuffer;
   int current=0, bp;
   char buf[256];
- 
+
   /* read # of words */
   indexBuffer = new unsigned char[fIndex.size()];
   fIndex.readBlock((char*)indexBuffer,fIndex.size());
   wordCount=0;
   wordCount = (indexBuffer[9] << 8) + indexBuffer[8];
-  indexes = new unsigned long [wordCount+2];
+  indexes = new unsigned long [wordCount];
 
   /* setup visual side */
   progress.setTotalSteps(wordCount / 256);
@@ -181,10 +181,9 @@ void ydpDictionary::FillWordList()
     curpos+=4;
     strncpy(buf,(const char*)&indexBuffer[curpos],255);
     bp = strlen(buf);
-    curpos+=bp+1+4;
+    curpos+=bp+5;
 
-    p = convert_cp1250(buf,bp);
-    dictList->insertItem(codec->toUnicode(p.fromAscii(p)));
+    dictList->insertItem(codec->toUnicode(convert_cp1250(buf,bp)));
   } while (++current < wordCount);
 
   delete [] indexBuffer;
@@ -213,7 +212,7 @@ int ydpDictionary::ReadDefinition(int index)
     def[size] = 0;
     curDefinition=QString(def);
 
-    delete def;
+    delete [] def;
     return 0;
 }
 

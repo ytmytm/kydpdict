@@ -18,11 +18,13 @@
       'Fiji' - sprawdzic podpowiedzi
 - konfiguracja:
     - konfiguracja czcionek i/lub ich stylu
+- szukanie hasla w drugim slowniku (zamiana stron)
 - szukanie hasla w zasobach slownika
 - optymalizacja ladowania indeksu
     - napisaæ sobie w³asny widget z QDict do trzymania danych
-      (najwiecej czasu zajmuje tworzenie nowych obiektow przy InsertItem, moze lepiej to
-       zamienic na statyczna tablice QStringow tworzana tylko raz? wordcount jest znany)
+      najwiecej czasu zajmuje wstawianie nowych obiektów przy InsertItem (zawsze jest
+      tworzona kopia, wstawianie w³asnych z przygotowanej tablicy nic nie da)
+      oraz konwersja w convert_cp1250
 - przejscie z tlumaczeniem na gettext
     - makra, ¿eby nic w kodzie nie zmieniæ
     - makefiles (.po, .mo; sciezki;)
