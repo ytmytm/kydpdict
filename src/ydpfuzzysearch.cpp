@@ -41,6 +41,7 @@ ydpFuzzySearch::ydpFuzzySearch (void* ydpParent, QWidget *parent, const char* na
     listBox = new QListBox(this, "listBox");
     listBox->setGeometry(10, 40, 290, 160);
     connect(listBox, SIGNAL(clicked(QListBoxItem*)), this, SLOT(newFromClick(QListBoxItem*)));
+    connect(listBox, SIGNAL(selected(QListBoxItem*)), this, SLOT(newFromClick(QListBoxItem*)));
 
     distSlider = new QSlider(1, 10, 1, 2, Qt::Vertical, this, "distSlider");
     distSlider->setGeometry(320, 40, 22, 160);
@@ -51,7 +52,7 @@ ydpFuzzySearch::ydpFuzzySearch (void* ydpParent, QWidget *parent, const char* na
     QLabel *maxV = new QLabel(tr("high"), this, "maxV");
     QLabel *minV = new QLabel(tr("low"), this, "minV");
     QLabel *similar = new QLabel(tr("Similarity"), this, "similar");
-    similar->setGeometry(320, 17, 80, 22);
+    similar->setGeometry(310, 17, 90, 22);
     maxV->setGeometry(345, 36, 60, 22);
     minV->setGeometry(345, 180, 60, 22);
 }
