@@ -133,6 +133,7 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 	lastEdit = "";
 	lastSelection = "";
 	lastClipboard = "";
+	eventLock = false;
 
 	int a;
 
