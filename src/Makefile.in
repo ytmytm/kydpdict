@@ -34,7 +34,7 @@ endif
 main.o:
 		$(CXX) -c main.cpp $(QT_INCLUDE) $(CXXFLAGS) -DLOCALEDIR=\"$(LOCALEDIR)\"
 
-kydpdict.moc.o:
+kydpdict.moc.o: kydpdict.h
 		$(MOC) kydpdict.h -o kydpdict.moc.cpp
 		$(CXX) -c kydpdict.moc.cpp $(QT_INCLUDE) $(CXXFLAGS)
 
@@ -44,14 +44,14 @@ kydpdict.o:
 ydpdictionary.o:
 		$(CXX) -c ydpdictionary.cpp $(QT_INCLUDE) $(CXXFLAGS)
 
-ydpdictionary.moc.o:
+ydpdictionary.moc.o: ydpdictionary.h
 		$(MOC) ydpdictionary.h -o ydpdictionary.moc.cpp
 		$(CXX) -c ydpdictionary.moc.cpp $(QT_INCLUDE) $(CXXFLAGS)
 
 ydpconfigure.o:
 		$(CXX) -c ydpconfigure.cpp $(QT_INCLUDE) $(CXXFLAGS)
 
-ydpconfigure.moc.o:
+ydpconfigure.moc.o: ydpconfigure.h
 		$(MOC) ydpconfigure.h -o ydpconfigure.moc.cpp
 		$(CXX) -c ydpconfigure.moc.cpp $(QT_INCLUDE) $(CXXFLAGS)
 
@@ -64,7 +64,7 @@ kdynamictip.o:
 dock_widget.o:
 		$(CXX) -c dock_widget.cpp $(QT_INCLUDE) $(CXXFLAGS)
 
-dock_widget.moc.o:
+dock_widget.moc.o: dock_widget.h
 		$(MOC) dock_widget.h -o dock_widget.moc.cpp
 		$(CXX) -c dock_widget.moc.cpp $(QT_INCLUDE) $(CXXFLAGS)
 
