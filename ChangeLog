@@ -262,3 +262,8 @@ Kydpdict 0.5.6pre2 (28.7.2003)
 =====================================================================
 Kydpdict 0.5.6 (31.7.2003)
 - poprawki w dokumentacji
+
+=====================================================================
+Kydpdict 0.5.7pre1 (8.7.2003)
+- poprawki autoconfa - wymagane Qt >=3.1; podwójny // w ¶cie¿ce z $QTDIR,
+  $QTDIR nie brany pod uwagê przy szukaniu lupdate i lrelease

@@ -164,7 +164,7 @@ AC_DEFUN(QT_DO_IT_ALL,
 	FATAL=1
 
 	AC_ARG_WITH(qt-dir, [  --with-qt-dir           where the root of Qt is installed ],
-		[ qt_cv_dir=`eval echo "$withval"/` ])
+		[ qt_cv_dir=`eval echo "$withval"` ])
 	 
 	AC_ARG_WITH(qt-includes, [  --with-qt-includes      where the Qt includes are. ],
 		[ qt_cv_includes=`eval echo "$withval"` ])
