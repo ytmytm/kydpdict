@@ -218,3 +218,8 @@ Kydpdict 0.5.4pre2 (26.7.2003)
 - zmiana geometrii dialogu konfiguracji
 - combobox z histori± ostatnich wyrazów zamiast editboxa
 - combobox uzywa simplifywhitespace przed wstawieniem, nie wstawia pustych
+
+=====================================================================
+Kydpdict 0.5.4pre3 (26.7.2003)
+- nowa opcja: ignorowanie schowka jesli zaznaczenie pochodzi z kydpdict
+- polski skrót na Zakoñcz - Ctrl+K (Ctrl+Z to 'undo' i bez grzebania w combo->lineEdit to siê nie zmieni)

@@ -1,7 +1,5 @@
-- nie reagowac na zmiany w schowku pochodzace z kydpdict (sprawdzenie pochodzenia jest wogole mozliwe?)
 - zmiana rozmiaru splittera poziomego ma zmieniaæ rozmiar guzika 'usun' i comboboxa
 - skrót klawiaturowy na zamianê jêzyków
-- skrót na zamkniêcie programu nie dzia³a w oknie edit
 - podpowiedzi
     - niemieckie
     - wywalic tips.html i generowac go sobie z tabelki tips'ow na starcie (albo odwrotnie

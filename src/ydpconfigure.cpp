@@ -125,12 +125,14 @@ ydpConfigure::ydpConfigure( kydpConfig *globalconfig, QWidget* parent,  const ch
     tab3 = new QWidget( TabWidget1, "tab3" );
     checkBox2 = new QCheckBox(tr("Enable clipboard tracking"), tab3, "checkBox2");
     checkBox2->setGeometry(10,14,350,20);
+    checkBox6 = new QCheckBox(tr("Ignore own selection"), tab3, "checkBox6");
+    checkBox6->setGeometry(10,40,350,20);
     checkBox3 = new QCheckBox(tr("Enable italic font"), tab3, "checkBox3");
-    checkBox3->setGeometry(10,54,350,20);
+    checkBox3->setGeometry(10,66,350,20);
     checkBox4 = new QCheckBox(tr("Enable tooltips"), tab3, "checkBox4");
-    checkBox4->setGeometry(10,94,350,20);
+    checkBox4->setGeometry(10,92,350,20);
     checkBox5 = new QCheckBox(tr("Enable autoplay"), tab3, "checkBox5");
-    checkBox5->setGeometry(10,134,350,20);
+    checkBox5->setGeometry(10,118,350,20);
 
     TabWidget1->insertTab( tab3, tr("Miscellaneous") );
 
@@ -147,6 +149,7 @@ ydpConfigure::ydpConfigure( kydpConfig *globalconfig, QWidget* parent,  const ch
     connect( changeFont4, SIGNAL( clicked() ), this, SLOT( NewFontColor4() ) );
     connect( changeBckgrndUrl, SIGNAL( clicked() ), this, SLOT( NewBckgrndUrl() ) );
     connect( checkBox1, SIGNAL( stateChanged ( int ) ), this, SLOT(NewCheck(int ) ) );
+    connect( checkBox2, SIGNAL( stateChanged ( int ) ), this, SLOT(NewCheck2(int ) ) );
     connect( changePlayerUrl, SIGNAL( clicked() ), this, SLOT( NewPlayerUrl() ) );
 
     config = globalconfig;
@@ -243,6 +246,11 @@ void ydpConfigure::NewCheck(int state)
     UpdateLabels();
 }
 
+void ydpConfigure::NewCheck2(int state)
+{
+	checkBox6->setEnabled(checkBox2->isOn());
+}
+
 void ydpConfigure::UpdateLabels()
 {
     QString label;
@@ -305,6 +313,7 @@ void ydpConfigure::WriteDefaults()
     cBckgrnd = cnf->kBckgrndPix;
     checkBox1->setChecked(FALSE);
     checkBox2->setChecked(cnf->clipTracking);
+    checkBox6->setChecked(cnf->ignoreOwnSelection);
     checkBox3->setChecked(cnf->italicFont);
     checkBox4->setChecked(cnf->toolTips);
     checkBox5->setChecked(cnf->autoPlay);
@@ -319,6 +328,8 @@ void ydpConfigure::showEvent ( QShowEvent * )
     textLabel4->setEnabled(a);
     checkBox1->setChecked(a);
     checkBox2->setChecked(config->clipTracking);
+    checkBox6->setChecked(config->ignoreOwnSelection);
+    checkBox6->setEnabled(config->clipTracking);
     checkBox3->setChecked(config->italicFont);
     checkBox4->setChecked(config->toolTips);
     checkBox5->setChecked(config->autoPlay);
@@ -339,6 +350,7 @@ ydpConfigure::~ydpConfigure()
 		config->cd2Path = audio2Url->text();
 		config->player = playerUrl->text();
 		config->clipTracking = checkBox2->isChecked();
+		config->ignoreOwnSelection = checkBox6->isChecked();
 		config->italicFont = checkBox3->isChecked();
 		config->toolTips = checkBox4->isChecked();
 		config->autoPlay = checkBox5->isChecked();

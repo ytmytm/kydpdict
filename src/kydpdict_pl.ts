@@ -12,12 +12,12 @@
     </message>
     <message>
         <source>&amp;Quit</source>
-        <translation>&amp;Zakończ</translation>
+        <translation>Za&amp;kończ</translation>
     </message>
     <message>
         <source>Ctrl+Q</source>
         <comment>File|Quit</comment>
-        <translation>Ctrl+Z</translation>
+        <translation>Ctrl+K</translation>
     </message>
     <message>
         <source>&amp;Settings</source>
@@ -181,6 +181,10 @@ Do widzenia!</translation>
     <message>
         <source>Choose path to Deutsch audio files</source>
         <translation>Wybierz ścieżkę do niemieckich plików dźwiękowych</translation>
+    </message>
+    <message>
+        <source>Ignore own selection</source>
+        <translation>Ignoruj własne zaznaczenia</translation>
     </message>
 </context>
 <context>

@@ -45,6 +45,8 @@ Krótki opis opcji konfiguracyjnych z zak³adki 'Ró¿ne'
 - 'W³±cz ¶ledzenie schowka' - okno s³ownika wyskakuj±ce na wierzch mo¿e przeszkadzaæ, w ten
    sposób mo¿na wy³±czyæ takie zachowanie na sta³e. Tymczasow± metod± jest zminimalizowanie
    okna.
+- 'Ignoruj w³asne zaznaczenia' - je¶li zawarto¶æ schowka pochodzi z okna t³umaczeñ
+   kydpdict, to zostanie zignorowana (kto¶ ma lepszy pomys³ na nazwê tej opcji?)
 - 'U¿ywaj pochy³ej czcionki' - niektóre czcionki pochy³e wygl±daj± brzydko, tak mo¿na nieco
    poprawiæ wygl±d i czytelno¶æ okna
 - 'W³±cz podpowiedzi' - opcja kontroluj±ca wy¶wietlanie wyja¶nieñ po najechaniu myszk± na

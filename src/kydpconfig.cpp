@@ -51,7 +51,8 @@ void kydpConfig::setDefaultConfiguration(void)
 	clipTracking = true;
 	italicFont = false;
 	toolTips = true;
-	autoPlay= false;
+	autoPlay = false;
+	ignoreOwnSelection = false;
 }
 
 void kydpConfig::load(void)
@@ -217,6 +218,12 @@ void kydpConfig::load(void)
 					value = line.mid(pos+1);
 					autoPlay = ( value.toInt() != 0);
 				}
+				pos = line.find("ignoreOwnSelection");
+				if (pos==0) {
+					pos = line.find('=');
+					value = line.mid(pos+1);
+					ignoreOwnSelection = ( value.toInt() != 0);
+				}
 			}
 		}
 	config.close();
@@ -307,6 +314,8 @@ void kydpConfig::save(void)
 	if (toolTips) { line+="1"; } else { line+="0"; };
 	line += "\nautoPlay\t=\t";
 	if (autoPlay) { line+="1"; } else { line+="0"; };
+	line += "\nignoreOwnSelection\t=\t";
+	if (ignoreOwnSelection) { line+="1"; } else { line+="0"; };
 
 	line += "\n";
 

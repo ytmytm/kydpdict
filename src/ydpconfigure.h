@@ -59,6 +59,7 @@ private:
     QCheckBox *checkBox3;
     QCheckBox *checkBox4;
     QCheckBox *checkBox5;
+    QCheckBox *checkBox6;
 
     kydpConfig *config;
 
@@ -87,6 +88,7 @@ private slots:
     void NewFontColor4();
     void NewBckgrndUrl();
     void NewCheck(int state);
+    void NewCheck2(int state);
     void WriteDefaults();
     void NewPlayerUrl();
 

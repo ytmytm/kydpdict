@@ -244,9 +244,13 @@ void Kydpdict::PasteClipboard(QString haslo)
 
 	// do nothing if minimized
 	if (this->isMinimized())
-		return;
+	    return;
 
-	QString contents = haslo.stripWhiteSpace();
+	if ((RTFOutput->hasSelectedText()) && (config->ignoreOwnSelection)) {
+	    return;
+	}
+
+	QString contents = haslo.simplifyWhiteSpace();
 
 	contents.truncate(20);
 
@@ -273,15 +277,14 @@ void Kydpdict::PasteClipboard(QString haslo)
 	}
 
 	wordInput->blockSignals( TRUE );
-	QString content = contents.simplifyWhiteSpace();
-	if (((wordInput->listBox())->findItem(content, Qt::ExactMatch) == 0)
-	    && (content.length()>0)) {
-	    wordInput->insertItem(content);
-	    /* this is broken in Qt, has to be done manually */
+	if (((wordInput->listBox())->findItem(contents, Qt::ExactMatch) == 0)
+	    && (contents.length()>0)) {
+	    wordInput->insertItem(contents);
+	    /* maxCount is broken or ignored in Qt, has to be done manually */
 	    if (wordInput->count() > wordInput->maxCount())
 		wordInput->removeItem(0);
 	}
-	wordInput->setEditText(content);
+	wordInput->setEditText(contents);
 	wordInput->blockSignals( FALSE );
 
 	if(config->autoPlay)
@@ -335,6 +338,7 @@ void Kydpdict::UpdateHistory(int index)
     if (((wordInput->listBox())->findItem(content, Qt::ExactMatch) == 0)
        && (content.length()>0)) {
 	    wordInput->insertItem(content);
+	    /* maxCount is broken or ignored in Qt, has to be done manually */
 	    if (wordInput->count() > wordInput->maxCount())
 		wordInput->removeItem(0);
     }
