@@ -134,8 +134,6 @@ ydpConfigure::ydpConfigure( kydpConfig *globalconfig, QWidget* parent,  const ch
     checkBox4->setGeometry(10,40,350,20);
     checkBox7 = new QCheckBox(tr("Enable tray icon"), tab3, "checkBox7");
     checkBox7->setGeometry(10,66,350,20);
-    checkBox5 = new QCheckBox(tr("Enable autoplay"), tab3, "checkBox5");
-    checkBox5->setGeometry(10,92,350,20);
 
     TabWidget1->insertTab( tab3, tr("Miscellaneous") );
 
@@ -147,6 +145,8 @@ ydpConfigure::ydpConfigure( kydpConfig *globalconfig, QWidget* parent,  const ch
     checkBox6->setGeometry(10,40,350,20);
     checkBox8 = new QCheckBox(tr("Set focus on self"), tab5, "checkBox8");
     checkBox8->setGeometry(10,66,350,20);
+    checkBox5 = new QCheckBox(tr("Enable autoplay"), tab5, "checkBox5");
+    checkBox5->setGeometry(10,92,350,20);
 
     TabWidget1->insertTab( tab5, tr("Clipboard") );
 
