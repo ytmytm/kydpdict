@@ -579,6 +579,8 @@ int ydpDictionary::FindWord(QString word)
 
     setlocale(LC_COLLATE,"pl_PL");	// otherwise '¶win'->'z...' on at least one system :(
 
+    /* najpierw wyszukiwanie binarne zawê¿a zakres do 30 hase³ (warto¶æ wziêta z g³owy (mojej - MW)) */
+
     while (b-a >= 30) {	/* bez tego marginesu s± problemy np. z 'for' */
 	middle = a + (b-a)/2;
 	midstring = toCodec->toUnicode(words[middle]);
@@ -592,6 +594,10 @@ int ydpDictionary::FindWord(QString word)
 		a = middle;
 	}
     }
+
+    /* poniewa¿ indeksy nie s± idealnie posortowane - teraz wyszukujemy naiwnie;
+       nastêpuje cofniêcie o 35 hase³ i w¶ród 70 nastêpnych znalezienie tego z najwy¿szym
+       wynikiem ze ScoreWord (najwiêcej wspólnych znaków z wyszukiwanym has³em) */
 
     if (a!=b) {
 	a=a-35; if (a<0) a=0; i=1;
