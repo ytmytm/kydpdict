@@ -25,12 +25,14 @@
 #include <qapplication.h>
 #include <qtextcodec.h>
 #include <qgrid.h>
+#include <qtoolbar.h>
 
+/* 16x16 */
 #include "../icons/exit.xpm"
 #include "../icons/tux.xpm"
 #include "../icons/help.xpm"
 #include "../icons/conf.xpm"
-
+/* glyphs */
 #include "../icons/f1.xpm"
 #include "../icons/f2.xpm"
 #include "../icons/f3.xpm"
@@ -39,19 +41,32 @@
 #include "../icons/f6.xpm"
 #include "../icons/f7.xpm"
 #include "../icons/f8.xpm"
+/* 22x22 */
+#include "../icons/en_pl.xpm"
+#include "../icons/pl_en.xpm"
+#include "../icons/de_pl.xpm"
+#include "../icons/pl_de.xpm"
+#include "../icons/configure.xpm"
+#include "../icons/loop.xpm"
+#include "../icons/player_play.xpm"
+#include "../icons/clear_left.xpm"
 
 #include "kydpdict.h"
 #include "kydpconfig.h"
 
 Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name)
 {
+	QToolBar *toolBar = new QToolBar(this, "toolbar");
+	toolBar->setLabel(tr("Kydpdict toolbar"));
+
 	QFrame *centralFrame = new QFrame(this);
 	splitterH = new QSplitter(centralFrame, "splitter");
 	splitterV = new QSplitter(Qt::Vertical, splitterH);
 	QHBox *hbox1 = new QHBox(splitterV);
 	wordInput = new QComboBox( hbox1, "wordInput");
-	listclear = new QPushButton(tr("Clear"), hbox1, "Clear");
+	listclear = new QPushButton(QIconSet(QPixmap(clear_left_xpm)), QString::null, hbox1, "clear");
 	listclear->setMaximumWidth(40);
+	listclear->setFlat(TRUE);
 	hbox1->setMinimumHeight(20);
 	dictList = new QListBox( splitterV, "dictList" );
 	RTFOutput = new QTextBrowser (splitterH, "RTFOutput");
@@ -112,6 +127,7 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 		a=myDict->OpenDictionary(config);
 	}
 	while (a);
+	wordInput->clear();
 
 	QPopupMenu *file = new QPopupMenu( this );
 	Q_CHECK_PTR( file );
@@ -124,11 +140,15 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 	if(myDict->CheckDictionary(config->topPath, "dict100.idx", "dict100.dat") && myDict->CheckDictionary(config->topPath, "dict101.idx", "dict101.dat")) {
 		polToEng = settings->insertItem("POL --> ENG", this, SLOT(SwapPolToEng()), QKeySequence( tr("Ctrl+;", "Options|POL --> ENG") ) );
 		engToPol = settings->insertItem("ENG --> POL", this, SLOT(SwapEngToPol()), QKeySequence( tr("Ctrl+.", "Options|ENG --> POL") ) );
+		but_EnPl = new QToolButton(QIconSet(QPixmap(en_pl_xpm)), "ENG --> POL", QString::null, this, SLOT(SwapEngToPol()), toolBar, "butEnPl" );
+		but_PlEn = new QToolButton(QIconSet(QPixmap(pl_en_xpm)), "POL --> ENG", QString::null, this, SLOT(SwapPolToEng()), toolBar, "butPlEn" );
 	}
 	if(myDict->CheckDictionary(config->topPath, "dict200.idx", "dict200.dat") && myDict->CheckDictionary(config->topPath, "dict201.idx", "dict201.dat")) {
 		settings->insertSeparator();
 		polToGer = settings->insertItem("POL --> GER", this, SLOT(SwapPolToGer()), QKeySequence( tr("Ctrl+:", "Options|POL --> GER") ) );
 		gerToPol = settings->insertItem("GER --> POL", this, SLOT(SwapGerToPol()), QKeySequence( tr("Ctrl+>", "Options|GER --> POL") ) );
+		but_DePl = new QToolButton(QIconSet(QPixmap(de_pl_xpm)), "GER --> POL", QString::null, this, SLOT(SwapGerToPol()), toolBar, "butDePl" );
+		but_PlDe = new QToolButton(QIconSet(QPixmap(pl_de_xpm)), "POL --> GER", QString::null, this, SLOT(SwapPolToGer()), toolBar, "butPlDe" );
 	}
 	settings->insertSeparator();
 	settings->insertItem( tr("Swap direction"), this, SLOT(SwapLanguages()), QKeySequence( tr("Ctrl+/", "Options|Swap direction") ) );
@@ -148,15 +168,22 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 
  	t = new DynamicTip( this );
 
+	toolBar->addSeparator();
+	but_SwapLang = new QToolButton(QIconSet(QPixmap(loop_xpm)), tr("Swap direction"), QString::null, this, SLOT(SwapLanguages()), toolBar, "but_swaplang" );
+	toolBar->addSeparator();
+	but_Play = new QToolButton(QIconSet(QPixmap(player_play_xpm)), tr("Play"), QString::null, this, SLOT(PlayCurrent()), toolBar, "but_play" );
+	toolBar->addSeparator();
+	but_Settings = new QToolButton(QIconSet(QPixmap(configure_xpm)), tr("Settings"), QString::null, this, SLOT(ConfigureKydpdict()), toolBar, "but_settings" );
+
 	connect (dictList, SIGNAL(highlighted(int)), this, SLOT(NewDefinition(int)));
 	connect (dictList, SIGNAL(selected(int)), this, SLOT(PlayCurrent()));
 	connect (wordInput, SIGNAL(textChanged(const QString&)), this, SLOT(NewFromLine(const QString&)));
 	connect (wordInput, SIGNAL(activated(int)), this, SLOT(PlayCurrent()));
-	connect (listclear, SIGNAL(clicked()),wordInput, SLOT(clearEdit()));
- 	connect (RTFOutput, SIGNAL( highlighted ( const QString & )), this, SLOT(updateText( const QString & )));
- 	connect( cb, SIGNAL( selectionChanged() ), SLOT(slotSelectionChanged()));
- 	connect( cb, SIGNAL( dataChanged() ), SLOT( slotClipboardChanged() ));
- 	connect(m_checkTimer, SIGNAL(timeout()), this, SLOT(newClipData()));
+	connect (listclear, SIGNAL(clicked()), wordInput, SLOT(clearEdit()));
+ 	connect (RTFOutput, SIGNAL(highlighted( const QString & )), this, SLOT(updateText( const QString & )));
+ 	connect (cb, SIGNAL(selectionChanged() ), SLOT(slotSelectionChanged()));
+ 	connect (cb, SIGNAL(dataChanged() ), SLOT( slotClipboardChanged() ));
+ 	connect (m_checkTimer, SIGNAL(timeout()), this, SLOT(newClipData()));
 
 	QGridLayout *grid = new QGridLayout(centralFrame, 1, 1);
 	grid->addWidget(splitterH, 0, 0);
@@ -330,6 +357,7 @@ void Kydpdict::PlaySelected (int index)
 void Kydpdict::PlayCurrent ()
 {
     UpdateHistory(dictList->currentItem());
+    wordInput->setEditText(dictList->currentText());
     PlaySelected(dictList->currentItem());
 }
 
@@ -345,7 +373,6 @@ void Kydpdict::UpdateHistory(int index)
 	    if (wordInput->count() > wordInput->maxCount())
 		wordInput->removeItem(0);
     }
-    wordInput->setEditText(content);
     wordInput->blockSignals( FALSE );
 }
 
@@ -386,6 +413,7 @@ void Kydpdict::SwapLang (bool direction, int language ) //dir==1 toPolish
 			a=myDict->OpenDictionary(config);
 			if (a) Configure(TRUE);
 		} while (a);
+		wordInput->clear();
 		UpdateLook();
 	}
 }
@@ -416,12 +444,8 @@ void Kydpdict::ConfigureKydpdict()
 void Kydpdict::Configure(bool status)
 {
 	int result;
-	kydpConfig tempconf;
 
-	config->save();		// XXX this is ugly!!!
-	tempconf.load();
-	config->clipTracking = false;
-	ydpConfigure *myConf = new ydpConfigure(&tempconf);
+	ydpConfigure *myConf = new ydpConfigure(config);
 
 	m_checkTimer->stop();
 	cb->blockSignals( TRUE );
@@ -441,10 +465,9 @@ void Kydpdict::Configure(bool status)
         	delete myConf;
 
 	if (result == QDialog::Accepted) {	// just a performance gain
-		tempconf.save();	// XXX this is ugly!!!
-		config->load();
-		
+		config->save();	
 	}
+
 	if (cb->supportsSelection())
 	    cb->clear(QClipboard::Selection);
 	else

@@ -2,10 +2,6 @@
 <context>
     <name>Kydpdict</name>
     <message>
-        <source>Clear</source>
-        <translation>Usuń</translation>
-    </message>
-    <message>
         <source>Ctrl+X</source>
         <comment>Clear</comment>
         <translation>Ctrl+X</translation>
@@ -44,18 +40,6 @@
     <message>
         <source>About Qt</source>
         <translation>Informacje o Qt</translation>
-    </message>
-    <message>
-        <source>File</source>
-        <translation type="obsolete">Plik</translation>
-    </message>
-    <message>
-        <source>Options</source>
-        <translation type="obsolete">Opcje</translation>
-    </message>
-    <message>
-        <source>Help</source>
-        <translation type="obsolete">Pomoc</translation>
     </message>
     <message>
         <source>This is frontend to YDP Collins dictionary.
@@ -115,6 +99,18 @@ Do widzenia!</translation>
     <message>
         <source>Swap direction</source>
         <translation>Zmień kierunek</translation>
+    </message>
+    <message>
+        <source>Kydpdict toolbar</source>
+        <translation>Pasek narzędziowy Kydpdict</translation>
+    </message>
+    <message>
+        <source>Play</source>
+        <translation>Odtwórz</translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <translation>Ustawienia</translation>
     </message>
 </context>
 <context>

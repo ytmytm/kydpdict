@@ -243,3 +243,11 @@ Kydpdict 0.5.5pre1 (26.7.2003)
 Kydpdict 0.5.5 (27.7.2003)
 - nowa funkcja - zamiana kierunku tlumaczenia
 - wiêcej akceleratorów
+
+=====================================================================
+Kydpdict 0.5.6pre1 (28.7.2003)
+- dodane stdlib.h tam gdzie trzeba
+- poprawione g³upie zachowanie przy wpisywaniu s³owa w combobox
+- poprawiony b³±d psuj±cy ustawienie cliboard_tracking przy zmianie jêzyków
+- toolbar z ikonkami (flagi po¿yczone ze screenshotu AP)
+- p³aski pushbutton z ikonk± zamiast buttona Clear

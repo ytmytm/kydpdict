@@ -192,7 +192,7 @@ void ydpDictionary::FillWordList()
   QListBoxItem *result;
   if((result = dictList->findItem("Proven<")))
   	dictList->changeItem(QString("Provencial"), dictList->index(result));
- 
+
   dictList->setCurrentItem(0);
   dictList->setAutoUpdate(TRUE);
   dictList->repaint();

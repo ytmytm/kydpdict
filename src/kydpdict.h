@@ -16,9 +16,9 @@
 #include <qmenubar.h>
 #include <qclipboard.h>
 #include <qmainwindow.h>
-
 #include <qtimer.h>
 #include <qsplitter.h>
+#include <qtoolbutton.h>
 
 #include "ydpdictionary.h"
 #include "kydpconfig.h"
@@ -62,6 +62,8 @@ class Kydpdict : public QMainWindow
 		QTimer *m_checkTimer;
 		DynamicTip * t;
 		QSplitter *splitterH, *splitterV;
+		QToolButton *but_EnPl, *but_PlEn, *but_DePl, *but_PlDe, *but_SwapLang;
+		QToolButton *but_Settings, *but_Play;
 
     private slots:
 		void NewDefinition (int index);       		/* word list highlited */
