@@ -19,3 +19,7 @@
     - niewykonalne ³atwo? szukaæ okna klasy Kydpdict.Kydpdict? (niby jak?)
 - konfigurowalne klawisze z --with-kde
 - wczytywanie wszystkich slow, ze slownikow w obie strony do jednej listy
+- minimalizacja+ryba -> znika, ryba ponownie - tez zle
+    - niech ryba nic nie robi gdy jest zminimalizowany
+- minimalizacja nie ma miec wplywu na sledzenie schowka, cos jest nie tak jesli tlumacze to
+  po raz kolejny userom
