@@ -367,3 +367,5 @@ Kydpdict 0.6.1 (xx.xx.2004)
 - je¶li tipsy s± widoczne, to klikniêcie na li¶cie wyrazów je chowa (równie¿ je¶li klik by³ na
   aktualnym wyrazie)
 - wy¶wietla t³umaczenie je¶li znalezione s³owo to ostatnie w s³owniku
+- minimalizacja progamu nie ma wp³ywu na przechwytywanie schowka (je¶li muszê t³umaczyæ to
+  zachowanie po raz n-ty, to ze mn± jest co¶ nie tak, nie z innymi lud¼mi :)

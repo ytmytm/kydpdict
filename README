@@ -27,9 +27,8 @@ klikniêciem na wyrazie) by pojawi³o siê "na górze" okno s³ownika z t³umaczeniem
 (czas rzêdu u³amka sekundy!). Je¶li wyrazu, który zaznaczy³e¶ nie ma w s³owniku,
 pojawi siê t³umaczenie wyrazu mu najbli¿szego ( np: wyraz  "investigations" nie wystêpuje,
 ale najbli¿szy mu wyraz ze s³ownika to "investigation").
-Od tej chwili wszystko co zaznaczysz pojawi siê przet³umaczone, ale je¶li tego nie
-potrzebujesz przez chwilê, wystarczy Kydpdict zminimalizowaæ do paska, a nie bêdzie siê
-ju¿ pojawia³.
+Od tej chwili wszystko co zaznaczysz pojawi siê przet³umaczone, je¶li zacznie ci to
+przeszkadzaæ po prostu wy³±cz opcjê ¶ledzenia schowka - przez pasek ikon lub menu z ryby.
 Jedn± z zalet jest tak¿e ³atwa konfiguracja programu: ¶cie¿ek dostêpu do plików s³ownika,
 ¶cie¿ki do plików z wymow± (oryginalne pliki wav lub zakodowane do mp3/ogg), a tak¿e kolorów
 tekstu t³umaczenia i t³a aplikacji. Te i inne parametry programu (np pozycja na ekranie, wielko¶æ
@@ -51,8 +50,7 @@ Program postara siê odtworzyæ go z domy¶lnych warto¶ci oraz korzystaj±c z
 
 Krótki opis opcji konfiguracyjnych z zak³adek 'Ró¿ne' i 'Schowek'
 - 'W³±cz ¶ledzenie schowka' - okno s³ownika wyskakuj±ce na wierzch mo¿e przeszkadzaæ, w ten
-   sposób mo¿na wy³±czyæ takie zachowanie na sta³e. Tymczasow± metod± jest zminimalizowanie
-   okna.
+   sposób mo¿na wy³±czyæ takie zachowanie
 - 'Ignoruj w³asne zaznaczenia' - je¶li zawarto¶æ schowka pochodzi z okna t³umaczeñ
    kydpdict, to zostanie zignorowana (kto¶ ma lepszy pomys³ na nazwê tej opcji?)
 - 'U¿ywaj pochy³ej czcionki' - niektóre czcionki pochy³e wygl±daj± brzydko, tak mo¿na nieco
