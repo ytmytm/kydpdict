@@ -12,6 +12,14 @@ AC_C_BIGENDIAN( AC_SUBST(CXXFLAGS,"$CXXFLAGS -DWORDS_BIGENDIAN") )
 
 QT_DO_IT_ALL
 
+if test x"$no_x" = "xyes"; then
+    AC_SUBST(CXXFLAGS,"$CXXFLAGS -DWITHOUT_X11")
+    AC_SUBST(HAVE_X11,"no")
+else
+    AC_SUBST(HAVE_X11,"yes")
+    AC_SUBST(X_LIB,"-lX11")
+fi
+
 if test x"$qt_cv_libraries" = "x"; then
     AC_MSG_ERROR([you have to provide both --with-qt-includes and --with-qt-libraries])
 fi

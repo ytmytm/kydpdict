@@ -248,12 +248,14 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 	RTFOutput->mimeSourceFactory()->setFilePath( config->tipsPath );
 	RTFOutput->mimeSourceFactory()->setExtensionType("html", "text/html;charset=iso8859-2");
 
+#ifndef WITHOUT_X11
 	if (config->dock) {
 	    trayicon = new TrayIcon(this,"trayicon");
 	    trayicon->setDictWidget(this);
 	    trayicon->setPopupMenu(trayMenu);
 	    trayicon->show();
 	}
+#endif
 	setFocusProxy(wordInput);
 	RTFOutput->setFocusProxy(wordInput);
 }
