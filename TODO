@@ -11,8 +11,10 @@
 - wyszukiwanie w tre¶ci (co to w³a¶ciwie znaczy?)
 - dzielenie listy hase³ na grupy (np. 'run across', 'run away' itd. w grupie
   'run' wizualnie oddzielonej a¿ do 'runabout' które jest now± grup±
+  (do zrobienia przy wpisywaniu nowych w ListRefresh, wywalic wszystkie odwolania do
+   dictList przez tresc zaznaczonego - inne niz sprawdzanie indeksow)
 - przejscie z tlumaczeniem na gettext
     - makra, ¿eby nic w kodzie nie zmieniæ
     - makefiles (.po, .mo; sciezki;)
 - opcja: po przechwyceniu schowka - na wierzch ale bez focusa na siebie
-- FindWord napisac ³adniej
+- FindWord napisac ³adniej (potrzeba pomys³u! :)
