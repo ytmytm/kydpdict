@@ -37,7 +37,6 @@ class Kydpdict : public QMainWindow
     /** destructor */
     ~Kydpdict();
     void flushConfig(void);
-    void showMinimized();
 
     private:
 		void resizeEvent (QResizeEvent *);

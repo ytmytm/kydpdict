@@ -402,12 +402,6 @@ void Kydpdict::newClipData()
     lastresult = result;
 }
 
-void Kydpdict::showMinimized()
-{
-    QMainWindow::showMinimized();
-    m_checkTimer->stop();
-}
-
 void Kydpdict::showEvent(QShowEvent *ashowEvent)
 {
     static bool sfirstStart = true;
