@@ -427,7 +427,7 @@ void Kydpdict::newFromSelection()
     if (!(config->clipTracking))
 	return;
     // do nothing if minimized
-    if (isMinimized())
+    if (this->isMinimized())
 	return;
     // do nothing if it comes from us
     if (((RTFOutput->hasSelectedText())||(wordInput->lineEdit()->hasSelectedText())) && (config->ignoreOwnSelection))
