@@ -24,6 +24,7 @@
 #include <qapplication.h>
 #include <qtextcodec.h>
 #include <qgrid.h>
+#include <qaccel.h>
 
 #define COMBO_HISTORY_SIZE	25
 
@@ -75,7 +76,6 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 	hbox1->setMinimumHeight(20);
 	dictList = new QListBox( splitterV, "dictList" );
 	RTFOutput = new QTextBrowser (splitterH, "RTFOutput");
-	listclear->setAccel( QKeySequence(Key_Escape) );
 	setCentralWidget(centralFrame);
 
 	RTFOutput->setTextFormat( RichText );
@@ -221,6 +221,9 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 	QGridLayout *grid = new QGridLayout(centralFrame, 1, 1);
 	grid->addWidget(splitterH, 0, 0);
 
+	QAccel *accel = new QAccel(this);
+	accel->connectItem(accel->insertItem(Key_Escape), this, SLOT(onEscaped()));
+
 	UpdateLook();
 
 	if (!config->toolBarVisible)
@@ -283,6 +286,16 @@ void Kydpdict::moveEvent(QMoveEvent *)
 	aPosition = this->pos();
 	config->kGeometryX = aPosition.x();
 	config->kGeometryY = aPosition.y();
+}
+
+void Kydpdict::onEscaped()
+{
+    if(wordInput->currentText().isEmpty())
+	this->hide();
+    else {
+	wordInput->clearEdit();
+	wordInput->setFocus();
+    }
 }
 
 void Kydpdict::windowActivationChange(bool oldActive)

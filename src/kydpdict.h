@@ -96,6 +96,7 @@ class Kydpdict : public QMainWindow
 			clipboardSignalArrived( false );
 		}
 		void newClipData();
+		void onEscaped();
 
     protected:
     		void clipboardSignalArrived( bool selectionMode );

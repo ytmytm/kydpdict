@@ -36,7 +36,9 @@ tekstu t³umaczenia i t³a aplikacji. Te i inne parametry programu (np pozycja na 
 okna s± przechowywane w katalogu .kydpdict w Twoim katalogu konfiguracyjnym. Bêdzie to
 katalog domowy lub katalog poni¿ej niego okre¶lony przez zmienn± $CONFIG_DIR.
 Kilka najwa¿niejszych skrótów klawiaturowych:
-- ESC pozwala szybko wpisaæ z klawiatury nowy wyraz
+- ESC pozwala szybko wpisaæ z klawiatury nowy wyraz - czy¶ci widget wprowadzania i przenosi
+  tam kursor
+- kolejne naci¶niêcie ESC pozwala ukryæ s³ownik - jak przy klikniêciu na rybie
 - Ctrl+` (nad Tab) pozwala szybko zamieniæ kierunek t³umaczenia
 
 4. Konfiguracja
@@ -74,8 +76,9 @@ koliduj±ce z domy¶lnymi skrótami managerów okien (np. Ctrl/Shift/Alt+Tab) - napi
 6. Co jest do zrobienia/jakie s± znane b³êdy ?
 Przeczytaj plik TODO. Najwa¿niejszy problem to przyspieszenie ³adowania s³ownika.
 
-7. Co tam robi ryba?
-Nie s³ysza³e¶ o babelfish? Id¼ do biblioteki/ksiêgarni i poszukaj ksi±¿ek
+7. Co na tacce robi ryba?
+Kolejne wersje kydpdict bêd± wyposa¿one nie tylko w rybê na tacce ale i plastikowe sztuæce.
+Na serio: nie s³ysza³e¶ o babelfish? Id¼ do biblioteki/ksiêgarni i poszukaj ksi±¿ek
 Douglasa Adamsa.
 
 Wszelkie wykryte b³êdy, konstruktywn± krytykê, ciekawe pomys³y, gotowe ³aty itd. wysy³ajcie
