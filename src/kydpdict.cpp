@@ -375,8 +375,8 @@ void Kydpdict::showEntry(QString *aEntry, int aindex)
 	wordInput->lineEdit()->selectAll();
     }
 
-    RTFOutput->setCursorPosition(0, 0);
     RTFOutput->setText(myDict->GetDefinition(myDict->topitem + dictList->currentItem()));
+    RTFOutput->setCursorPosition(0, 0);
 
     UpdateHistory();
     tipsVisible = false;
