@@ -47,7 +47,7 @@ struct dictionaryCache {
 
 #define TABLE_PHONETIC_ISO { \
   ".", ".", "<img src=\"f2\">", "<img src=\"f3\">", ".", "<img src=\"f5\">", "e", "<img src=\"f6\">", \
-  "<img src=\"f1\">", "<img src=\"f8\">", "<img src=\"f4\">", "<img src=\"f7\">", "¦", ":", "´", ".", \
+  "<img src=\"f1\">", "<img src=\"f8\">", "<img src=\"f4\">", "<img src=\"f7\">", "¦", ":", "´", "¬", \
   "&#331;", ".", ".", ".", ".", ".", ".", "&#240;", \
   "&#230;", ".", ".", ".", "¶", ".", ".", "¼", \
   " ", "¡", "¢", "£", "¤", "¥", "¦", "§", \
@@ -258,7 +258,7 @@ QString ydpDictionary::convert_cp1250(char *tekst, int size)
 	// prawdopodobnie jesli to jest wlaczone, to czesc zabaw z lokalami jest zbedna
 	const static int table_cp_unicode[] = {
 	    0x002e, 0x002e, 0x0254, 0x0292, 0x002e, 0x0283, 0x0065, 0x028c,	// 80-87
-	    0x0259, 0x03b8, 0x026a, 0x0251, 0x015a, 0x02d0, 0x00b4, 0x002e,	// 88-8f
+	    0x0259, 0x03b8, 0x026a, 0x0251, 0x015a, 0x02d0, 0x00b4, 0x0179,	// 88-8f
 	    0x014b, 0x002e, 0x002e, 0x002e, 0x002e, 0x002e, 0x002e, 0x00f0,	// 90-97
 	    0x00e6, 0x002e, 0x002e, 0x002e, 0x015b, 0x002e, 0x002e, 0x017a,	// 98-9f
 	    0x002e, 0x0104, 0x002e, 0x0141, 0x00a4, 0x013d, 0x015a, 0x00a7,	// a0-a7
