@@ -291,7 +291,7 @@ void ydpConfigure::UpdateLabels()
     QBrush paper;
 
     exampleLabel1->setLinkUnderline(FALSE);
-    QMimeSourceFactory::defaultFactory()->setText ( "pomoc", "<qt type=\"detail\" title=\"tytul\"><nobr><font color=\"red\">adjectiv - przymiotnik</font></nobr></qt>" );
+    QMimeSourceFactory::defaultFactory()->setText ( "pomoc", "<qt type=\"detail\" title=\"tytul\"><nobr><font color=\"red\">adjective - przymiotnik</font></nobr></qt>" );
 
     if(checkBox1->isChecked() && pixmap.load(cBckgrnd) ) {
 	paper.setPixmap(pixmap);
