@@ -370,7 +370,7 @@ void Kydpdict::newClipData()
     this->show();
     this->setActiveWindow();	// XXX this sets focus
 
-    UpdateHistory(result);
+    UpdateHistory();
     wordInput->setEditText(lnewEntry);
 
     if ((config->autoPlay) && (lastresult!=result))
@@ -399,7 +399,7 @@ void Kydpdict::showEvent(QShowEvent *ashowEvent)
 
 void Kydpdict::NewDefinition (int index)
 {
-    UpdateHistory(index+myDict->topitem);
+    UpdateHistory();
     RTFOutput->setText(myDict->GetDefinition(index+myDict->topitem));
     RTFOutput->setCursorPosition(0,0);
     scrollBar->setValue(index+myDict->topitem);
@@ -428,11 +428,11 @@ void Kydpdict::PlaySelected (int index)
 
 void Kydpdict::PlayCurrent ()
 {
-    UpdateHistory(dictList->currentItem());
+    UpdateHistory();
     PlaySelected(dictList->currentItem());
 }
 
-void Kydpdict::UpdateHistory(int index)
+void Kydpdict::UpdateHistory(void)
 {
     int i;
     QString content = (dictList->currentText()).simplifyWhiteSpace();

@@ -8,7 +8,7 @@
       pionie az do dolnej krawedzi okna
     - 'dynamics' - nie ma podpowiedzi do 'npl'
       'Fiji' - sprawdzic podpowiedzi
-- wyszukiwanie w tre¶ci
+- wyszukiwanie w tre¶ci (co to w³a¶ciwie znaczy?)
 - dzielenie listy hase³ na grupy (np. 'run across', 'run away' itd. w grupie
   'run' wizualnie oddzielonej a¿ do 'runabout' które jest now± grup±
 - przejscie z tlumaczeniem na gettext
@@ -20,7 +20,4 @@
   wyskakiwac na wierzch (opcja?)
 - usunac przycisk do kasowania (albo zminiejszyæ)
 - opcja: po przechwyceniu schowka - na wierzch ale bez focusa na siebie
-
-nowe nowe nowe
-    - UpdateHistory wcale nie potrzebuje swojego parametru
-    - wersja z mmap
+- wersja z mmap

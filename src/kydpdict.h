@@ -82,7 +82,7 @@ class Kydpdict : public QMainWindow
 		void NewDefinition (int index);       		/* word list highlited */
 		void NewFromLine (const QString& newText);	/* new word entered */
 		void PlaySelected (int index);			/* dbl click or return to play */
-		void UpdateHistory (int index);
+		void UpdateHistory (void);
 		void PlayCurrent ();
 		void SwapLanguages ();
 		void SwapPolToEng ();
