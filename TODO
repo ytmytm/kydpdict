@@ -16,6 +16,7 @@
 - bugreport clipboard/wyszukiwanie by Jamnik (dwuznaki? a jak siê zachowa przy innym locale?)
 - schowek / schowek+klipper
     - po zmianie kierunku t³umaczenia nie wyskakuje na wierzch!
+    - to samo po toggle
     - chyba nie ma szans na dzia³anie gdy jest w³±czony klipper :(
 - mozliwosc zmiany ikony/ustawiania jej z poziomu aplikacji (to co kiedys AP wywalil)
 - wykrywanie juz uruchomionej instancji i ustawianie jej fokusa
