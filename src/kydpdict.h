@@ -46,7 +46,9 @@ class Kydpdict : public QMainWindow
 		void SwapLang(bool direction, int lang);
 		void PasteClipboard (QString haslo);
 		void showEvent(QShowEvent *ashowEvent);
+		void hideEvent(QHideEvent *ahideEvent);
 		void updateUserTimestamp(void);
+		void showEntry(QString *aEntry, int aindex = -1);
 
 		// global configuration
 		kydpConfig *config;
@@ -76,14 +78,17 @@ class Kydpdict : public QMainWindow
 		// clipboard shit
 		QClipboard  *cb;
 		QTimer *m_checkTimer, *escTimer;
-		QString slastSelection;
-		QString slastClipboard;
+		QString lastSelection, lastClipboard, lastEdit;
+
+		// eventually, replace that it with proper blockSignals set
+		bool eventLock;
 
     private slots:
-		void NewDefinition (int index);       		/* word list highlited */
-		void NewFromLine (const QString& newText);	/* new word entered */
+		void newFromLine (const QString& aEntry);
+		void newFromList(int aindex);
+		void newFromSelection();
+		void newFromClick(QListBoxItem *lbi);		/* click to go back from tips mode */
 		void PlaySelected (int index);			/* dbl click or return to play */
-		void NewClicked(QListBoxItem *lbi);		/* click to go back from tips mode */
 		void UpdateHistory (void);
 		void PlayCurrent ();
 		void SwapLanguages ();
@@ -99,7 +104,6 @@ class Kydpdict : public QMainWindow
 		void ShowToolbar ();
 		void handleLink( const QString & href );
 		void handleTip( const QString & href );
-		void newClipData();
 		void onEscaped();
 
     protected:

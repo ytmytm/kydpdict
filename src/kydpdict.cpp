@@ -134,8 +134,9 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
  	m_checkTimer = new QTimer(this, "timer");
 	m_checkTimer->start(TIMER_PERIOD, FALSE);
 	escTimer = new QTimer(this, "esctimer");
-	slastSelection = "";
-	slastClipboard = "";
+	lastEdit = "";
+	lastSelection = "";
+	lastClipboard = "";
 
 	int a;
 
@@ -227,19 +228,19 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 	toolBar->addSeparator();
 	but_Settings = new QToolButton(QIconSet(QPixmap(configure_xpm)), tr("Settings"), QString::null, this, SLOT(ConfigureKydpdict()), toolBar, "but_settings" );
 
-	connect (dictList, SIGNAL(highlighted(int)), this, SLOT(NewDefinition(int)));
+	connect (dictList, SIGNAL(highlighted(int)), this, SLOT(newFromList(int)));
 	connect (dictList, SIGNAL(selected(int)), this, SLOT(PlayCurrent()));
-	connect (dictList, SIGNAL(clicked(QListBoxItem*)), this, SLOT(NewClicked(QListBoxItem*)));
-	connect (wordInput, SIGNAL(textChanged(const QString&)), this, SLOT(NewFromLine(const QString&)));
+	connect (dictList, SIGNAL(clicked(QListBoxItem*)), this, SLOT(newFromClick(QListBoxItem*)));
+	connect (wordInput, SIGNAL(textChanged(const QString&)), this, SLOT(newFromLine(const QString&)));
 	connect (wordInput, SIGNAL(activated(int)), this, SLOT(PlayCurrent()));
 	connect (listclear, SIGNAL(clicked()), wordInput, SLOT(clearEdit()));
 	connect (listclear, SIGNAL(clicked()), wordInput, SLOT(setFocus()));
 	connect (RTFOutput, SIGNAL(highlighted(const QString &)), this, SLOT(handleTip(const QString &)));
 	connect (RTFOutput, SIGNAL(linkClicked(const QString &)), this, SLOT(handleLink(const QString &)));
- 	connect (m_checkTimer, SIGNAL(timeout()), this, SLOT(newClipData()));
+	connect (m_checkTimer, SIGNAL(timeout()), this, SLOT(newFromSelection()));
 	connect (toolBar, SIGNAL(visibilityChanged(bool)), this, SLOT(ToolbarShowHide(bool)));
- 	connect (cb, SIGNAL(selectionChanged() ), SLOT(newClipData()));
- 	connect (cb, SIGNAL(dataChanged() ), SLOT(newClipData()));
+	connect (cb, SIGNAL(selectionChanged() ), SLOT(newFromSelection()));
+	connect (cb, SIGNAL(dataChanged() ), SLOT(newFromSelection()));
 
 	connect (scrollBar, SIGNAL(nextLine()), myDict, SLOT(ListScroll1Up()));
 	connect (scrollBar, SIGNAL(nextPage()), myDict, SLOT(ListScrollPageUp()));
@@ -349,67 +350,130 @@ void Kydpdict::onEscaped()
 
 void Kydpdict::windowActivationChange(bool oldActive)
 {
-    if (isActiveWindow())
+    if (isActiveWindow()) {
+	m_checkTimer->stop();
 	wordInput->setFocus();
+	wordInput->lineEdit()->selectAll();
+    } else {
+	wordInput->lineEdit()->deselect();
+	lastClipboard = cb->text(QClipboard::Clipboard).stripWhiteSpace();   // protect from catching own copy in clipboard
+	m_checkTimer->start(TIMER_PERIOD,FALSE);
+    }
 }
 
-void Kydpdict::newClipData()
+void Kydpdict::hideEvent( QHideEvent *ahideEvent)
 {
-    int result;
-    static int lastresult=-1;
+    QMainWindow::hideEvent(ahideEvent);
+    m_checkTimer->stop();
+}
 
-    updateUserTimestamp();
+void Kydpdict::showEntry(QString *aEntry, int aindex)
+{
+// when aindex is set aEntity is ignored (only for performance reason)
+    if (aindex < 0) {
+	aEntry->simplifyWhiteSpace();
+	aEntry->truncate(20);
+	int lindex = myDict->FindWord(*aEntry);
+	myDict->ListRefresh(lindex);
+	dictList->setCurrentItem(lindex - myDict->topitem);
+	scrollBar->setValue(lindex);
+	if (aindex == -2)   // from selection or clipboard
+	    wordInput->setEditText(*aEntry);
+	aindex = lindex - myDict->topitem;
+    } else {
+	wordInput->setEditText(dictList->text(dictList->currentItem()));
+	wordInput->setFocus();
+	wordInput->lineEdit()->selectAll();
+    }
 
+    RTFOutput->setCursorPosition(0, 0);
+    RTFOutput->setText(myDict->GetDefinition(myDict->topitem + dictList->currentItem()));
+
+    UpdateHistory();
+    tipsVisible = false;
+
+    if (config->autoPlay)
+	PlaySelected (dictList->currentItem());
+
+    this->show();
+    this->raise();
+
+    if (this->isMinimized())
+	this->showNormal();
+
+    if (config->setFocusOnSelf)
+	this->setActiveWindow();
+}
+
+void Kydpdict::newFromLine(const QString& aEntry)
+{
+    if (eventLock)
+	return;
+
+    eventLock = true;
+    if (!aEntry.isEmpty()) {
+	QString lentry = aEntry.stripWhiteSpace();
+	if ((lentry.length())&&(lentry != lastEdit)) {
+		lastEdit = lentry;
+		showEntry(&lentry);
+	}
+    }
+    eventLock = false;
+}
+
+void Kydpdict::newFromList(int aindex)
+{
+    if (eventLock)
+      return;
+
+    eventLock = true;
+    if (aindex >= 0)
+	showEntry(NULL, aindex);
+    eventLock = false;
+}
+
+void Kydpdict::newFromSelection()
+{
     // do nothing if clipboard tracking is disabled
     if (!(config->clipTracking))
 	return;
-    // do nothing if it comes from us
-    if (((RTFOutput->hasSelectedText())||(wordInput->lineEdit()->hasSelectedText())) && (config->ignoreOwnSelection))
-        return;
+    if (eventLock)
+	return;
+
+    eventLock = true;
+    updateUserTimestamp();
 
     // get selection - if selection and clipboard are changed simultaneously selection
     // is chosen an clipboard is ignored
     QString lnewEntry = cb->text(QClipboard::Selection).stripWhiteSpace(); 
-    if (lnewEntry.length() && lnewEntry != slastSelection)
-	slastSelection = lnewEntry;
+    if (lnewEntry.length() && lnewEntry != lastSelection)
+	lastSelection = lnewEntry;
     else
 	lnewEntry = "";
 
     if (lnewEntry.isEmpty()) {
 	// get clipboard if selection empty or unchanged
 	lnewEntry = cb->text(QClipboard::Clipboard).stripWhiteSpace();    
-	if(lnewEntry.length() && lnewEntry != slastClipboard) {
-	    slastClipboard = lnewEntry;
-	    if(slastSelection == slastClipboard)
+	if (lnewEntry.length() && lnewEntry != lastClipboard) {
+	    lastClipboard = lnewEntry;
+	    if (lastSelection == lastClipboard)
 		lnewEntry = "";
 	} else
 	    lnewEntry = "";
     } else
-	slastClipboard = cb->text(QClipboard::Clipboard).stripWhiteSpace();
+	lastClipboard = cb->text(QClipboard::Clipboard).stripWhiteSpace();
 	// prevent from spurious apperance (in next second after selection was shown)
 
-    if(lnewEntry.isEmpty())
-	return;
+    if (lnewEntry.length())
+	showEntry(&lnewEntry, -2);
 
-    lnewEntry.simplifyWhiteSpace();
-    lnewEntry.truncate(20);
+    eventLock = false;
+}
 
-    this->show();
-    this->raise();
-    if (this->isMinimized())
-	this->showNormal();
-
-    if (config->setFocusOnSelf)
-	this->setActiveWindow();
-
-    wordInput->setEditText(lnewEntry);	// this does search
-
-    result = myDict->topitem+dictList->currentItem();
-    UpdateHistory();
-    if ((config->autoPlay) && (lastresult!=result))
-	PlaySelected (dictList->currentItem());
-
-    lastresult = result;
+void Kydpdict::newFromClick(QListBoxItem *lbi)
+{
+    if (tipsVisible)
+	newFromList(dictList->currentItem());
 }
 
 void Kydpdict::showEvent(QShowEvent *ashowEvent)
@@ -419,43 +483,9 @@ void Kydpdict::showEvent(QShowEvent *ashowEvent)
     if (sfirstStart)
 	sfirstStart = false;
     else
-	newClipData();
+	newFromSelection();
     QMainWindow::showEvent(ashowEvent);
     m_checkTimer->start(TIMER_PERIOD, FALSE);
-}
-
-void Kydpdict::NewClicked (QListBoxItem *lbi)
-{
-    if (tipsVisible)
-	NewDefinition(dictList->currentItem());
-}
-
-void Kydpdict::NewDefinition (int index)
-{
-    tipsVisible = false;
-    UpdateHistory();
-    RTFOutput->setText(myDict->GetDefinition(index+myDict->topitem));
-    RTFOutput->setCursorPosition(0,0);
-    scrollBar->setValue(index+myDict->topitem);
-}
-
-void Kydpdict::NewFromLine (const QString &newText)
-{
-    int result;
-
-    // prevent spurious aperance when user starts writing immediately after Kydpdict gets focus
-    slastSelection = cb->text(QClipboard::Selection).stripWhiteSpace();
-    slastClipboard = cb->text(QClipboard::Clipboard).stripWhiteSpace();
-
-    if (newText.length()) {
-	result=myDict->FindWord(newText);
-	myDict->ListRefresh(result);
-	dictList->setCurrentItem(result-myDict->topitem);
-	// ugly hack, for some reason the signal highlighted from above setCurrentItem
-	// is not triggered/delivered with the very last word in the dictionary
-	if (result==myDict->wordCount-1)
-	    NewDefinition(result-myDict->topitem);
-    }
 }
 
 void Kydpdict::PlaySelected (int index)
@@ -534,7 +564,7 @@ void Kydpdict::SwapLang (bool direction, int language ) //dir==1 toPolish
 		} while (a);
 		wordInput->setEditText(word);
 		UpdateLook();
-		NewFromLine(word);
+		newFromLine(word);
 	}
 }
 
@@ -717,8 +747,6 @@ void Kydpdict::UpdateLook()
 	dictList->setFont(config->fontTransFont);
 	wordInput->setFont(config->fontTransFont);
 
-	NewDefinition(dictList->currentItem() < 0 ? 0 : dictList->currentItem() );
-
 	int item;
 	item = dictList->currentItem();
 	myDict->ListRefresh(myDict->topitem);
@@ -757,7 +785,7 @@ void Kydpdict::handleLink( const QString & href )
 		if (link.startsWith("1"))
 			SwapLanguages();
 
-		NewFromLine(link.remove(0,1));
+		newFromLine(link.remove(0,1));
 	}
 }
 
