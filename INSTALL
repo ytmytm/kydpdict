@@ -1,0 +1,22 @@
+Rozpakuj ¼ród³a do wybranego katalogu
+
+Kompilacja programu.
+1. wykonaj
+    ./configure
+2. wykonaj
+    make
+
+Je¶li skrypt ./configure zakoñczy siê b³êdem, to prawdopodobnie nie mo¿e znale¼æ ¶cie¿ek
+do Qt. Nale¿y wówczas jawnie je podaæ, np.
+    ./configure --with-qt-includes=/usr/X11R6/include/qt --with-qt-libs=/usr/X11R6/lib
+Je¶li Qt zosta³o zainstalowane bezpo¶rednio ze ¼róde³ to prawdopodobnie wystarczy co¶
+podobnego do:
+    ./configure --with-qt-dir=/usr/local/qt
+
+W razie k³opotów przeczytaj dokumentacje Qt.
+
+Instalacja programu.
+
+3. make install
+Program zostanie zainstalowany domy¶lnie do /usr/local lub innego drzewa okre¶lonego przez
+opcjê --prefix skryptu ./configure

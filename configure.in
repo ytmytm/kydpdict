@@ -1,0 +1,69 @@
+
+AC_PREREQ(2.57)
+AC_INIT(kydpdict, 0.5.0, ytm@friko.onet.pl)
+
+AC_PROG_CPP
+AC_PROG_CC
+AC_PROG_CXX
+AC_PROG_CXXCPP
+AC_PROG_MAKE_SET
+
+QT_DO_IT_ALL
+
+if test x"$qt_cv_libraries" = "x"; then
+    AC_MSG_ERROR([you have to provide both --with-qt-includes and --with-qt-libraries])
+fi
+
+# Required Qt version
+QTMAJOR=3
+QTMIDDLE=0
+QTMINOR=0
+
+aIFS=$IFS
+IFS=.
+CNT=1
+FAULT=0
+for NAME in $QT_VERSION; do
+    case $CNT in
+	1)
+	    if test 0$NAME -lt $QTMAJOR; then
+		FAULT=1
+	    fi
+	    ;;
+	2)
+	    if test 0$NAME -lt $QTMIDDLE; then
+		FAULT=1
+	    fi
+	    ;;
+	3)
+	    if test 0$NAME -lt $QTMINOR; then
+		FAULT=1
+	    fi
+	    ;;
+    esac
+    CNT=`expr $CNT + 1`
+done
+IFS=$aIFS
+
+if test 0$FAULT -eq 1; then
+    AC_MSG_ERROR([found Qt $QT_VERSION, Qt >= $QTMAJOR.$QTMIDDLE.$QTMINOR required])
+fi
+
+AC_ARG_VAR(LUPDATE,[path to Qt lupdate tool])
+AC_CHECK_PROG([LUPDATE],[lupdate],[found],[notfound],[$PATH:$QTDIR/bin:/usr/X11R6/bin:/usr/bin:/usr/local/bin:/usr/local/qt/bin])
+if test "$LUPDATE" = "notfound"; then
+    AC_MSG_ERROR([lupdate not found. Please check if it is in your PATH or set LUPDATE variable])
+fi
+AC_PATH_PROG([LUPDATE],[lupdate],[/usr/bin/lupdate],[$PATH:/usr/X11R6/bin:/usr/bin:/usr/local/bin:/usr/local/qt/bin])
+
+AC_ARG_VAR(LRELEASE,[path to Qt lrelease tool])
+AC_CHECK_PROG([LRELEASE],[lrelease],[found],[notfound],[$PATH:$QTDIR/bin:/usr/X11R6/bin:/usr/bin:/usr/local/bin:/usr/local/qt/bin])
+if test "$LRELEASE" = "notfound"; then
+    AC_MSG_ERROR([lrelease not found. Please check if it is in your PATH or set LRELEASE variable])
+fi
+AC_PATH_PROG([LRELEASE],[lrelease],[/usr/bin/lrelease],[$PATH:/usr/X11R6/bin:/usr/bin:/usr/local/bin:/usr/local/qt/bin])
+
+AC_OUTPUT([
+Makefile
+src/Makefile
+])

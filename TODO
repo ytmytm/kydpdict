@@ -1,0 +1,5 @@
+- poprawna obs³uga schowka
+- podpowiedzi
+- szukanie hasla w zasobach slownika
+- optymalizacja ladowania indeksu
+- testy z wlasna implementacja wyszukiwania w indeksie

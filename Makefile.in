@@ -1,0 +1,24 @@
+
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+bindir=@bindir@
+datadir=@datadir@
+PACKAGE_NAME=@PACKAGE_NAME@
+PACKAGE_VERSION=@PACKAGE_VERSION@
+
+all :
+	$(MAKE) -C src
+
+clean:
+	$(MAKE) -C src clean
+	-rm config.log config.status
+
+distclean:
+	$(MAKE) -C src distclean
+	-rm config.log config.status aclocal.m4 configure Makefile
+
+install:
+	mkdir -p $(bindir)
+	mkdir -p $(datadir)/doc/$(PACKAGE_NAME)-$(PACKAGE_VERSION)
+	install -m 644 AUTHORS COPYING ChangeLog INSTALL README TODO $(datadir)/doc/$(PACKAGE_NAME)-$(PACKAGE_VERSION)
+	$(MAKE) -C src install

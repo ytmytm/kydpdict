@@ -1,0 +1,8 @@
+#!/bin/sh
+#
+# use this to recreate ./configure shell script
+#
+
+aclocal --acdir=config
+autoconf
+./configure $@

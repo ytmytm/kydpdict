@@ -1,0 +1,47 @@
+1. Co to jest?
+Aplikacja Kydpdict jest nak³adk± na s³ownik Young Digital Poland Collins.
+Umo¿liwia ³atwe i efektywne korzystanie z s³ownika w ¶rodowisku graficznym
+systemu Linux.
+
+2. Co jest wymagane dla dzia³ania Kydpdict?
+Konieczne jest posiadanie biblioteki qt w wersji > 3.0, je¶li kompilujemy program
+konieczny bêdzie tak¿e pakiet Qt-devel. Kydpdict nie wymaga zainstalowanego
+¶rodowiska KDE (wbrew swojej nazwie :).
+Do odtwarzania wymowy s³ów potrzebny bêdzie zewnêtrzny program. Mo¿e to byæ play do
+oryginalnych plików wav lub je¶li zosta³y przekodowane: mpg123, ogg123 i wiele innych.
+
+3. Jakie s± najwa¿niejsze zalety Kydpdict?
+Korzystanie ze s³ownika  nigdy nie by³o tak proste jak obecnie(przynajmniej dla mnie ; - ) ).
+W wiêkszo¶ci przypadków t³umaczymy teksty w postaci elektronicznej, nie ma wiêc sensu
+wpisywac z klawiatury wyrazów (czas znacznie powy¿ej sekundy) ani nawet zaznaczaæ
+tekstu, naciskaæ Ctrl+C, zmieniaæ okno na okno s³ownika i wklejaæ tekst naciskaj±c Ctrl+V
+(czas rzêdu sekundy). Teraz pracuj±c z tekstem obcojêzycznym (np w przegl±darce www)
+wystarczy tylko zaznaczyæ wyraz (w wiêkszo¶ci aplikacji zaznacza siê tekst dwukrotnym
+klikniêciem na wyrazie) by pojawi³o siê "na górze" okno s³ownika z t³umaczeniem
+(czas rzêdu u³amka sekundy!). Je¶li wyrazu, który zaznaczy³e¶ nie ma w s³owniku,
+pojawi siê t³umaczenie wyrazu mu najbli¿szego ( np: wyraz  "investigations" nie wystêpuje,
+ale najbli¿szy mu wyraz ze s³ownika to "investigation").
+Od tej chwili wszystko co zaznaczysz pojawi siê przet³umaczone, ale je¶li tego nie
+potrzebujesz przez chwilê, wystarczy Kydpdict zminimalizowaæ do paska, a nie bêdzie siê
+ju¿ pojawia³, choæ ci±gle bêdzie t³umaczy³.
+Jedn± z zalet jest tak¿e ³atwa konfiguracja programu: ¶cie¿ek dostêpu do plików s³ownika,
+¶cie¿ki do plików z wymow± (oryginalne pliki wav lub zakodowane do mp3/ogg), a tak¿e kolorów
+tekstu t³umaczenia i t³a aplikacji. Te i inne parametry programu (np pozycja na ekranie, wielko¶æ
+okna s± przechowywane w pliku konfiguracyjnym w Twoim katalogu konfiguracyjnym. Bêdzie to
+katalog domowy lub katalog poni¿ej niego okre¶lony przez zmienn± $CONFIG_DIR.
+Je¶li chcesz u¿ywaæ programu ze wszystkimi komunikatami w jêzyku polskim, upewnij siê, ¿e
+w katalogu, z którego uruchamiasz Kydpdict znajduje siê plik kydpdict_pl.qm.
+
+4. Jakie s± znane wady i b³êdy Kydpdict ?
+a) Aplikacja oparta jest o bibliotekê Qt i podczas wykonywania zajmuje sporo pamiêci (na mojej
+maszynie warto¶æ ta dochodzi nawet do 11MB). Nie jest to jednak wina kodu programu -
+nawet najprostsze aplikacje przyk³adowe Qt (dostêpne w pakiecie Qt-devel) podczas
+wykonywania zajmuj± wiêcej ni¿ 8MB. No có¿, warto¶ci wydaj± siê ogromne w porównaniu
+do ilo¶ci pamiêci zajmowanego przez ydpdict (rzêdu kilkuset kB), ale je¶li kto¶ ma du¿o
+pamiêci nie odczuje ¿adnego dyskomfortu.
+b) ¦ledzenie zaznaczanego tekstu nie dzia³a poprawnie w OpenOffice.
+c) program szuka pliku z t³umaczeniem domyslnie w /usr/share/kydpdict
+Nie jest to poprawne rozwi±zanie ale na razie lepszego nie znamy.
+
+Wszelkie wykryte b³êdy, konstruktywn± krytykê, ciekawe pomys³y itd. wysy³ajcie na adres:
+kulozik@op.pl lub ytm@friko.onet.pl

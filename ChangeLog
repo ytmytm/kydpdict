@@ -1,0 +1,131 @@
+Kydpdict 0.4.0
+Zmiany od wersji 0.2.1
+-przeniesiony do qt 3.0.x
+-usuniêtne przestarza³e klasy i funkcje
+-aplikacja ma teraz menu z prawdziwego zdarzenia
+-dopisana funkcja ¶ledzenia zaznaczanego tekstu w dowolnej aplikacji X Windows
+ zaznaczony tekst zostaje przet³umaczony, a okno s³ownika pojawia siê na wierzchu
+ (chcesz to chwilowo wy³±czyæ - zminimalizuj Kypdict do paska). Je¶li zaznaczonego
+ s³owa nie ma w s³owniku wy¶wietlone zostanie t³umaczenie s³owa mu najbli¿szego.
+-nowe okno dialogowe, w którym skonfigurujesz Kydpdict: ¶cie¿ki do plików s³ownika
+ i cdromu, t³o aplikacji, kolory tekstu.
+-przet³umaczony tekst jest teraz lepiej uporz±dkowany i bardziej czytelny
+=====================================================================
+Kydpdict 0.4.1
+-Wykonana internacjonalizacja programu
+-Zrobione pliki do wersji polskiej (aplikacja szuka ich w kat. bie¿±cym )
+
+=====================================================================
+Kydpdict 0.4.2
+-aplikacja sprawdza dostêpne pliki s³ownika i dopasowuje do nich menu
+-uproszczenie kodu i mo¿liwo¶æ ³atwego dodawania kolejnych jêzyków
+
+=====================================================================
+Kydpdict 0.4.3
+-poprawione kilka drobnych b³êdow
+
+=====================================================================
+Kydpdict 0.4.4
+-napisana od nowa funkcja generuj±ca poprawny kod html-a
+-wygl±d t³umaczeñ dla jêzyka angielskiego i niemieckiego jest jednolity - zadnej kursywy
+ czy pogrubienia tam, gdzie ich nie powinno byæ
+-rozszerzone mo¿liwo¶ci konfiguracji kolorów
+
+=====================================================================
+Kydpdict 0.4.5
+-znaki alfabetu fonetycznego s± poprawnie wy¶wietlane
+
+=====================================================================
+Kydpdict 0.4.6
+-uporz±dkowanie kodu
+-poprawione b³êdy zwi±zane z sprawdzaniem plików s³ownika przed ich za³adowaniem
+ i kilka innych
+
+=====================================================================
+Kydpdict 0.4.7pre (31.1.2003)
+
+- usuniecie/zmiana kolejnosci Helvetica,Arial na Arial,Helvetica
+  (domyslna Helvetica moze nie pochodzic z .ttf, tylko Type1 (brzydka!))
+- zamiana kolejnosci kolorow translation i qualificator w oknie (zeby strzalki
+  pasowaly do obrazka)
+- odgrywa dzwieki tylko gdy tlumaczenie jest Z ANGIELSKIEGO
+- jesli nie moze znalezc slownika z jezykiem z pliku conf. to szuka drugiego
+- jesli jest dostepny tylko jeden slownik, to nie ma przelaczania
+- wywalony fork, jest QProcess
+- dodane players do konfiguratora
+- Play szuka w kolejnosci: wav, mp3, ogg
+- brakujace tlumaczenia w klasie ydpdictionary
+- troche porzadkow w naglowkach (w *.h to co niezbedne, reszta do *.cpp)
+- w ydpconfigure.h:public tylko to co musi tam byc, reszta do private (paranoia)
+
+=====================================================================
+Kydpdict 0.4.7pre2 (1.2.2003)
+
+-usuniete wyszczegolnienie na: play, mpg123, ogg123. Uzytkownik podaje
+ sobie sciezke do plikow audio (wav, mp3, ogg lub co tam ma) i sam
+ podaje sciezke do jakiegos playera, ktory to bedzie odgrywal.
+-poprawiona literowka w slowie "Helvetica"(ydpdictionaty -l.236), uzupelnione tlumaczenia
+-troche ujednolicilem nazwy zmiennych w ydpconfigure: przyciski zaczynaja sie od "change"
+ a funkcje pod nie podpiete od "New".
+
+=====================================================================
+Kydpdict 0.4.7pre3 (2.2.2003)
+- cala konfiguracja jest wspolna i trzymana w jednej strukturze
+- przy tworzeniu pliku konfiguracyjnego - proba przejecia danych z /etc/ydpdict.conf
+- ./configure ktory udaje ze szuka Qt... (ale toolsy znajduje)
+- qt.m4 bezposrednio z Lyx'a. (dzieki!)
+- ./configure ktory szuka i znajduje Qt
+- poprawiona sprawa kwadratu w eng->pol i nawiasow trojkatnych w ger->pol
+- nawias trojkatny w ger->pol kontratakuje!
+
+=====================================================================
+Kydpdict 0.4.7pre4 (2.2.2003)
+- koszerne make install, uaktualniona dokumentacja
+- wywalone UpdateConfiguration z ydpdictionary, teraz zawsze korzysta ze struktury konf.,
+  a nie z lokalnych danych
+- nowe rozwiazanie kwestii niemieckiego '>'
+- plik tlumaczenia instalowany w share/doc/kydpdict-x.y.z i ladowany stamtad lub z katalogu biezacego
+- ./configure sprawdza wersje Qt (wymagana >=3.0.0)
+
+=====================================================================
+Kydpdict 0.4.8pre1 (2.2.2003)
+- definicje tablic konwersji przeniesione z ydpdictionary.h do pliku .cpp
+  (moc z Qt 3.1.0 sie na nich krztusi³)
+
+=====================================================================
+Kydpdict 0.4.8pre2 (3.2.2003)
+- jeszcze jedna poprawka na '>' i '<'
+- zmiana kolejnosci sprawdzania tagow
+- podniesiony numer wersji w ./configure.in
+- tlumaczenie szukane w w/w, potem w $HOME, $HOME/$CONFIG_DIR, "."
+- jesli zminimalizowany, to nic nie robi po wklejeniu tekstu do clipboard
+
+=====================================================================
+Kydpdict 0.4.8pre3 (4.2.2003)
+- ydpconfigure.h: void static -> static void
+
+=====================================================================
+Kydpdict 0.4.9pre1 (4.2.2003)
+- struktura kydpconf zamieniona na klase kydpConf, odczyt i zapis konfiguracji z dysku tamze
+  wywalone Write/ReadConfiguration
+
+=====================================================================
+Kydpdict 0.4.9pre2 (7.2.2003)
+- dodana brakuj±ca obs³uga taga \cf4
+
+=====================================================================
+Kydpdict 0.4.9pre3 (8.2.2003)
+- wymuszone linkowanie dynamiczne
+- brakujacy #include <stdlib.h> w kydpconfig.cpp
+- uzupelniony plik .pro o kydpconfig
+
+=====================================================================
+Kydpdict 0.4.9pre3 (18.2.2003)
+- nowy kod clipboardu, poprawiony blad c) z README
+- uaktualniona dokumentacja (blad d)->c))
+
+=====================================================================
+Kydpdict 0.5.0 (24.02.2003)
+- workaround na slowo 'proven'
+- zmiana LOCALEDIR na /usr/share/kydpdict
+
