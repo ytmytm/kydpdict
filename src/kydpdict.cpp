@@ -517,7 +517,7 @@ void Kydpdict::ShowAbout()
 	cb->blockSignals( TRUE );
 	QMessageBox aboutBox;
 
-	aboutBox.setCaption("Kydpdict");
+	aboutBox.setCaption("Kydpdict " VERSION);
 	aboutBox.setText(
 	    tr("This is frontend to YDP Collins dictionary.\n"
 	    "Authors: Andrzej Para , Maciej Witkowiak.\n"

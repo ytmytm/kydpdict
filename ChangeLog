@@ -354,3 +354,7 @@ Kydpdict 0.6.0 (12.03.2004)
 - prawid³owo radzi sobie ze s³owami z koñca s³ownika, nie wyszukuje dwukrotnie po wklejaniu
 - autoplay przesuniête na zak³adkê 'schowek'
 - opó¼nienie .5s przed schowaniem okna przez ESC
+
+=====================================================================
+Kydpdict 0.6.1 (xx.xx.2004)
+- informacja o wersji w nazwie okna about
