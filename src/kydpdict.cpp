@@ -73,7 +73,7 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 	hbox1->setMinimumHeight(20);
 	dictList = new QListBox( splitterV, "dictList" );
 	RTFOutput = new QTextBrowser (splitterH, "RTFOutput");
-	listclear->setAccel( QKeySequence( tr("Ctrl+X", "Clear") ) );
+	listclear->setAccel( QKeySequence(Key_Escape) );
 	setCentralWidget(centralFrame);
 
 	RTFOutput->setTextFormat( RichText );

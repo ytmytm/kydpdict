@@ -2,11 +2,6 @@
 <context>
     <name>Kydpdict</name>
     <message>
-        <source>Ctrl+X</source>
-        <comment>Clear</comment>
-        <translation>Ctrl+X</translation>
-    </message>
-    <message>
         <source>&amp;Quit</source>
         <translation>Za&amp;kończ</translation>
     </message>
