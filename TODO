@@ -30,3 +30,4 @@
 - gdy okno wyskakuje na wierzch - focus na wordInput
     (prawie to, o co chodzi³o, jeszcze nie dok³adnie tak)
 - opcja: po przechwyceniu schowka - na wierzch ale bez focusa na siebie (opcja?)
+- fix32 (funkcja i obsluga w configure.in) - z ydpdict
