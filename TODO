@@ -17,3 +17,5 @@
 - skrót klawiaturowy na prze³±czanie ¶ledzenia schowka (jaki?!?)
     Ctrl+S? (polski, angielski - Ctrl+'T' like 'T'racking?)
 - skróty klawiaturowe opisane w dymkach nad toolbarem
+- wyszukiwanie powinno preferowaæ idealne dopasowanie od przybli¿onego
+  (np. 'for' znajduje 'f.o.r.', powinno byæ 'for')

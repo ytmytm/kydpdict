@@ -360,8 +360,6 @@ void Kydpdict::showEntry(QString *aEntry, int aindex)
 {
 // when aindex is set aEntity is ignored (only for performance reason)
     if (aindex < 0) {
-	aEntry->simplifyWhiteSpace();
-	aEntry->truncate(20);
 	int lindex = myDict->FindWord(*aEntry);
 	myDict->ListRefresh(lindex);
 	dictList->setCurrentItem(lindex - myDict->topitem);

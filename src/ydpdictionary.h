@@ -44,7 +44,8 @@ private:
 	QString rtf2html (QString definition);
 	void disableTag (int tag_code, int level);
 	QString insertHyperText(QString raw_input, int level);
-	int ScoreWord(const char *w1, const char *w2);
+	QString stripDelimiters(QString word);
+	int ScoreWord(QString w1, QString w2);
 
 	// configuration holder
 	kydpConfig *cnf;

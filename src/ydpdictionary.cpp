@@ -542,49 +542,54 @@ void ydpDictionary::ListRefresh(int index)
     dictList->blockSignals(FALSE);
 }
 
-// odpowiednik tego chyba jest w QString - ile znakow z poczatku w1 jest w2
-int ydpDictionary::ScoreWord(const char *w1, const char *w2)
+int ydpDictionary::ScoreWord(QString w1, QString w2)
 {
-    int i=0;
-    int score=0;
-    while (w1[i] && w2[i] && (score <=0)) {
-	if (tolower(w1[i]) == tolower(w2[i]))
-	    score--;
-	else {
-	    if (score == 0) return score;
-	    score=-score;
-	}
-	i++;
-    }
-    if (score<0) score=-score;
+    unsigned int i = 0;
+    for (; (i<w1.length()) && (i<w2.length()); i++)
+	if (w1.at(i) != w2.at(i))
+	    break;
+    return i;
+}
 
-    return score;
+QString ydpDictionary::stripDelimiters(QString word)
+{
+    QString lstring;
+
+    unsigned int i;
+    for (i=0; i<word.length(); i++) {
+	if (word.at(i).isLetterOrNumber())
+	    lstring += word.at(i);
+    }
+
+    return lstring;
 }
 
 int ydpDictionary::FindWord(QString word)
 {
-    QTextCodec *toCodec = QTextCodec::codecForName("CP1250");
-    QTextCodec *fromCodec = QTextCodec::codecForName("ISO8859-2");
-    QString midstring;
-    QCString qcword, qmword, qaword, qbword;
-    int a,b,i,sa,sb,lword;
+    QTextCodec *codec = QTextCodec::codecForName("CP1250");
+    QString midstring, astring;
+    int a,b,i;
     int middle,result;
+    unsigned int sa,sb,lword;
 
     if (word.length() == 0)
 	return 0;
 
+    word = stripDelimiters(word.lower());
+    word.truncate(20);
+
     a = 0; b = wordCount;
 
-    word = word.lower();
-
     setlocale(LC_COLLATE,"pl_PL");	// otherwise '¶win'->'z...' on at least one system :(
+					// afair - required for that localeAwareCompare below
+					// trzeba sprawdziæ u ¼ród³a jeszcze raz
 
     /* najpierw wyszukiwanie binarne zawê¿a zakres do 30 hase³ (warto¶æ wziêta z g³owy (mojej - MW)) */
 
     while (b-a >= 30) {	/* bez tego marginesu s± problemy np. z 'for' */
 	middle = a + (b-a)/2;
-	midstring = toCodec->toUnicode(words[middle]);
-	result = word.localeAwareCompare(midstring.lower());
+	midstring = stripDelimiters(codec->toUnicode(words[middle])).lower();
+	result = word.localeAwareCompare(midstring);
 	if (result==0) {
 	    a = middle; b = middle;
 	} else {
@@ -600,25 +605,20 @@ int ydpDictionary::FindWord(QString word)
        wynikiem ze ScoreWord (najwiêcej wspólnych znaków z wyszukiwanym has³em) */
 
     if (a!=b) {
-	a=a-35; if (a<0) a=0; i=1;
+	a=a-35; if (a<0) a=0;
 	b=a;
-	qcword = fromCodec->fromUnicode(word);
+	i=1;
 	lword = word.length();
 	while ((i<70) && (a+i<wordCount)) {
-	/* co tu siê dzieje: ScoreWord u¿ywa tolower w pl_PL, wiêc musimy kodowaæ na iso
-	    - kodujemy word na iso
-	    - kodujemy words[a+i] na unicode, unicode na iso (jak od razu?)
-	    - kodujemy words[b] na unicode, unicode na iso (jak od razu?) */
-	    qaword = fromCodec->fromUnicode(toCodec->toUnicode(words[a+i]));
-	    qbword = fromCodec->fromUnicode(toCodec->toUnicode(words[b]));
-	    sa = ScoreWord(qcword,qaword);
-	    sb = ScoreWord(qcword,qbword);
-	    if ((sa==lword)&&((int)strlen(words[a+i])<=sa)) {
+	    astring = stripDelimiters(codec->toUnicode(words[a+i])).lower();
+	    sa = ScoreWord(word,astring);
+	    sb = ScoreWord(word,stripDelimiters(codec->toUnicode(words[b])).lower());
+	    if ((sa==lword)&&(astring.length()<=sa)) {
 		b=a+i; i=260;
 	    } else {
 		if (sa>sb) {
 		    b=a+i;
-		    if (!strcmp(words[b],qcword))
+		    if (QString::compare(stripDelimiters(codec->toUnicode(words[b])).lower(),word)==0)
 			i=260;
 		}
 	    }
