@@ -24,7 +24,6 @@
 #include "../icons/babelfish.xpm"
 
 #define kdebug printf
-#define i18n tr
 
 extern Time qt_x_time;
 
@@ -93,14 +92,8 @@ TrayIcon::TrayIcon(QWidget *parent, const char *name)
 	QLabel::setPixmap(pix);
 	resize(pix.size());
 	setMouseTracking(true);
-	QToolTip::add(this, "Left click - hide/show window\nMiddle click or Left click- next message");
+	QToolTip::add(this, tr("Left click - hide/show window\nMiddle click or Left click- next message"));
 	update();
-
-	icon_timer = new QTimer(this);
-	blink = FALSE;
-	QObject::connect(icon_timer, SIGNAL(timeout()), this, SLOT(changeIcon()));
-
-//	hint = new TrayHint(0);
 
 	Display *dsp = x11Display();
 	WId win = winId();
@@ -110,7 +103,7 @@ TrayIcon::TrayIcon(QWidget *parent, const char *name)
 	// nie poka¿emy okna g³ównego na ekranie wystêpuje
 	// "efekt klepsydry"
 	WMakerMasterWidget=new QWidget(0,"WMakerMasterWidget");
-	WMakerMasterWidget->setGeometry(-10,-10,0,0);
+	WMakerMasterWidget->setGeometry(-20,-20,1,1);
 
 	// SPOSÓB PIERWSZY
 	// System Tray Protocol Specification
@@ -128,7 +121,7 @@ TrayIcon::TrayIcon(QWidget *parent, const char *name)
 	XFlush(dsp);
 	if (manager_window != None)
 		send_message(dsp, manager_window, SYSTEM_TRAY_REQUEST_DOCK, win, 0, 0);
-	
+
 	// SPOSÓB DRUGI
 	// Dzia³a na KDE 3.0.x i pewnie na starszych
 	// oraz pod GNOME 1.x
@@ -138,9 +131,9 @@ TrayIcon::TrayIcon(QWidget *parent, const char *name)
 	int r1=XChangeProperty(dsp, win, r, r, 32, 0, (uchar *)&data, 1);
 	r = XInternAtom(dsp, "_KDE_NET_WM_SYSTEM_TRAY_WINDOW_FOR", false);
 	int r2=XChangeProperty(dsp, win, r, XA_WINDOW, 32, 0, (uchar *)&data, 1);
-			
+
 	// SPOSÓB TRZECI
-	// Dzia³a pod Window Maker'em
+	// Dzia³a pod Window Makerem
 	WId w_id = WMakerMasterWidget->winId();
 	XWMHints *hints;
 	hints = XGetWMHints(dsp, w_id);
@@ -150,9 +143,7 @@ TrayIcon::TrayIcon(QWidget *parent, const char *name)
 	XSetWMHints(dsp, w_id, hints);
 	XFree( hints );
 
-//	connect(this, SIGNAL(mousePressMidButton()), &pending, SLOT(openMessages()));
 	setPixmap(pix);
-//	resize(size());
 };
 
 TrayIcon::~TrayIcon()
@@ -168,6 +159,12 @@ void TrayIcon::setDictWidget(Kydpdict *newDict) {
 
 }
 
+void TrayIcon::setPopupMenu(QPopupMenu *newMenu) {
+
+    popUp = newMenu;
+
+}
+
 QPoint TrayIcon::trayPosition()
 {
 	return mapToGlobal(QPoint(0,0));
@@ -176,11 +173,16 @@ QPoint TrayIcon::trayPosition()
 void TrayIcon::show()
 {
 	QLabel::show();
-	WMakerMasterWidget->show();
 	// Je¶li WindowMaker nie jest aktywny okno
 	// nie powinno zostaæ widoczne
-	if(XInternAtom(x11Display(),"_WINDOWMAKER_WM_PROTOCOLS",true)==0)
+	if(XInternAtom(x11Display(),"_WINDOWMAKER_WM_PROTOCOLS",true)==0) {
 		WMakerMasterWidget->hide();
+		return;
+	}
+	kdebug("show wmakermasterwidget\n");
+	WMakerMasterWidget->setGeometry(-20,-20,1,1);
+	WMakerMasterWidget->show();
+	WMakerMasterWidget->setGeometry(-20,-20,1,1);
 };
 
 void TrayIcon::setPixmap(const QPixmap& pixmap)
@@ -190,47 +192,8 @@ void TrayIcon::setPixmap(const QPixmap& pixmap)
 	repaint();
 };
 
-void TrayIcon::setType(QPixmap &pixmap)
-{
-//	if (!config.dock)
-//		return;
-	setPixmap(pixmap);
-}
-
-void TrayIcon::changeIcon() {
-//	if (pending.pendingMsgs() && config.dock && !icon_timer->isActive()) {
-//		if (!blink) {
-//			setPixmap(*icons->loadIcon("message"));
-//			icon_timer->start(500,TRUE);
-//			blink = true;
-//			}
-//		else {
-//			setPixmap(*icons->loadIcon(gg_icons[statusGGToStatusNr(getActualStatus() & (~GG_STATUS_FRIENDS_MASK))]));
-//			icon_timer->start(500,TRUE);
-//			blink = false;
-//			}
-//	}
-//	else {
-		kdebug("DockWidget::changeIcon() OFF\n");
-//		}
-}
-
-void TrayIcon::dockletChange(int id)
-{
-//	if (id < 9)
-//		kadu->slotHandleState(id);
-//	else
-//		kadu->close(true);
-}
-
-void TrayIcon::connectSignals() {
-//	QObject::connect(dockppm, SIGNAL(activated(int)), this, SLOT(dockletChange(int)));
-}
-
 void TrayIcon::resizeEvent(QResizeEvent* e)
 {
-//	if (icon)
-//		icon->resize(size());
 	resize(size());
 };
 
@@ -282,10 +245,13 @@ void TrayIcon::mousePressEvent(QMouseEvent * e) {
 	if (e->button() == RightButton) {
 		emit mousePressRightButton();
 		kdebug("right button\n");
-//		dockppm->exec(QCursor::pos());
+		popUp->exec(QCursor::pos());
 		return;
 		}
 }
+
+/* Hint class below */
+//////////////////////////////////////////////
 
 void TrayIcon::showHint(const QString &str, const QString &nick, int index) {
 //	if (!config.trayhint || !config.dock)
@@ -304,7 +270,7 @@ void TrayIcon::showErrorHint(const QString &str) {
 //	if (!config.hinterror)
 //		return;
 	kdebug("TrayIcon::showErrorHint()\n");
-	hint->show_hint(str, i18n("Error: "), 1);
+	hint->show_hint(str, tr("Error: "), 1);
 }
 
 TrayHint::TrayHint(QWidget *parent, const char *name)

@@ -140,6 +140,7 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 
 	QPopupMenu *file = new QPopupMenu( this );
 	Q_CHECK_PTR( file );
+
 	file->insertItem(QPixmap(exit_xpm), tr("&Quit"), qApp, SLOT(quit()), QKeySequence( tr("Ctrl+Q", "File|Quit") ) );
 
 	QPopupMenu *settings = new QPopupMenu( this );
@@ -171,6 +172,16 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 	Q_CHECK_PTR( help );
 	help->insertItem(QPixmap(babelfish_small_xpm), tr("About"), this, SLOT(ShowAbout()));
 	help->insertItem(QPixmap(help_xpm), tr("About Qt"), this, SLOT(ShowAboutQt()));
+
+	QPopupMenu *trayMenu = new QPopupMenu( this );
+	Q_CHECK_PTR( trayMenu );
+	trayMenu->insertItem(QPixmap(conf_xpm), tr("&Settings"), this, SLOT(ConfigureKydpdict()) );
+	trayMenu->insertSeparator();
+	trayMenu->insertItem( tr("Swap direction"), this, SLOT(SwapLanguages()) );
+	trayMenu->insertItem( tr("Toggle clipboard tracking"), this, SLOT(ToggleClipTracking()) );
+	trayMenu->insertSeparator();
+	trayMenu->insertItem(QPixmap(babelfish_small_xpm), tr("About"), this, SLOT(ShowAbout()));
+	trayMenu->insertItem(QPixmap(exit_xpm), tr("&Quit"), qApp, SLOT(quit()) );
 
 	Q_CHECK_PTR( menu );
 	menu->insertItem(  tr("&File"), file );
@@ -211,9 +222,10 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 	RTFOutput->mimeSourceFactory()->setFilePath( config->tipsPath );
 	RTFOutput->mimeSourceFactory()->setExtensionType("html", "text/html;charset=iso8859-2");
 
-	printf("will create tray\n");
 	trayicon = new TrayIcon(this,"trayicon");
 	trayicon->setDictWidget(this);
+	trayicon->setPopupMenu(trayMenu);
+	trayicon->show();
 }
 
 Kydpdict::~Kydpdict()

@@ -1,3 +1,4 @@
+
 #ifndef DOCKAPP_H
 #define DOCKAPP_H
 
@@ -5,6 +6,7 @@
 #include <qtextbrowser.h>
 #include <qstringlist.h>
 #include <qpixmap.h>
+#include <qpopupmenu.h>
 
 #include "kydpdict.h"
 
@@ -19,12 +21,10 @@ class TrayIcon : public QLabel
 		friend class TrayHint;
 		QWidget* WMakerMasterWidget;
 		TrayHint *hint;
-		QTimer *icon_timer;
-		bool blink;
 		Kydpdict *dict;
+		QPopupMenu *popUp;
 
 	protected:
-		void setPixmap(const QPixmap& pixmap);
 		virtual void resizeEvent(QResizeEvent* e);
 		virtual void enterEvent(QEvent* e);
 		virtual void mousePressEvent(QMouseEvent*);
@@ -34,18 +34,15 @@ class TrayIcon : public QLabel
 		~TrayIcon();
 		QPoint trayPosition();
 		void show();
-		void setType(QPixmap &pixmap);
 		void connectSignals();
 		void showHint(const QString&, const QString&, int index);
 		void showErrorHint(const QString&);
 		void reconfigHint();
+		void setPixmap(const QPixmap& pixmap);
 		void setDictWidget(Kydpdict *newDict);
+		void setPopupMenu(QPopupMenu *newMenu);
 
-	public slots:
-		// Status change slots
-		void dockletChange(int id);
-		//Funkcja do migania koperty
-		void changeIcon();
+//	public slots:
 
 	signals:
 		void mousePressMidButton();
