@@ -23,3 +23,15 @@
 - zobaczyc co dobrego jest w windows-ydp
 - F8 - cliboard tracking toggle
 - QClipboard::selectionChanged() - czemu nieuzywany?
+- za drugim dwuklikiem na tym samym nie odtwarza audio
+- jesli zminimalizowany i jest ikona w tray - powinien dalej przechwytywac wyrazy i
+  wyskakiwac na wierzch (opcja?)
+- gdy zminimalizowany - ma star± selekcjê i nie uznaje aktualnej za now± - po
+  przywroceniu powinien pokazac wynik tlumaczenia aktualnej selekcji
+- po przewinieciu definicji i zmianie hasla nie resetuje pozycji textedit (dalej jest
+  przesunieta)
+- usunac przycisk do kasowania
+- otrzymanie focus - zawsze na pole edycji hasla, z selekcja aktualnego (zeby usunac latwo)
+- opcja: po przechwyceniu schowka - na wierzch ale bez focusa na siebie (opcja?)
+
+
