@@ -369,4 +369,4 @@ Kydpdict 0.6.1 (xx.xx.2004)
 - wy¶wietla t³umaczenie je¶li znalezione s³owo to ostatnie w s³owniku
 - minimalizacja programu nie ma wp³ywu na przechwytywanie schowka (je¶li muszê t³umaczyæ to
   zachowanie po raz n-ty, to ze mn± jest co¶ nie tak, nie z innymi lud¼mi :)
-- po zminimalizowaniu klikanie na rybê niczego nie zmienia
+- po zminimalizowaniu klikanie na rybê przywraca okno

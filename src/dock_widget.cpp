@@ -230,7 +230,9 @@ void TrayIcon::mousePressEvent(QMouseEvent * e) {
 	if (e->button() == LeftButton) {
 		emit mousePressLeftButton();
 //		kdebug("left button\n");
-		if (!dict->isMinimized()) {
+		if (dict->isMinimized()) {
+		    dict->showNormal();
+		} else {
 		    switch (dict->isVisible()) {
 			case 0:
 			    dict->show();

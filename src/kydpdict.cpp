@@ -430,7 +430,7 @@ void Kydpdict::RTFLinkClicked(const QString &link)
 void Kydpdict::NewClicked (QListBoxItem *lbi)
 {
     if (tipsVisible)
-	NewDefinition(myDict->topitem+dictList->currentItem());
+	NewDefinition(dictList->currentItem());
 }
 
 void Kydpdict::NewDefinition (int index)
