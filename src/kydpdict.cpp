@@ -102,6 +102,7 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 	wordInput->setMaxCount(20);
 	wordInput->setDuplicatesEnabled(false);
 	wordInput->setEditable(true);
+	wordInput->setAutoCompletion(false);
 	wordInput->setInsertionPolicy(QComboBox::AtTop);
 
 	cb = QApplication::clipboard();
@@ -161,7 +162,6 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 
 	QPopupMenu *file = new QPopupMenu( this );
 	Q_CHECK_PTR( file );
-
 	file->insertItem(QPixmap(exit_xpm), tr("&Quit"), qApp, SLOT(quit()), QKeySequence( tr("Ctrl+Q", "File|Quit") ) );
 
 	QPopupMenu *settings = new QPopupMenu( this );
