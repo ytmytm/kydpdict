@@ -8,6 +8,7 @@
  *                                                                         *
  ***************************************************************************/
 
+#include "kydpdict.h"
 #include "ydpdictionary.h"
 #include <qmessagebox.h>
 #include <qprogressdialog.h>

@@ -18,6 +18,14 @@
 #include <qtextedit.h>
 #include <qdialog.h>
 #include <qpushbutton.h>
+#include <qsplitter.h>
+#include <qhbox.h>
+#include <qvbox.h>
+#include <qlayout.h>
+#include <qmainwindow.h>
+#include <qframe.h>
+#include <qvaluelist.h>
+#include <qapplication.h>
 
 #include "../icons/exit.xpm"
 #include "../icons/tux.xpm"
@@ -33,13 +41,27 @@
 #include "../icons/f7.xpm"
 #include "../icons/f8.xpm"
 
-Kydpdict::Kydpdict(QWidget *parent, const char *name) : QWidget(parent, name)
+Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name)
 {
-	dictList = new QListBox( this, "dictList" );
-	wordInput = new QLineEdit (this, "wordInput");
-	RTFOutput = new QTextEdit (this, "RTFOutput");
-	listclear = new QPushButton(tr("Clear"),this, "Clear");
-	listclear->setAccel ( QKeySequence( tr("Ctrl+X", "Clear") ) );
+	QFrame *centralFrame = new QFrame(this);
+	QSplitter *splitter = new QSplitter(centralFrame);
+	QVBox *vbox1 = new QVBox(splitter);
+	vbox1->setSpacing(2);
+	vbox1->setMinimumWidth(QApplication::desktop()->width() / 6);
+	QHBox *hbox1 = new QHBox(vbox1);
+	hbox1->setSpacing(2);
+	wordInput = new QLineEdit( hbox1, "wordInput");
+	listclear = new QPushButton(tr("Clear"), hbox1, "Clear");
+	listclear->setMaximumWidth(40);
+	dictList = new QListBox( vbox1, "dictList" );
+	RTFOutput = new QTextEdit (splitter, "RTFOutput");
+	listclear->setAccel( QKeySequence( tr("Ctrl+X", "Clear") ) );
+	setCentralWidget(centralFrame);
+
+	QValueList<int> splittersizes;
+	splittersizes.append(1);
+	splittersizes.append(20);
+	splitter->setSizes(splittersizes);
 
 	RTFOutput->setTextFormat( RichText );
 	RTFOutput->setReadOnly(TRUE);
@@ -54,7 +76,7 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QWidget(parent, name)
 
 	cb =  QApplication::clipboard();
 
- 	menu = new QMenuBar( this, "menu" );
+	menu = menuBar();
 
 	config = new kydpConfig;
 	config->load();
@@ -62,7 +84,6 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QWidget(parent, name)
  	myDict = new ydpDictionary(config,dictList);
 
 	setGeometry (config->kGeometryX, config->kGeometryY, config->kGeometryW, config->kGeometryH);
-	InitVisual();
 
 	int a;
 
@@ -120,6 +141,9 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QWidget(parent, name)
 
 	setIcon(QPixmap(tux_xpm));
 
+	QGridLayout *grid = new QGridLayout(centralFrame, 1, 1);
+	grid->addWidget(splitter, 0, 0);
+
 	this->show();
 
 	UpdateLook();
@@ -134,7 +158,6 @@ void Kydpdict::resizeEvent(QResizeEvent *)
 {
 	QSize aRozmiar;
 
-	InitVisual();
 	aRozmiar = this->size();
 	config->kGeometryW = aRozmiar.width();
 	config->kGeometryH = aRozmiar.height();
@@ -149,19 +172,6 @@ void Kydpdict::moveEvent(QMoveEvent *)
 	config->kGeometryX = aPosition.x();
 	config->kGeometryY = aPosition.y();
 	config->save();
-}
-
-void Kydpdict::InitVisual(void)
-{
-	RTFOutput->setGeometry( (this->width()-15)/3+10, 30,
-				(this->width()-(this->width()-15)/3-15),
-				(this->height()-35));
-
-	wordInput->setGeometry( 5, 30, (this->width()-10)/3-40-5, 20);
-	listclear->setGeometry(5 + (this->width()-10)/3-40-1,30,40,20);
-	dictList->setGeometry( 5, 55, (this->width()-10)/3, (this->height()-60) );
-
-	dictList->repaint();
 }
 
 void Kydpdict::ShowDefinition(QString def)

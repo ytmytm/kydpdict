@@ -12,10 +12,13 @@
 #include <qtextcodec.h>
 #include "kydpdict.h"
 
+QApplication *a;
+
 int main (int argc, char *argv[])
 {
 	QString locname;
-	QApplication a (argc, argv, "Kydpdict");
+
+	a = new QApplication(argc, argv, "Kydpdict");
 
 	QTranslator myapp( 0 );
 
@@ -29,10 +32,10 @@ int main (int argc, char *argv[])
 		}
 	    }
 	}
-        a.installTranslator( &myapp );
+        a->installTranslator( &myapp );
 
 	Kydpdict *kydpdict = new Kydpdict ();
-	a.setMainWidget (kydpdict);
+	a->setMainWidget (kydpdict);
 
-	return a.exec ();
+	return a->exec ();
 }

@@ -15,12 +15,13 @@
 #include <qlineedit.h>
 #include <qmenubar.h>
 #include <qclipboard.h>
+#include <qmainwindow.h>
 
 #include "ydpdictionary.h"
 #include "kydpconfig.h"
 #include "ydpconfigure.h"
 
-class Kydpdict : public QWidget
+class Kydpdict : public QMainWindow
 {
   Q_OBJECT
     public:
@@ -30,7 +31,6 @@ class Kydpdict : public QWidget
     ~Kydpdict();
 
     private:
-		void InitVisual(void);
 		void resizeEvent (QResizeEvent *);
 		void moveEvent (QMoveEvent *);
 		void ShowDefinition (QString def);
@@ -68,5 +68,7 @@ class Kydpdict : public QWidget
 		void ConfigureKydpdict();
 
 };
+
+extern QApplication *a;
 
 #endif
