@@ -8,14 +8,8 @@
       pionie az do dolnej krawedzi okna
     - 'dynamics' - nie ma podpowiedzi do 'npl'
       'Fiji' - sprawdzic podpowiedzi
-- szukanie hasla w drugim slowniku (zamiana stron)
-- szukanie hasla w zasobach slownika
+- szukanie hasla w drugim slowniku (zamiana stron i wyszukanie)
 - optymalizacja ladowania indeksu
-    - ladowac oba indeksy?
-	- najpierw ten ktory ma siê pokazac w konfigu
-	- w podwatku - indeks w druga strone
-	- przelaczanie slownikow zablokowane dopoki podwatek nie skonczy
-	    (do 4 w menu i do 4 ikon)
     - napisaæ sobie w³asny widget z QDict do trzymania danych
       najwiecej czasu zajmuje wstawianie nowych obiektów przy InsertItem (zawsze jest
       tworzona kopia, wstawianie w³asnych z przygotowanej tablicy nic nie da)

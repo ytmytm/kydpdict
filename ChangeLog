@@ -249,7 +249,7 @@ Kydpdict 0.5.6pre1 (28.7.2003)
 - dodane stdlib.h tam gdzie trzeba
 - poprawione g³upie zachowanie przy wpisywaniu s³owa w combobox
 - poprawiony b³±d psuj±cy ustawienie cliboard_tracking przy zmianie jêzyków
-- toolbar z ikonkami (flagi po¿yczone ze screenshotu AP)
+- toolbar z ikonkami (motyw flag po¿yczony ze screenshotu AP)
 - p³aski pushbutton z ikonk± zamiast buttona Clear
 
 =====================================================================
@@ -258,3 +258,7 @@ Kydpdict 0.5.6pre2 (28.7.2003)
 - zmiana ikony z Tuksa na Babelfish (¶liczna :)
 - usuniecie globalnych zmiennych z ydpdictionary
 - poprawiony segfaluting przy braku jednego z jezykow
+
+=====================================================================
+Kydpdict 0.5.6 (31.7.2003)
+- poprawki w dokumentacji

@@ -59,12 +59,13 @@ maszynie warto¶æ ta dochodzi nawet do 11MB). Nie jest to jednak wina kodu progra
 nawet najprostsze aplikacje przyk³adowe Qt (dostêpne w pakiecie Qt-devel) podczas
 wykonywania zajmuj± wiêcej ni¿ 8MB. No có¿, warto¶ci wydaj± siê ogromne w porównaniu
 do ilo¶ci pamiêci zajmowanego przez ydpdict (rzêdu kilkuset kB), ale je¶li kto¶ ma du¿o
-pamiêci nie odczuje ¿adnego dyskomfortu.
+pamiêci nie odczuje ¿adnego dyskomfortu. Bêdzie to równie¿ niezauwa¿alne je¿eli jakie¶
+programy korzystaj±ce z Qt bêd± ju¿ uruchomione.
 b) program szuka pliku z t³umaczeniem domyslnie w /usr/share/kydpdict
 Nie jest to poprawne rozwi±zanie ale na razie lepszego nie znamy.
 
 6. Co jest do zrobienia/jakie s± znane b³êdy ?
-Przeczytaj plik TODO.
+Przeczytaj plik TODO. Najwa¿niejszy problem to przyspieszenie ³adowania s³ownika.
 
 7. Co tam robi ryba?
 Nie s³ysza³e¶ o babelfish? Id¼ do biblioteki/ksiêgarni i poszukaj ksi±¿ek
