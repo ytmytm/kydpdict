@@ -117,20 +117,22 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 	int a;
 
 	do {
+		testagain:
 		if(!myDict->CheckDictionary(config)) {
-			//jesli nie ma tego co chcemy, to sprawdzamy drugi jezyk
+		//jesli nie ma tego co chcemy, to sprawdzamy drugi jezyk
 			config->language++;
 			if (config->language >= LANG_LAST)
 				config->language = LANG_ENGLISH;
 			config->save();
 			if(!myDict->CheckDictionary(config)) {
-				// buu, drugiego jezyka tez nie ma; moze user bedzie cos wiedzial na ten temat...
+			// buu, drugiego jezyka tez nie ma; moze user bedzie cos wiedzial na ten temat...
 			    QMessageBox::critical( this, tr("Error"),
 				tr( "Kydpdict can't work with incorrect path to dictionary files.\n"
 				    "In order to use this program you have to have data files from Windows\n"
 				    "dictionary installation. For more information please read README.\n"
 				    "A configuration window will be opened now, so you can set the path."));
-				Configure(TRUE);
+			    Configure(TRUE);
+			    goto testagain;	// z³o¿y³em ofiarê z jagniêcia i wolno mi u¿yæ goto
 			}
 		}
 		a=myDict->OpenDictionary(config);

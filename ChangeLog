@@ -293,6 +293,7 @@ Kydpdict 0.5.7 (21.12.2003)
 
 =====================================================================
 Kydpdict 0.5.8 (xx.xx.xxxx)
-- ikonka w tray'u (kod wziêty z kadu)
+- ikonka w tray'u (kod wziêty z kadu, dziêki!)
 - zapamiêtywany stan toolbara (w³±czony/wy³±czony)
 - klikniêcie na ikonke od czyszczenia wordinput ustawia fokus na ten¿e (ElPablo)
+- poprawione zachowanie przy pierwszym uruchomieniu
