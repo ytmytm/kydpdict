@@ -81,12 +81,13 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 	RTFOutput->setTextFormat( RichText );
 	RTFOutput->setReadOnly(TRUE);
 	RTFOutput->setLineWidth( 0 );
-	RTFOutput->setLinkUnderline ( FALSE);
+	RTFOutput->setLinkUnderline (FALSE);
 
 	dictList->setBottomScrollBar(FALSE);
 	dictList->setLineWidth( 0 );
 
 	wordInput->setMaxCount(20);
+	wordInput->setMaximumHeight(21);
 	wordInput->setDuplicatesEnabled(false);
 	wordInput->setEditable(true);
 	wordInput->setInsertionPolicy(QComboBox::AtTop);
@@ -370,8 +371,7 @@ void Kydpdict::PasteClipboard(QString haslo)
 void Kydpdict::NewDefinition (int index)
 {
 	UpdateHistory(index);
-	QString def = myDict->GetDefinition(index);
-	RTFOutput->setText(def);
+	RTFOutput->setText(myDict->GetDefinition(index));
 	RTFOutput->setCursorPosition(0,0);
 }
 
