@@ -241,6 +241,8 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 	if (!config->toolBarVisible)
 	    toolBar->hide();
 
+	cb->clear(QClipboard::Selection);
+	cb->clear(QClipboard::Clipboard);
 	this->show();
 	myDict->ListRefresh(0);
 	dictList->setCurrentItem(0);
@@ -536,6 +538,10 @@ void Kydpdict::ToggleClipTracking()
 	config->save();
 	but_Clipboard->setOn(config->clipTracking);
 	trayMenu->setItemChecked(trayMenuItemClipTrack, config->clipTracking);
+	if (config->clipTracking) {
+	    cb->clear(QClipboard::Selection);
+	    cb->clear(QClipboard::Clipboard);
+	}
 }
 
 void Kydpdict::ConfigureKydpdict()

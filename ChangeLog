@@ -345,3 +345,4 @@ Kydpdict 0.6.0pre (xx.xx.2004)
 - nowa opcja: czy ma ustawiaæ focus na siebie po przechwyceniu schowka
 - clipboard tracking znowu honorowany
 - wordInput pusty na starcie
+- zaznaczenia/schowek ignorowane po w³±czeniu clipboard tracking i na starcie
