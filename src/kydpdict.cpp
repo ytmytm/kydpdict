@@ -207,6 +207,7 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 	connect (wordInput, SIGNAL(textChanged(const QString&)), this, SLOT(NewFromLine(const QString&)));
 	connect (wordInput, SIGNAL(activated(int)), this, SLOT(PlayCurrent()));
 	connect (listclear, SIGNAL(clicked()), wordInput, SLOT(clearEdit()));
+	connect (listclear, SIGNAL(clicked()), wordInput, SLOT(setFocus())); //ustawia focus na wordImput El_Pablo
  	connect (RTFOutput, SIGNAL(highlighted( const QString & )), this, SLOT(updateText( const QString & )));
  	connect (cb, SIGNAL(selectionChanged() ), SLOT(slotSelectionChanged()));
  	connect (cb, SIGNAL(dataChanged() ), SLOT( slotClipboardChanged() ));
