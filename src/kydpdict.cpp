@@ -67,8 +67,6 @@
 extern Time qt_x_user_time;	// this is from Qt
 #endif
 
-void updateUserTimestamp(void);
-
 Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name)
 {
 	updateUserTimestamp();
