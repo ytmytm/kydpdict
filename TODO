@@ -21,10 +21,10 @@
 	- to CHYBA wina Qt (3.3.040205) - kpwndict ze starym kodem clipboard wcale nie wyskakuje
     - chyba nie ma szans na dzia³anie gdy jest w³±czony klipper :(
 	- zobaczyæ jak to robi klipper z 3.2/3.2.1
+	    - XAtoms - trzeba zapodac klasê clippoll
 - mozliwosc zmiany ikony/ustawiania jej z poziomu aplikacji (to co kiedys AP wywalil)
 - wykrywanie juz uruchomionej instancji i ustawianie jej fokusa
 - jesli sa wyswietlane tipsy to obsluzyc sygnal select z listy wyrazow jako zgloszenie nowego
   wyrazu
 - konfigurowalne klawisze z --with-kde
 - wczytywanie wszystkich slow, ze slownikow w obie strony do jednej listy
-- prawdopodobnie mozna zawezic wyszukiwanie naiwne (chyba to blad w ScoreWord powodowal klopoty)

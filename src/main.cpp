@@ -8,6 +8,7 @@
  ***************************************************************************/
 
 #include <stdlib.h>
+#include <locale.h>
 #include <qtranslator.h>
 #include <qtextcodec.h>
 #include "kydpdict.h"
@@ -23,7 +24,7 @@ int main (int argc, char *argv[])
 {
 	QString locname;
 
-	putenv("LANG=pl_PL");	// otherwise localeAwareCompare fails miserably
+	putenv("LANG=pl_PL.ISO-8859-2");	// otherwise localeAwareCompare fails miserably
 
 	a = new QApplication(argc, argv, "Kydpdict");
 

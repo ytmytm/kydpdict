@@ -510,12 +510,12 @@ int ydpDictionary::ScoreWord(const char *w1, const char *w2)
 
 int ydpDictionary::FindWord(QString word)
 {
-    QTextCodec *codec = QTextCodec::codecForName("CP1250");
+    QTextCodec *toCodec = QTextCodec::codecForName("CP1250");
+    QTextCodec *fromCodec = QTextCodec::codecForName("ISO8859-2");
     QString midstring;
-    QCString qcword;
-    int a,b,i;
+    QCString qcword, qmword, qaword, qbword;
+    int a,b,i,sa,sb,lword;
     int middle,result;
-    const char *cword;
 
     if (word.length() == 0)
 	return 0;
@@ -523,9 +523,10 @@ int ydpDictionary::FindWord(QString word)
     a = 0; b = wordCount;
 
     word = word.lower();
-    while (b-a >= 140) {
+
+    while (b-a >= 30) {	/* bez tego marginesu s± problemy np. z 'for' */
 	middle = a + (b-a)/2;
-	midstring = codec->toUnicode(QString(words[middle]));
+	midstring = toCodec->toUnicode(words[middle]);
 	result = word.localeAwareCompare(midstring.lower());
 	if (result==0) {
 	    a = middle; b = middle;
@@ -538,21 +539,33 @@ int ydpDictionary::FindWord(QString word)
     }
 
     if (a!=b) {
-    /* w idealnym swiecie to byloby niepotrzebne, ale np. 'a & r' jest przed 'aba'! */
 	i=1;
 	b=a;
-	qcword = codec->fromUnicode(word);
-	cword = qcword;
-	while ((i<150) && (a+i<wordCount)) {
-	    if (ScoreWord(cword,words[a+i])>ScoreWord(cword,words[b])) {
+	qcword = fromCodec->fromUnicode(word);
+	lword = word.length();
+	while ((i<50) && (a+i<wordCount)) {
+	/* co tu siê dzieje: ScoreWord u¿ywa tolower w pl_PL, wiêc musimy kodowaæ na iso
+	    - kodujemy word na iso
+	    - kodujemy words[a+i] na unicode, unicode na iso (jak od razu?)
+	    - kodujemy words[b] na unicode, unicode na iso (jak od razu?) */
+	    qaword = fromCodec->fromUnicode(toCodec->toUnicode(words[a+i]));
+	    qbword = fromCodec->fromUnicode(toCodec->toUnicode(words[b]));
+	    sa = ScoreWord(qcword,qaword);
+	    sb = ScoreWord(qcword,qbword);
+	    if ((sa==lword)&&((int)strlen(words[a+i])==sa)) {
+		b=a+i; i=260;
+	    } else {
+	    if (sa>sb) {
 		b=a+i;
-		if (!strcmp(words[b],cword))
+		if (!strcmp(words[b],qcword))
 		    i=260;
 	    }
+	     }
 	    i++;
 	}
 	a=b;
     }
+
     return a;
 }
 
