@@ -179,10 +179,6 @@ Prawy - otwórz menu</translation>
         <translation>Kolor tłumaczenia</translation>
     </message>
     <message>
-        <source>Choose qualificator color</source>
-        <translation>Kolor opisów</translation>
-    </message>
-    <message>
         <source>Choose example color</source>
         <translation>Kolor przykładów</translation>
     </message>
@@ -281,6 +277,10 @@ Prawy - otwórz menu</translation>
     <message>
         <source>Set focus on self</source>
         <translation>Ustawiaj focus na siebie</translation>
+    </message>
+    <message>
+        <source>Choose qualifier color</source>
+        <translation>Kolor opisów</translation>
     </message>
 </context>
 <context>

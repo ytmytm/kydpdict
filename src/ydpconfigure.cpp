@@ -90,7 +90,7 @@ ydpConfigure::ydpConfigure( kydpConfig *globalconfig, QWidget* parent,  const ch
 
     tab2 = new QWidget( TabWidget1, "tab2" );
 
-    textLabel2 = new QLabel(tr("Choose qualificator color"), tab2, "textLabel2");
+    textLabel2 = new QLabel(tr("Choose qualifier color"), tab2, "textLabel2");
     textLabel2->setGeometry(6,36,150,22);
     textLabel1 = new QLabel(tr("Choose translation color"), tab2, "textLabel1");
     textLabel1->setGeometry(6,62,150,22);
