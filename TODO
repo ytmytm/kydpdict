@@ -16,6 +16,7 @@
     - wywalic zabawy z locale na rzecz wlasnej funkcji strcoll/localeAwareCompare
 - mozliwosc zmiany ikony/ustawiania jej z poziomu aplikacji (to co kiedys AP wywalil)
 - wykrywanie juz uruchomionej instancji i ustawianie jej fokusa
+    - niewykonalne ³atwo? szukaæ okna klasy Kydpdict.Kydpdict? (niby jak?)
 - konfigurowalne klawisze z --with-kde
 - wczytywanie wszystkich slow, ze slownikow w obie strony do jednej listy
 - po wpisaniu ostatniego wyrazu w s³owniku nie pokazuje siê definicja, dopiero po klikniêciu
