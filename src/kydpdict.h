@@ -21,6 +21,7 @@
 #include <qsplitter.h>
 #include <qtoolbar.h>
 #include <qtoolbutton.h>
+#include <qscrollbar.h>
 
 #include "ydpdictionary.h"
 #include "kydpconfig.h"
@@ -56,6 +57,7 @@ class Kydpdict : public QMainWindow
 		QTextBrowser *RTFOutput;
 		QPushButton *listclear;
 		QMenuBar *menu;
+		QScrollBar *scrollBar;
 		QPopupMenu *trayMenu;
 		int polToEng,engToPol, gerToPol, polToGer;
 		int toolBarMenuItem, trayMenuItemClipTrack;

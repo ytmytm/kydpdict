@@ -28,6 +28,11 @@ public:
 	int CheckDictionary(QString path, QString index, QString def);
 	int Play (int index, kydpConfig *config);
 	void CloseDictionary(void);
+	void ListScrollUp(int offset);
+	void ListScrollDown(int offset);
+	int FindWord(QString word);
+	int topitem;
+	int wordCount;			/* number of words */
 
 private:
 	int  ReadDefinition (int index);
@@ -36,6 +41,7 @@ private:
 	QString rtf2html (QString definition);
 	void disableTag (int tag_code, int level);
 	QString insertTip(QString raw_input);
+	int ScoreWord(const char *w1, const char *w2);
 
 	// configuration holder
 	kydpConfig *cnf;
@@ -44,14 +50,32 @@ private:
 	QListBox	*dictList;
 
 	// dictionary file variables
-	QFile fIndex;               /* index file descriptor */
-	QFile fData;                /* data file descriptor */
-	unsigned long *indexes; 	/* indexes to definitions array */
+	QFile fIndex;			/* index file descriptor */
+	QFile fData;			/* data file descriptor */
 	QString curDefinition;		/* contains current definition (RTF)*/
 	QStringList::Iterator it;
 	QStringList list;
 	int tag_num[16];
 
+	unsigned long *indexes; 	/* indexes to definitions array */
+	char** words;			/* actual words */
+
+public slots:
+	void ListRefresh (int index);
+	void ListScroll1Up();
+	void ListScroll1Down();
+	void ListScrollPageUp();
+	void ListScrollPageDown();
+};
+
+class KeyEater : public QObject {
+    public:
+	KeyEater(ydpDictionary* parent);
+	~KeyEater();
+    protected:
+	bool eventFilter( QObject *o, QEvent *e );
+    private:
+	ydpDictionary *myDict;
 };
 
 #endif

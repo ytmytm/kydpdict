@@ -9,11 +9,18 @@
  ***************************************************************************/
 
 #include <qmessagebox.h>
-#include <qprogressdialog.h>
 #include <qprocess.h>
 #include <qtextcodec.h>
 
 #include "ydpdictionary.h"
+
+KeyEater* keyEater;
+
+struct dictionaryCache {
+    int wordCount;
+    char **words;
+    unsigned long *indexes;
+} dictCache[3];
 
 #define color1 cnf->kFontKolor1
 #define color2 cnf->kFontKolor2
@@ -43,57 +50,102 @@
   "ð", "ñ", "ò", "ó", "ô", "õ", "ö", "÷", \
   "ø", "ù", "ú", "û", "ü", "ý", "þ", "ÿ" } \
 
-ydpDictionary::ydpDictionary(kydpConfig *config, QListBox *listBox) {
-	dictList = listBox;
-	cnf = config;
+ydpDictionary::ydpDictionary(kydpConfig *config, QListBox *listBox)
+{
+    int i;
+
+    dictList = listBox;
+    cnf = config;
+    keyEater = new KeyEater(this);
+    dictList->installEventFilter(keyEater);
+    for (i=0;i<4;i++) {
+        dictCache[i].wordCount = -1;
+        dictCache[i].indexes = NULL;
+        dictCache[i].words = NULL;
+    }
 }
 
 ydpDictionary::~ydpDictionary()
 {
-
+    int i,j;
+    
+    for (i=0;i<4;i++) {
+	if (dictCache[i].wordCount>0) {
+	    if (dictCache[i].indexes) delete [] dictCache[i].indexes;
+	    if (dictCache[i].words) {
+		for (j=0;j<dictCache[i].wordCount;j++)
+		    delete [] dictCache[i].words[j];
+		delete [] dictCache[i].words;
+	    }
+	}
+    }
 }
 
 QString ydpDictionary::GetDefinition (int index)
 {
-	if (ReadDefinition(index) == 0)
-			return rtf2html(curDefinition);
-	 else
-			return (tr("Error reading data file!"));
+    if (ReadDefinition(index) == 0)
+	return rtf2html(curDefinition);
+    else
+	return (tr("Error reading data file!"));
 }
 
 int ydpDictionary::OpenDictionary(kydpConfig *config)
 {
-	return OpenDictionary(config->topPath,config->indexFName,config->dataFName);
+    return OpenDictionary(config->topPath,config->indexFName,config->dataFName);
 }
 
 int ydpDictionary::OpenDictionary(QString path, QString index, QString def)
 {
     QString p;
+    int i;
 
-  /* open index and definition files */
+    /* open index and definition files */
     p = path + "/" + index;
     fIndex.setName(p);
     if (!(fIndex.open(IO_ReadOnly))) {
-	  	p = tr( "Can't open index file!\n" ) + p;
-		QMessageBox::critical(0, "kydpdict", p );
-		return 1; };
+	p = tr( "Can't open index file!\n" ) + p;
+	QMessageBox::critical(0, "kydpdict", p );
+	return 1;
+    }
 
     p = path + "/" + def;
     fData.setName(p);
 
     if (!(fData.open(IO_ReadOnly))) {
-	  	p = tr( "Can't open data file!\n" ) + p;
-		QMessageBox::critical(0, "kydpdict", p );
-		return 1; };
+	p = tr( "Can't open data file!\n" ) + p;
+	QMessageBox::critical(0, "kydpdict", p );
+	return 1;
+     }
 
-    FillWordList();
+    /* 0-english, eng->pol; 1-english, pol->eng; 2-german, ger->pol; 3-german, pol->ger */
+    i = 0;
+    if (cnf->language == LANG_DEUTSCH)
+	i+=2;
+    if (!(cnf->toPolish))
+	i++;
+    if (dictCache[i].wordCount>0) {
+	wordCount = dictCache[i].wordCount;
+	indexes = dictCache[i].indexes;
+	words = dictCache[i].words;
+    } else {
+	FillWordList();
+	dictCache[i].wordCount = wordCount;
+	dictCache[i].indexes = indexes;
+	dictCache[i].words = words;
+    }
+    /* don't want to do ListRefresh yet and dictList can't be empty */
+    dictList->blockSignals(TRUE);
+    dictList->insertItem(QString("dummy"));
+    dictList->insertItem(QString("dummy"));
+    ListRefresh(0);
+    dictList->blockSignals(FALSE);
 
     return 0;
 }
 
 int ydpDictionary::CheckDictionary(kydpConfig *config)
 {
-	return CheckDictionary(config->topPath,config->indexFName,config->dataFName);
+    return CheckDictionary(config->topPath,config->indexFName,config->dataFName);
 }
 
 int ydpDictionary::CheckDictionary(QString path, QString index, QString def)
@@ -102,19 +154,18 @@ int ydpDictionary::CheckDictionary(QString path, QString index, QString def)
 
     f.setName( path + "/" + index);
     if ( !(f.exists()) )
-    	return 0;
+	return 0;
     f.setName( path + "/" + def);
     if ( !(f.exists()) )
-    	return 0;
+	return 0;
     return 1;
 }
 
 void ydpDictionary::CloseDictionary()
 {
-	dictList->clear();
-	fIndex.close();
-	fData.close();
-	if (indexes) delete [] indexes;
+    dictList->clear();
+    fIndex.close();
+    fData.close();
 }
 
 QString ydpDictionary::convert_cp1250(char *tekst, long int size)
@@ -129,84 +180,304 @@ QString ydpDictionary::convert_cp1250(char *tekst, long int size)
     input = (unsigned char *)tekst;
 
     for (i=0; i!=size; i++) {
-		if (*input > 127) {
-		    j=0;
-		    do {
-			ch=table_cp_phonetic[*input-128][j];
-			out +=ch;
-			j++;
-		    } while (table_cp_phonetic[*input-128][j]!='\0');
-		} else {
-		    a = *input;
-		    out += a; };
-		input++;
-    };
-
+	if (*input > 127) {
+	    j=0;
+	    do {
+		ch=table_cp_phonetic[*input-128][j];
+		out +=ch;
+		j++;
+	    } while (table_cp_phonetic[*input-128][j]!='\0');
+	} else {
+	    a = *input;
+	    out += a;
+	}
+	input++;
+    }
     return out;
+}
+
+KeyEater::KeyEater(ydpDictionary *parent)
+{
+    myDict = parent;
+}
+
+KeyEater::~KeyEater()
+{
+
+}
+
+bool KeyEater::eventFilter(QObject *o, QEvent *e) {
+    QListBox *dictList = (QListBox*)o;
+    if ( e->type() == QEvent::KeyPress ) {
+	QKeyEvent *k = (QKeyEvent *)e;
+	if ((dictList->currentItem()==0)&&((k->key()==Qt::Key_Up)||(k->key()==Qt::Key_Prior))) {
+	    if (k->key()==Qt::Key_Up)
+		myDict->ListScroll1Down();
+	    if (k->key()==Qt::Key_Prior)
+		myDict->ListScrollPageDown();
+	    return true;	// don't pass this down
+	}
+	if ((dictList->currentItem()+1==(int)dictList->count())&&((k->key()==Qt::Key_Down)||(k->key()==Qt::Key_Next))) {
+	    if (k->key()==Qt::Key_Down)
+		myDict->ListScroll1Up();
+	    if (k->key()==Qt::Key_Next)
+		myDict->ListScrollPageUp();
+	    return true;	// don't pass this down
+	}
+	return false;	// process event
+    } else
+	return false;	// process event
 }
 
 void ydpDictionary::FillWordList()
 {
-  QProgressDialog progress;
-  QTextCodec *codec = QTextCodec::codecForName("CP1250");
+    unsigned long pos;
+    unsigned long index[2];
+    int current=0;
 
-  unsigned long pos;
-  unsigned long index[2];
-  int current=0, wordCount;
-  char buf[256];
+    /* read # of words */
+    wordCount=0;
+    fIndex.at(0x08);
+    fIndex.readBlock((char*)&wordCount,2);
 
-  /* read # of words */
-  wordCount=0;
-  fIndex.at(0x08);
-  fIndex.readBlock((char*)&wordCount,2);
+    indexes = new unsigned long [wordCount+2];
 
-  indexes = new unsigned long [wordCount+2];
+    words = new char* [wordCount+1];
+    words[wordCount] = 0;
 
-  /* setup visual side */
-  progress.setTotalSteps(wordCount / 256);
-  progress.setMinimumDuration(500);
-  progress.show();
-  dictList->setAutoUpdate(FALSE);
+    /* read index table offset */
+    pos=0;
+    fIndex.at(0x10);
+    fIndex.readBlock((char*)&pos, 4);
+    fIndex.at(pos);
 
-  /* read index table offset */
-  pos=0;
-  fIndex.at(0x10);
-  fIndex.readBlock((char*)&pos, 4);
-  fIndex.at(pos);
-
-  /* read index table */
-  do {
-    if ((current % 256)==0)
-	progress.setProgress(current / 256);
+    /* read index table */
+    do {
 //  this is a trick - instead of fssek(cur+4), read ulong we read ulong twice
 //  and throw out first 4 bytes
-    fIndex.readBlock((char*)&index[0], 8);
-    indexes[current]=index[1];
+	fIndex.readBlock((char*)&index[0], 8);
+	indexes[current]=index[1];
 //  and another trick
 //  we don't throw out first 4 bytes :)
-    fIndex.readBlock((char*)&buf, index[0]&0xff);
+	words[current] = new char [(index[0]&0xff)];
+	fIndex.readBlock(words[current], index[0]&0xff);
+    } while (++current < wordCount);
 
-    dictList->insertItem(codec->toUnicode(QString(buf)));
-  } while (++current < wordCount);
+    topitem = 0;
 
-//  stara metoda pol2eng=490 eng2pol=560 pol2ger=716 ger2pol=735
-//  nowa metoda  pol2eng=331 eng2pol=374 pol2ger=465 ger2pol=453
-//  przyspieszenie  pol2eng=32% eng2pol=33% pol2ger=35% ger2pol=38%
+    /* omijanie bledow w slowniku... */
+    if ((cnf->language==LANG_ENGLISH) && (cnf->toPolish)) {
+	current = FindWord(QString("Proven"));
+	delete [] words[current];
+	words[current] = new char [strlen("Provencial")];
+	strcpy(words[current],"Provencial");
+    }
+}
 
-  /* omijanie bledow w slowniku... */
-  QListBoxItem *result;
-  if((result = dictList->findItem("Proven")))
-  	dictList->changeItem(QString("Provencial"), dictList->index(result));
+// offset == 1 - o linie, !=1 - o strone widoczna
+void ydpDictionary::ListScrollUp(int offset) {
+    int i,spacefor;
 
-  dictList->setCurrentItem(0);
-  dictList->setAutoUpdate(TRUE);
-  dictList->repaint();
+    spacefor=dictList->height()/dictList->itemHeight();
+
+    if (topitem+spacefor == wordCount)
+	return;
+
+    if (offset != 1) {
+	ListRefresh(topitem+spacefor);
+	dictList->blockSignals(TRUE);
+	dictList->setCurrentItem(spacefor-2);	// prepare to force highlight signal
+	dictList->blockSignals(FALSE);
+	dictList->setCurrentItem(spacefor-1);	// restore correct item
+    } else {
+	QTextCodec *codec = QTextCodec::codecForName("CP1250");
+	dictList->setAutoUpdate(FALSE);
+	dictList->blockSignals(TRUE);
+	// przepisac o 1 w gore, w ostatni wpisac nowy, current ustawic na przedostatni
+	for (i=1;i<spacefor;i++)
+	    dictList->changeItem(dictList->text(i),i-1);
+
+	dictList->changeItem(codec->toUnicode(QString(words[topitem+spacefor])),i-1);
+	topitem++;
+
+	dictList->setCurrentItem(spacefor-2);	// prepare to force highlight signal
+	dictList->setAutoUpdate(TRUE);
+	dictList->blockSignals(FALSE);
+	dictList->setCurrentItem(spacefor-1);	// restore correct item
+    }
+}
+
+void ydpDictionary::ListScrollDown(int offset) {
+    int i, spacefor;
+
+    if (topitem==0)
+	return;
+
+    spacefor=dictList->height()/dictList->itemHeight();
+
+    if (offset != 1) {
+	ListRefresh(topitem-spacefor);
+	dictList->setCurrentItem(0);
+    } else {
+	QTextCodec *codec = QTextCodec::codecForName("CP1250");
+	dictList->setAutoUpdate(FALSE);
+	dictList->blockSignals(TRUE);
+	for (i=spacefor-1;i!=0;i--)
+	    dictList->changeItem(dictList->text(i-1),i);
+	topitem--;
+	dictList->changeItem(codec->toUnicode(QString(words[topitem])),0);
+
+	dictList->setCurrentItem(1);	// prepare to force highlight signal
+	dictList->setAutoUpdate(TRUE);
+	dictList->blockSignals(FALSE);
+	dictList->setCurrentItem(0);	// restore correct index
+    }
+}
+
+void ydpDictionary::ListScroll1Up() 
+{
+    if (dictList->currentItem()+1==(int)dictList->count()) {
+	ListScrollUp(1);
+    } else {
+	dictList->setCurrentItem(dictList->currentItem()+1);
+    }
+}
+
+void ydpDictionary::ListScrollPageUp()
+{
+    ListScrollUp(20);	// anything but 1 for page
+}
+
+void ydpDictionary::ListScroll1Down()
+{
+    if (dictList->currentItem()==0) {
+	ListScrollDown(1);
+    } else {
+	dictList->setCurrentItem(dictList->currentItem()-1);
+    }
+}
+
+void ydpDictionary::ListScrollPageDown()
+{
+    ListScrollDown(20);	// anything but 1 for page
+}
+
+void ydpDictionary::ListRefresh(int index)
+{
+/* refresh list so index is visible and dictList length is correct */
+    QTextCodec *codec = QTextCodec::codecForName("CP1250");
+    unsigned int spacefor;
+    bool needRefresh=false;
+    static unsigned int lastspacefor;
+    int i;
+
+    if (index<0)
+	index=0;
+
+    /* handle size change */
+    spacefor=dictList->height()/dictList->itemHeight();
+    dictList->setAutoUpdate(FALSE);
+    if (spacefor!=lastspacefor) {
+	needRefresh=true;
+	if (dictList->count()<spacefor) {
+	    int i,j;
+	    j = spacefor-dictList->count();
+	    for (i=0;i<j;i++)
+		dictList->insertItem(QString("dummy"));
+	} else {
+	    int i,j;
+	    j = dictList->count()-dictList->numItemsVisible();
+	    for (i=0;i<j;i++)
+		dictList->removeItem(dictList->count()-1);
+	}
+    }
+    dictList->setAutoUpdate(TRUE);
+
+    /* if currently visible - do nothing */
+    if (((index>topitem)&&(index<(int)(topitem+dictList->count())))&&(!needRefresh))
+	return;
+
+    /* fix for out of bounds */
+    if ((int)((index+dictList->count()))>wordCount)
+	index=wordCount-dictList->count();
+
+    topitem = index;
+
+    dictList->blockSignals(TRUE);
+    for (i=0;i<(int)dictList->count();i++)
+	dictList->changeItem(codec->toUnicode(QString(words[index+i])),i);
+    dictList->blockSignals(FALSE);
+}
+
+// odpowiednik tego chyba jest w QString - ile znakow z poczatku w1 jest w2
+int ydpDictionary::ScoreWord(const char *w1, const char *w2)
+{
+    int i=0;
+    int score=0;
+    while (w1[i] && w2[i] && score <=0) {
+	if (tolower(w1[i]) == tolower(w2[i]))
+	    score--;
+	else
+	    score=-score;
+	i++;
+    }
+    if (score<0) score=-score;
+    return score;
+}
+
+int ydpDictionary::FindWord(QString word)
+{
+    QTextCodec *codec = QTextCodec::codecForName("CP1250");
+    QString midstring;
+    QCString qcword;
+    int a,b,i;
+    int middle,result;
+    const char *cword;
+
+    if (word.length() == 0)
+	return 0;
+
+    a = 0; b = wordCount;
+
+    word = word.lower();
+    while (b-a >= 2) {
+	middle = a + (b-a)/2;
+	midstring = codec->toUnicode(QString(words[middle]));
+	midstring.stripWhiteSpace();
+	result = word.localeAwareCompare(midstring.lower());
+	if (result==0) {
+	    a = middle; b = middle;
+	} else {
+	    if (result<0)
+		b = middle;
+	    else
+		a = middle;
+	}
+    }
+
+    if (a!=b) {
+    /* w idealnym swiecie to byloby niepotrzebne, ale np. 'a & r' jest przed 'aba'! */
+	i=1;
+	b=a;
+	qcword = codec->fromUnicode(word);
+	cword = qcword;
+	while ((i<12) && (a+i<wordCount)) {
+	    if (ScoreWord(cword,words[a+i])>ScoreWord(cword,words[b])) {
+		b=a+i;
+		if (strlen(words[b])==strlen(cword))
+		    i=12;
+	    }
+	    i++;
+	}
+	a=b;
+    }
+    return a;
 }
 
 int ydpDictionary::ReadDefinition(int index)
 {
-  unsigned long dsize, size;
-  char *def;
+    unsigned long dsize, size;
+    char *def;
 
     dsize=0;
     fData.at(indexes[index]);
@@ -221,59 +492,59 @@ int ydpDictionary::ReadDefinition(int index)
     return 0;
 }
 
-int ydpDictionary::Play (int index, kydpConfig *config) {
-	QFile fd;
-	QString pathdir, name, ext;
-	static QProcess proc;
+int ydpDictionary::Play (int index, kydpConfig *config)
+{
+    QFile fd;
+    QString pathdir, name, ext;
+    static QProcess proc;
 
-	switch (config->language) {
-		case LANG_DEUTSCH:
-			pathdir = config->cd2Path;
-			break;
-		case LANG_ENGLISH:
-			pathdir = config->cdPath;
-			break;
-		default:
-			break;	// cos poszlo nie tak?
-	}
+    switch (config->language) {
+	case LANG_DEUTSCH:
+	    pathdir = config->cd2Path;
+	    break;
+	case LANG_ENGLISH:
+	    pathdir = config->cdPath;
+	    break;
+	default:
+	    break;	// cos poszlo nie tak?
+    }
 
-	fd.setName(pathdir.latin1());
-	if (!(fd.exists()))
-		return 0;	// nie ma co tracic czasu jesli katalogu nie ma
+    fd.setName(pathdir.latin1());
+    if (!(fd.exists()))
+	return 0;	// nie ma co tracic czasu jesli katalogu nie ma
 
-	name.sprintf("%s/s%.3d/%.6d.", pathdir.latin1(), index/1000, index+1);
+    name.sprintf("%s/s%.3d/%.6d.", pathdir.latin1(), index/1000, index+1);
 
-	ext = "wav";
+    ext = "wav";
+    fd.setName(name+ext);
+    if (!(fd.exists())) {
+	ext = "mp3";
 	fd.setName(name+ext);
-	if (!(fd.exists())) {
-		ext = "mp3";
-		fd.setName(name+ext);
-		if(!(fd.exists())) {
-			ext = "ogg";
-			fd.setName(name+ext);
-			if(!(fd.exists()))
-				return 0;
-		}
+	if(!(fd.exists())) {
+	    ext = "ogg";
+	    fd.setName(name+ext);
+	    if(!(fd.exists()))
+		return 0;
 	}
+    }
 
-	fd.setName(config->player);
-	if (!(fd.exists()))
-		return 0;		// oh well...
+    fd.setName(config->player);
+    if (!(fd.exists()))
+	return 0;		// oh well...
 
-	if (proc.isRunning()) {
-		proc.kill();		// nie ma litosci dla skurwysynow! BUM! BUM!
-	}
+    if (proc.isRunning())
+	proc.kill();		// nie ma litosci dla skurwysynow! BUM! BUM!
 
-	proc.clearArguments();
-	proc.addArgument( config->player );
-	proc.addArgument( name+ext );
-	proc.start();
+    proc.clearArguments();
+    proc.addArgument( config->player );
+    proc.addArgument( name+ext );
+    proc.start();
 
-	return 1;
+    return 1;
 }
 
-QString ydpDictionary::rtf2html (QString definition) {
-
+QString ydpDictionary::rtf2html (QString definition)
+{
 char token[1024];
 int tp, level = 0;
 bool sa_tag = FALSE,br_tag = FALSE, tip_tag = FALSE, italic_tag = FALSE;

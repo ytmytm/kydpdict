@@ -70,12 +70,15 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 	splitterH = new QSplitter(centralFrame, "splitter");
 	splitterV = new QSplitter(Qt::Vertical, splitterH);
 	QHBox *hbox1 = new QHBox(splitterV);
+	QHBox *hbox2 = new QHBox(splitterV);
 	wordInput = new QComboBox( hbox1, "wordInput");
 	listclear = new QPushButton(QIconSet(QPixmap(clear_left_xpm)), QString::null, hbox1, "clear");
 	listclear->setMaximumWidth(40);
 	listclear->setFlat(TRUE);
 	hbox1->setMinimumHeight(20);
-	dictList = new QListBox( splitterV, "dictList" );
+	dictList = new QListBox( hbox2, "dictList" );
+	scrollBar = new QScrollBar( Qt::Vertical, hbox2, "scrollBar");
+	scrollBar->setMaximumWidth(20);
 	RTFOutput = new QTextBrowser (splitterH, "RTFOutput");
 	setCentralWidget(centralFrame);
 
@@ -85,10 +88,10 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 	RTFOutput->setLinkUnderline (FALSE);
 
 	dictList->setBottomScrollBar(FALSE);
+	dictList->setAutoScrollBar(FALSE);
 	dictList->setLineWidth( 0 );
 
 	wordInput->setMaxCount(20);
-	wordInput->setMaximumHeight(21);
 	wordInput->setDuplicatesEnabled(false);
 	wordInput->setEditable(true);
 	wordInput->setInsertionPolicy(QComboBox::AtTop);
@@ -218,6 +221,14 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
  	connect (RTFOutput, SIGNAL(highlighted( const QString & )), this, SLOT(updateText( const QString & )));
  	connect (m_checkTimer, SIGNAL(timeout()), this, SLOT(newClipData()));
 	connect (toolBar, SIGNAL(visibilityChanged(bool)), this, SLOT(ToolbarShowHide(bool)));
+ 	connect (cb, SIGNAL(selectionChanged() ), SLOT(newClipData()));
+ 	connect (cb, SIGNAL(dataChanged() ), SLOT(newClipData()));
+
+	connect (scrollBar, SIGNAL(nextLine()), myDict, SLOT(ListScroll1Up()));
+	connect (scrollBar, SIGNAL(nextPage()), myDict, SLOT(ListScrollPageUp()));
+	connect (scrollBar, SIGNAL(prevLine()), myDict, SLOT(ListScroll1Down()));
+	connect (scrollBar, SIGNAL(prevPage()), myDict, SLOT(ListScrollPageDown()));
+	connect (scrollBar, SIGNAL(sliderMoved(int)), myDict, SLOT(ListRefresh(int)));
 
 	QGridLayout *grid = new QGridLayout(centralFrame, 1, 1);
 	grid->addWidget(splitterH, 0, 0);
@@ -231,7 +242,8 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 	    toolBar->hide();
 
 	this->show();
-	NewDefinition(1);
+	myDict->ListRefresh(0);
+	dictList->setCurrentItem(0);
 
 	RTFOutput->mimeSourceFactory()->setFilePath( config->tipsPath );
 	RTFOutput->mimeSourceFactory()->setExtensionType("html", "text/html;charset=iso8859-2");
@@ -278,6 +290,9 @@ void Kydpdict::resizeEvent(QResizeEvent *)
 	aRozmiar = this->size();
 	config->kGeometryW = aRozmiar.width();
 	config->kGeometryH = aRozmiar.height();
+
+	myDict->ListRefresh(dictList->currentItem());
+	scrollBar->setPageStep(dictList->numItemsVisible());
 }
 
 void Kydpdict::moveEvent(QMoveEvent *)
@@ -308,6 +323,9 @@ void Kydpdict::windowActivationChange(bool oldActive)
 
 void Kydpdict::newClipData()
 {
+    int result;
+    static int lastresult=-1;
+
     // do nothing if minimized
     if (this->isMinimized())
         return;
@@ -339,40 +357,26 @@ void Kydpdict::newClipData()
     if(lnewEntry.isEmpty())
 	return;
 
-    lnewEntry = lnewEntry.simplifyWhiteSpace();
+    lnewEntry.simplifyWhiteSpace();
     lnewEntry.truncate(20);
-    QListBoxItem *lentry = dictList->findItem(lnewEntry, Qt::ExactMatch);
-    if(!lentry) {
-	int ldown = 0;
-	int lup = lnewEntry.length() + 1;
-	QListBoxItem *lresult = NULL;
 
-	while (lup - ldown > 1) {
-	    lresult = dictList->findItem(lnewEntry.left((lup + ldown) / 2));
-	    if (lresult) {
-		lentry = lresult;
-		ldown = (lup + ldown) / 2;
-	    } else
-		lup = (lup + ldown) / 2;
-	}
-	if (!lentry)
-	    return;
-    }
+    result = myDict->FindWord(lnewEntry);
+    myDict->ListRefresh(result);
+    dictList->blockSignals(TRUE);
+    dictList->setCurrentItem(0);
+    dictList->blockSignals(FALSE);
 
-    dictList->setCurrentItem(lentry);
-    dictList->ensureCurrentVisible();
-    this->setActiveWindow ();
     this->raise();
     this->show();
+    this->setActiveWindow();	// XXX this sets focus
 
-    wordInput->blockSignals(TRUE);
-    if (lnewEntry.length()>0)
-	UpdateHistory(dictList->currentItem());
+    UpdateHistory(result);
     wordInput->setEditText(lnewEntry);
-    wordInput->setFocus();
-    wordInput->blockSignals(FALSE);
-    if(config->autoPlay)
-	PlaySelected(dictList->currentItem());
+
+    if ((config->autoPlay) && (lastresult!=result))
+	PlaySelected (dictList->currentItem());
+
+    lastresult = result;
 }
 
 void Kydpdict::showMinimized()
@@ -395,41 +399,36 @@ void Kydpdict::showEvent(QShowEvent *ashowEvent)
 
 void Kydpdict::NewDefinition (int index)
 {
-	UpdateHistory(index);
-	RTFOutput->setText(myDict->GetDefinition(index));
-	RTFOutput->setCursorPosition(0,0);
+    UpdateHistory(index+myDict->topitem);
+    RTFOutput->setText(myDict->GetDefinition(index+myDict->topitem));
+    RTFOutput->setCursorPosition(0,0);
+    scrollBar->setValue(index+myDict->topitem);
 }
 
 void Kydpdict::NewFromLine (const QString &newText)
 {
-    int index;
-    QListBoxItem *result = dictList->findItem(newText, Qt::ExactMatch);
+    int result;
 
     // prevent spurious aperance when user starts writing immediately after Kydpdict gets focus
     slastSelection = cb->text(QClipboard::Selection).stripWhiteSpace();
     slastClipboard = cb->text(QClipboard::Clipboard).stripWhiteSpace();
 
-    if (!result)
-	if (!(result = dictList->findItem(newText, Qt::BeginsWith)))
-	    return;
-
-    if ((index = dictList->index(result)) >= 0) {
-	if(index != dictList->currentItem())
-		dictList->setCurrentItem(index);
-	dictList->ensureCurrentVisible();
+    if (newText.length()) {
+	result=myDict->FindWord(newText);
+	myDict->ListRefresh(result);
+	dictList->setCurrentItem(0);
     }
 }
 
 void Kydpdict::PlaySelected (int index)
 {
-	if ( (index>=0) && config->toPolish )
-	    myDict->Play(index,config);
+    if ((index>=0) && config->toPolish)
+	myDict->Play(index+myDict->topitem,config);
 }
 
 void Kydpdict::PlayCurrent ()
 {
     UpdateHistory(dictList->currentItem());
-    wordInput->setEditText(dictList->currentText());
     PlaySelected(dictList->currentItem());
 }
 
@@ -483,7 +482,10 @@ void Kydpdict::SwapPolToGer ()
 void Kydpdict::SwapLang (bool direction, int language ) //dir==1 toPolish
 {
 	int a;
+	QString word;
+
 	if(! ((config->toPolish == direction) && (config->language == language)) ) {
+		word=wordInput->currentText();
 		myDict->CloseDictionary();
 		config->toPolish=direction;
 		config->language = language;
@@ -492,7 +494,8 @@ void Kydpdict::SwapLang (bool direction, int language ) //dir==1 toPolish
 			a=myDict->OpenDictionary(config);
 			if (a) Configure(TRUE);
 		} while (a);
-		wordInput->clear();
+		wordInput->setEditText(word);
+		NewFromLine(word);
 		UpdateLook();
 	}
 }
@@ -669,6 +672,8 @@ void Kydpdict::UpdateLook()
 	wordInput->setFont(config->fontTransFont);
 
 	NewDefinition(dictList->currentItem() < 0 ? 0 : dictList->currentItem() );
+
+	scrollBar->setMaxValue(myDict->wordCount);
 }
 
 void Kydpdict::updateText( const QString & href )
