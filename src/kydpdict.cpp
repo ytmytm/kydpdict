@@ -371,20 +371,15 @@ void Kydpdict::newClipData()
     lnewEntry.simplifyWhiteSpace();
     lnewEntry.truncate(20);
 
-    result = myDict->FindWord(lnewEntry);
-    myDict->ListRefresh(result);
-    dictList->blockSignals(TRUE);
-    dictList->setCurrentItem(0);
-    dictList->blockSignals(FALSE);
-
     this->show();
     this->raise();
     if (config->setFocusOnSelf)
 	this->setActiveWindow();
 
+    wordInput->setEditText(lnewEntry);	// this does search
     UpdateHistory();
-    wordInput->setEditText(lnewEntry);
 
+    result = myDict->topitem+dictList->currentItem();
     if ((config->autoPlay) && (lastresult!=result))
 	PlaySelected (dictList->currentItem());
 
@@ -428,7 +423,7 @@ void Kydpdict::NewFromLine (const QString &newText)
     if (newText.length()) {
 	result=myDict->FindWord(newText);
 	myDict->ListRefresh(result);
-	dictList->setCurrentItem(0);
+	dictList->setCurrentItem(result-myDict->topitem);
     }
 }
 
@@ -507,8 +502,8 @@ void Kydpdict::SwapLang (bool direction, int language ) //dir==1 toPolish
 			if (a) Configure(TRUE);
 		} while (a);
 		wordInput->setEditText(word);
-		NewFromLine(word);
 		UpdateLook();
+		NewFromLine(word);
 	}
 }
 
