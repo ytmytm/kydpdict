@@ -13,7 +13,6 @@
 #include <qpixmap.h>
 #include <qframe.h>
 #include <qmessagebox.h>
-#include <qpopupmenu.h>
 #include <qdialog.h>
 #include <qpushbutton.h>
 #include <qtextbrowser.h>
@@ -176,12 +175,12 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 	help->insertItem(QPixmap(babelfish_small_xpm), tr("About"), this, SLOT(ShowAbout()));
 	help->insertItem(QPixmap(help_xpm), tr("About Qt"), this, SLOT(ShowAboutQt()));
 
-	QPopupMenu *trayMenu = new QPopupMenu( this );
+	trayMenu = new QPopupMenu( this );
 	Q_CHECK_PTR( trayMenu );
 	trayMenu->insertItem(QPixmap(conf_xpm), tr("&Settings"), this, SLOT(ConfigureKydpdict()) );
 	trayMenu->insertSeparator();
 	trayMenu->insertItem( tr("Swap direction"), this, SLOT(SwapLanguages()) );
-	trayMenu->insertItem( tr("Toggle clipboard tracking"), this, SLOT(ToggleClipTracking()) );
+	trayMenuItemClipTrack = trayMenu->insertItem( tr("Clipboard tracking"), this, SLOT(ToggleClipTracking()) );
 	trayMenu->insertSeparator();
 	trayMenu->insertItem(QPixmap(babelfish_small_xpm), tr("About"), this, SLOT(ShowAbout()));
 	trayMenu->insertItem(QPixmap(exit_xpm), tr("&Quit"), qApp, SLOT(quit()) );
@@ -479,6 +478,7 @@ void Kydpdict::ToggleClipTracking()
 	config->clipTracking=!config->clipTracking;
 	config->save();
 	but_Clipboard->setOn(config->clipTracking);
+	trayMenu->setItemChecked(trayMenuItemClipTrack, config->clipTracking);
 }
 
 void Kydpdict::ConfigureKydpdict()
@@ -559,6 +559,9 @@ void Kydpdict::UpdateLook()
 	if (but_PlEn!=NULL) but_PlEn->setEnabled(TRUE);
 	if (but_DePl!=NULL) but_DePl->setEnabled(TRUE);
 	if (but_PlDe!=NULL) but_PlDe->setEnabled(TRUE);
+
+	but_Clipboard->setOn(config->clipTracking);
+	trayMenu->setItemChecked(trayMenuItemClipTrack, config->clipTracking);
 
 	switch (config->language) { //mozna dopisac kolejne case'y dla kolejnych jezykow
 		case LANG_DEUTSCH:

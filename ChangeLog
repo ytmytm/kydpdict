@@ -297,3 +297,5 @@ Kydpdict 0.5.8 (xx.xx.xxxx)
 - zapamiêtywany stan toolbara (w³±czony/wy³±czony)
 - klikniêcie na ikonke od czyszczenia wordinput ustawia fokus na ten¿e (ElPablo)
 - poprawione zachowanie przy pierwszym uruchomieniu
+- ¶ledzenie schowka - widaæ w traymenu, czy jest w³±czone
+- zmiana ¶ledzenia w dialogu teraz jest uwidoczniona na toolbarze i w traymenu

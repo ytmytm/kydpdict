@@ -139,6 +139,10 @@ Do zobaczenia!</translation>
         <comment>Options|Settings</comment>
         <translation>Ctrl+P</translation>
     </message>
+    <message>
+        <source>Clipboard tracking</source>
+        <translation>Śledzenie schowka</translation>
+    </message>
 </context>
 <context>
     <name>TrayIcon</name>

@@ -14,6 +14,7 @@
 #include <qlistbox.h>
 #include <qcombobox.h>
 #include <qmenubar.h>
+#include <qpopupmenu.h>
 #include <qclipboard.h>
 #include <qmainwindow.h>
 #include <qtimer.h>
@@ -52,9 +53,10 @@ class Kydpdict : public QMainWindow
 		QComboBox *wordInput;
 		QTextBrowser *RTFOutput;
 		QPushButton *listclear;
-		QMenuBar  *menu;
+		QMenuBar *menu;
+		QPopupMenu *trayMenu;
 		int polToEng,engToPol, gerToPol, polToGer;
-		int toolBarMenuItem;
+		int toolBarMenuItem, trayMenuItemClipTrack;
 
 		// dictionary class
 		ydpDictionary *myDict;
