@@ -93,7 +93,6 @@ private slots:
     void NewFontColor3();
     void NewFontColor4();
     void NewBckgrndUrl();
-    void NewBackgroundColor();
     void NewCheck(int state);
     void NewCheck2(int state);
     void WriteDefaults();
