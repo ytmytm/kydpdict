@@ -230,17 +230,19 @@ void TrayIcon::mousePressEvent(QMouseEvent * e) {
 	if (e->button() == LeftButton) {
 		emit mousePressLeftButton();
 //		kdebug("left button\n");
-		switch (dict->isVisible()) {
-		    case 0:
-			dict->show();
-			dict->setFocus();
-			dict->setActiveWindow();
-			break;
-		    case 1:
-			dict->hide();
-			break;
+		if (!dict->isMinimized()) {
+		    switch (dict->isVisible()) {
+			case 0:
+			    dict->show();
+			    dict->setFocus();
+			    dict->setActiveWindow();
+			    break;
+			case 1:
+			    dict->hide();
+			    break;
 		    }
 		}
+	}
 
 	if (e->button() == RightButton) {
 		emit mousePressRightButton();
