@@ -368,9 +368,10 @@ void Kydpdict::newClipData()
     dictList->setCurrentItem(0);
     dictList->blockSignals(FALSE);
 
-    this->raise();
     this->show();
-    this->setActiveWindow();	// XXX this sets focus
+    this->raise();
+    if (config->setFocusOnSelf)
+	this->setActiveWindow();
 
     UpdateHistory();
     wordInput->setEditText(lnewEntry);

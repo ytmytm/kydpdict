@@ -48,7 +48,7 @@ W razie problemów po prostu skasuj katalog z plikami konfiguracyjnymi.
 Program postara siê odtworzyæ go z domy¶lnych warto¶ci oraz korzystaj±c z
 /etc/ydpdict.conf je¶li korzystasz jednocze¶nie z konsolowego s³ownika.
 
-Krótki opis opcji konfiguracyjnych z zak³adki 'Ró¿ne'
+Krótki opis opcji konfiguracyjnych z zak³adek 'Ró¿ne' i 'Schowek'
 - 'W³±cz ¶ledzenie schowka' - okno s³ownika wyskakuj±ce na wierzch mo¿e przeszkadzaæ, w ten
    sposób mo¿na wy³±czyæ takie zachowanie na sta³e. Tymczasow± metod± jest zminimalizowanie
    okna.
@@ -61,6 +61,10 @@ Krótki opis opcji konfiguracyjnych z zak³adki 'Ró¿ne'
 - 'W³±cz ikonê na tacce systemowej' - pozwala wy³±czyæ ikonê dla managerów okien, z którymi
    sprawia to problemy
 - 'Autoodtwarzanie d¼wiêku' - dotyczy tylko tekstu przechwyconego ze schowka.
+- 'Ustawiaj focus na siebie' - czasem wygodnie jest mieæ okno Kydpdict wyskakuj±ce na wierzch
+   z t³umaczeniem ale nie pozostawiaj±ce jako aktywne poprzednie okno - ta opcja kontroluje
+   takie zachowanie (wyj±tek: je¶li okno by³o niewidoczne - po trzykrotnym ESC, to zawsze
+   dostanie focus)
 
 5. Jakie s± znane wady Kydpdict ?
 a) Aplikacja oparta jest o bibliotekê Qt i podczas wykonywania zajmuje sporo pamiêci (na mojej

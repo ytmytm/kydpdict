@@ -103,6 +103,7 @@ void kydpConfig::load(void)
 	autoPlay     = settings.readBoolEntry("/auto_play", FALSE);
 	ignoreOwnSelection = settings.readBoolEntry("/ignore_own_selection", FALSE);
 	dock = settings.readBoolEntry("/dock", TRUE);
+	setFocusOnSelf = settings.readBoolEntry("/set_focus_on_self", TRUE);
 	settings.endGroup();
 	settings.endGroup();
 
@@ -156,6 +157,7 @@ void kydpConfig::save(void)
 	settings.writeEntry("/auto_play", autoPlay);
 	settings.writeEntry("/ignore_own_selection", ignoreOwnSelection);
 	settings.writeEntry("/dock", dock);
+	settings.writeEntry("/set_focus_on_self", setFocusOnSelf);
 	settings.endGroup();
 	settings.endGroup();
 }

@@ -240,11 +240,11 @@ Prawy - otwórz menu</translation>
     </message>
     <message>
         <source>Path to English audio files</source>
-        <translation>Ścieżka do ang. plików dźwiękowych</translation>
+        <translation>Ścieżka do angielskich plików dźwiękowych</translation>
     </message>
     <message>
         <source>Path to Deutsch audio files</source>
-        <translation>Ścieżka do niem. plików dźwiękowych</translation>
+        <translation>Ścieżka do niemieckich plików dźwiękowych</translation>
     </message>
     <message>
         <source>Audio</source>
@@ -273,6 +273,14 @@ Prawy - otwórz menu</translation>
     <message>
         <source>Choose background color</source>
         <translation>Wybierz kolor tła</translation>
+    </message>
+    <message>
+        <source>Clipboard</source>
+        <translation>Schowek</translation>
+    </message>
+    <message>
+        <source>Set focus on self</source>
+        <translation>Ustawiaj focus na siebie</translation>
     </message>
 </context>
 <context>

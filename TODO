@@ -15,5 +15,4 @@
 - przejscie z tlumaczeniem na gettext
     - makra, ¿eby nic w kodzie nie zmieniæ
     - makefiles (.po, .mo; sciezki;)
-- opcja: po przechwyceniu schowka - na wierzch ale bez focusa na siebie
 - FindWord napisac ³adniej (potrzeba pomys³u! :)

@@ -127,20 +127,28 @@ ydpConfigure::ydpConfigure( kydpConfig *globalconfig, QWidget* parent,  const ch
     TabWidget1->insertTab( tab2, tr("Colors") );
 
     tab3 = new QWidget( TabWidget1, "tab3" );
-    checkBox2 = new QCheckBox(tr("Enable clipboard tracking"), tab3, "checkBox2");
-    checkBox2->setGeometry(10,14,350,20);
-    checkBox6 = new QCheckBox(tr("Ignore own selection"), tab3, "checkBox6");
-    checkBox6->setGeometry(10,40,350,20);
+
     checkBox3 = new QCheckBox(tr("Enable italic font"), tab3, "checkBox3");
-    checkBox3->setGeometry(10,66,350,20);
+    checkBox3->setGeometry(10,14,350,20);
     checkBox4 = new QCheckBox(tr("Enable tooltips"), tab3, "checkBox4");
-    checkBox4->setGeometry(10,92,350,20);
+    checkBox4->setGeometry(10,40,350,20);
     checkBox7 = new QCheckBox(tr("Enable tray icon"), tab3, "checkBox7");
-    checkBox7->setGeometry(10,118,350,20);
+    checkBox7->setGeometry(10,66,350,20);
     checkBox5 = new QCheckBox(tr("Enable autoplay"), tab3, "checkBox5");
-    checkBox5->setGeometry(10,144,350,20);
+    checkBox5->setGeometry(10,92,350,20);
 
     TabWidget1->insertTab( tab3, tr("Miscellaneous") );
+
+    tab5 = new QWidget( TabWidget1, "tab5" );
+
+    checkBox2 = new QCheckBox(tr("Enable clipboard tracking"), tab5, "checkBox2");
+    checkBox2->setGeometry(10,14,350,20);
+    checkBox6 = new QCheckBox(tr("Ignore own selection"), tab5, "checkBox6");
+    checkBox6->setGeometry(10,40,350,20);
+    checkBox8 = new QCheckBox(tr("Set focus on self"), tab5, "checkBox8");
+    checkBox8->setGeometry(10,66,350,20);
+
+    TabWidget1->insertTab( tab5, tr("Clipboard") );
 
     connect( ok, SIGNAL( clicked() ), this, SLOT( accept() ) );
     connect( cancel, SIGNAL( clicked() ), this, SLOT( reject() ) );
@@ -344,6 +352,7 @@ void ydpConfigure::WriteDefaults()
     checkBox4->setChecked(cnf->toolTips);
     checkBox7->setChecked(cnf->dock);
     checkBox5->setChecked(cnf->autoPlay);
+    checkBox8->setChecked(cnf->setFocusOnSelf);
     UpdateLabels();
     delete cnf;
 }
@@ -364,6 +373,7 @@ void ydpConfigure::showEvent ( QShowEvent * )
     checkBox4->setChecked(config->toolTips);
     checkBox7->setChecked(config->dock);
     checkBox5->setChecked(config->autoPlay);
+    checkBox8->setChecked(config->setFocusOnSelf);
     UpdateLabels();
 }
 
@@ -387,6 +397,7 @@ ydpConfigure::~ydpConfigure()
 		config->toolTips = checkBox4->isChecked();
 		config->dock = checkBox7->isChecked();
 		config->autoPlay = checkBox5->isChecked();
+		config->setFocusOnSelf = checkBox8->isChecked();
 		config->fontTransFont = cFont;
 	}
 }
