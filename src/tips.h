@@ -79,4 +79,5 @@
 	"wojskowo¶æ - military", "zoology - zoologia", "¿egluga - nautical", "ups!"}
 
 #define I_size 60
-#define II_size 64
+// that '-1' comes from "ups!" at the very end of the list
+#define II_size 64-1

@@ -59,7 +59,6 @@ private:
 	QStringList list;
 	int tag_num[16];
 	int direction_tab[16];
-	static QString input_tip[];
 
 	unsigned long *indexes; 	/* indexes to definitions array */
 	char** words;			/* actual words */

@@ -63,9 +63,8 @@ struct dictionaryCache {
 
 #include "tips.h"
 
-QString ydpDictionary::input_tip[] = INPUT_TIP;
-
 QString ydpDictionary::GetInputTip(int index) {
+static QString input_tip[] = INPUT_TIP;
     if (index <= I_size+II_size)
 	return input_tip[index];
     else
@@ -73,7 +72,7 @@ QString ydpDictionary::GetInputTip(int index) {
 }
 
 QString ydpDictionary::GetOutputTip(int index) {
-    QString output_tip[] = OUTPUT_TIP;	// guess what happens with 'ñ' when this is not private...
+static QString output_tip[] = OUTPUT_TIP;	// guess what happens with 'ñ' when this is not private...
     if (index <= I_size+II_size)
 	return output_tip[index];
     else
@@ -995,7 +994,7 @@ QString ydpDictionary::insertHyperText(QString raw_input, int level)
 			proposition = tmp2;
 
 			for(int i = 0; i < I_size+II_size; i++) {
-				if (!QString::compare(tmp2, input_tip[i])) {
+				if (!QString::compare(tmp2, GetInputTip(i))) {
 					number.sprintf("%d", i);
 					proposition = "<a href=2" + number +">" + tmp2 + "</a>";
 					result = TRUE;
