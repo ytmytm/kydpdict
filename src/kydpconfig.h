@@ -49,6 +49,7 @@ private:
 
 	void readYDPConfig(void);
 	void updateFName(void);
+	QString fixColour(const QString);
 };
 
 #endif // KYDPCONFIG_H

@@ -38,6 +38,9 @@ struct dictionaryCache {
 #define T_PN_L 4
 #define T_PN_R 8
 
+#define _native 0
+#define _foreign 1
+
 #define TABLE_PHONETIC_ISO { \
   ".", ".", "<img src=\"f2\">", "<img src=\"f3\">", ".", "<img src=\"f5\">", "e", "<img src=\"f6\">", \
   "<img src=\"f1\">", "<img src=\"f8\">", "<img src=\"f4\">", "<img src=\"f7\">", "¦", ":", "´", ".", \
@@ -55,6 +58,25 @@ struct dictionaryCache {
   "è", "é", "ê", "ë", "ì", "í", "î", "ï", \
   "ð", "ñ", "ò", "ó", "ô", "õ", "ö", "÷", \
   "ø", "ù", "ú", "û", "ü", "ý", "þ", "ÿ" } \
+
+#include "tips.h"
+
+QString ydpDictionary::input_tip[] = INPUT_TIP;
+
+QString ydpDictionary::GetInputTip(int index) {
+    if (index <= I_size+II_size)
+	return input_tip[index];
+    else
+	return QString("");
+}
+
+QString ydpDictionary::GetOutputTip(int index) {
+    QString output_tip[] = OUTPUT_TIP;	// guess what happens with 'ñ' when this is not private...
+    if (index <= I_size+II_size)
+	return output_tip[index];
+    else
+	return QString("");
+}
 
 unsigned long fix32(unsigned long x)
 {
@@ -647,25 +669,29 @@ QString ydpDictionary::rtf2html (QString definition)
 {
 char token[1024];
 int tp, level = 0;
-bool sa_tag = FALSE,br_tag = FALSE, tip_tag = FALSE, italic_tag = FALSE;
+bool sa_tag = FALSE,br_tag = FALSE, italic_tag = FALSE, link_tag = TRUE;
 QString tag_on,tag_off;
 char *def;
 (const char*)def=definition;
 list.clear();
-list += "<qt><font color=" + color4 +">";
+list += "<qt><font color=\"" + color4 +"\" link=\"" + color4 + "\">";
 list += "</font></qt>";
-for(level=15;level>=0;level--)
+for(level=15;level>=0;level--) {
 	tag_num[level] = 0;
+	direction_tab[level] = 0;	
+}
 level = 0;
-
+direction_tab[level] = _native;
 it = list.begin();
 it++;
+
 
   while (*def) {
   	switch(*def) {
   		case '{':
-				if (level < 16) tag_num[++level] = 0;
-  			break;
+			if (level < 16) tag_num[++level] = 0;
+			direction_tab[level] = _native;
+  				break;
   		case '\\':
 			def++; tp = 0;
 			while((*def >= 'a' && *def <= 'z') || (*def >='0' && *def <= '9'))
@@ -679,14 +705,16 @@ it++;
 					tag_off = "</i>";
 					tag_num[level]++;
 				}
-				italic_tag = TRUE;
+				direction_tab[level] = _native;
+			//	italic_tag = TRUE;
 			} else
 
 			if (!strcmp(token, "cf2")) { //	79850
 				tag_on = "<font color=" + color2 + ">";
 				tag_off = "</font>";
 				tag_num[level]++;
-				tip_tag = TRUE;
+				direction_tab[level] = _native; // vi - trzeba to przemyslec jeszcze
+				link_tag = TRUE;
 			} else
 
 			if (!strcmp(token, "par")) { //74442
@@ -706,6 +734,7 @@ it++;
 				tag_on = "<font color=" + color1 + ">";
 				tag_off = "</font>";
 				tag_num[level]++;
+				direction_tab[level] = _foreign;
 			} else
 
 			if (!strcmp(token, "b")) { //	43737
@@ -718,13 +747,27 @@ it++;
 				tag_on = "<font color=" + color3 + ">";
 				tag_off = "</font>";
 				tag_num[level]++;
+				direction_tab[level] = _native;
 			} else
 
 			if (!strcmp(token, "cf5")) { // 21478
 				tag_on = "<font color=" + color4 + ">";
 				tag_off = "</font>";
 				tag_num[level]++;
-//				tip_tag = FALSE;
+//				direction_tab[level] = _native;
+				link_tag = FALSE;
+			} else
+			
+			if (!strcmp(token, "f1")) { // ????
+				tag_on = "";
+				tag_off = "";
+				link_tag = FALSE;
+			} else
+			
+			if (!strcmp(token, "f2")) { // ????
+				tag_on = "";
+				tag_off = "";
+				link_tag = TRUE;
 			} else
 
 			if (!strncmp(token, "sa", 2)) { // 19969
@@ -745,6 +788,7 @@ it++;
 				tag_on = "<small>";
 				tag_off = "</small>";
 				tag_num[level]++;
+//				direction_tab[level] = _off;
 			} else
 
 			if (!strcmp(token, "i0")) { // 69
@@ -758,6 +802,7 @@ it++;
 				tag_on = "<font color=" + color3 + ">";
 				tag_off = "</font>";
 				tag_num[level]++;
+				direction_tab[level] = _native;
 			}
 
 			def--;
@@ -778,6 +823,7 @@ it++;
 			}
 			level--;
 			italic_tag = FALSE;
+			link_tag = TRUE;
 			if(sa_tag) {
 				it++; //tabela ma tylko obejmowac 1 pozycje a nie do konca tekstu
 				sa_tag = FALSE;
@@ -806,11 +852,9 @@ it++;
 			def--;
 			QString tmp = convert_cp1250(token, (long int) tp);
 
-			if((italic_tag || tip_tag ) && (cnf->language == LANG_ENGLISH) && cnf->toolTips) {
-				tmp = insertTip(tmp);
-				tip_tag = FALSE;
+			if((cnf->language == LANG_ENGLISH) && cnf->toolTips && link_tag) {
+				tmp = insertHyperText(tmp, level);
 			}
-
 			it = list.insert(it, tmp); it++;
 			break;
 	}
@@ -896,20 +940,13 @@ int wstawiono=0;
 	}
 }
 
-QString ydpDictionary::insertTip(QString raw_input)
+QString ydpDictionary::insertHyperText(QString raw_input, int level)
 {
-	static QString input_tip[] = {"", "adj", "adv", "conj", "perf", "m(f", "fus", "inv", "pron","nt", "npl", "cpd", "pl", "vb", "vi", "vt", "sg", \
-	"abbr", "nom","acc", "dat", "gen", "infin", "instr", "loc", "irreg", "prep", "aux", "pt", "pp", "m", "n", "f", "post", "nvir", \
-	"vir", "num", "decl", "excl", "inf!", "inf", "pej", "cmp", "pot!", "pot", "vr", "attr", "part", "fml", "im)perf", "dimin","ADMIN", "ANAT", "AUT", \
-	"AVIAT", "BIO", "BOT", "BRIT", "CHEM", "COMM", "COMPUT", "CULIN", "ELEC", "FIN", "JUR", "LING", "MATH", "MED", "MIL", \
-	"MUS", "NAUT", "POL", "PSYCH", "RAIL", "REL", "SCOL", "SPORT", "TECH", "TEL", "THEAT", "TYP", "US", "ZOOL", "fig", "lit", \
-	"GEOG", "ARCHIT", "FIZ", "PHYSIOL", "imp", "GEOL", "art", "indef", "def", "PHOT", "ELEKTR", "EKON", "ECON", "GEOM", "JÊZ", \
-	"KULIN", "KOMPUT", "LOT", "MAT", "MOT", "MUZ", "SZKOL", "WOJSK", "¯EGL", "BUD", "METEO", "HIST", "DRUK", "ROL", "pref", \
-	"ASTRON", "PHYS", "etc", "AGR", "CONSTR", "suff", "LIT", "UNIV", "ups!"};
 
-	int tags = 0, pos = 0;
-	QString output, fullOutput, number, proposition;
-	
+	int tags = 0, pos = 0, pos2 = 0;
+	bool result;
+	QString output, output2, fullOutput, number, proposition;
+
 	QString input = raw_input.simplifyWhiteSpace();
 
 	while(TRUE) {
@@ -934,18 +971,44 @@ QString ydpDictionary::insertTip(QString raw_input)
 			tags |= T_PL;
 			tmp  = tmp.right(tmp.length()-1);
 		}
+		
+		pos2 = 0;
+		output2 = "";
+		QString direction;
+		direction_tab[level] == _native ? direction = "0" : direction = "1"; 
+		result = FALSE;
+		
+		while(TRUE) {
+			QString tmp2 = tmp.section('/', pos2, pos2);
+///////////////////////////////////////////////////////////////////////////////////////////			
+			
 
-		proposition = tmp;
+			proposition = tmp2;
 
-		for(int i = 0; i < 124; i++) {
-			if (!QString::compare(tmp, input_tip[i])) {
-				number.sprintf("%d", i);
-				proposition = "<a href=\"tips.html#" + number + "\">" + tmp + "</a>";
-				break;
+			for(int i = 0; i < I_size+II_size; i++) {
+				if (!QString::compare(tmp2, input_tip[i])) {
+					number.sprintf("%d", i);
+					proposition = "<a href=2" + number +">" + tmp2 + "</a>";
+					result = TRUE;
+					break;
+				}
 			}
+			
+			if(!result) {
+				proposition = "<a href="+ direction + tmp2+">"+tmp2+"</a>";
+			}
+			
+			output2 = proposition;
+
+///////////////////////////////////////////////////////////////////////////////////////////
+			pos2++;
+		
+			if(tmp.section('/', pos2, pos2).isEmpty())
+				break;
+			output2 += '/';
 		}
 
-		output = proposition;
+		output += output2;
 
 		if(tags & T_CM)
 			output += ",";
@@ -957,6 +1020,7 @@ QString ydpDictionary::insertTip(QString raw_input)
 			fullOutput += "(";
 
 		fullOutput += output;
+		output = "";
 
 		if(tags & T_PN_R)
 			fullOutput += ")";

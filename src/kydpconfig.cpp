@@ -83,12 +83,12 @@ void kydpConfig::load(void)
 	kGeometryY = settings.readNumEntry("/y", 1);
 	kGeometryW = settings.readNumEntry("/w", 500);
 	kGeometryH = settings.readNumEntry("/h", 300);
-	kFontKolor1 = settings.readEntry("/translation_text", "#C00000");
-	kFontKolor2 = settings.readEntry("/describe_text", "#0000FF");
-	kFontKolor3 = settings.readEntry("/example_text", "#736324");
-	kFontKolor4 = settings.readEntry("/plain_text", "#000000");
+	kFontKolor1 = fixColour(settings.readEntry("/translation_text", "#C00000"));
+	kFontKolor2 = fixColour(settings.readEntry("/describe_text", "#0000FF"));
+	kFontKolor3 = fixColour(settings.readEntry("/example_text", "#736324"));
+	kFontKolor4 = fixColour(settings.readEntry("/plain_text", "#000001"));
 	kBckgrndPix = settings.readEntry("/background", "NoBackground");
-	kBckgrndKol = settings.readEntry("/background_colour", "#FFFFFF");
+	kBckgrndKol = fixColour(settings.readEntry("/background_colour", "#FFFFFF"));
 	spH1 = settings.readNumEntry("/splitterH_1", 200);
 	spH2 = settings.readNumEntry("/splitterH_2", 300);
 	spV1 = settings.readNumEntry("/splitterV_1", 30);
@@ -137,12 +137,12 @@ void kydpConfig::save(void)
 	settings.writeEntry("/y", kGeometryY);
 	settings.writeEntry("/w", kGeometryW);
 	settings.writeEntry("/h", kGeometryH);
-	settings.writeEntry("/translation_text", kFontKolor1);
-	settings.writeEntry("/describe_text", kFontKolor2);
-	settings.writeEntry("/example_text", kFontKolor3);
-	settings.writeEntry("/plain_text", kFontKolor4);
+	settings.writeEntry("/translation_text", fixColour(kFontKolor1));
+	settings.writeEntry("/describe_text", fixColour(kFontKolor2));
+	settings.writeEntry("/example_text", fixColour(kFontKolor3));
+	settings.writeEntry("/plain_text", fixColour(kFontKolor4));
 	settings.writeEntry("/background", kBckgrndPix);
-	settings.writeEntry("/background_colour", kBckgrndKol);
+	settings.writeEntry("/background_colour", fixColour(kBckgrndKol));
 	settings.writeEntry("/splitterH_1", spH1);
 	settings.writeEntry("/splitterH_2", spH2);
 	settings.writeEntry("/splitterV_1", spV1);
@@ -210,4 +210,15 @@ void kydpConfig::updateFName(void)
 		  dataFName = toPolish ? "dict200.dat" : "dict201.dat";
 		  break;
 	}
+}
+
+// this is here due to fact that if link's colour is set to black, Qt ignores that
+// and uses default blue instead
+QString kydpConfig::fixColour(const QString colour)
+{
+    if (colour == "#000000") {
+	return "#000001";
+    }
+    else
+	return colour;
 }

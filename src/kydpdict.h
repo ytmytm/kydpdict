@@ -85,7 +85,6 @@ class Kydpdict : public QMainWindow
 		void NewFromLine (const QString& newText);	/* new word entered */
 		void PlaySelected (int index);			/* dbl click or return to play */
 		void NewClicked(QListBoxItem *lbi);		/* click to go back from tips mode */
-		void RTFLinkClicked(const QString& link);	/* user selected link from browser */
 		void UpdateHistory (void);
 		void PlayCurrent ();
 		void SwapLanguages ();
@@ -99,7 +98,8 @@ class Kydpdict : public QMainWindow
 		void ToggleClipTracking ();
 		void ToolbarShowHide (bool visible);
 		void ShowToolbar ();
-		void updateText( const QString & href );
+		void handleLink( const QString & href );
+		void handleTip( const QString & href );
 		void newClipData();
 		void onEscaped();
 

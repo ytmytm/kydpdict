@@ -375,3 +375,7 @@ Kydpdict 0.6.1 (22.04.2004)
 Kydpdict 0.6.2 (24.04.2004)
 - usuniêcie problemu z kompilacj± na Qt 3.x gdzie x=1,2 (Marcin Zaj±czkowski, mszpak@wp.pl)
 - make install honoruje DESTDIR (MZ)
+
+=====================================================================
+Kydpdict 0.6.3 (xx.xx.2004)
+- nowy kod obs³uguj±cy tipsy - wszystko klikalne, skoki miêdzy s³ownikami (AP)

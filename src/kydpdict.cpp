@@ -8,7 +8,6 @@
  ***************************************************************************/
 
 #include <stdlib.h>
-#include <qmime.h>
 #include <qimage.h>
 #include <qpixmap.h>
 #include <qframe.h>
@@ -232,8 +231,8 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 	connect (wordInput, SIGNAL(activated(int)), this, SLOT(PlayCurrent()));
 	connect (listclear, SIGNAL(clicked()), wordInput, SLOT(clearEdit()));
 	connect (listclear, SIGNAL(clicked()), wordInput, SLOT(setFocus()));
- 	connect (RTFOutput, SIGNAL(highlighted( const QString & )), this, SLOT(updateText( const QString & )));
-	connect (RTFOutput, SIGNAL(linkClicked(const QString&)), this, SLOT(RTFLinkClicked(const QString&)));
+	connect (RTFOutput, SIGNAL(highlighted(const QString &)), this, SLOT(handleTip(const QString &)));
+	connect (RTFOutput, SIGNAL(linkClicked(const QString &)), this, SLOT(handleLink(const QString &)));
  	connect (m_checkTimer, SIGNAL(timeout()), this, SLOT(newClipData()));
 	connect (toolBar, SIGNAL(visibilityChanged(bool)), this, SLOT(ToolbarShowHide(bool)));
  	connect (cb, SIGNAL(selectionChanged() ), SLOT(newClipData()));
@@ -262,9 +261,6 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 	myDict->ListRefresh(0);
 	dictList->setCurrentItem(0);
 	wordInput->clearEdit();
-
-	RTFOutput->mimeSourceFactory()->setFilePath( config->tipsPath );
-	RTFOutput->mimeSourceFactory()->setExtensionType("html", "text/html;charset=iso8859-2");
 
 #ifndef WITHOUT_X11
 	if (config->dock) {
@@ -422,11 +418,6 @@ void Kydpdict::showEvent(QShowEvent *ashowEvent)
 	newClipData();
     QMainWindow::showEvent(ashowEvent);
     m_checkTimer->start(TIMER_PERIOD, FALSE);
-}
-
-void Kydpdict::RTFLinkClicked(const QString &link)
-{
-    tipsVisible = true;
 }
 
 void Kydpdict::NewClicked (QListBoxItem *lbi)
@@ -624,9 +615,8 @@ void Kydpdict::Configure(bool status)
 	if(myConf)
         	delete myConf;
 
-	if (result == QDialog::Accepted) {	// just a performance gain
+	if (result == QDialog::Accepted)	// just a performance gain
 		config->save();	
-	}
 
 	if (cb->supportsSelection())
 	    cb->clear(QClipboard::Selection);
@@ -650,6 +640,7 @@ void Kydpdict::UpdateLook()
 		RTFOutput->setPaper(QColor(config->kBckgrndKol));
 		dictList->setPaletteBackgroundColor(QColor(config->kBckgrndKol));
 	}
+
 	dictList->setPaletteForegroundColor ( QColor(config->kFontKolor4) );
 
 	if (but_EnPl!=NULL) but_EnPl->setEnabled(TRUE);
@@ -728,47 +719,53 @@ void Kydpdict::UpdateLook()
 	scrollBar->setMaxValue(myDict->wordCount);
 }
 
-void Kydpdict::updateText( const QString & href )
+// XXX: only to get size of input_, output_ tables (get rid of it!)
+#include "tips.h"
+
+void Kydpdict::handleLink( const QString & href )
 {
-	static QString tab[] = {"", "adjective - przymiotnik", "adverb - przys³ówek", "conjunction - spójnik", \
-	"perfective verb - czasownik dokonany", "masculine(feminine) - mêski(¿eñski)", "inseparable verb - czasownik nierozdzielny", \
-	"invariable - niezmienny", "pronoun - zaimek", "neuter - nijaki", "plural noun - rzeczownik w liczbie mnogiej", \
-	"compound - wyraz z³o¿ony", "plural - liczba mnoga", "verb - czasownik", "intransitive verb - czasownik nieprzechodni", \
-	"transitive verb - czasownik przechodni", "singular - liczba pojedyncza", \
-	"abbreviation - skrót", "nominative - mianownik", "accusative - biernik", "dative - celownik", \
-	"genitive - dope³niacz", "infinitive - bezokolicznik", "instrumental - narzêdnik", "locative - miejscownik", \
-	"irregular - nieregularny", "preposition - przyimek", "auxiliary - pomocniczy", "past tense - czas przesz³y", \
-	"past participle - imies³ów czasu przesz³ego", "masculine - mêski", "noun - rzeczownik", "feminine - ¿eñski", \
-	"postpositiv (does not immediately precede a noun) - nie wystêpuje bezpo¶rednio przed rzeczownikiem", "nonvirile - niemêskoosobowy", \
-	"virile - mêskoosobowy", "number - liczba", "declined - odmienny", "exclamation - wykrzyknik", \
-	"offensiv - obra¼liwy, wulgarny", "informal - potocznie", "pejorative - pejoratywny", "compaund - wyraz z³o¿ony", \
-	"obra¼liwy - offensiv", "potoczny - informal", "reflexiv verb - czasownik zwrotny", "attribute - przydawka", \
-	"particle - partyku³a", "formal - formalny", "imperfect tense - czas przesz³y o aspekcie niedokonanym", \
-	"diminutive - zdrobnienie", "administration - administracja", \
-	"anatomy - anatomia", "automobiles - motoryzacja", "aviation - lotnictwo",  "biology - biologia", \
-	"botany - botanika", "British English - angielszczyzna brytyjska", "chemistry - chemia", "commerce - handel", \
-	"computer - informatyka i komputery", "culinary - kulinarny", "electronics, eletricity - elektronika, elektryczno¶æ", \
-	"finance finanse", "law - prawo", "linguistic - jêzykoznawstwo", "mathematics - matematyka", \
-	"medicine - medycyna", "military - wojskowo¶æ", "music - muzyka", "nautical - ¿egluga", "politics - polityka", \
-	"psychology - psychologia", "railways - kolej", "religion - religia", "school - szko³a", "sport - sportowy", \
-	"technology - technika i technologia", "telecominication - telekomunikacja", "theatre - teatr", "printing - poligrafia", \
-	"American English - angielszczyzna amerykañska", "zoology - zoologia", "figurative - przeno¶ny", "literal - dos³owny", \
-	"geography - geografia", "architecture - architektura", "fizyka - physics", "physiology - fizjologia", \
-	"imperative - tryb rozkazuj±cy", "geology - geologia","article - rodzajnik", "indefinite - nieokre¶lony", \
-	"definite - okre¶lony", "photography - fotografia", "elektryczno¶æ - electricity", "ekonomia - economy", \
-	"economy - ekonomia", "geometria - geometry", "jêzykoznawstwo - linguistic", "kulinarny - culinary", \
-	"komputery - computers", "lotnictwo - aviation", "matematyka - mathematics", "motoryzacja - automobiles", \
-	"muzyka - music", "szko³a - school", "wojskowo¶æ - military", "¿egluga - nautical", "budownictwo - construction", \
-	"meteorology - meteorologia", "history - historia", "poligrafia - printing", "rolnictwo - agriculture", \
-	"prefix - przedrostek", "astronomy - astronomia", "physics - fizyka", "et cetera - itd.", "agriculture - rolnictwo", \
-	"construction - budownictwo", "ups!"};
+	QString link = href;
+	QString tmp;
+	int i;
 
-	QString tmp = href;
+	tipsVisible = true;
 
-	tmp.remove(0, 10);
+	if (link.startsWith("2")) {
+		QString output = "<h2>Skróty wystêpuj±ce w t³umaczeniach</h2>";
+		output += "<h3>Czê¶æ I - GRAMATYKA</h3>";
 
-	if(tmp.toInt() >= 0 && tmp.toInt() < 121)
-	myDynamicTip->tekst = tab[tmp.toInt()];
+		for(i=0; i<I_size; i++) {
+			tmp.sprintf("%d", i);
+			output += "<a name=\""+ tmp + "\"></a><h4><font color=\"red\">"+ myDict->GetInputTip(i) + "</font></h4>" + myDict->GetOutputTip(i) + "<hr>";
+		}
+
+		output += "<h3>Czê¶æ II - DZIEDZINY</h3>";
+
+		for(i=I_size; i<I_size+II_size; i++) {
+			tmp.sprintf("%d", i);
+			output += "<a name=\""+ tmp + "\"></a><h4><font color=\"red\">"+ myDict->GetInputTip(i) + "</font></h4>" + myDict->GetOutputTip(i) + "<hr>";
+		}
+
+		RTFOutput->setText(output);
+		RTFOutput->scrollToAnchor(link.remove(0,1));
+	} else {
+		if (link.startsWith("1"))
+			SwapLanguages();
+
+		NewFromLine(link.remove(0,1));
+	}
+}
+
+void Kydpdict::handleTip( const QString & href )
+{
+    QString tmp = href;
+
+    if (tmp.startsWith("2")) {
+	tmp = tmp.remove(0,1);
+	if(tmp.toInt() >= 0 && tmp.toInt() < I_size + II_size)
+	    myDynamicTip->tekst = myDict->GetOutputTip(tmp.toInt());
+    } else
+	myDynamicTip->tekst = "";
 }
 
 void Kydpdict::updateUserTimestamp(void) {

@@ -27,6 +27,8 @@ public:
 	int CheckDictionary(kydpConfig *config);
 	int CheckDictionary(QString path, QString index, QString def);
 	int Play (int index, kydpConfig *config);
+	QString GetInputTip(int index);
+	QString GetOutputTip(int index);
 	void CloseDictionary(void);
 	void ListScrollUp(int offset);
 	void ListScrollDown(int offset);
@@ -40,7 +42,7 @@ private:
 	void FillWordList(void);
 	QString rtf2html (QString definition);
 	void disableTag (int tag_code, int level);
-	QString insertTip(QString raw_input);
+	QString insertHyperText(QString raw_input, int level);
 	int ScoreWord(const char *w1, const char *w2);
 
 	// configuration holder
@@ -56,6 +58,8 @@ private:
 	QStringList::Iterator it;
 	QStringList list;
 	int tag_num[16];
+	int direction_tab[16];
+	static QString input_tip[];
 
 	unsigned long *indexes; 	/* indexes to definitions array */
 	char** words;			/* actual words */
