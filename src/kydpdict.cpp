@@ -7,6 +7,7 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <stdlib.h>
 #include <qmime.h>
 #include <qimage.h>
 #include <qpixmap.h>
@@ -121,15 +122,17 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 	settings->insertItem(QPixmap(conf_xpm), tr("&Settings"), this, SLOT(ConfigureKydpdict()), QKeySequence( tr("Ctrl+S", "Options|Settings") ) );
 	settings->insertSeparator();
 	if(myDict->CheckDictionary(config->topPath, "dict100.idx", "dict100.dat") && myDict->CheckDictionary(config->topPath, "dict101.idx", "dict101.dat")) {
-		polToEng = settings->insertItem("POL --> ENG", this, SLOT(SwapPolToEng()));
-		engToPol = settings->insertItem("ENG --> POL", this, SLOT(SwapEngToPol()) );
-		settings->insertSeparator();
+		polToEng = settings->insertItem("POL --> ENG", this, SLOT(SwapPolToEng()), QKeySequence( tr("Ctrl+;", "Options|POL --> ENG") ) );
+		engToPol = settings->insertItem("ENG --> POL", this, SLOT(SwapEngToPol()), QKeySequence( tr("Ctrl+.", "Options|ENG --> POL") ) );
 	}
 	if(myDict->CheckDictionary(config->topPath, "dict200.idx", "dict200.dat") && myDict->CheckDictionary(config->topPath, "dict201.idx", "dict201.dat")) {
-		polToGer = settings->insertItem("POL --> GER", this, SLOT(SwapPolToGer()));
-		gerToPol = settings->insertItem("GER --> POL", this, SLOT(SwapGerToPol()));
 		settings->insertSeparator();
+		polToGer = settings->insertItem("POL --> GER", this, SLOT(SwapPolToGer()), QKeySequence( tr("Ctrl+:", "Options|POL --> GER") ) );
+		gerToPol = settings->insertItem("GER --> POL", this, SLOT(SwapGerToPol()), QKeySequence( tr("Ctrl+>", "Options|GER --> POL") ) );
 	}
+	settings->insertSeparator();
+	settings->insertItem( tr("Swap direction"), this, SLOT(SwapLanguages()), QKeySequence( tr("Ctrl+/", "Options|Swap direction") ) );
+	settings->insertSeparator();
 	settings->insertItem( tr("&Play sample"), this, SLOT(PlayCurrent()), QKeySequence( tr("Ctrl+P", "Options|Play sample") ) );
 	settings->setCheckable(TRUE);
 
@@ -139,9 +142,9 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 	help->insertItem(QPixmap(help_xpm), tr("About Qt"), this, SLOT(ShowAboutQt()));
 
 	Q_CHECK_PTR( menu );
-	menu->insertItem(  tr("File"), file );
-	menu->insertItem(  tr("Options"), settings );
-	menu->insertItem(  tr("Help"), help );
+	menu->insertItem(  tr("&File"), file );
+	menu->insertItem(  tr("&Options"), settings );
+	menu->insertItem(  tr("&Help"), help );
 
  	t = new DynamicTip( this );
 
@@ -346,6 +349,11 @@ void Kydpdict::UpdateHistory(int index)
     wordInput->blockSignals( FALSE );
 }
 
+void Kydpdict::SwapLanguages ()
+{
+	SwapLang(!(config->toPolish), config->language);
+}
+
 void Kydpdict::SwapEngToPol ()
 {
 	SwapLang(1, LANG_ENGLISH);
@@ -469,9 +477,9 @@ void Kydpdict::UpdateLook()
 			menu->setItemChecked(polToEng, FALSE);
 			menu->setItemChecked(engToPol, FALSE);
 			if(config->toPolish)
-				this->setCaption("De -> Pl - Kydpdict");
+				this->setCaption("De --> Pl - Kydpdict");
 			else
-				this->setCaption("Pl -> De - Kydpdict");
+				this->setCaption("Pl --> De - Kydpdict");
 			break;
 		case LANG_ENGLISH:
 			menu->setItemChecked(engToPol, config->toPolish);
@@ -479,9 +487,9 @@ void Kydpdict::UpdateLook()
 			menu->setItemChecked(gerToPol, FALSE);
 			menu->setItemChecked(polToGer, FALSE);
 			if(config->toPolish)
-				this->setCaption("En -> Pl - Kydpdict");
+				this->setCaption("En --> Pl - Kydpdict");
 			else
-				this->setCaption("Pl -> En - Kydpdict");
+				this->setCaption("Pl --> En - Kydpdict");
 			break;
 		default:
 			break; //cos jest nie tak

@@ -238,3 +238,8 @@ Kydpdict 0.5.5pre1 (26.7.2003)
 - ma³e u³atwienie dla upartych u¿ytkowników qmake
 - uaktualnienie README
 - polski skrót na Zakoñcz - Ctrl+Q (tak jest w wiêkszo¶ci KDE/Qt)
+
+=====================================================================
+Kydpdict 0.5.5 (27.7.2003)
+- nowa funkcja - zamiana kierunku tlumaczenia
+- wiêcej akceleratorów

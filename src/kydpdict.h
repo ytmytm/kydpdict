@@ -69,6 +69,7 @@ class Kydpdict : public QMainWindow
 		void PlaySelected (int index);			/* dbl click or return to play */
 		void UpdateHistory (int index);
 		void PlayCurrent ();
+		void SwapLanguages ();
 		void SwapPolToEng ();
 		void SwapEngToPol ();
 		void SwapPolToGer ();

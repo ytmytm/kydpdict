@@ -7,12 +7,13 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <stdlib.h>
 #include <qdir.h>
 #include <qfile.h>
 
 #include "kydpconfig.h"
 
-// for those qmake morons...
+// for those qmake stubborns...
 #ifndef KYDPDATADIR
 # define KYDPDATADIR "/usr/share/kydpdict/"
 #endif

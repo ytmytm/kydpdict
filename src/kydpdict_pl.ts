@@ -47,15 +47,15 @@
     </message>
     <message>
         <source>File</source>
-        <translation>Plik</translation>
+        <translation type="obsolete">Plik</translation>
     </message>
     <message>
         <source>Options</source>
-        <translation>Opcje</translation>
+        <translation type="obsolete">Opcje</translation>
     </message>
     <message>
         <source>Help</source>
-        <translation>Pomoc</translation>
+        <translation type="obsolete">Pomoc</translation>
     </message>
     <message>
         <source>This is frontend to YDP Collins dictionary.
@@ -74,6 +74,47 @@ Program oparty na ydpdict Wojtka Kaniewskiego</translation>
 Good bye!</source>
         <translation>Kydpdict nie może pracować z złą ścieżką do plików słownika.
 Do widzenia!</translation>
+    </message>
+    <message>
+        <source>Ctrl+.</source>
+        <comment>Options|ENG --&gt; POL</comment>
+        <translation>Ctrl+.</translation>
+    </message>
+    <message>
+        <source>Ctrl+&gt;</source>
+        <comment>Options|GER --&gt; POL</comment>
+        <translation>Ctrl+&gt;</translation>
+    </message>
+    <message>
+        <source>&amp;File</source>
+        <translation>&amp;Plik</translation>
+    </message>
+    <message>
+        <source>&amp;Options</source>
+        <translation>&amp;Opcje</translation>
+    </message>
+    <message>
+        <source>&amp;Help</source>
+        <translation>Pomo&amp;c</translation>
+    </message>
+    <message>
+        <source>Ctrl+/</source>
+        <comment>Options|Swap direction</comment>
+        <translation>Ctrl+/</translation>
+    </message>
+    <message>
+        <source>Ctrl+;</source>
+        <comment>Options|POL --&gt; ENG</comment>
+        <translation>Ctrl+;</translation>
+    </message>
+    <message>
+        <source>Ctrl+:</source>
+        <comment>Options|POL --&gt; GER</comment>
+        <translation>Ctrl+:</translation>
+    </message>
+    <message>
+        <source>Swap direction</source>
+        <translation>Zmień kierunek</translation>
     </message>
 </context>
 <context>
