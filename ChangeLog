@@ -134,3 +134,9 @@ Kydpdict 0.5.1pre0 (2.3.2003)
 - patch na rozdzielanie okna QSplitterem (Tomasz Chilinski)
 - g³owne okno - QMainWidget zamiast QWidget, wywalone initVisual (Tomasz Chilinski)
 
+=====================================================================
+Kydpdict 0.5.1pre1 (2.3.2003)
+- schowek dzia³a poprawnie z OO i *term (AP)
+- program nie ustawia w³asnej ikony (AP)
+- podpowiedzi dla wersji angielskiej (AP)
+- uaktualnione README; usuniety blad b), c)->b); uzupelniony .pro

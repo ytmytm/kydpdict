@@ -13,7 +13,7 @@ Je¶li Qt zosta³o zainstalowane bezpo¶rednio ze ¼róde³ to prawdopodobnie wystarcz
 podobnego do:
     ./configure --with-qt-dir=/usr/local/qt
 
-W razie k³opotów przeczytaj dokumentacje Qt.
+W razie k³opotów przeczytaj dokumentacje Qt (to o $QTDIR te¿ :).
 
 Instalacja programu.
 

@@ -19,7 +19,7 @@ LOCALEDIR=$(datadir)/$(PACKAGE_NAME)
 
 # Do not touch below and above this line
 
-OBJECTS = kydpconfig.cpp kydpdict.cpp main.cpp ydpdictionary.cpp ydpconfigure.cpp
+OBJECTS = kdynamictip.cpp kydpconfig.cpp kydpdict.cpp main.cpp ydpdictionary.cpp ydpconfigure.cpp
 
 ifeq (.depend,$(wildcard .depend))
 all : 	kydpdict translation
@@ -56,8 +56,11 @@ ydpconfigure.moc.o:
 kydpconfig.o:
 		$(CXX) -c kydpconfig.cpp $(QT_INCLUDE) $(CXXFLAGS)
 
-kydpdict: main.o kydpconfig.o kydpdict.o ydpdictionary.o ydpdictionary.moc.o ydpconfigure.o ydpconfigure.moc.o kydpdict.moc.o
-		$(CC) -Wl,-call_shared main.o kydpconfig.o kydpdict.o ydpdictionary.o ydpdictionary.moc.o ydpconfigure.o \
+kdynamictip.o:
+		$(CXX) -c kdynamictip.cpp $(QT_INCLUDE) $(CXXFLAGS)
+
+kydpdict: main.o kydpconfig.o kdynamictip.o kydpdict.o ydpdictionary.o ydpdictionary.moc.o ydpconfigure.o ydpconfigure.moc.o kydpdict.moc.o
+		$(CC) -Wl,-call_shared main.o kydpconfig.o kdynamictip.o kydpdict.o ydpdictionary.o ydpdictionary.moc.o ydpconfigure.o \
 		  ydpconfigure.moc.o kydpdict.moc.o $(QT_LIBS) $(QT_LIB) \
 		  $(CXXFLAGS) -o kydpdict
 

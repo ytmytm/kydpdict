@@ -18,6 +18,7 @@
 #include <qtextedit.h>
 #include <qdialog.h>
 #include <qpushbutton.h>
+#include <qtextbrowser.h>
 #include <qsplitter.h>
 #include <qhbox.h>
 #include <qvbox.h>
@@ -54,7 +55,7 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 	listclear = new QPushButton(tr("Clear"), hbox1, "Clear");
 	listclear->setMaximumWidth(40);
 	dictList = new QListBox( vbox1, "dictList" );
-	RTFOutput = new QTextEdit (splitter, "RTFOutput");
+	RTFOutput = new QTextBrowser (splitter, "RTFOutput");
 	listclear->setAccel( QKeySequence( tr("Ctrl+X", "Clear") ) );
 	setCentralWidget(centralFrame);
 
@@ -67,6 +68,8 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 	RTFOutput->setReadOnly(TRUE);
 	RTFOutput->setLineWidth( 1 );
 	RTFOutput->setFrameStyle( QFrame::Sunken | QFrame::Panel);
+	RTFOutput->setLinkUnderline ( FALSE);
+
 	dictList->setBottomScrollBar(FALSE);
 	dictList->setFrameStyle( QFrame::Sunken | QFrame::Panel);
 	dictList->setLineWidth( 1 );
@@ -132,14 +135,20 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 	menu->insertItem(  tr("Options"), settings );
 	menu->insertItem(  tr("Help"), help );
 
+ 	t = new DynamicTip( this );
+
+ 	m_checkTimer = new QTimer(this, "timer");
+ 	m_checkTimer->start(1000, FALSE);
+
 	connect (dictList, SIGNAL(highlighted(int)), this, SLOT(NewDefinition(int)));
 	connect (dictList, SIGNAL(selected(int)), this, SLOT(PlayCurrent()));
 	connect (wordInput, SIGNAL(textChanged(const QString&)), this, SLOT(NewFromLine(const QString&)));
 	connect (wordInput, SIGNAL(returnPressed()), this, SLOT(PlayCurrent()));
 	connect (listclear, SIGNAL(clicked()),wordInput, SLOT(clear()));
-	connect (cb, SIGNAL(selectionChanged()), this, SLOT(PasteClippboard()));
-
-	setIcon(QPixmap(tux_xpm));
+ 	connect (RTFOutput, SIGNAL( highlighted ( const QString & )), this, SLOT(updateText( const QString & )));
+ 	connect( cb, SIGNAL( selectionChanged() ), SLOT(slotSelectionChanged()));
+ 	connect( cb, SIGNAL( dataChanged() ), SLOT( slotClipboardChanged() ));
+ 	connect(m_checkTimer, SIGNAL(timeout()), this, SLOT(newClipData()));
 
 	QGridLayout *grid = new QGridLayout(centralFrame, 1, 1);
 	grid->addWidget(splitter, 0, 0);
@@ -147,11 +156,16 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 	this->show();
 
 	UpdateLook();
+
+ 	QMimeSourceFactory::defaultFactory()->setText( "Kydpdict", "Tutaj na razie nic nie ma, ale bêdzie lista wszystkich podpowiedzi" );
 }
 
 Kydpdict::~Kydpdict()
 {
 	myDict->CloseDictionary();
+ 	delete t;
+ 	t = 0;
+ 	delete m_checkTimer;
 }
 
 void Kydpdict::resizeEvent(QResizeEvent *)
@@ -174,13 +188,33 @@ void Kydpdict::moveEvent(QMoveEvent *)
 	config->save();
 }
 
-void Kydpdict::ShowDefinition(QString def)
+void Kydpdict::clipboardSignalArrived( bool selectionMode )
 {
+	cb->setSelectionMode( selectionMode );
+	QString text = cb->text();
 
-	RTFOutput->setText(def.fromLocal8Bit(def));
+	checkClipData( text );
 }
 
-void Kydpdict::PasteClippboard()
+void Kydpdict::checkClipData( const QString& text )
+{
+	static QString m_lastString;
+
+	if (text != m_lastString) {
+		m_lastString = text;
+		PasteClippboard(m_lastString);
+	}
+}
+
+void Kydpdict::newClipData()
+{
+	cb->setSelectionMode( true );
+	QString clipContents = cb->text().stripWhiteSpace();
+
+	checkClipData( clipContents );
+}
+
+void Kydpdict::PasteClippboard(QString haslo)
 {
 	int index;
 	QListBoxItem *result, *tmp_result;
@@ -189,18 +223,16 @@ void Kydpdict::PasteClippboard()
 	if (this->isMinimized())
 		return;
 
-	cb->setSelectionMode(true);
+	QString contents = haslo.stripWhiteSpace();
 
-	QString clipContents = cb->text().stripWhiteSpace();
+	contents.truncate(20);
 
-	clipContents.truncate(20);
-
-	if(!(result = dictList->findItem(clipContents, Qt::ExactMatch))) {
+	if(!(result = dictList->findItem(contents, Qt::ExactMatch))) {
 		int down = 0;
-		int up = clipContents.length() + 1;
+		int up = contents.length() + 1;
 
 		while(up - down > 1) {
-			if((tmp_result = dictList->findItem(clipContents.left((up+down)/2)))) {
+			if((tmp_result = dictList->findItem(contents.left((up+down)/2)))) {
 				result = tmp_result; //tylko wtedy uaktualniaj gdy jest takie s³owo
 				down = (up + down)/2;
 			}
@@ -218,12 +250,15 @@ void Kydpdict::PasteClippboard()
 	}
 
 	wordInput->blockSignals( TRUE );
-	wordInput->setText(clipContents);
+	wordInput->setText(contents);
 	wordInput->blockSignals( FALSE );
+
 }
 
-void Kydpdict::NewDefinition (int index) {
-	ShowDefinition(myDict->GetDefinition(index));
+void Kydpdict::NewDefinition (int index)
+{
+	QString def = myDict->GetDefinition(index);
+	RTFOutput->setText(def.fromLocal8Bit(def));
 }
 
 void Kydpdict::NewFromLine (const QString &newText)
@@ -406,3 +441,31 @@ void Kydpdict::UpdateLook()
 
 	NewDefinition(dictList->currentItem() < 0 ? 0 : dictList->currentItem() );
 }
+
+void Kydpdict::updateText( const QString & href )
+{
+	static QString tab[] = {"", "adj = adjective - przymiotnik", "adv = adverb - przys³ówek", "conj = conjunction - spójnik", \
+	"perf = perfective verb - czasownik dokonany", "m(f) = masculine(feminine) - mêski(¿eñski)", "fus = inseparable verb - czasownik nierozdzielny", \
+	"inv = invariable - niezmienny", "pron = pronoun - zaimek", "nt = neuter - nijaki", "npl = plural noun - rzeczownik w liczbie mnogiej", \
+	"cmp = compound - wyraz z³o¿ony", "pl = plural - liczba mnoga", "vb = verb - czasownik", "vi = intransitive verb - czasownik nieprzechodni", \
+	"vt = transitive verb - czasownik przechodni", "sg = singular - liczba pojedyncza", \
+	"abbr = abbreviation - skrót", "+nom = nominative - mianownik", "+acc = accusative - biernik", "+dat = dative - celownik", \
+	"+gen = genitive - dope³niacz", " +infin = infinitiv - bezokolicznik", "+instr = instrumental - narzêdnik", "+loc = locative - miejscownik", \
+	"irreg = irregular - nieregularny", "prep = preposition - przyimek", "aux = auxiliary - pomocniczy", "pt = past tense - czas przesz³y", \
+	"pp = past participle - imies³ów czasu przesz³ego", "m = masculine - mêski", "n = noun - rzeczownik", "f = feminine - ¿eñski", \
+	"post = postpositiv (does not immediately precede a noun) - nie wystêpuje bezpo¶rednio przed rzeczownikiem", "nvir = nonvirile - niemêskoosobowy", \
+	"vir = virile - mêskoosobowy", "num = number - liczba", "decl = declined - odmienny", "excl = exclemation - wykrzyknik", \
+	"inf! = offensiv - obra¼liwy, wulgarny", "inf = informal - potocznie", "pej = pejorative - pejoratywny", "perf = perfective verb - czasownik dokonany", \
+	"pot! = obra¼liwy - offensiv", "pot = potoczny - informal", "vr = reflexiv verb - czasownik zwrotny", "attr = attribute - przydawka", \
+	"part = particle - partyku³a", "fml - Balcerowicz musi odej¶æ ;-)", "ups!"};
+
+	//du¿o tego, mo¿e to jako¶ w pliku umie¶ciæ?
+
+	QString tmp = href;
+
+	tmp.remove(0,9);
+
+	if(tmp.toInt() >= 0 && tmp.toInt() <= 50)
+	t->tekst = tab[tmp.toInt()];
+}
+

@@ -11,6 +11,9 @@
 #include <qpixmap.h>
 #include <qfiledialog.h>
 #include <qcolordialog.h>
+#include <qtextbrowser.h>
+#include <qimage.h>
+#include <qmime.h>
 
 ydpConfigure::ydpConfigure( kydpConfig *globalconfig, QWidget* parent,  const char* name, bool modal )
     : QDialog( parent, name, modal )
@@ -99,7 +102,8 @@ ydpConfigure::ydpConfigure( kydpConfig *globalconfig, QWidget* parent,  const ch
     checkBox1 = new QCheckBox(tr("Enable Background"), tab2, "checkBox1");
     checkBox1->setGeometry(6,117,150,16);
 
-    exampleLabel1 = new QTextEdit (tab2, "exampleLabel1");
+//    exampleLabel1 = new QTextEdit (tab2, "exampleLabel1");
+    exampleLabel1 = new QTextBrowser (tab2, "exampleLabel1");
     exampleLabel1->setAlignment( Qt::AlignCenter );
     exampleLabel1->setFrameStyle( QFrame::Box | QFrame::Plain);
     exampleLabel1->setLineWidth( 1 );
@@ -213,6 +217,9 @@ void ydpConfigure::UpdateLabels()
     QPixmap pixmap;
     QBrush paper;
 
+    exampleLabel1->setLinkUnderline(FALSE);
+    QMimeSourceFactory::defaultFactory()->setText ( "pomoc", "<qt type=\"detail\" title=\"tytul\"><nobr><font color=\"red\">adjectiv - przymiotnik</font></nobr></qt>" );
+
     if(checkBox1->isChecked() && pixmap.load(cBckgrnd) ) {
 	paper.setPixmap(pixmap);
 	exampleLabel1->setPaper( paper );
@@ -220,7 +227,7 @@ void ydpConfigure::UpdateLabels()
     	exampleLabel1->setPaper( white );
     }
 
-    label = "<qt title=l1><font color=" + cFontKolor4 + "><b>ably</b> [eibli]<br><br><i><font color=" + cFontKolor2 + ">adv</font></i><br><font color=" +
+    label = "<qt type=\"page\"><font color=" + cFontKolor4 + "><b>ably</b> [eibli]<br><br><i><a href=\"pomoc\"><font color=" + cFontKolor2 + ">adv</font></a></i><br><font color=" +
     cFontKolor1 + ">umiejêtnie</font>, <font color=" + cFontKolor1 + ">zrêcznie</font><br><table cellspacing=0><tr><td width=25></td><td><font color=" +
     cFontKolor3 + ">They were ably supported by the Communist Party.</font></td></tr></table></font></qt>";
     exampleLabel1->setText(label.fromLocal8Bit(label));

@@ -30,27 +30,28 @@ public:
 	void CloseDictionary(void);
 
 private:
-		int  ReadDefinition (int index);
-		QString convert_cp1250 (char *tekst, long int size);
-		void FillWordList(void);
-		QString rtf2html (QString definition);
-		void disableTag (int tag_code, int level);
+	int  ReadDefinition (int index);
+	QString convert_cp1250 (char *tekst, long int size);
+	void FillWordList(void);
+	QString rtf2html (QString definition);
+	void disableTag (int tag_code, int level);
+	QString insertTip(QString input);
 
-		// configuration holder
-		kydpConfig *cnf;
+	// configuration holder
+	kydpConfig *cnf;
 
-		// GUI element holding index
-		QListBox	*dictList;
+	// GUI element holding index
+	QListBox	*dictList;
 
- 		// dictionary file variables
-		QFile fIndex;               /* index file descriptor */
-		QFile fData;                /* data file descriptor */
-		int wordCount;          	/* number of all words in dictionary */
-		unsigned long *indexes; 	/* indexes to definitions array */
-		QString curDefinition;		/* contains current definition (RTF)*/
-		QStringList::Iterator it;
-		QStringList list;
-		int tag_num[16];
+	// dictionary file variables
+	QFile fIndex;               /* index file descriptor */
+	QFile fData;                /* data file descriptor */
+	int wordCount;          	/* number of all words in dictionary */
+	unsigned long *indexes; 	/* indexes to definitions array */
+	QString curDefinition;		/* contains current definition (RTF)*/
+	QStringList::Iterator it;
+	QStringList list;
+	int tag_num[16];
 
 };
 

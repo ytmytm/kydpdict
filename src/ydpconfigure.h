@@ -53,7 +53,8 @@ private:
     QLabel *textLabel4;
     QLabel *textLabel5;
     QCheckBox *checkBox1;
-    QTextEdit *exampleLabel1;
+//    QTextEdit *exampleLabel1;
+    QTextBrowser *exampleLabel1;
 
     kydpConfig *config;
 

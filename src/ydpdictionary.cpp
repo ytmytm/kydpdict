@@ -13,8 +13,8 @@
 #include <qmessagebox.h>
 #include <qprogressdialog.h>
 #include <qprocess.h>
-
 #include <qregexp.h>
+#include <qdatetime.h>
 
 #define color1 cnf->kFontKolor1
 #define color2 cnf->kFontKolor2
@@ -63,8 +63,9 @@ ydpDictionary::ydpDictionary(kydpConfig *config, QListBox *listBox) {
 	cnf = config;
 }
 
-ydpDictionary::~ydpDictionary(){
-	// free all objects here...
+ydpDictionary::~ydpDictionary()
+{
+
 }
 
 QString ydpDictionary::GetDefinition (int index)
@@ -218,7 +219,7 @@ void ydpDictionary::FillWordList()
   if((result = dictList->findItem("Proven<")))
   	dictList->changeItem(QString("Provencial"), dictList->index(result));
   dictList->setCurrentItem(0);
-
+  
   dictList->setAutoUpdate(TRUE);
   dictList->repaint();
 }
@@ -285,7 +286,7 @@ QString ydpDictionary::rtf2html (QString definition) {
 
 char token[128];
 int tp, level = 0;
-bool sa_tag = FALSE,br_tag = FALSE;
+bool sa_tag = FALSE,br_tag = FALSE, tip_tag = FALSE;
 QString tag_on,tag_off;
 char *def;
 (const char*)def=definition;
@@ -321,6 +322,7 @@ it++;
 				tag_on = "<font color=" + color2 + ">";
 				tag_off = "</font>";
 				tag_num[level]++;
+				tip_tag = TRUE;
 			} else
 
 			if (!strcmp(token, "par")) { //74442
@@ -409,6 +411,7 @@ it++;
 				tag_num[level]--;
 			}
 			level--;
+			tip_tag = FALSE;
 			if(sa_tag) {
 				it++; //tabela ma tylko obejmowac 1 pozycje a nie do konca tekstu
 				sa_tag = FALSE;
@@ -435,7 +438,10 @@ it++;
 			}
     			token[tp] = '\0';
 			def--;
-			it = list.insert(it, convert_cp1250(token, (long int) tp)); it++;
+			QString tmp = convert_cp1250(token, (long int) tp);
+			if (tip_tag && cnf->useEnglish)
+				tmp = insertTip(tmp);
+			it = list.insert(it, tmp); it++;
 			break;
 	}
   	def++;
@@ -519,4 +525,123 @@ int wstawiono=0;
 			break;
 		}
 	}
+}
+
+QString ydpDictionary::insertTip(QString input)
+{
+	int pos = 0;
+	QString output;
+
+	while(TRUE) {
+		QString tmp = input.section(' ', pos, pos);
+
+		if (tmp.contains("adj"))
+			output += "<a href=\"Kydpdict#1\">"+tmp+"</a>"; // adj
+		else if (!QString::compare(tmp, "adv"))
+			output += "<a href=\"Kydpdict#2\">adv</a>"; // adv
+		else if (!QString::compare(tmp, "conj"))
+			output += "<a href=\"Kydpdict#3\">conj</a>"; // conj
+		else if (tmp.contains("perf"))
+			output += "<a href=\"Kydpdict#4\">"+tmp+"</a>"; // perf
+		else if (!QString::compare(tmp, "m(f)"))
+			output += "<a href=\"Kydpdict#5\">m(f)</a>"; // m(f)
+		else if (!QString::compare(tmp, "fus"))
+			output += "<a href=\"Kydpdict#6\">fus</a>"; // fus
+		else if (!QString::compare(tmp, "inv"))
+			output += "<a href=\"Kydpdict#7\">inv</a>"; // inv
+		else if (!QString::compare(tmp, "pron"))
+			output += "<a href=\"Kydpdict#8\">pron</a>"; // pron
+		else if (!QString::compare(tmp, "nt"))
+			output += "<a href=\"Kydpdict#9\">nt</a>"; // nt
+		else if (tmp.contains( "npl"))
+			output += "<a href=\"Kydpdict#10\">"+tmp+"</a>"; // npl
+		else if (!QString::compare(tmp, "cpd"))
+			output += "<a href=\"Kydpdict#11\">cpd</a>"; // cpd
+		else if (tmp.contains("pl"))
+			output += "<a href=\"Kydpdict#12\">"+tmp+"</a>"; // pl
+		else if (!QString::compare(tmp, "vb"))
+			output += "<a href=\"Kydpdict#13\">vb</a>"; // vb
+		else if (!QString::compare(tmp, "vi"))
+			output += "<a href=\"Kydpdict#14\">vi</a>"; // vi
+		else if (!QString::compare(tmp, "vt"))
+			output += "<a href=\"Kydpdict#15\">vt</a>"; // vt
+		else if (!QString::compare(tmp, "sg"))
+			output += "<a href=\"Kydpdict#16\">sg</a>"; // sg
+		else if (!QString::compare(tmp, "abbr"))
+			output += "<a href=\"Kydpdict#17\">abbr</a>"; // abbr
+		else if (tmp.contains("nom"))
+			output += "<a href=\"Kydpdict#18\">"+tmp+"</a>"; // +nom
+		else if (tmp.contains("acc"))
+			output += "<a href=\"Kydpdict#19\">"+tmp+"</a>"; // +acc
+		else if (tmp.contains("dat"))
+			output += "<a href=\"Kydpdict#20\">"+tmp+"</a>"; // +dat
+		else if (tmp.contains("gen"))
+			output += "<a href=\"Kydpdict#21\">"+tmp+"</a>"; // +gen
+		else if (tmp.contains("infin"))
+			output += "<a href=\"Kydpdict#22\">"+tmp+"</a>"; // +infin
+		else if (tmp.contains("instr"))
+			output += "<a href=\"Kydpdict#23\">"+tmp+"</a>"; // +instr
+		else if (tmp.contains("loc"))
+			output += "<a href=\"Kydpdict#24\">"+tmp+"</a>"; // +loc
+		else if (tmp.contains("irreg"))
+			output += "<a href=\"Kydpdict#25\">"+tmp+"</a>"; // irreg
+		else if (tmp.contains("prep"))
+			output += "<a href=\"Kydpdict#26\">"+tmp+"</a>"; // prep
+		else if (!QString::compare(tmp, "aux"))
+			output += "<a href=\"Kydpdict#27\">aux</a>"; // aux
+		else if (tmp.contains("pt"))
+			output += "<a href=\"Kydpdict#28\">"+tmp+"</a>"; // pt
+		else if (!QString::compare(tmp, "pp"))
+			output += "<a href=\"Kydpdict#29\">pp</a>"; // pp
+		else if (!QString::compare(tmp, "m"))
+			output += "<a href=\"Kydpdict#30\">m</a>"; // m
+		else if (!QString::compare(tmp, "n"))
+			output += "<a href=\"Kydpdict#31\">n</a>"; // n
+		else if (!QString::compare(tmp, "f"))
+			output += "<a href=\"Kydpdict#32\">f</a>"; // f
+		else if (!QString::compare(tmp, "post"))
+			output += "<a href=\"Kydpdict#33\">post</a>"; // post
+		else if (tmp.contains("nvir"))
+			output += "<a href=\"Kydpdict#34\">"+tmp+"</a>"; // nvir
+		else if (tmp.contains("vir"))
+			output += "<a href=\"Kydpdict#35\">"+tmp+"</a>"; // vir
+		else if (!QString::compare(tmp, "num"))
+			output += "<a href=\"Kydpdict#36\">num</a>"; // num
+		else if (!QString::compare(tmp, "decl"))
+			output += "<a href=\"Kydpdict#37\">decl</a>"; // decl
+		else if (!QString::compare(tmp, "excl"))
+			output += "<a href=\"Kydpdict#38\">excl</a>"; // excl
+		else if (!QString::compare(tmp, "inf!"))
+			output += "<a href=\"Kydpdict#39\">inf!</a>"; // inf!
+		else if (!QString::compare(tmp, "inf"))
+			output += "<a href=\"Kydpdict#40\">inf</a>"; // inf
+		else if (!QString::compare(tmp, "pej"))
+			output += "<a href=\"Kydpdict#41\">pej</a>"; // pej
+		else if (!QString::compare(tmp, "perf"))
+			output += "<a href=\"Kydpdict#42\">perf</a>"; // perf
+		else if (!QString::compare(tmp, "pot!"))
+			output += "<a href=\"Kydpdict#43\">pot!</a>"; // pot!
+		else if (!QString::compare(tmp, "pot"))
+			output += "<a href=\"Kydpdict#44\">pot</a>"; // pot
+		else if (!QString::compare(tmp, "vr"))
+			output += "<a href=\"Kydpdict#45\">vr</a>"; // vr
+		else if (!QString::compare(tmp, "attr"))
+			output += "<a href=\"Kydpdict#46\">attr</a>"; // attr
+		else if (!QString::compare(tmp, "part"))
+			output += "<a href=\"Kydpdict#47\">part</a>"; // part
+		else if (!QString::compare(tmp, "fml"))
+			output += "<a href=\"Kydpdict#48\">fml</a>"; // part
+		else
+			output += input.section(' ', pos, pos);
+
+		pos++;
+		if( input.section(' ', pos, pos).isEmpty() )
+			break;
+		output +=" ";
+	}
+
+	if(input.endsWith(" "))
+	 output += " ";
+	return output;
+
 }

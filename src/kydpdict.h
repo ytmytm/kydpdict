@@ -17,9 +17,12 @@
 #include <qclipboard.h>
 #include <qmainwindow.h>
 
+#include <qtimer.h>
+
 #include "ydpdictionary.h"
 #include "kydpconfig.h"
 #include "ydpconfigure.h"
+#include "kdynamictip.h"
 
 class Kydpdict : public QMainWindow
 {
@@ -33,25 +36,29 @@ class Kydpdict : public QMainWindow
     private:
 		void resizeEvent (QResizeEvent *);
 		void moveEvent (QMoveEvent *);
-		void ShowDefinition (QString def);
 		void Configure(bool status);
 		void UpdateLook ();
 		void SwapLang(bool direction, int lang);
+		void PasteClippboard (QString haslo);
 
 		// global configuration
 		kydpConfig *config;
 
-		QClipboard  *cb;
 		// GUI widgets
 		QListBox *dictList;
 		QLineEdit *wordInput;
-		QTextEdit *RTFOutput;
+		QTextBrowser *RTFOutput;
 		QPushButton *listclear;
 		QMenuBar  *menu;
 		int polToEng,engToPol, gerToPol, polToGer;
 
 		// dictionary class
 		ydpDictionary *myDict;
+
+		//and others
+		QClipboard  *cb;
+		QTimer *m_checkTimer;
+		DynamicTip * t;
 
     private slots:
 		void NewDefinition (int index);       		/* word list highlited */
@@ -64,11 +71,21 @@ class Kydpdict : public QMainWindow
 		void SwapGerToPol ();
 		void ShowAbout ();
 		void ShowAboutQt ();
-		void PasteClippboard ();
 		void ConfigureKydpdict();
+		void updateText( const QString & href );
+
+		void slotSelectionChanged() {
+			clipboardSignalArrived( true );
+		}
+		void slotClipboardChanged() {
+			clipboardSignalArrived( false );
+		}
+		void newClipData();
+
+    protected:
+    		void clipboardSignalArrived( bool selectionMode );
+		void checkClipData( const QString& text );
 
 };
-
-extern QApplication *a;
 
 #endif
