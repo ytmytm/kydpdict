@@ -8,7 +8,6 @@
       pionie az do dolnej krawedzi okna
     - 'dynamics' - nie ma podpowiedzi do 'npl'
       'Fiji' - sprawdzic podpowiedzi
-- szukanie hasla w drugim slowniku (zamiana stron i wyszukanie)
 - wyszukiwanie w tre¶ci
 - dzielenie listy hase³ na grupy (np. 'run across', 'run away' itd. w grupie
   'run' wizualnie oddzielonej a¿ do 'runabout' które jest now± grup±
@@ -19,12 +18,8 @@
 - F8 - cliboard tracking toggle
 - jesli zminimalizowany i jest ikona w tray - powinien dalej przechwytywac wyrazy i
   wyskakiwac na wierzch (opcja?)
-- gdy zminimalizowany - ma star± selekcjê i nie uznaje aktualnej za now± - po
-  przywroceniu powinien pokazac wynik tlumaczenia aktualnej selekcji
 - usunac przycisk do kasowania (albo zminiejszyæ)
-- gdy okno wyskakuje na wierzch - focus na wordInput
-    (prawie to, o co chodzi³o, jeszcze nie dok³adnie tak)
-- opcja: po przechwyceniu schowka - na wierzch ale bez focusa na siebie (opcja?)
+- opcja: po przechwyceniu schowka - na wierzch ale bez focusa na siebie
 
 nowe nowe nowe
     - UpdateHistory wcale nie potrzebuje swojego parametru
