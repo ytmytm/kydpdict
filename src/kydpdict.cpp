@@ -229,10 +229,12 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 	RTFOutput->mimeSourceFactory()->setFilePath( config->tipsPath );
 	RTFOutput->mimeSourceFactory()->setExtensionType("html", "text/html;charset=iso8859-2");
 
-	trayicon = new TrayIcon(this,"trayicon");
-	trayicon->setDictWidget(this);
-	trayicon->setPopupMenu(trayMenu);
-	trayicon->show();
+	if (config->dock) {
+	    trayicon = new TrayIcon(this,"trayicon");
+	    trayicon->setDictWidget(this);
+	    trayicon->setPopupMenu(trayMenu);
+	    trayicon->show();
+	}
 }
 
 Kydpdict::~Kydpdict()
@@ -550,8 +552,8 @@ void Kydpdict::UpdateLook()
 		dictList->setPaletteBackgroundPixmap( pixmap );
 		dictList->setStaticBackground(TRUE);
 	} else {
-		RTFOutput->setPaper( white );
-		dictList->setPaletteBackgroundColor(white);
+		RTFOutput->setPaper(QColor(config->kBckgrndKol));
+		dictList->setPaletteBackgroundColor(QColor(config->kBckgrndKol));
 	}
 	dictList->setPaletteForegroundColor ( QColor(config->kFontKolor4) );
 

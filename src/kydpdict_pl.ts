@@ -266,6 +266,14 @@ Prawy - otwórz menu</translation>
         <source>Font</source>
         <translation>Font</translation>
     </message>
+    <message>
+        <source>Enable tray icon</source>
+        <translation>Włącz ikonę na tacce systemowej</translation>
+    </message>
+    <message>
+        <source>Choose background color</source>
+        <translation>Wybierz kolor tła</translation>
+    </message>
 </context>
 <context>
     <name>ydpDictionary</name>

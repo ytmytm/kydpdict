@@ -62,6 +62,7 @@ private:
     QCheckBox *checkBox4;
     QCheckBox *checkBox5;
     QCheckBox *checkBox6;
+    QCheckBox *checkBox7;
 
     kydpConfig *config;
 
@@ -79,6 +80,7 @@ private:
     QString cFontKolor3;
     QString cFontKolor4;
     QString cBckgrnd;
+    QString cBckgrndKol;
     QFont   cFont;
 
 private slots:
@@ -91,6 +93,7 @@ private slots:
     void NewFontColor3();
     void NewFontColor4();
     void NewBckgrndUrl();
+    void NewBackgroundColor();
     void NewCheck(int state);
     void NewCheck2(int state);
     void WriteDefaults();

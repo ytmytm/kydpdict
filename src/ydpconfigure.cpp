@@ -117,7 +117,6 @@ ydpConfigure::ydpConfigure( kydpConfig *globalconfig, QWidget* parent,  const ch
     changeFont = new QPushButton(tr("Font"), tab2, "changeFont");
     changeFont->setGeometry(162,117,40,22);
 
-
     exampleLabel1 = new QTextBrowser (tab2, "exampleLabel1");
     exampleLabel1->setAlignment( Qt::AlignCenter );
     exampleLabel1->setFrameStyle( QFrame::Box | QFrame::Plain);
@@ -136,8 +135,10 @@ ydpConfigure::ydpConfigure( kydpConfig *globalconfig, QWidget* parent,  const ch
     checkBox3->setGeometry(10,66,350,20);
     checkBox4 = new QCheckBox(tr("Enable tooltips"), tab3, "checkBox4");
     checkBox4->setGeometry(10,92,350,20);
+    checkBox7 = new QCheckBox(tr("Enable tray icon"), tab3, "checkBox7");
+    checkBox7->setGeometry(10,118,350,20);
     checkBox5 = new QCheckBox(tr("Enable autoplay"), tab3, "checkBox5");
-    checkBox5->setGeometry(10,118,350,20);
+    checkBox5->setGeometry(10,144,350,20);
 
     TabWidget1->insertTab( tab3, tr("Miscellaneous") );
 
@@ -168,6 +169,7 @@ ydpConfigure::ydpConfigure( kydpConfig *globalconfig, QWidget* parent,  const ch
     cFontKolor3 = config->kFontKolor3;
     cFontKolor4 = config->kFontKolor4;
     cBckgrnd = config->kBckgrndPix;
+    cBckgrndKol = config->kBckgrndKol;
     cFont = config->fontTransFont;
 
     exampleLabel1->setFont(cFont);
@@ -242,7 +244,11 @@ void ydpConfigure::NewFontColor4()
 
 void ydpConfigure::NewBckgrndUrl()
 {
-    cBckgrnd = GetNewBackgroundUrl(cBckgrnd);
+    if (checkBox1->isChecked())
+	cBckgrnd = GetNewBackgroundUrl(cBckgrnd);
+    else
+	cBckgrndKol = GetNewColor(cBckgrndKol);
+
     UpdateLabels();
 }
 
@@ -251,13 +257,13 @@ void ydpConfigure::NewCheck(int state)
     switch(state)
     {
     case 0:
-    	changeBckgrndUrl->setEnabled(FALSE);
-	textLabel4->setEnabled(FALSE);
+	changeBckgrndUrl->setText("-->");
+	textLabel4->setText(tr("Choose background color"));
 	cBckgrnd = "NoBackground";
     	break;
     case 2:
-    	changeBckgrndUrl->setEnabled(TRUE);
-	textLabel4->setEnabled(TRUE);
+	changeBckgrndUrl->setText("...");
+	textLabel4->setText(tr("Choose background image"));
     	break;
     default:
     	break;
@@ -283,7 +289,7 @@ void ydpConfigure::UpdateLabels()
 	paper.setPixmap(pixmap);
 	exampleLabel1->setPaper( paper );
     } else {
-    	exampleLabel1->setPaper( white );
+    	exampleLabel1->setPaper( QColor(cBckgrndKol) );
     }
 
     label = "<qt type=\"page\"><font color=" + cFontKolor4 + "><b>ably</b> [eibli]<br><br><i><a href=\"pomoc\"><font color=" + cFontKolor2 + ">adv</font></a></i><br><font color=" +
@@ -330,11 +336,13 @@ void ydpConfigure::WriteDefaults()
     cFontKolor3 = cnf->kFontKolor3;
     cFontKolor4 = cnf->kFontKolor4;
     cBckgrnd = cnf->kBckgrndPix;
+    cBckgrndKol = cnf->kBckgrndKol;
     checkBox1->setChecked(FALSE);
     checkBox2->setChecked(cnf->clipTracking);
     checkBox6->setChecked(cnf->ignoreOwnSelection);
     checkBox3->setChecked(cnf->italicFont);
     checkBox4->setChecked(cnf->toolTips);
+    checkBox7->setChecked(cnf->dock);
     checkBox5->setChecked(cnf->autoPlay);
     UpdateLabels();
     delete cnf;
@@ -343,14 +351,18 @@ void ydpConfigure::WriteDefaults()
 void ydpConfigure::showEvent ( QShowEvent * )
 {
     bool a = (QString::compare(cBckgrnd, "NoBackground") != 0);
-    changeBckgrndUrl->setEnabled(a);
-    textLabel4->setEnabled(a);
+    if (a)
+	NewCheck(2);
+    else
+	NewCheck(0);
     checkBox1->setChecked(a);
+
     checkBox2->setChecked(config->clipTracking);
     checkBox6->setChecked(config->ignoreOwnSelection);
     checkBox6->setEnabled(config->clipTracking);
     checkBox3->setChecked(config->italicFont);
     checkBox4->setChecked(config->toolTips);
+    checkBox7->setChecked(config->dock);
     checkBox5->setChecked(config->autoPlay);
     UpdateLabels();
 }
@@ -364,6 +376,7 @@ ydpConfigure::~ydpConfigure()
 		config->kFontKolor3 = cFontKolor3;
 		config->kFontKolor4 = cFontKolor4;
 		config->kBckgrndPix = cBckgrnd;
+		config->kBckgrndKol = cBckgrndKol;
 		config->topPath = dictionaryUrl->text();
 		config->cdPath = audioUrl->text();
 		config->cd2Path = audio2Url->text();
@@ -372,6 +385,7 @@ ydpConfigure::~ydpConfigure()
 		config->ignoreOwnSelection = checkBox6->isChecked();
 		config->italicFont = checkBox3->isChecked();
 		config->toolTips = checkBox4->isChecked();
+		config->dock = checkBox7->isChecked();
 		config->autoPlay = checkBox5->isChecked();
 		config->fontTransFont = cFont;
 	}

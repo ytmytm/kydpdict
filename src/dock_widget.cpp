@@ -128,9 +128,9 @@ TrayIcon::TrayIcon(QWidget *parent, const char *name)
 	int r;
 	int data = 1;
 	r = XInternAtom(dsp, "KWM_DOCKWINDOW", false);
-	int r1=XChangeProperty(dsp, win, r, r, 32, 0, (uchar *)&data, 1);
+	XChangeProperty(dsp, win, r, r, 32, 0, (uchar *)&data, 1);
 	r = XInternAtom(dsp, "_KDE_NET_WM_SYSTEM_TRAY_WINDOW_FOR", false);
-	int r2=XChangeProperty(dsp, win, r, XA_WINDOW, 32, 0, (uchar *)&data, 1);
+	XChangeProperty(dsp, win, r, XA_WINDOW, 32, 0, (uchar *)&data, 1);
 
 	// SPOSÓB TRZECI
 	// Dzia³a pod Window Makerem
@@ -148,7 +148,7 @@ TrayIcon::TrayIcon(QWidget *parent, const char *name)
 
 TrayIcon::~TrayIcon()
 {
-	kdebug("TrayIcon::~TrayIcon()\n");
+//	kdebug("TrayIcon::~TrayIcon()\n");
 	delete WMakerMasterWidget;
 	delete hint;
 }

@@ -86,6 +86,7 @@ void kydpConfig::load(void)
 	kFontKolor3 = settings.readEntry("/example_text", "#736324");
 	kFontKolor4 = settings.readEntry("/plain_text", "#000000");
 	kBckgrndPix = settings.readEntry("/background", "NoBackground");
+	kBckgrndKol = settings.readEntry("/background_colour", "#FFFFFF");
 	spH1 = settings.readNumEntry("/splitterH_1", 200);
 	spH2 = settings.readNumEntry("/splitterH_2", 300);
 	spV1 = settings.readNumEntry("/splitterV_1", 30);
@@ -99,6 +100,7 @@ void kydpConfig::load(void)
 	toolTips     = settings.readBoolEntry("/tool_tips", TRUE);
 	autoPlay     = settings.readBoolEntry("/auto_play", FALSE);
 	ignoreOwnSelection = settings.readBoolEntry("/ignore_own_selection", FALSE);
+	dock = settings.readBoolEntry("/dock", TRUE);
 	settings.endGroup();
 	settings.endGroup();
 
@@ -137,6 +139,7 @@ void kydpConfig::save(void)
 	settings.writeEntry("/example_text", kFontKolor3);
 	settings.writeEntry("/plain_text", kFontKolor4);
 	settings.writeEntry("/background", kBckgrndPix);
+	settings.writeEntry("/background_colour", kBckgrndKol);
 	settings.writeEntry("/splitterH_1", spH1);
 	settings.writeEntry("/splitterH_2", spH2);
 	settings.writeEntry("/splitterV_1", spV1);
@@ -150,6 +153,7 @@ void kydpConfig::save(void)
 	settings.writeEntry("/tool_tips", toolTips);
 	settings.writeEntry("/auto_play", autoPlay);
 	settings.writeEntry("/ignore_own_selection", ignoreOwnSelection);
+	settings.writeEntry("/dock", dock);
 	settings.endGroup();
 	settings.endGroup();
 }

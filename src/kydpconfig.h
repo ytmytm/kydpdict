@@ -29,6 +29,7 @@ public:
 	QString kFontKolor3;
 	QString kFontKolor4;
 	QString kBckgrndPix;
+	QString kBckgrndKol;
 	QString indexFName;
 	QString dataFName;
 	QFont   fontTransFont;
@@ -37,7 +38,7 @@ public:
 	int language;
 	int kGeometryX, kGeometryY, kGeometryW, kGeometryH;
 	int spH1, spH2, spV1, spV2;
-	bool clipTracking, italicFont, toolTips, autoPlay, ignoreOwnSelection;
+	bool clipTracking, italicFont, toolTips, autoPlay, ignoreOwnSelection, dock;
 
 	void load(void);
 	void save(void);
