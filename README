@@ -67,6 +67,12 @@ Krótki opis opcji konfiguracyjnych z zak³adek 'Ró¿ne' i 'Schowek'
    dostanie focus)
 
 5. Jakie s± znane wady Kydpdict ?
+Je¶li wydaje ci siê, ¿e program nie potrafi zapamiêtaæ swojego po³o¿enia na ekranie, to
+wiedz, ¿e najprawdopodobniej jest to wina twojego managera okien, który sam wymusza po³o¿enie
+nowych okien.
+Je¶li w KDE program nie wyskakuje nad inne okna po zaznaczeniu nowego wyrazu, to w
+Centrum Sterowania->Pulpit->Okna->Zaawansowane zmieñ poziom ochrony przed zmian± aktywnego
+okna na 'Brak.
 a) Aplikacja oparta jest o bibliotekê Qt i podczas wykonywania zajmuje sporo pamiêci (na mojej
 maszynie warto¶æ ta dochodzi nawet do 11MB). Nie jest to jednak wina kodu programu -
 nawet najprostsze aplikacje przyk³adowe Qt (dostêpne w pakiecie Qt-devel) podczas
