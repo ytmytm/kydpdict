@@ -414,8 +414,10 @@ void Kydpdict::newFromList(int aindex)
       return;
 
     eventLock = true;
-    if (aindex >= 0)
+    if (aindex >= 0) {
 	showEntry(NULL, aindex);
+	lastEdit = "";
+    }
     eventLock = false;
 }
 
