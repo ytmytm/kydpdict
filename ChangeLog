@@ -343,3 +343,4 @@ Kydpdict 0.6.0pre (xx.xx.2004)
 - poprawiony dawno znany bug - z³y font w pierwszej definicji
 - opcje konfiguracji obs³ugi schowka na nowej zak³adce
 - nowa opcja: czy ma ustawiaæ focus na siebie po przechwyceniu schowka
+- clipboard tracking znowu honorowany

@@ -328,6 +328,9 @@ void Kydpdict::newClipData()
     int result;
     static int lastresult=-1;
 
+    // do nothing if clipboard tracking is disabled
+    if (!(config->clipTracking))
+	return;
     // do nothing if minimized
     if (this->isMinimized())
         return;
