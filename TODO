@@ -18,3 +18,4 @@
 - numer wersji do info o programie
 - wykrywanie juz uruchomionej instancji i ustawianie jej fokusa
 - ... cos jeszcze od jamnika?
+- jesli sa wyswietlane tipsy to obsluzyc sygnal select z listy wyrazow jako zgloszenie nowego
