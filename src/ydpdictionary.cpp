@@ -464,10 +464,9 @@ int ydpDictionary::FindWord(QString word)
     a = 0; b = wordCount;
 
     word = word.lower();
-    while (b-a >= 2) {
+    while (b-a >= 140) {
 	middle = a + (b-a)/2;
 	midstring = codec->toUnicode(QString(words[middle]));
-	midstring.stripWhiteSpace();
 	result = word.localeAwareCompare(midstring.lower());
 	if (result==0) {
 	    a = middle; b = middle;
@@ -485,11 +484,11 @@ int ydpDictionary::FindWord(QString word)
 	b=a;
 	qcword = codec->fromUnicode(word);
 	cword = qcword;
-	while ((i<12) && (a+i<wordCount)) {
+	while ((i<150) && (a+i<wordCount)) {
 	    if (ScoreWord(cword,words[a+i])>ScoreWord(cword,words[b])) {
 		b=a+i;
-		if (strlen(words[b])==strlen(cword))
-		    i=12;
+		if (!strcmp(words[b],cword))
+		    i=260;
 	    }
 	    i++;
 	}

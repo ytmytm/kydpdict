@@ -15,4 +15,4 @@
     - makra, ¿eby nic w kodzie nie zmieniæ
     - makefiles (.po, .mo; sciezki;)
 - opcja: po przechwyceniu schowka - na wierzch ale bez focusa na siebie
-- przy wyszukiwaniu: problemy ze spacjami: np 'go_xxx' vs. goat, gobble etc.
+- FindWord napisac ³adniej
