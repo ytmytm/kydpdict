@@ -22,7 +22,6 @@
     - makefiles (.po, .mo; sciezki;)
 - zobaczyc co dobrego jest w windows-ydp (niewiele :)
 - F8 - cliboard tracking toggle
-- QClipboard::selectionChanged() - czemu nieuzywany?
 - za drugim dwuklikiem na tym samym nie odtwarza audio
 - jesli zminimalizowany i jest ikona w tray - powinien dalej przechwytywac wyrazy i
   wyskakiwac na wierzch (opcja?)
