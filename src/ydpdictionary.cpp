@@ -566,11 +566,11 @@ int ydpDictionary::FindWord(QString word)
     }
 
     if (a!=b) {
-	a=a-25; if (a<0) a=0; i=1;
+	a=a-35; if (a<0) a=0; i=1;
 	b=a;
 	qcword = fromCodec->fromUnicode(word);
 	lword = word.length();
-	while ((i<50) && (a+i<wordCount)) {
+	while ((i<70) && (a+i<wordCount)) {
 	/* co tu siê dzieje: ScoreWord u¿ywa tolower w pl_PL, wiêc musimy kodowaæ na iso
 	    - kodujemy word na iso
 	    - kodujemy words[a+i] na unicode, unicode na iso (jak od razu?)
@@ -579,6 +579,7 @@ int ydpDictionary::FindWord(QString word)
 	    qbword = fromCodec->fromUnicode(toCodec->toUnicode(words[b]));
 	    sa = ScoreWord(qcword,qaword);
 	    sb = ScoreWord(qcword,qbword);
+	    printf("%s vs [%s,%s] got (%i,%i)\n",word.ascii(),words[a+i],words[b],sa,sb);
 	    if ((sa==lword)&&((int)strlen(words[a+i])<=sa)) {
 		b=a+i; i=260;
 	    } else {
