@@ -28,9 +28,11 @@ public:
 	QString kBckgrndPix;
 	QString indexFName;
 	QString dataFName;
+	QString tipsFName;
 	bool	toPolish, useEnglish;
 	int kGeometryX, kGeometryY, kGeometryW, kGeometryH;
 	int spH1, spH2;
+	bool clipTracking, italicFont, toolTips, autoPlay;
 
 	void load(void);
 	void save(void);

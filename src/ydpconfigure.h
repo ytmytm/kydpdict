@@ -36,7 +36,7 @@ private:
     QString GetNewBackgroundUrl(QString kolor);
 
     QTabWidget *TabWidget1;
-    QWidget *tab1, *tab2;
+    QWidget *tab1, *tab2, *tab3;
     QGroupBox *GroupBox1, *GroupBox2, *GroupBox3;
 
     QPushButton *changeDictionaryUrl;
@@ -53,8 +53,11 @@ private:
     QLabel *textLabel4;
     QLabel *textLabel5;
     QCheckBox *checkBox1;
-//    QTextEdit *exampleLabel1;
     QTextBrowser *exampleLabel1;
+    QCheckBox *checkBox2;
+    QCheckBox *checkBox3;
+    QCheckBox *checkBox4;
+    QCheckBox *checkBox5;
 
     kydpConfig *config;
 

@@ -15,7 +15,6 @@
 #include <qframe.h>
 #include <qmessagebox.h>
 #include <qpopupmenu.h>
-#include <qtextedit.h>
 #include <qdialog.h>
 #include <qpushbutton.h>
 #include <qtextbrowser.h>
@@ -23,7 +22,6 @@
 #include <qvbox.h>
 #include <qlayout.h>
 #include <qmainwindow.h>
-#include <qframe.h>
 #include <qvaluelist.h>
 #include <qapplication.h>
 
@@ -59,8 +57,8 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 	setCentralWidget(centralFrame);
 
 	QValueList<int> splittersizes2;
-	splittersizes2.append(20);
-	splittersizes2.append(350);
+	splittersizes2.append(1);
+	splittersizes2.append(100);
 	splitter2->setSizes(splittersizes2);
 
 	RTFOutput->setTextFormat( RichText );
@@ -215,7 +213,8 @@ void Kydpdict::checkClipData( const QString& text )
 
 	if (text != m_lastString) {
 		m_lastString = text;
-		PasteClippboard(m_lastString);
+		if(config->clipTracking)
+			PasteClippboard(m_lastString);
 	}
 }
 
@@ -265,6 +264,9 @@ void Kydpdict::PasteClippboard(QString haslo)
 	wordInput->blockSignals( TRUE );
 	wordInput->setText(contents);
 	wordInput->blockSignals( FALSE );
+	
+	if(config->autoPlay)
+		PlaySelected (index);
 
 }
 
@@ -459,40 +461,38 @@ void Kydpdict::UpdateLook()
 
 void Kydpdict::updateText( const QString & href )
 {
-	static QString tab[] = {"", "adj = adjective - przymiotnik", "adv = adverb - przys³ówek", "conj = conjunction - spójnik", \
-	"perf = perfective verb - czasownik dokonany", "m(f) = masculine(feminine) - mêski(¿eñski)", "fus = inseparable verb - czasownik nierozdzielny", \
-	"inv = invariable - niezmienny", "pron = pronoun - zaimek", "nt = neuter - nijaki", "npl = plural noun - rzeczownik w liczbie mnogiej", \
-	"cmp = compound - wyraz z³o¿ony", "pl = plural - liczba mnoga", "vb = verb - czasownik", "vi = intransitive verb - czasownik nieprzechodni", \
-	"vt = transitive verb - czasownik przechodni", "sg = singular - liczba pojedyncza", \
-	"abbr = abbreviation - skrót", "+nom = nominative - mianownik", "acc = accusative - biernik", "dat = dative - celownik", \
-	"gen = genitive - dope³niacz", " infin = infinitiv - bezokolicznik", "instr = instrumental - narzêdnik", "loc = locative - miejscownik", \
-	"irreg = irregular - nieregularny", "prep = preposition - przyimek", "aux = auxiliary - pomocniczy", "pt = past tense - czas przesz³y", \
-	"pp = past participle - imies³ów czasu przesz³ego", "m = masculine - mêski", "n = noun - rzeczownik", "f = feminine - ¿eñski", \
-	"post = postpositiv (does not immediately precede a noun) - nie wystêpuje bezpo¶rednio przed rzeczownikiem", "nvir = nonvirile - niemêskoosobowy", \
-	"vir = virile - mêskoosobowy", "num = number - liczba", "decl = declined - odmienny", "excl = exclemation - wykrzyknik", \
-	"inf! = offensiv - obra¼liwy, wulgarny", "inf = informal - potocznie", "pej = pejorative - pejoratywny", "cmp = compaund - wyraz z³o¿ony", \
-	"pot! = obra¼liwy - offensiv", "pot = potoczny - informal", "vr = reflexiv verb - czasownik zwrotny", "attr = attribute - przydawka", \
-	"part = particle - partyku³a", "fml - formal - formalny", "(im)perf = imperfect tens - czas przesz³y o aspekcie niedokonanym", \
-	"dimin = diminutive - zdrobnienie", "ADMIN = administration - administracja", \
-	"ANAT = anatomy - anatomia", "AUT = automobiles - motoryzacja", "AVIAT = aviation - lotnictwo",  "BIO = biology - biologia", \
-	"BOT = botany - botanika", "BRIT = British English - angielszczyzna brytyjska", "CHEM = chemistry - chemia", "COMM = commerce - handel", \
-	"COMPUT = computer - informatyka i komputery", "CULIN = culinary - kulinarny", "ELEC = electronics, eletricity - elektronika, elektryczno¶æ", \
-	"FIN = finance finanse", "JUR = law - prawo", "LING = linguistic - jêzykoznawstwo", "MATH = mathematics - matematyka", \
-	"MED = medicine - medycyna", "MIL = military - wojskowo¶æ", "MUS = music - muzyka", "NAUT = nautical - ¿egluga", "POL = politics - polityka", \
-	"PSYCH = psychology - psychologia", "RAIL = railways - kolej", "REL = religion - religia", "SCOL = school - szko³a", "SPORT = sport - sportowy", \
-	"TECH = technology - technika i technologia", "TEL = telecominication - telekomunikacja", "THEAT = theatre - teatr", "TYP = printing - poligrafia", \
-	"US = American English - angielszczyzna amerykañska", "ZOOL = zoology - zoologia", "fig = figurative - przeno¶ny", "lit = literal - dos³owny", \
-	"GEOG = geography - geografia", "ARCHIT = architecture - architektura", "FIZ = fizyka - physics", "PHYSIOL = physiology - fizjologia", \
-	"imp = imperative - tryb rozkazuj±cy", "GEOL = geology - geologia","art = article - rodzajnik" , "indef = indefinite - nieokre¶lony", \
-	"def = definite - okre¶lony", "PHOT = photography - fotografia", "ELEKTR = elektryczno¶æ - electricity", "EKON = ekonomia - economy", \
-	"ECON - economy - ekonomia", "GEOM = geometria - geometry", "JÊZ = jêzykoznawstwo - linguistic", "KULIN = kulinarny - culinary", \
-	"KOMPUT = komputery - computers", "LOT = lotnictwo - aviation", "MAT = matematyka - mathematics", "MOT = motoryzacja - automobiles", \
-	"MUZ = muzyka - music", "SZKOL = szko³a - school", "WOJSK = wojskowo¶æ - military", "¯EGL = ¿egluga - nautical", "BUD = budownictwo - construction", \
-	"METEO = meteorology - meteorologia", "HIST = history - historia", "DRUK = poligrafia - printing", "ROL - rolnictwo - agriculture", \
-	"pref = prefix - przedrostek", "ASTRON = astronomy - astronomia", "PHYS = physics - fizyka", "etc = et cetera - itd.", "AGR - agriculture - rolnictwo", \
-	"CONSTR - construction - budownictwo", "ups!"};
-
-	//du¿o tego, mo¿e to jako¶ w pliku umie¶ciæ?
+	static QString tab[] = {"", "adjective - przymiotnik", "adverb - przys³ówek", "conjunction - spójnik", \
+	"perfective verb - czasownik dokonany", "masculine(feminine) - mêski(¿eñski)", "inseparable verb - czasownik nierozdzielny", \
+	"invariable - niezmienny", "pronoun - zaimek", "neuter - nijaki", "plural noun - rzeczownik w liczbie mnogiej", \
+	"compound - wyraz z³o¿ony", "plural - liczba mnoga", "verb - czasownik", "intransitive verb - czasownik nieprzechodni", \
+	"transitive verb - czasownik przechodni", "singular - liczba pojedyncza", \
+	"abbreviation - skrót", "nominative - mianownik", "accusative - biernik", "dative - celownik", \
+	"genitive - dope³niacz", "infinitiv - bezokolicznik", "instrumental - narzêdnik", "locative - miejscownik", \
+	"irregular - nieregularny", "preposition - przyimek", "auxiliary - pomocniczy", "past tense - czas przesz³y", \
+	"past participle - imies³ów czasu przesz³ego", "masculine - mêski", "noun - rzeczownik", "feminine - ¿eñski", \
+	"postpositiv (does not immediately precede a noun) - nie wystêpuje bezpo¶rednio przed rzeczownikiem", "nonvirile - niemêskoosobowy", \
+	"virile - mêskoosobowy", "number - liczba", "declined - odmienny", "exclemation - wykrzyknik", \
+	"offensiv - obra¼liwy, wulgarny", "informal - potocznie", "pejorative - pejoratywny", "compaund - wyraz z³o¿ony", \
+	"obra¼liwy - offensiv", "potoczny - informal", "reflexiv verb - czasownik zwrotny", "attribute - przydawka", \
+	"particle - partyku³a", "formal - formalny", "imperfect tens - czas przesz³y o aspekcie niedokonanym", \
+	"diminutive - zdrobnienie", "administration - administracja", \
+	"anatomy - anatomia", "automobiles - motoryzacja", "aviation - lotnictwo",  "biology - biologia", \
+	"botany - botanika", "British English - angielszczyzna brytyjska", "chemistry - chemia", "commerce - handel", \
+	"computer - informatyka i komputery", "culinary - kulinarny", "electronics, eletricity - elektronika, elektryczno¶æ", \
+	"finance finanse", "law - prawo", "linguistic - jêzykoznawstwo", "mathematics - matematyka", \
+	"medicine - medycyna", "military - wojskowo¶æ", "music - muzyka", "nautical - ¿egluga", "politics - polityka", \
+	"psychology - psychologia", "railways - kolej", "religion - religia", "school - szko³a", "sport - sportowy", \
+	"technology - technika i technologia", "telecominication - telekomunikacja", "theatre - teatr", "printing - poligrafia", \
+	"American English - angielszczyzna amerykañska", "zoology - zoologia", "figurative - przeno¶ny", "literal - dos³owny", \
+	"geography - geografia", "architecture - architektura", "fizyka - physics", "physiology - fizjologia", \
+	"imperative - tryb rozkazuj±cy", "geology - geologia","article - rodzajnik", "indefinite - nieokre¶lony", \
+	"definite - okre¶lony", "photography - fotografia", "elektryczno¶æ - electricity", "ekonomia - economy", \
+	"economy - ekonomia", "geometria - geometry", "jêzykoznawstwo - linguistic", "kulinarny - culinary", \
+	"komputery - computers", "lotnictwo - aviation", "matematyka - mathematics", "motoryzacja - automobiles", \
+	"muzyka - music", "szko³a - school", "wojskowo¶æ - military", "¿egluga - nautical", "budownictwo - construction", \
+	"meteorology - meteorologia", "history - historia", "poligrafia - printing", "rolnictwo - agriculture", \
+	"prefix - przedrostek", "astronomy - astronomia", "physics - fizyka", "et cetera - itd.", "agriculture - rolnictwo", \
+	"construction - budownictwo", "ups!"};
 
 	QString tmp = href;
 

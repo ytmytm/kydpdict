@@ -12,8 +12,6 @@
 #include <qfiledialog.h>
 #include <qcolordialog.h>
 #include <qtextbrowser.h>
-#include <qimage.h>
-#include <qmime.h>
 
 ydpConfigure::ydpConfigure( kydpConfig *globalconfig, QWidget* parent,  const char* name, bool modal )
     : QDialog( parent, name, modal )
@@ -102,7 +100,6 @@ ydpConfigure::ydpConfigure( kydpConfig *globalconfig, QWidget* parent,  const ch
     checkBox1 = new QCheckBox(tr("Enable Background"), tab2, "checkBox1");
     checkBox1->setGeometry(6,117,150,16);
 
-//    exampleLabel1 = new QTextEdit (tab2, "exampleLabel1");
     exampleLabel1 = new QTextBrowser (tab2, "exampleLabel1");
     exampleLabel1->setAlignment( Qt::AlignCenter );
     exampleLabel1->setFrameStyle( QFrame::Box | QFrame::Plain);
@@ -111,6 +108,18 @@ ydpConfigure::ydpConfigure( kydpConfig *globalconfig, QWidget* parent,  const ch
     exampleLabel1-> setReadOnly(TRUE);
 
     TabWidget1->insertTab( tab2, tr("Colors") );
+    
+     tab3 = new QWidget( TabWidget1, "tab3" );
+     checkBox2 = new QCheckBox(tr("Enable clipboard tracking"), tab3, "checkBox2");
+     checkBox2->setGeometry(10,14,350,20);
+     checkBox3 = new QCheckBox(tr("Enable italic font"), tab3, "checkBox3");
+     checkBox3->setGeometry(10,54,350,20);
+     checkBox4 = new QCheckBox(tr("Enable tooltips"), tab3, "checkBox4");
+     checkBox4->setGeometry(10,94,350,20);
+     checkBox5 = new QCheckBox(tr("Enable autoplay"), tab3, "checkBox5");
+     checkBox5->setGeometry(10,134,350,20);
+     
+     TabWidget1->insertTab( tab3, tr("Miscellaneous") );
 
     connect( ok, SIGNAL( clicked() ), this, SLOT( accept() ) );
     connect( cancel, SIGNAL( clicked() ), this, SLOT( reject() ) );
@@ -271,6 +280,10 @@ void ydpConfigure::WriteDefaults()
     cFontKolor4 = cnf->kFontKolor4;
     cBckgrnd = cnf->kBckgrndPix;
     checkBox1->setChecked(FALSE);
+    checkBox2->setChecked(cnf->clipTracking);
+    checkBox3->setChecked(cnf->italicFont);
+    checkBox4->setChecked(cnf->toolTips);
+    checkBox5->setChecked(cnf->autoPlay);
     UpdateLabels();
     delete cnf;
 }
@@ -281,6 +294,10 @@ void ydpConfigure::showEvent ( QShowEvent * )
     changeBckgrndUrl->setEnabled(a);
     textLabel4->setEnabled(a);
     checkBox1->setChecked(a);
+    checkBox2->setChecked(config->clipTracking);
+    checkBox3->setChecked(config->italicFont);
+    checkBox4->setChecked(config->toolTips);
+    checkBox5->setChecked(config->autoPlay);
     UpdateLabels();
 }
 
@@ -296,5 +313,9 @@ ydpConfigure::~ydpConfigure()
 		config->topPath = dictionaryUrl->text();
 		config->cdPath = audioUrl->text();
 		config->player = playerUrl->text();
+		config->clipTracking = checkBox2->isChecked();
+		config->italicFont = checkBox3->isChecked();
+		config->toolTips = checkBox4->isChecked();
+		config->autoPlay = checkBox5->isChecked();
 	}
 }

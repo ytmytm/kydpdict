@@ -43,7 +43,7 @@ private:
 	// GUI element holding index
 	QListBox	*dictList;
 
-		// dictionary file variables
+	// dictionary file variables
 	QFile fIndex;               /* index file descriptor */
 	QFile fData;                /* data file descriptor */
 	int wordCount;          	/* number of all words in dictionary */

@@ -13,9 +13,6 @@
 #include <qprogressdialog.h>
 #include <qprocess.h>
 
-#include <qregexp.h>
-#include  <qdatetime.h>
-
 #define color1 cnf->kFontKolor1
 #define color2 cnf->kFontKolor2
 #define color3 cnf->kFontKolor3
@@ -313,9 +310,11 @@ it++;
 			if (*def == ' ') def++;
 
 			if (!strcmp(token, "i")) { //	109891 -ilosc wystapien -  optymalizacja pod plik ang->pol :)))))))
-//				tag_on = "<i>";
-//				tag_off = "</i>";
-//				tag_num[level]++;
+				if(cnf->italicFont) {
+					tag_on = "<i>";
+					tag_off = "</i>";
+					tag_num[level]++;
+				}
 				italic_tag = TRUE;
 			} else
 
@@ -443,7 +442,7 @@ it++;
 			def--;
 			QString tmp = convert_cp1250(token, (long int) tp);
 
-			if((italic_tag || tip_tag ) && cnf->useEnglish) {
+			if((italic_tag || tip_tag ) && cnf->useEnglish && cnf->toolTips) {
 				tmp = insertTip(tmp);
 				tip_tag = FALSE;
 			}
@@ -539,7 +538,7 @@ QString ydpDictionary::insertTip(QString raw_input)
 	"abbr", "nom","acc", "dat", "gen", "infin", "instr", "loc", "irreg", "prep", "aux", "pt", "pp", "m", "n", "f", "post", "nvir", \
 	"vir", "num", "decl", "excl", "inf!", "inf", "pej", "cmp", "pot!", "pot", "vr", "attr", "part", "fml", "(im)perf", "dimin","ADMIN", "ANAT", "AUT", \
 	"AVIAT", "BIO", "BOT", "BRIT", "CHEM", "COMM", "COMPUT", "CULIN", "ELEC", "FIN", "JUR", "LING", "MATH", "MED", "MIL", \
-	"MUS", "NAUT", "POL", "PSYCH", "REIL", "REL", "SCOL", "SPORT", "TECH", "TEL", "THEAT", "TYP", "US", "ZOOL", "fig", "lit", \
+	"MUS", "NAUT", "POL", "PSYCH", "RAIL", "REL", "SCOL", "SPORT", "TECH", "TEL", "THEAT", "TYP", "US", "ZOOL", "fig", "lit", \
 	"GEOG", "ARCHIT", "FIZ", "PHYSIOL", "imp", "GEOL", "art", "indef", "def", "PHOT", "ELEKTR", "EKON", "ECON", "GEOM", "JÊZ ", \
 	"KULIN", "KOMPUT", "LOT", "MAT", "MOT", "MUZ", "SZKOL", "WOJSK", "¯EGL", "BUD", "METEO", "HIST", "DRUK", "ROL", "pref", \
 	"ASTRON", "PHYS", "etc", "AGR", "CONSTR", "ups!"};
@@ -580,6 +579,7 @@ QString ydpDictionary::insertTip(QString raw_input)
 		for(int i = 0; i < 121; i++) {
 			if (!QString::compare(tmp, input_tip[i])) {
 				number.sprintf("%d", i);
+//				proposition = "<a href=\"" + cnf->tipsFName + "#" + number + "\">" + tmp + "</a>";
 				proposition = "<a href=\"tips.html#" + number + "\">" + tmp + "</a>";
 				break;
 			}

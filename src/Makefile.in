@@ -16,6 +16,7 @@ PACKAGE_NAME=@PACKAGE_NAME@
 PACKAGE_VERSION=@PACKAGE_VERSION@
 
 LOCALEDIR=$(datadir)/$(PACKAGE_NAME)
+KYDPDATADIR=$(datadir)/$(PACKAGE_NAME)/
 
 # Do not touch below and above this line
 
@@ -54,7 +55,7 @@ ydpconfigure.moc.o:
 		$(CXX) -c ydpconfigure.moc.cpp $(QT_INCLUDE) $(CXXFLAGS)
 
 kydpconfig.o:
-		$(CXX) -c kydpconfig.cpp $(QT_INCLUDE) $(CXXFLAGS)
+		$(CXX) -c kydpconfig.cpp $(QT_INCLUDE) $(CXXFLAGS) -DKYDPDATADIR=\"$(KYDPDATADIR)\"
 
 kdynamictip.o:
 		$(CXX) -c kdynamictip.cpp $(QT_INCLUDE) $(CXXFLAGS)
@@ -70,7 +71,10 @@ translation: kydpdict.pro
 
 install: kydpdict
 		install -s -m 755 kydpdict $(bindir)
-		install -m 644 kydpdict_pl.qm $(datadir)/doc/$(PACKAGE_NAME)-$(PACKAGE_VERSION)
+		install -m 755 -d $(LOCALEDIR)
+		install -m 755 -d $(KYDPDATADIR)
+		install -m 644 kydpdict_pl.qm $(LOCALEDIR)
+		install -m 644 tips.html $(KYDPDATADIR)
 
 clean:
 		-rm *.o *.moc.cpp *.qm .depend

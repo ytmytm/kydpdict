@@ -156,3 +156,11 @@ Kydpdict 0.5.2pre1 (8.3.2003)
 - drugi splitter (AP)
 - zapisywanie splittera (AP)
 - plik tips.html z lista podpowiedzi (AP)
+
+=====================================================================
+Kydpdict 0.5.2pre2 (8.3.2003)
+- trzecia zakladka, nowe opcje: wylaczenie sledzenia clipboardu, ustawienia fontu (AP)
+- nowe opcje w kydpconfig (AP)
+- uaktualnione tips.html (AP)
+- szukanie tips.html w sciezce tipsFName z kydpconf (wylaczone teraz z powodu bledu)
+- naprawiony make install

@@ -199,6 +199,26 @@ Do widzenia!</translation>
         <source>Choose audio player</source>
         <translation>Wybierz odtwarzacz audio</translation>
     </message>
+    <message>
+        <source>Enable clipboard tracking</source>
+        <translation>Włącz śledzenie schowka</translation>
+    </message>
+    <message>
+        <source>Enable italic font</source>
+        <translation>Używaj pochyłą czcionkę</translation>
+    </message>
+    <message>
+        <source>Enable tooltips</source>
+        <translation>Włącz podpowiedzi</translation>
+    </message>
+    <message>
+        <source>Enable autoplay</source>
+        <translation>Autoodtwarzanie dźwięku</translation>
+    </message>
+    <message>
+        <source>Miscellaneous</source>
+        <translation>Różne</translation>
+    </message>
 </context>
 <context>
     <name>ydpDictionary</name>

@@ -44,6 +44,12 @@ void kydpConfig::setDefaultConfiguration(void)
 	player = "/usr/bin/play";
 	spH1 = 200;
 	spH2 = 300;
+	clipTracking = true;
+	italicFont = false;
+	toolTips = true;
+	autoPlay= false;
+	tipsFName = KYDPDATADIR ;
+	tipsFName += "tips.html";
 }
 
 void kydpConfig::load(void)
@@ -161,6 +167,30 @@ void kydpConfig::load(void)
 					value = line.mid(pos+1);
 					spH2 = value.toInt();
 				}
+				pos = line.find("clipTracking");
+				if (pos==0) {
+					pos = line.find('=');
+					value = line.mid(pos+1);
+					clipTracking = ( value.toInt() != 0);
+				}
+				pos = line.find("italicFont");
+				if (pos==0) {
+					pos = line.find('=');
+					value = line.mid(pos+1);
+					italicFont = ( value.toInt() != 0);
+				}
+				pos = line.find("toolTips");
+				if (pos==0) {
+					pos = line.find('=');
+					value = line.mid(pos+1);
+					toolTips = ( value.toInt() != 0);
+				}
+				pos = line.find("autoPlay");
+				if (pos==0) {
+					pos = line.find('=');
+					value = line.mid(pos+1);
+					autoPlay = ( value.toInt() != 0);
+				}
 			}
 		}
 	config.close();
@@ -230,6 +260,16 @@ void kydpConfig::save(void)
 	line += "\nsplitterH_2\t=\t";
 	tmp.sprintf("%d",spH2);
 	line += tmp;
+	
+	line += "\nclipTracking\t=\t";
+	if (clipTracking) { line+="1"; } else { line+="0"; };
+	line += "\nitalicFont\t=\t";
+	if (italicFont) { line+="1"; } else { line+="0"; };
+	line += "\ntoolTips\t=\t";
+	if (toolTips) { line+="1"; } else { line+="0"; };
+	line += "\nautoPlay\t=\t";
+	if (autoPlay) { line+="1"; } else { line+="0"; };
+
 	line += "\n";
 
 	config.writeBlock(line.latin1(), line.length());
