@@ -72,6 +72,9 @@ void ydpFuzzySearch::update(const int wordnum, char **words)
 
 void ydpFuzzySearch::doSearch()
 {
+    if ((wordCount<0) || (wordList == NULL))
+	return;
+
     static QTextCodec *codec = QTextCodec::codecForName("CP1250");
     listBox->clear();
     int i;
