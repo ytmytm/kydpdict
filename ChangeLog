@@ -303,3 +303,4 @@ Kydpdict 0.5.8 (27.12.2003)
 
 =====================================================================
 Kydpdict 0.5.9 (xx.xx.xxxx)
+- g++ zamiast gcc do ostatecznego linkowania (na Aurox nie potrafi znale¼æ libstdc++)

@@ -69,7 +69,7 @@ dock_widget.moc.o:
 		$(CXX) -c dock_widget.moc.cpp $(QT_INCLUDE) $(CXXFLAGS)
 
 kydpdict: main.o kydpconfig.o kdynamictip.o kydpdict.o ydpdictionary.o ydpdictionary.moc.o ydpconfigure.o ydpconfigure.moc.o kydpdict.moc.o dock_widget.o dock_widget.moc.o
-		$(CC) -Wl,-call_shared main.o kydpconfig.o kdynamictip.o kydpdict.o ydpdictionary.o ydpdictionary.moc.o ydpconfigure.o \
+		$(CXX) -Wl,-call_shared main.o kydpconfig.o kdynamictip.o kydpdict.o ydpdictionary.o ydpdictionary.moc.o ydpconfigure.o \
 		dock_widget.o dock_widget.moc.o ydpconfigure.moc.o kydpdict.moc.o $(QT_LIBS) $(QT_LIB) \
 		$(CXXFLAGS) -o kydpdict
 
