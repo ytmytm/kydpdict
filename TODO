@@ -9,13 +9,13 @@
   (do zrobienia przy wpisywaniu nowych w ListRefresh je¿eli poprzedni zawiera³ jedn± spacjê,
    to... co? jak to mia³oby wygl±daæ?)
 - FindWord napisac ³adniej (potrzeba pomys³u! :)
-    - wywalic zabawy z locale na rzecz wlasnej funkcji strcoll/localeAwareCompare
+    - wywalic zabawy z locale na rzecz wlasnej funkcji strcoll/localeAwareCompare?
 - mozliwosc zmiany ikony/ustawiania jej z poziomu aplikacji (to co kiedys AP wywalil)
 - wykrywanie juz uruchomionej instancji i ustawianie jej fokusa
     - niewykonalne ³atwo? szukaæ okna klasy Kydpdict.Kydpdict? (niby jak?)
 - konfigurowalne klawisze z --with-kde
-- wczytywanie wszystkich slow, ze slownikow w obie strony do jednej listy
-- pomys³y Jamnika na zachowanie okna: pojawianie sie po zmianie pulpitu, autostick?
-    - bah - minimalizacja<=>znikanie (do kpwndict tez)
-- skrót klawiaturowy na prze³±czanie ¶ledzenia schowka
+- wczytywanie wszystkich slow, ze slownikow (wybranych) do jednej listy
+- pojawianie sie po zmianie pulpitu, autostick?
+    - bah - minimalizacja<=>znikanie (dla kpwndict tez) (jak?)
+- skrót klawiaturowy na prze³±czanie ¶ledzenia schowka (jaki?!?)
 - obs³uga mouse wheel na li¶cie wyrazów
