@@ -309,8 +309,8 @@ void ydpDictionary::FillWordList()
 	    indexes[current]=fix32(index[1]);
 	//  and another trick
 	//  we don't throw out first 4 bytes :)
-	    words[current] = new char [(index[0]&0xff)];	/// XXX fix32?
-	    fIndex.readBlock(words[current], index[0]&0xff);	/// XXX fix32?
+	    words[current] = new char [fix32(index[0]) & 0xff];
+	    fIndex.readBlock(words[current], fix32(index[0]) & 0xff);
 	} while (++current < wordCount);
     }
     munmap((void*)filedata, length);
