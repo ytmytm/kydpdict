@@ -68,6 +68,7 @@ void ydpFuzzySearch::updateDictionary(const int wordnum, char **words)
 
 void ydpFuzzySearch::doSearch()
 {
+
     if ((wordCount<0) || (wordList == NULL))
 	return;
 
@@ -75,10 +76,18 @@ void ydpFuzzySearch::doSearch()
     listBox->clear();
     int i;
     int distance = distSlider->value();
+    int j=0, best=0, hiscore = distance, score;
     QCString tekst = codec->fromUnicode(wordEdit->text());
     for (i=0;i<wordCount;i++)
-	if (editDistance(tekst,wordList[i]) < distance)
+	if ((score = editDistance(tekst,wordList[i])) < distance) {
 	    listBox->insertItem(codec->toUnicode(wordList[i]));
+	    j++;
+	    if (score<hiscore) {
+		best = j-1;
+		hiscore = score;
+	    }
+	}
+    listBox->setCurrentItem(best);
 }
 
 void ydpFuzzySearch::newFromClick(QListBoxItem *lbi)

@@ -425,3 +425,4 @@ Kydpdict 0.6.7 (xx.xx.2004)
 - koñcówka ¶cie¿ki do plików audio testowana na ma³e/du¿e (czê¶ciowy fix, tam jeszcze jest 's' po drodze)
 - powinno dzia³aæ poprawnie na systemach, gdzie z CD/FAT32 widzi katalog tylko z du¿ymi literami
 - lista poprawnie uaktualnia siê przy prze³±czaniu jêzyków
+- wyszukiwanie rozmyte zaznacza najlepiej pasuj±cy element
