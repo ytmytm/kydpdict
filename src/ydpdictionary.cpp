@@ -37,6 +37,8 @@ struct dictionaryCache {
 #define T_CM 2
 #define T_PN_L 4
 #define T_PN_R 8
+#define T_SL_L 16
+#define T_SL_R 32
 
 #define _native 0
 #define _foreign 1
@@ -978,6 +980,16 @@ QString ydpDictionary::insertHyperText(QString raw_input, int level)
 		direction_tab[level] == _native ? direction = "0" : direction = "1"; 
 		result = FALSE;
 
+		if(tmp.startsWith("/")) {
+			tags |= T_SL_L;
+			tmp = tmp.right(tmp.length()-1);
+		}
+
+		if(tmp.endsWith("/")) {
+			tags |= T_SL_R;
+			tmp = tmp.left(tmp.length()-1);
+		}
+
 		while(TRUE) {
 			QString tmp2 = tmp.section('/', pos2, pos2);
 
@@ -1005,8 +1017,14 @@ QString ydpDictionary::insertHyperText(QString raw_input, int level)
 			output2 += '/';
 		}
 
+		if(tags & T_SL_L)
+			output2 = '/' + output2;
+
+		if(tags & T_SL_R)
+			output2 += '/';
+
 		output += output2;
-		output2 = ""; //dodana linia, tak na wszelki wypadek
+		output2 = "";
 
 		if(tags & T_CM)
 			output += ",";
