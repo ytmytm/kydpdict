@@ -8,11 +8,8 @@
       pionie az do dolnej krawedzi okna
     - 'dynamics' - nie ma podpowiedzi do 'npl'
       'Fiji' - sprawdzic podpowiedzi
-- wyszukiwanie w tre¶ci (co to w³a¶ciwie znaczy?)
 - dzielenie listy hase³ na grupy (np. 'run across', 'run away' itd. w grupie
   'run' wizualnie oddzielonej a¿ do 'runabout' które jest now± grup±
-  (do zrobienia przy wpisywaniu nowych w ListRefresh je¿eli poprzedni zawiera³ jedn± spacjê, to...?)
-- przejscie z tlumaczeniem na gettext
-    - makra, ¿eby nic w kodzie nie zmieniæ
-    - makefiles (.po, .mo; sciezki;)
+  (do zrobienia przy wpisywaniu nowych w ListRefresh je¿eli poprzedni zawiera³ jedn± spacjê,
+   to... co? jak to mia³oby wygl±daæ?)
 - FindWord napisac ³adniej (potrzeba pomys³u! :)
