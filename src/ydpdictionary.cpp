@@ -12,6 +12,10 @@
 #include <qprocess.h>
 #include <qtextcodec.h>
 
+#include <sys/mman.h>
+#include <fcntl.h>
+#include <unistd.h>
+
 #include "ydpdictionary.h"
 
 KeyEater* keyEater;
@@ -234,6 +238,11 @@ void ydpDictionary::FillWordList()
     unsigned long pos;
     unsigned long index[2];
     int current=0;
+    /* for mmap */
+    int f;
+    char *filedata;
+    size_t page_size;
+    unsigned int length;
 
     /* read # of words */
     wordCount=0;
@@ -249,19 +258,35 @@ void ydpDictionary::FillWordList()
     pos=0;
     fIndex.at(0x10);
     fIndex.readBlock((char*)&pos, 4);
-    fIndex.at(pos);
 
-    /* read index table */
-    do {
-//  this is a trick - instead of fssek(cur+4), read ulong we read ulong twice
-//  and throw out first 4 bytes
-	fIndex.readBlock((char*)&index[0], 8);
-	indexes[current]=index[1];
-//  and another trick
-//  we don't throw out first 4 bytes :)
-	words[current] = new char [(index[0]&0xff)];
-	fIndex.readBlock(words[current], index[0]&0xff);
-    } while (++current < wordCount);
+    /* prepare mmap stuff */
+    f = open(fIndex.name(), O_RDONLY);
+    page_size = (size_t)sysconf(_SC_PAGESIZE);
+    length = ((fIndex.size() / page_size)+1)*page_size;
+    filedata = (char*)mmap(NULL, length, PROT_READ, MAP_PRIVATE, f, 0);
+
+    if ((int)filedata > 0) {
+	do {
+	    indexes[current] = *(int*)&filedata[pos+4];
+	    words[current] = new char [(filedata[pos])];
+	    strcpy(words[current], &filedata[pos+8]);
+	    pos += 8+1+strlen(words[current]);
+	} while (++current < wordCount);
+    } else {
+	fIndex.at(pos);
+	do {
+	//  trick - instead of fssek(cur+4), read ulong we read ulong twice
+	//  and throw out first 4 bytes
+	    fIndex.readBlock((char*)&index[0], 8);
+	    indexes[current]=index[1];
+	//  and another trick
+	//  we don't throw out first 4 bytes :)
+	    words[current] = new char [(index[0]&0xff)];
+	    fIndex.readBlock(words[current], index[0]&0xff);
+	} while (++current < wordCount);
+    }
+    munmap((void*)filedata, length);
+    close(f);
 
     topitem = 0;
 

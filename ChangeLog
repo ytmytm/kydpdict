@@ -333,3 +333,4 @@ Kydpdict 0.6.0pre (xx.xx.2004)
 - zmieniona obs³uga clipboard, nie wiem, czy zachowuje siê tak jak poprzednia
 - aktualnie wpisane s³owo automatycznie wyszukiwane w innym s³owniku po prze³±czeniu
 - sygna³y z cb znowu pod³±czone, bo obce aplikacje Qt jednak powoduj± natychmiastowy rezultat
+- wersja mmap loadera, jeszcze szybsza
