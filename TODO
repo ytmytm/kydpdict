@@ -19,9 +19,8 @@
 - focus chyba nie powinien przeskakiwaæ z listy do edit? poruszanie siê kursorami robi siê
     nieintuicyjne
 - ydpFuzzySearch
-    - chyba powinno jako¶ fonty ustawiaæ
+    - chyba powinno jako¶ fonty ustawiaæ (wtedy geometria listy i dialogu musi byæ zmienna)
     - poprawic uk³ad geometryczny dialogu?
     - niskie podobieñstwo chyba jest zbyt niskie (10 zmian ³apie chyba ca³y s³ownik)
-- weryfikacja tablicy konwersji unicode z ydpdict
 - w starej tablicy: 0x83 to '3' (f3), ale nie chodzi o '3' jak w 'bird' (bo w s³owniku YDP jest
   tam schwa) tylko o '¿' (jak w pleasure), na obrazku inny ogonek; ten z kpwndict jest zbyt brzydki
