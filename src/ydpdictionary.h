@@ -35,7 +35,8 @@ private:
 	void FillWordList(void);
 	QString rtf2html (QString definition);
 	void disableTag (int tag_code, int level);
-	QString insertTip(QString input);
+	QString insertTip(QString raw_input);
+	QString insertTip2(QString raw_input);
 
 	// configuration holder
 	kydpConfig *cnf;
@@ -43,7 +44,7 @@ private:
 	// GUI element holding index
 	QListBox	*dictList;
 
-	// dictionary file variables
+		// dictionary file variables
 	QFile fIndex;               /* index file descriptor */
 	QFile fData;                /* data file descriptor */
 	int wordCount;          	/* number of all words in dictionary */

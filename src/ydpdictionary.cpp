@@ -8,13 +8,13 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "kydpdict.h"
 #include "ydpdictionary.h"
 #include <qmessagebox.h>
 #include <qprogressdialog.h>
 #include <qprocess.h>
+
 #include <qregexp.h>
-#include <qdatetime.h>
+#include  <qdatetime.h>
 
 #define color1 cnf->kFontKolor1
 #define color2 cnf->kFontKolor2
@@ -286,12 +286,12 @@ QString ydpDictionary::rtf2html (QString definition) {
 
 char token[128];
 int tp, level = 0;
-bool sa_tag = FALSE,br_tag = FALSE, tip_tag = FALSE;
+bool sa_tag = FALSE,br_tag = FALSE, tip_tag = FALSE, italic_tag = FALSE;
 QString tag_on,tag_off;
 char *def;
 (const char*)def=definition;
 list.clear();
-list += "<qt title Kypdict><font face=Arial, Helvetica, sans-serif color=" + color4 +">";
+list += "<qt title Kydpdict><font face=Arial, Helvetica, sans-serif color=" + color4 +">";
 list += "</font></qt>";
 for(level=15;level>=0;level--)
 	tag_num[level] = 0;
@@ -316,6 +316,7 @@ it++;
 				tag_on = "<i>";
 				tag_off = "</i>";
 				tag_num[level]++;
+				italic_tag = TRUE;
 			} else
 
 			if (!strcmp(token, "cf2")) { //	79850
@@ -360,6 +361,7 @@ it++;
 				tag_on = "<font color=" + color4 + ">";
 				tag_off = "</font>";
 				tag_num[level]++;
+//				tip_tag = FALSE;
 			} else
 
 			if (!strncmp(token, "sa", 2)) { // 19969
@@ -385,6 +387,7 @@ it++;
 			if (!strcmp(token, "i0")) { // 69
 				tag_on = "";
 				tag_off = "";
+				italic_tag = FALSE;
 				disableTag (2, level);
 			} else
 
@@ -411,7 +414,7 @@ it++;
 				tag_num[level]--;
 			}
 			level--;
-			tip_tag = FALSE;
+			italic_tag = FALSE;
 			if(sa_tag) {
 				it++; //tabela ma tylko obejmowac 1 pozycje a nie do konca tekstu
 				sa_tag = FALSE;
@@ -439,8 +442,15 @@ it++;
     			token[tp] = '\0';
 			def--;
 			QString tmp = convert_cp1250(token, (long int) tp);
-			if (tip_tag && cnf->useEnglish)
+
+			if(tip_tag && cnf->useEnglish) {					//podpowiedzi do gramatyki ang/pol
 				tmp = insertTip(tmp);
+				tip_tag = FALSE;
+			}
+			else if(italic_tag && cnf->useEnglish) {				//podpowiedzi do dziedzin itp ang/pol
+				tmp = insertTip2(tmp);
+			}
+
 			it = list.insert(it, tmp); it++;
 			break;
 	}
@@ -527,13 +537,34 @@ int wstawiono=0;
 	}
 }
 
-QString ydpDictionary::insertTip(QString input)
+QString ydpDictionary::insertTip(QString raw_input)
 {
+	QString str_start = "", str_end = "";
+	bool col = FALSE;
+
+	QString input = raw_input.simplifyWhiteSpace();
+
+	if(input.startsWith("(")) {
+		str_start = "(";
+		input = input.right(input.length()-1);
+	}
+
+	if(input.endsWith(")")) {
+		str_end = ")";
+		input = input.left(input.length()-1);
+	}
+
+
 	int pos = 0;
 	QString output;
 
 	while(TRUE) {
 		QString tmp = input.section(' ', pos, pos);
+
+		if(tmp.endsWith(",")) {
+			col = TRUE;
+			tmp  = tmp.left(tmp.length()-1);
+		}
 
 		if (tmp.contains("adj"))
 			output += "<a href=\"Kydpdict#1\">"+tmp+"</a>"; // adj
@@ -543,8 +574,8 @@ QString ydpDictionary::insertTip(QString input)
 			output += "<a href=\"Kydpdict#3\">conj</a>"; // conj
 		else if (tmp.contains("perf"))
 			output += "<a href=\"Kydpdict#4\">"+tmp+"</a>"; // perf
-		else if (!QString::compare(tmp, "m(f)"))
-			output += "<a href=\"Kydpdict#5\">m(f)</a>"; // m(f)
+		else if (!QString::compare(tmp, "m(f"))
+			output += "<a href=\"Kydpdict#5\">m(f</a>"; // m(f)
 		else if (!QString::compare(tmp, "fus"))
 			output += "<a href=\"Kydpdict#6\">fus</a>"; // fus
 		else if (!QString::compare(tmp, "inv"))
@@ -557,8 +588,8 @@ QString ydpDictionary::insertTip(QString input)
 			output += "<a href=\"Kydpdict#10\">"+tmp+"</a>"; // npl
 		else if (!QString::compare(tmp, "cpd"))
 			output += "<a href=\"Kydpdict#11\">cpd</a>"; // cpd
-		else if (tmp.contains("pl"))
-			output += "<a href=\"Kydpdict#12\">"+tmp+"</a>"; // pl
+		else if (!QString::compare(tmp, "pl"))
+			output += "<a href=\"Kydpdict#12\">pl</a>"; // pl
 		else if (!QString::compare(tmp, "vb"))
 			output += "<a href=\"Kydpdict#13\">vb</a>"; // vb
 		else if (!QString::compare(tmp, "vi"))
@@ -631,17 +662,161 @@ QString ydpDictionary::insertTip(QString input)
 			output += "<a href=\"Kydpdict#47\">part</a>"; // part
 		else if (!QString::compare(tmp, "fml"))
 			output += "<a href=\"Kydpdict#48\">fml</a>"; // part
+		else if (!QString::compare(tmp, "n(pl)"))
+			output += "<a href=\"Kydpdict#49\">n(pl)</a>"; // n(pl)
 		else
-			output += input.section(' ', pos, pos);
-
+			output += tmp;
+		if(col) {
+			col = FALSE;
+			output +=",";
+		}
 		pos++;
 		if( input.section(' ', pos, pos).isEmpty() )
 			break;
 		output +=" ";
 	}
 
-	if(input.endsWith(" "))
-	 output += " ";
+	output = str_start + output + str_end;
+	if(raw_input.startsWith(" "))
+		output = " " + output;
+	if(raw_input.endsWith(" "))
+		output += " ";
 	return output;
-
 }
+
+QString ydpDictionary::insertTip2(QString raw_input)
+{
+	QString str_start = "", str_end = "";
+	bool col = FALSE;
+
+	QString input = raw_input.simplifyWhiteSpace();
+
+	if(input.startsWith("(")) {
+		str_start = "(";
+		input = input.right(input.length()-1);
+	}
+
+	if(input.endsWith(")")) {
+		str_end = ")";
+		input = input.left(input.length()-1);
+	}
+
+	int pos = 0;
+	QString output;
+
+	while(TRUE) {
+		QString tmp = input.section(' ', pos, pos);
+		
+		if(tmp.endsWith(",")) {
+			col = TRUE;
+			tmp  = tmp.left(tmp.length()-1);
+		}
+
+		if (!QString::compare(tmp, "ADMIN"))
+			output += "<a href=\"Kydpdict#51\">ADMIN</a>"; // ADMIN
+		else if (!QString::compare(tmp, "ANAT"))
+			output += "<a href=\"Kydpdict#52\">ANAT</a>"; // ANAT
+		else if (!QString::compare(tmp, "AUT"))
+			output += "<a href=\"Kydpdict#53\">AUT</a>"; // AUT
+		else if (!QString::compare(tmp, "AVIAT"))
+			output += "<a href=\"Kydpdict#54\">AVIAT</a>"; // AVIAT
+		else if (!QString::compare(tmp, "BIO"))
+			output += "<a href=\"Kydpdict#55\">BIO</a>"; // BIO
+		else if (!QString::compare(tmp, "BOT"))
+			output += "<a href=\"Kydpdict#56\">BOT</a>"; // BOT
+		else if (!QString::compare(tmp, "BRIT"))
+			output += "<a href=\"Kydpdict#57\">BRIT</a>"; // BRIT
+		else if (!QString::compare(tmp, "CHEM"))
+			output += "<a href=\"Kydpdict#58\">CHEM</a>"; // CHEM
+		else if (!QString::compare(tmp, "COMM"))
+			output += "<a href=\"Kydpdict#59\">COMM</a>"; // COMM
+		else if (!QString::compare(tmp, "COMPUT"))
+			output += "<a href=\"Kydpdict#60\">COMPUT</a>"; // COMPUT
+		else if (!QString::compare(tmp, "CULIN"))
+			output += "<a href=\"Kydpdict#61\">CULIN</a>"; // CULIN
+		else if (!QString::compare(tmp, "ELEC"))
+			output += "<a href=\"Kydpdict#62\">ELEC</a>"; // ELEC
+		else if (!QString::compare(tmp, "FIN"))
+			output += "<a href=\"Kydpdict#63\">FIN</a>"; // FIN
+		else if (!QString::compare(tmp, "JUR"))
+			output += "<a href=\"Kydpdict#64\">JUR</a>"; // JUR
+		else if (!QString::compare(tmp, "LING"))
+			output += "<a href=\"Kydpdict#65\">LING</a>"; // LING
+		else if (!QString::compare(tmp, "MATH"))
+			output += "<a href=\"Kydpdict#66\">MATH</a>"; // MATH
+		else if (!QString::compare(tmp, "MED"))
+			output += "<a href=\"Kydpdict#67\">MED</a>"; // MED
+		else if (!QString::compare(tmp, "MIL"))
+			output += "<a href=\"Kydpdict#68\">MIL</a>"; // MIL
+		else if (!QString::compare(tmp, "MUS"))
+			output += "<a href=\"Kydpdict#69\">MUS</a>"; // MUS
+		else if (!QString::compare(tmp, "NAUT"))
+			output += "<a href=\"Kydpdict#70\">NAUT</a>"; // NAUT
+		else if (!QString::compare(tmp, "POL"))
+			output += "<a href=\"Kydpdict#71\">POL</a>"; // POL
+		else if (!QString::compare(tmp, "PSYCH"))
+			output += "<a href=\"Kydpdict#72\">PSYCH</a>"; // PSYCH
+		else if (!QString::compare(tmp, "RAIL"))
+			output += "<a href=\"Kydpdict#73\">RAIL</a>"; // RAIL
+		else if (!QString::compare(tmp, "REL"))
+			output += "<a href=\"Kydpdict#74\">REL</a>"; // REL
+		else if (!QString::compare(tmp, "SCOL"))
+			output += "<a href=\"Kydpdict#75\">SCOL</a>"; // SCOL
+		else if (!QString::compare(tmp, "SPORT"))
+			output += "<a href=\"Kydpdict#76\">SPORT</a>"; // SPORT
+		else if (!QString::compare(tmp, "TECH"))
+			output += "<a href=\"Kydpdict#77\">TECH</a>"; // TECH
+		else if (!QString::compare(tmp, "TEL"))
+			output += "<a href=\"Kydpdict#78\">TEL</a>"; // TEL
+		else if (!QString::compare(tmp, "THEAT"))
+			output += "<a href=\"Kydpdict#79\">THEAT</a>"; // THEAT
+		else if (!QString::compare(tmp, "TYP"))
+			output += "<a href=\"Kydpdict#80\">TYP</a>"; // TYP
+		else if (!QString::compare(tmp, "US"))
+			output += "<a href=\"Kydpdict#81\">US</a>"; // US
+		else if (!QString::compare(tmp, "ZOOL"))
+			output += "<a href=\"Kydpdict#82\">ZOOL</a>"; // ZOOL
+		else if (!QString::compare(tmp, "fig"))
+			output += "<a href=\"Kydpdict#83\">fig</a>"; // fig
+		else if (!QString::compare(tmp, "lit"))
+			output += "<a href=\"Kydpdict#84\">lit</a>"; // lit
+		else if (!QString::compare(tmp, "pl"))
+			output += "<a href=\"Kydpdict#12\">pl</a>"; // pl
+		else if (!QString::compare(tmp, "pt"))
+			output += "<a href=\"Kydpdict#28\">pt</a>"; // pt
+		else if (!QString::compare(tmp, "pp"))
+			output += "<a href=\"Kydpdict#29\">pp</a>"; // pp
+		else if (!QString::compare(tmp, "GEOG"))
+			output += "<a href=\"Kydpdict#85\">GEOG</a>"; // GEOG
+		else if (!QString::compare(tmp, "ARCHIT"))
+			output += "<a href=\"Kydpdict#86\">ARCHIT</a>"; // ARCHIT
+		else if (!QString::compare(tmp, "FIZ"))
+			output += "<a href=\"Kydpdict#87\">FIZ</a>"; // FIZ
+		else if (!QString::compare(tmp, "PHYSIOL"))
+			output += "<a href=\"Kydpdict#88\">PHYSIOL</a>"; // PHYSIOL
+		else if (!QString::compare(tmp, "sg"))
+			output += "<a href=\"Kydpdict#16\">sg</a>"; // sg
+		else if (!QString::compare(tmp, "imp"))
+			output += "<a href=\"Kydpdict#89\">imp</a>"; // imp - jest tylko w pol->ang
+		else if (!QString::compare(tmp, "GEOL"))
+			output += "<a href=\"Kydpdict#90\">GEOL</a>"; // GEOL
+		else
+			output += tmp;
+		if(col) {
+			col = FALSE;
+			output +=",";
+		}
+		pos++;
+		if( input.section(' ', pos, pos).isEmpty() )
+			break;
+		output +=" ";
+	}
+
+	output = str_start + output + str_end;
+	if(raw_input.startsWith(" "))
+		output = " " + output;
+	if(raw_input.endsWith(" "))
+		output += " ";
+	return output;
+}
+
