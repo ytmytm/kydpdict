@@ -579,7 +579,6 @@ int ydpDictionary::FindWord(QString word)
 	    qbword = fromCodec->fromUnicode(toCodec->toUnicode(words[b]));
 	    sa = ScoreWord(qcword,qaword);
 	    sb = ScoreWord(qcword,qbword);
-	    printf("%s vs [%s,%s] got (%i,%i)\n",word.ascii(),words[a+i],words[b],sa,sb);
 	    if ((sa==lword)&&((int)strlen(words[a+i])<=sa)) {
 		b=a+i; i=260;
 	    } else {
