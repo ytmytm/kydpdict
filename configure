@@ -272,7 +272,7 @@ PACKAGE_VERSION='0.6.0'
 PACKAGE_STRING='kydpdict 0.6.0'
 PACKAGE_BUGREPORT='ytm@elysium.pl'
 
-ac_subst_vars='SHELL PATH_SEPARATOR PACKAGE_NAME PACKAGE_TARNAME PACKAGE_VERSION PACKAGE_STRING PACKAGE_BUGREPORT exec_prefix prefix program_transform_name bindir sbindir libexecdir datadir sysconfdir sharedstatedir localstatedir libdir includedir oldincludedir infodir mandir build_alias host_alias target_alias DEFS ECHO_C ECHO_N ECHO_T LIBS CC CFLAGS LDFLAGS CPPFLAGS ac_ct_CC EXEEXT OBJEXT CPP CXX CXXFLAGS ac_ct_CXX CXXCPP SET_MAKE CXXFLASG QT_INCLUDES QT_LDFLAGS MOC UIC QT_LIB QT_VERSION LUPDATE LRELEASE LIBOBJS LTLIBOBJS'
+ac_subst_vars='SHELL PATH_SEPARATOR PACKAGE_NAME PACKAGE_TARNAME PACKAGE_VERSION PACKAGE_STRING PACKAGE_BUGREPORT exec_prefix prefix program_transform_name bindir sbindir libexecdir datadir sysconfdir sharedstatedir localstatedir libdir includedir oldincludedir infodir mandir build_alias host_alias target_alias DEFS ECHO_C ECHO_N ECHO_T LIBS CC CFLAGS LDFLAGS CPPFLAGS ac_ct_CC EXEEXT OBJEXT CPP CXX CXXFLAGS ac_ct_CXX CXXCPP SET_MAKE QT_INCLUDES QT_LDFLAGS MOC UIC QT_LIB QT_VERSION LUPDATE LRELEASE LIBOBJS LTLIBOBJS'
 ac_subst_files=''
 
 # Initialize some variables set by options.
@@ -3797,7 +3797,7 @@ echo "$as_me:$LINENO: result: $ac_cv_c_bigendian" >&5
 echo "${ECHO_T}$ac_cv_c_bigendian" >&6
 case $ac_cv_c_bigendian in
   yes)
-    CXXFLASG="$CXXFLAGS -DWORDS_BIGENDIAN"
+    CXXFLAGS="$CXXFLAGS -DWORDS_BIGENDIAN"
   ;;
   no)
      ;;
@@ -4988,7 +4988,6 @@ s,@CXXFLAGS@,$CXXFLAGS,;t t
 s,@ac_ct_CXX@,$ac_ct_CXX,;t t
 s,@CXXCPP@,$CXXCPP,;t t
 s,@SET_MAKE@,$SET_MAKE,;t t
-s,@CXXFLASG@,$CXXFLASG,;t t
 s,@QT_INCLUDES@,$QT_INCLUDES,;t t
 s,@QT_LDFLAGS@,$QT_LDFLAGS,;t t
 s,@MOC@,$MOC,;t t
