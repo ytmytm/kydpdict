@@ -14,8 +14,7 @@
    to... co? jak to mia³oby wygl±daæ?)
 - FindWord napisac ³adniej (potrzeba pomys³u! :)
 - schowek / schowek+klipper
-    - po zmianie kierunku t³umaczenia nie wyskakuje na wierzch!
-    - to samo po toggle clipboard tracking
+    - psuje sie po kliknieciu w dowolnym miejscu (ale nie obramowaniu) okna
 	- otrzymuje (null),(null) zamiast zaznaczen
 	- wlasciwa zawartosc schowka pojawia sie dopiero po kliknieciu _w_ oknie, nie na ramce
 	- to NIE jest wina KDE, przy twm te¿ wystêpuje
