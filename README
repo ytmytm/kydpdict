@@ -4,8 +4,9 @@ Umo¿liwia ³atwe i efektywne korzystanie z s³ownika w ¶rodowisku graficznym
 systemu Linux oraz MacOS X.
 
 2. Co jest wymagane dla dzia³ania Kydpdict?
-Najwa¿niejsze jest posiadanie plików z danymi s³ownika z oryginalnej p³yty YDP.
-Chodzi o pliki dict*.idx oraz dict*.dat.
+Najwa¿niejsze jest posiadanie plików z danymi s³ownika z oryginalnego s³ownika YDP.
+Chodzi o pliki dict*.idx oraz dict*.dat które mo¿na znale¼æ w katalogu do którego
+zosta³ zainstalowany program pod Windows.
 Konieczne jest posiadanie biblioteki Qt w wersji >=3.1, je¶li kompilujemy program
 konieczny bêdzie tak¿e pakiet Qt-devel. Kydpdict nie wymaga zainstalowanego
 ¶rodowiska KDE (wbrew swojej nazwie :).
