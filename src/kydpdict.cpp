@@ -42,15 +42,19 @@
 #include "../icons/f7.xpm"
 #include "../icons/f8.xpm"
 
+#include <qgrid.h>
+
 Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name)
 {
 	QFrame *centralFrame = new QFrame(this);
 	QSplitter *splitter = new QSplitter(centralFrame);
 	QVBox *vbox1 = new QVBox(splitter);
-	vbox1->setMinimumWidth(QApplication::desktop()->width() / 6);
+	vbox1->setMinimumWidth(QApplication::desktop()->width() / 8);
 	QHBox *hbox1 = new QHBox(vbox1);
 	wordInput = new QLineEdit( hbox1, "wordInput");
 	listclear = new QPushButton(tr("Clear"), hbox1, "Clear");
+	vbox1->setSpacing(4);
+	wordInput->setMaximumHeight(20);
 	listclear->setMaximumWidth(40);
 	listclear->setMaximumHeight(20);
 	dictList = new QListBox( vbox1, "dictList" );
@@ -65,16 +69,14 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 
 	RTFOutput->setTextFormat( RichText );
 	RTFOutput->setReadOnly(TRUE);
-	RTFOutput->setLineWidth( 1 );
-	RTFOutput->setFrameStyle( QFrame::Sunken | QFrame::Panel);
+	RTFOutput->setLineWidth( 0 );
 	RTFOutput->setLinkUnderline ( FALSE);
 
 	dictList->setBottomScrollBar(FALSE);
-	dictList->setFrameStyle( QFrame::Sunken | QFrame::Panel);
-	dictList->setLineWidth( 1 );
+	dictList->setLineWidth( 0 );
+
 	wordInput ->setMaxLength(20);
-	wordInput->setLineWidth( 1 );
-	wordInput->setFrameStyle( QFrame::Sunken | QFrame::Panel);
+	wordInput->setLineWidth( 0 );
 
 	cb =  QApplication::clipboard();
 
@@ -450,15 +452,16 @@ void Kydpdict::updateText( const QString & href )
 	"inv = invariable - niezmienny", "pron = pronoun - zaimek", "nt = neuter - nijaki", "npl = plural noun - rzeczownik w liczbie mnogiej", \
 	"cmp = compound - wyraz z³o¿ony", "pl = plural - liczba mnoga", "vb = verb - czasownik", "vi = intransitive verb - czasownik nieprzechodni", \
 	"vt = transitive verb - czasownik przechodni", "sg = singular - liczba pojedyncza", \
-	"abbr = abbreviation - skrót", "+nom = nominative - mianownik", "+acc = accusative - biernik", "+dat = dative - celownik", \
-	"+gen = genitive - dope³niacz", " +infin = infinitiv - bezokolicznik", "+instr = instrumental - narzêdnik", "+loc = locative - miejscownik", \
+	"abbr = abbreviation - skrót", "+nom = nominative - mianownik", "acc = accusative - biernik", "dat = dative - celownik", \
+	"gen = genitive - dope³niacz", " infin = infinitiv - bezokolicznik", "instr = instrumental - narzêdnik", "loc = locative - miejscownik", \
 	"irreg = irregular - nieregularny", "prep = preposition - przyimek", "aux = auxiliary - pomocniczy", "pt = past tense - czas przesz³y", \
 	"pp = past participle - imies³ów czasu przesz³ego", "m = masculine - mêski", "n = noun - rzeczownik", "f = feminine - ¿eñski", \
 	"post = postpositiv (does not immediately precede a noun) - nie wystêpuje bezpo¶rednio przed rzeczownikiem", "nvir = nonvirile - niemêskoosobowy", \
 	"vir = virile - mêskoosobowy", "num = number - liczba", "decl = declined - odmienny", "excl = exclemation - wykrzyknik", \
 	"inf! = offensiv - obra¼liwy, wulgarny", "inf = informal - potocznie", "pej = pejorative - pejoratywny", "perf = perfective verb - czasownik dokonany", \
 	"pot! = obra¼liwy - offensiv", "pot = potoczny - informal", "vr = reflexiv verb - czasownik zwrotny", "attr = attribute - przydawka", \
-	"part = particle - partyku³a", "fml - Balcerowicz musi odej¶æ ;-)", "Trzeba dopisaæ", "Tu te¿ :)", "ADMIN = administration - administracja", \
+	"part = particle - partyku³a", "fml - formal - formalny", "(im)perf = imperfect tens - czas przesz³y o aspekcie niedokonanym", \
+	"dimin = diminutive - zdrobnienie", "ADMIN = administration - administracja", \
 	"ANAT = anatomy - anatomia", "AUT = automobiles - motoryzacja", "AVIAT = aviation - lotnictwo",  "BIO = biology - biologia", \
 	"BOT = botany - botanika", "BRIT = British English - angielszczyzna brytyjska", "CHEM = chemistry - chemia", "COMM = commerce - handel", \
 	"COMPUT = computer - informatyka i komputery", "CULIN = culinary - kulinarny", "ELEC = electronics, eletricity - elektronika, elektryczno¶æ", \
@@ -468,7 +471,13 @@ void Kydpdict::updateText( const QString & href )
 	"TECH = technology - technika i technologia", "TEL = telecominication - telekomunikacja", "THEAT = theatre - teatr", "TYP = printing - poligrafia", \
 	"US = American English - angielszczyzna amerykañska", "ZOOL = zoology - zoologia", "fig = figurative - przeno¶ny", "lit = literal - dos³owny", \
 	"GEOG = geography - geografia", "ARCHIT = architecture - architektura", "FIZ = fizyka - physics", "PHYSIOL = physiology - fizjologia", \
-	"imp = imperative - tryb rozkazuj±cy", "GEOL = geology - geologia", "ups!"};
+	"imp = imperative - tryb rozkazuj±cy", "GEOL = geology - geologia","art = article - rodzajnik" , "indef = indefinite - nieokre¶lony", \
+	"def = definite - okre¶lony", "PHOT = photography - fotografia", "ELEKTR = elektryczno¶æ - electricity", "EKON = ekonomia - economy", \
+	"FIZ = fizyka - physics", "GEOM = geometria - geometry", "JÊZ = jêzykoznawstwo - linguistic", "KULIN = kulinarny - culinary", \
+	"KOMPUT = komputery - computers", "LOT = lotnictwo - aviation", "MAT = matematyka - mathematics", "MOT = motoryzacja - automobiles", \
+	"MUZ = muzyka - music", "SZKOL = szko³a - school", "WOJSK = wojskowo¶æ - military", "¯EGL = ¿egluga - nautical", "BUD = budownictwo - construction", \
+	"METEO = meteorology - meteorologia", "HIST = history - historia", "DRUK = poligrafia - printing", "ROL - rolnictwo - agriculture", \
+	"pref = prefix - przedrostek", "ASTRON = astronomy - astronomia", "ups!"};
 
 	//du¿o tego, mo¿e to jako¶ w pliku umie¶ciæ?
 
@@ -476,6 +485,6 @@ void Kydpdict::updateText( const QString & href )
 
 	tmp.remove(0,9);
 
-	if(tmp.toInt() >= 0 && tmp.toInt() <= 91)
+	if(tmp.toInt() >= 0 && tmp.toInt() < 117)
 	t->tekst = tab[tmp.toInt()];
 }

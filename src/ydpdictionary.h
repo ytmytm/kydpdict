@@ -36,7 +36,6 @@ private:
 	QString rtf2html (QString definition);
 	void disableTag (int tag_code, int level);
 	QString insertTip(QString raw_input);
-	QString insertTip2(QString raw_input);
 
 	// configuration holder
 	kydpConfig *cnf;
