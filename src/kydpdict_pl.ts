@@ -1,30 +1,5 @@
 <!DOCTYPE TS><TS>
 <context>
-    <name>@default</name>
-    <message>
-        <source>This is frontend to YDP Collins dictionary.
-Authors: Andrzej Para , Maciej Witkowiak.
-Program based on ydpdict by Wojtek Kaniewski</source>
-        <translation type="obsolete">To jest nakładka na słownik YDP Collins.
-Autorzy: Andrzej Para, Maciej Witkowiak.
-Program oparty na ydpdict Wojtka Kaniewskiego</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translation type="obsolete">Błąd</translation>
-    </message>
-    <message>
-        <source>Kydpdict can&apos;t work with incorrect path to dictionary files.
-In order to use this program you have to have data files from Windows
-dictionary installation. For more information please read README.
-Good bye!</source>
-        <translation type="obsolete">Kydpdict nie może działać z nieprawidłową ścieżką do plików słownika
-Aby korzystać z programu musisz mieć pliki danych z programu dla Windows.
-Przeczytaj README, aby dowiedzieć się więcej.
-Do zobaczenia!</translation>
-    </message>
-</context>
-<context>
     <name>Kydpdict</name>
     <message>
         <source>&amp;Quit</source>
@@ -65,7 +40,7 @@ Do zobaczenia!</translation>
         <source>This is frontend to YDP Collins dictionary.
 Authors: Andrzej Para , Maciej Witkowiak.
 Program based on ydpdict by Wojtek Kaniewski</source>
-        <translation type="unfinished">To jest nakładka na słownik YDP Collins.
+        <translation>To jest nakładka na słownik YDP Collins.
 Autorzy: Andrzej Para, Maciej Witkowiak.
 Program oparty na ydpdict Wojtka Kaniewskiego</translation>
     </message>
@@ -140,7 +115,7 @@ Teraz zostanie otwarte okno konfiguracji, aby można było ustawić ścieżki.</
 In order to use this program you have to have data files from Windows
 dictionary installation. For more information please read README.
 Good bye!</source>
-        <translation type="unfinished">Kydpdict nie może działać z nieprawidłową ścieżką do plików słownika
+        <translation>Kydpdict nie może działać z nieprawidłową ścieżką do plików słownika
 Aby korzystać z programu musisz mieć pliki danych z programu dla Windows.
 Przeczytaj README, aby dowiedzieć się więcej.
 Do zobaczenia!</translation>
