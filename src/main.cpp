@@ -24,7 +24,7 @@ int main (int argc, char *argv[])
 {
 	QString locname;
 
-	putenv("LANG=pl_PL.ISO-8859-2");	// otherwise localeAwareCompare fails miserably
+	putenv("LANG=pl_PL.ISO-8859-2");	// otherwise '¶'->'a' right at the start
 
 	a = new QApplication(argc, argv, "Kydpdict");
 

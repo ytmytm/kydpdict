@@ -16,6 +16,8 @@
 #include <unistd.h>
 #include <ctype.h>
 
+#include <locale.h>
+
 #include "ydpdictionary.h"
 
 KeyEater* keyEater;
@@ -523,6 +525,8 @@ int ydpDictionary::FindWord(QString word)
     a = 0; b = wordCount;
 
     word = word.lower();
+
+    setlocale(LC_COLLATE,"pl_PL");	// otherwise '¶win'->'z...' on at least one system :(
 
     while (b-a >= 30) {	/* bez tego marginesu s± problemy np. z 'for' */
 	middle = a + (b-a)/2;
