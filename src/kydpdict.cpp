@@ -777,7 +777,13 @@ void Kydpdict::handleLink( const QString & href )
 		if (link.startsWith("1"))
 			SwapLanguages();
 
-		newFromLine(link.remove(0,1));
+		link.remove(0,1);
+		if (link.compare(dictList->currentText()) != 0) {
+		    newFromLine(link);
+		} else {
+		    // it is required to do something with RTFOutput even when it's not needed
+		    RTFOutput->setText(RTFOutput->text());
+		}
 	}
 }
 

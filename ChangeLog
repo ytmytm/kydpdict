@@ -394,3 +394,5 @@ Kydpdict 0.6.4 (xx.xx.2004)
 - usuniêty guzik do kasowania linii, chyba jest teraz dosyæ metod na skasowanie jej zawarto¶ci
 - usuniêty martwy kod z konfiguracji
 - zwiêkszone opó¼nienie miêdzy dwoma ESC-ESC
+- poprawiony b³±d odno¶ników gdy klika³o siê na to samo has³o co aktualne (np. 'set' w
+  przyk³adzie z opisu has³a 'set')
