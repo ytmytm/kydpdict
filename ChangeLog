@@ -212,3 +212,9 @@ Kydpdict 0.5.3 (22.7.2003)
 Kydpdict 0.5.4pre1 (26.7.2003)
 - poprawiony blad ktory powodowal segfault przy absolutnym braku konfiguracji (AP)
 - program zakoñczy siê przy braku konfiguracji i user nie chce jej podaæ
+
+=====================================================================
+Kydpdict 0.5.4pre2 (26.7.2003)
+- zmiana geometrii dialogu konfiguracji
+- combobox z histori± ostatnich wyrazów zamiast editboxa
+- combobox uzywa simplifywhitespace przed wstawieniem, nie wstawia pustych

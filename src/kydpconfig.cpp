@@ -46,8 +46,8 @@ void kydpConfig::setDefaultConfiguration(void)
 	player = "/usr/bin/play";
 	spH1 = 200;
 	spH2 = 300;
-	spV1 = 1;
-	spV2 = 100;
+	spV1 = 30;
+	spV2 = 236;
 	clipTracking = true;
 	italicFont = false;
 	toolTips = true;

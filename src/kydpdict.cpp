@@ -48,7 +48,7 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 	splitterH = new QSplitter(centralFrame, "splitter");
 	splitterV = new QSplitter(Qt::Vertical, splitterH);
 	QHBox *hbox1 = new QHBox(splitterV);
-	wordInput = new QLineEdit( hbox1, "wordInput");
+	wordInput = new QComboBox( hbox1, "wordInput");
 	listclear = new QPushButton(tr("Clear"), hbox1, "Clear");
 	listclear->setMaximumWidth(40);
 	hbox1->setMinimumHeight(20);
@@ -65,8 +65,10 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 	dictList->setBottomScrollBar(FALSE);
 	dictList->setLineWidth( 0 );
 
-	wordInput ->setMaxLength(20);
-	wordInput->setLineWidth( 0 );
+	wordInput->setMaxCount(20);
+	wordInput->setDuplicatesEnabled(false);
+	wordInput->setEditable(true);
+	wordInput->setInsertionPolicy(QComboBox::AtTop);
 
 	cb =  QApplication::clipboard();
 
@@ -146,8 +148,8 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 	connect (dictList, SIGNAL(highlighted(int)), this, SLOT(NewDefinition(int)));
 	connect (dictList, SIGNAL(selected(int)), this, SLOT(PlayCurrent()));
 	connect (wordInput, SIGNAL(textChanged(const QString&)), this, SLOT(NewFromLine(const QString&)));
-	connect (wordInput, SIGNAL(returnPressed()), this, SLOT(PlayCurrent()));
-	connect (listclear, SIGNAL(clicked()),wordInput, SLOT(clear()));
+	connect (wordInput, SIGNAL(activated(int)), this, SLOT(PlayCurrent()));
+	connect (listclear, SIGNAL(clicked()),wordInput, SLOT(clearEdit()));
  	connect (RTFOutput, SIGNAL( highlighted ( const QString & )), this, SLOT(updateText( const QString & )));
  	connect( cb, SIGNAL( selectionChanged() ), SLOT(slotSelectionChanged()));
  	connect( cb, SIGNAL( dataChanged() ), SLOT( slotClipboardChanged() ));
@@ -271,16 +273,24 @@ void Kydpdict::PasteClipboard(QString haslo)
 	}
 
 	wordInput->blockSignals( TRUE );
-	wordInput->setText(contents);
+	QString content = contents.simplifyWhiteSpace();
+	if (((wordInput->listBox())->findItem(content, Qt::ExactMatch) == 0)
+	    && (content.length()>0)) {
+	    wordInput->insertItem(content);
+	    /* this is broken in Qt, has to be done manually */
+	    if (wordInput->count() > wordInput->maxCount())
+		wordInput->removeItem(0);
+	}
+	wordInput->setEditText(content);
 	wordInput->blockSignals( FALSE );
-	
+
 	if(config->autoPlay)
 		PlaySelected (index);
-
 }
 
 void Kydpdict::NewDefinition (int index)
 {
+	UpdateHistory(index);
 	QString def = myDict->GetDefinition(index);
 /* to jest wlasciwie potrzebne tylko dla prawidlowego pokazania pierwszej def. */
 	QTextCodec *codec = QTextCodec::codecForName("ISO8859-2");
@@ -313,7 +323,23 @@ void Kydpdict::PlaySelected (int index)
 
 void Kydpdict::PlayCurrent ()
 {
-	PlaySelected(dictList->currentItem());
+    UpdateHistory(dictList->currentItem());
+    PlaySelected(dictList->currentItem());
+}
+
+void Kydpdict::UpdateHistory(int index)
+{
+    QString content = (dictList->currentText()).simplifyWhiteSpace();
+
+    wordInput->blockSignals( TRUE );
+    if (((wordInput->listBox())->findItem(content, Qt::ExactMatch) == 0)
+       && (content.length()>0)) {
+	    wordInput->insertItem(content);
+	    if (wordInput->count() > wordInput->maxCount())
+		wordInput->removeItem(0);
+    }
+    wordInput->setEditText(content);
+    wordInput->blockSignals( FALSE );
 }
 
 void Kydpdict::SwapEngToPol ()

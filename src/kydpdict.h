@@ -12,7 +12,7 @@
 
 #include <qwidget.h>
 #include <qlistbox.h>
-#include <qlineedit.h>
+#include <qcombobox.h>
 #include <qmenubar.h>
 #include <qclipboard.h>
 #include <qmainwindow.h>
@@ -48,7 +48,7 @@ class Kydpdict : public QMainWindow
 
 		// GUI widgets
 		QListBox *dictList;
-		QLineEdit *wordInput;
+		QComboBox *wordInput;
 		QTextBrowser *RTFOutput;
 		QPushButton *listclear;
 		QMenuBar  *menu;
@@ -67,6 +67,7 @@ class Kydpdict : public QMainWindow
 		void NewDefinition (int index);       		/* word list highlited */
 		void NewFromLine (const QString& newText);	/* new word entered */
 		void PlaySelected (int index);			/* dbl click or return to play */
+		void UpdateHistory (int index);
 		void PlayCurrent ();
 		void SwapPolToEng ();
 		void SwapEngToPol ();

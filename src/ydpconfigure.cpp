@@ -17,20 +17,20 @@
 ydpConfigure::ydpConfigure( kydpConfig *globalconfig, QWidget* parent,  const char* name, bool modal )
     : QDialog( parent, name, modal )
 {
-    setFixedSize(400,250);
+    setFixedSize(400,260);
     setCaption( tr("Configure Kydpdict") );
 
     defaults = new QPushButton( this, "defaults" );
     defaults->setText(tr("Defaults") );
-    defaults->setGeometry(10,220,81,21);
+    defaults->setGeometry(10,220,81,30);
 
     cancel = new QPushButton( this, "cancel" );
     cancel->setText( tr("Cancel") );
-    cancel->setGeometry(310,220,81,21);
+    cancel->setGeometry(310,220,81,30);
 
     ok = new QPushButton( this, "Ok" );
     ok->setText( tr("Ok") );
-    ok->setGeometry(210,220,81,21);
+    ok->setGeometry(210,220,81,30);
 
     TabWidget1 = new QTabWidget( this, "TabWidget1" );
     TabWidget1->setGeometry(10,10,381,200);
