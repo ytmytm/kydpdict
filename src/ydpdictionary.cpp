@@ -147,21 +147,20 @@ QString ydpDictionary::convert_cp1250(char *tekst, long int size)
 
 void ydpDictionary::FillWordList()
 {
-
   QProgressDialog progress;
-  QTextCodec *codec = QTextCodec::codecForName("ISO8859-2");
+  QTextCodec *codec = QTextCodec::codecForName("CP1250");
 
-  unsigned long curpos;
-  unsigned char *indexBuffer;
-  int current=0, bp, wordCount;
+  unsigned long pos;
+  unsigned long index[2];
+  int current=0, wordCount;
   char buf[256];
 
   /* read # of words */
-  indexBuffer = new unsigned char[fIndex.size()];
-  fIndex.readBlock((char*)indexBuffer,fIndex.size());
   wordCount=0;
-  wordCount = (indexBuffer[9] << 8) + indexBuffer[8];
-  indexes = new unsigned long [wordCount];
+  fIndex.at(0x08);
+  fIndex.readBlock((char*)&wordCount,2);
+
+  indexes = new unsigned long [wordCount+2];
 
   /* setup visual side */
   progress.setTotalSteps(wordCount / 256);
@@ -170,27 +169,33 @@ void ydpDictionary::FillWordList()
   dictList->setAutoUpdate(FALSE);
 
   /* read index table offset */
-  curpos = *((long*)&indexBuffer[0x10]) + 4;
+  pos=0;
+  fIndex.at(0x10);
+  fIndex.readBlock((char*)&pos, 4);
+  fIndex.at(pos);
 
   /* read index table */
   do {
-    if ((current % 256)==0) 
+    if ((current % 256)==0)
 	progress.setProgress(current / 256);
+//  this is a trick - instead of fssek(cur+4), read ulong we read ulong twice
+//  and throw out first 4 bytes
+    fIndex.readBlock((char*)&index[0], 8);
+    indexes[current]=index[1];
+//  and another trick
+//  we don't throw out first 4 bytes :)
+    fIndex.readBlock((char*)&buf, index[0]&0xff);
 
-    indexes[current]=*((long*)&indexBuffer[curpos]);
-    curpos+=4;
-    strncpy(buf,(const char*)&indexBuffer[curpos],255);
-    bp = strlen(buf);
-    curpos+=bp+5;
-
-    dictList->insertItem(codec->toUnicode(convert_cp1250(buf,bp)));
+    dictList->insertItem(codec->toUnicode(QString(buf)));
   } while (++current < wordCount);
 
-  delete [] indexBuffer;
+//  stara metoda pol2eng=490 eng2pol=560 pol2ger=716 ger2pol=735
+//  nowa metoda  pol2eng=331 eng2pol=374 pol2ger=465 ger2pol=453
+//  przyspieszenie  pol2eng=32% eng2pol=33% pol2ger=35% ger2pol=38%
 
   /* omijanie bledow w slowniku... */
   QListBoxItem *result;
-  if((result = dictList->findItem("Proven<")))
+  if((result = dictList->findItem("Proven")))
   	dictList->changeItem(QString("Provencial"), dictList->index(result));
 
   dictList->setCurrentItem(0);
