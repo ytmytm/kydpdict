@@ -353,3 +353,4 @@ Kydpdict 0.6.0pre (xx.xx.2004)
 - poprawiony b³±d za d³ugiej listy przy zmianie rozmiarów na mniejsze
 - prawid³owo radzi sobie ze s³owami z koñca s³ownika, nie wyszukuje dwukrotnie po wklejaniu
 - autoplay przesuniête na zak³adkê 'schowek'
+- opó¼nienie .5s przed schowaniem okna przez ESC

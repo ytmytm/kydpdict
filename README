@@ -40,7 +40,8 @@ niego okre¶lony przez zmienn± $CONFIG_DIR (testowane w tej kolejno¶ci).
 Kilka najwa¿niejszych skrótów klawiaturowych:
 - ESC pozwala szybko wpisaæ z klawiatury nowy wyraz - przenosi tam kursor i czy¶ci widget
   wprowadzania
-- kolejne naci¶niêcie ESC pozwala ukryæ s³ownik - jak przy klikniêciu na rybie
+- kolejne naci¶niêcie ESC (ale dopiero po up³yniêciu co najmniej .5s) pozwala ukryæ s³ownik -
+  jak przy klikniêciu na rybie
 - Ctrl+` (nad Tab) pozwala szybko zamieniæ kierunek t³umaczenia
 
 4. Konfiguracja

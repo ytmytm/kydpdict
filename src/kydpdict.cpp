@@ -28,6 +28,7 @@
 
 #define COMBO_HISTORY_SIZE	25
 #define TIMER_PERIOD		1000
+#define LAST_ESC_PERIOD		500
 
 /* 16x16 */
 #include "../icons/conf.xpm"
@@ -119,6 +120,7 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 
  	m_checkTimer = new QTimer(this, "timer");
 	m_checkTimer->start(TIMER_PERIOD, FALSE);
+	escTimer = new QTimer(this, "esctimer");
 	slastSelection = "";
 	slastClipboard = "";
 
@@ -268,6 +270,7 @@ Kydpdict::~Kydpdict()
     	myDict->CloseDictionary();
  	delete t;
  	delete m_checkTimer;
+	delete escTimer;
 	delete splitterH;
 }
 
@@ -317,10 +320,12 @@ void Kydpdict::onEscaped()
     if (!wordInput->hasFocus())
 	wordInput->setFocus();
     else
-	if (wordInput->currentText().isEmpty())
+	if (wordInput->currentText().isEmpty() && (!(escTimer->isActive()))) {
 	    this->hide();
-	else
+	} else {
 	    wordInput->clearEdit();
+	    escTimer->start(LAST_ESC_PERIOD,TRUE);
+	}
 }
 
 void Kydpdict::windowActivationChange(bool oldActive)

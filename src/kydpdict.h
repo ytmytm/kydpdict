@@ -74,7 +74,7 @@ class Kydpdict : public QMainWindow
 
 		// clipboard shit
 		QClipboard  *cb;
-		QTimer *m_checkTimer;
+		QTimer *m_checkTimer, *escTimer;
 		QString slastSelection;
 		QString slastClipboard;
 
