@@ -112,7 +112,7 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 	config = new kydpConfig;
 	config->load();
 
- 	myDict = new ydpDictionary(config,dictList);
+ 	myDict = new ydpDictionary(config,(void*)this,dictList);
 
 	wasMaximized = config->kMaximized;
 	setGeometry (config->kGeometryX, config->kGeometryY, config->kGeometryW, config->kGeometryH);
@@ -164,6 +164,7 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 	QPopupMenu *file = new QPopupMenu( this );
 	Q_CHECK_PTR( file );
 	file->insertItem(QPixmap(exit_xpm), tr("&Quit"), qApp, SLOT(quit()), QKeySequence( tr("Ctrl+Q", "File|Quit") ) );
+	file->insertItem(tr("&Fuzzy search"), myDict, SLOT(FuzzySearch()), QKeySequence( tr("Ctrl+F", "File|Fuzzy search") ) );
 
 	QPopupMenu *settings = new QPopupMenu( this );
 	Q_CHECK_PTR( settings );

@@ -37,6 +37,7 @@ class Kydpdict : public QMainWindow
     /** destructor */
     ~Kydpdict();
     void flushConfig(void);
+    void showEntry(QString *aEntry, int aindex = -1);
 
     private:
 		void resizeEvent (QResizeEvent *);
@@ -47,7 +48,6 @@ class Kydpdict : public QMainWindow
 		void showEvent(QShowEvent *ashowEvent);
 		void hideEvent(QHideEvent *ahideEvent);
 		void updateUserTimestamp(void);
-		void showEntry(QString *aEntry, int aindex = -1);
 
 		// global configuration
 		kydpConfig *config;

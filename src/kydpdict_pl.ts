@@ -143,6 +143,15 @@ Do zobaczenia!</translation>
         <comment>Tray|Clipboard tracking</comment>
         <translation>Ctrl+L</translation>
     </message>
+    <message>
+        <source>&amp;Fuzzy search</source>
+        <translation>&amp;Wyszukiwanie rozmyte</translation>
+    </message>
+    <message>
+        <source>Ctrl+F</source>
+        <comment>File|Fuzzy search</comment>
+        <translation>Ctrl+F</translation>
+    </message>
 </context>
 <context>
     <name>TrayIcon</name>
@@ -305,6 +314,33 @@ Prawy - otwórz menu</translation>
 </source>
         <translation>Nie można otworzyć pliku danych!
 </translation>
+    </message>
+</context>
+<context>
+    <name>ydpFuzzySearch</name>
+    <message>
+        <source>Fuzzy search</source>
+        <translation>Wyszukiwanie rozmyte</translation>
+    </message>
+    <message>
+        <source>Search</source>
+        <translation>Szukaj</translation>
+    </message>
+    <message>
+        <source>high</source>
+        <translation>wysokie</translation>
+    </message>
+    <message>
+        <source>low</source>
+        <translation>niskie</translation>
+    </message>
+    <message>
+        <source>Similarity</source>
+        <translation>Podobieństwo</translation>
+    </message>
+    <message>
+        <source>Search for...</source>
+        <translation>Szukaj...</translation>
     </message>
 </context>
 </TS>

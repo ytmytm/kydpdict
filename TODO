@@ -16,4 +16,11 @@
     - bah - minimalizacja<=>znikanie (dla kpwndict tez) (jak?)
 - skróty klawiaturowe opisane w dymkach nad toolbarem
     - obecnie niewykonalne, te same skróty rozrzucone w kilku miejscach - trudno utrzymaæ
-- focus chyba nie powinien przeskakiwaæ z listy do edit?
+- focus chyba nie powinien przeskakiwaæ z listy do edit? poruszanie siê kursorami robi siê
+    nieintuicyjne
+- ydpFuzzySearch jest uwik³ane (ten void* z konstruktora):
+    - chyba powinno jako¶ fonty ustawiaæ
+    - potrzebuje update z ydpDictionary, ale te¿
+    - potrzebuje showEntry z Kydpdict ¿eby uaktualniæ wynik (tylko po to w ydpDictionary leci void*)
+    - poprawic uk³ad geometryczny dialogu?
+    - niskie podobieñstwo chyba jest zbyt niskie (10 zmian ³apie chyba ca³y s³ownik)

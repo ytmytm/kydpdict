@@ -14,11 +14,12 @@
 #include <qlistbox.h>
 #include <qfile.h>
 #include "kydpconfig.h"
+#include "ydpfuzzysearch.h"
 
 class ydpDictionary : public QObject {
 	Q_OBJECT
 public:
-	ydpDictionary(kydpConfig *config, QListBox *listBox);
+	ydpDictionary(kydpConfig *config, void *parent, QListBox *listBox);
 	~ydpDictionary();
 
 	QString GetDefinition(int index);
@@ -49,6 +50,7 @@ private:
 
 	// configuration holder
 	kydpConfig *cnf;
+	void *kydpdic;
 
 	// GUI element holding index
 	QListBox	*dictList;
@@ -66,6 +68,7 @@ private:
 	char** words;			/* actual words */
 
 	int broken_entry;		/* index of a broken "Provencial" entry */
+	ydpFuzzySearch *mySearch;
 
 public slots:
 	void ListRefresh (int index);
@@ -73,6 +76,7 @@ public slots:
 	void ListScroll1Down();
 	void ListScrollPageUp();
 	void ListScrollPageDown();
+	void FuzzySearch();
 };
 
 class KeyEater : public QObject {

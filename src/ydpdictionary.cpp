@@ -20,6 +20,7 @@
 #include <locale.h>
 
 #include "ydpdictionary.h"
+#include "kydpdict.h"
 
 KeyEater* keyEater;
 
@@ -121,8 +122,7 @@ unsigned short fix16(unsigned short x)
 #endif
 }
 
-
-ydpDictionary::ydpDictionary(kydpConfig *config, QListBox *listBox)
+ydpDictionary::ydpDictionary(kydpConfig *config, void *parent, QListBox *listBox)
 {
     int i;
 
@@ -135,6 +135,8 @@ ydpDictionary::ydpDictionary(kydpConfig *config, QListBox *listBox)
         dictCache[i].indexes = NULL;
         dictCache[i].words = NULL;
     }
+    mySearch = new ydpFuzzySearch(parent);
+    mySearch->setModal(FALSE);
 }
 
 ydpDictionary::~ydpDictionary()
@@ -211,6 +213,7 @@ int ydpDictionary::OpenDictionary(QString path, QString index, QString def)
     dictList->insertItem(QString("dummy"));
     ListRefresh(0);
     dictList->blockSignals(FALSE);
+    mySearch->update(wordCount,words);
 
     return 0;
 }
@@ -540,6 +543,11 @@ void ydpDictionary::ListRefresh(int index)
     for (i=0;i<(int)dictList->count();i++)
 	dictList->changeItem(codec->toUnicode(words[index+i]),i);
     dictList->blockSignals(FALSE);
+}
+
+void ydpDictionary::FuzzySearch()
+{
+    mySearch->show();
 }
 
 int ydpDictionary::ScoreWord(QString w1, QString w2)
