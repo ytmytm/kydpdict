@@ -12,6 +12,7 @@
 #include <qmessagebox.h>
 #include <qprogressdialog.h>
 #include <qprocess.h>
+#include <qtextcodec.h>
 
 #define color1 cnf->kFontKolor1
 #define color2 cnf->kFontKolor2
@@ -162,11 +163,11 @@ QString ydpDictionary::convert_cp1250(char *tekst, long int size)
     return out;
 }
 
-
 void ydpDictionary::FillWordList()
 {
   QString p;
   QProgressDialog *g;
+  QTextCodec *codec = QTextCodec::codecForName("ISO8859-2");
 
   unsigned long pos;
   int current=0, bp;
@@ -174,29 +175,29 @@ void ydpDictionary::FillWordList()
 
   g = new QProgressDialog;
 
-    /* read # of words */
-    wordCount=0;
-    fIndex.at(0x08);
-    fIndex.readBlock((char*)&wordCount,2);
+  /* read # of words */
+  wordCount=0;
+  fIndex.at(0x08);
+  fIndex.readBlock((char*)&wordCount,2);
 
-    indexes = new unsigned long [wordCount];
+  indexes = new unsigned long [wordCount];
 
   g->setTotalSteps(wordCount / 200);
   g->setMinimumDuration(500);
   g->show();
 
-    /* read index table offset */
-    pos=0;
-    fIndex.at(0x10);
-    fIndex.readBlock((char*)&pos, sizeof(unsigned long));
-    fIndex.at(pos);
+  /* read index table offset */
+  pos=0;
+  fIndex.at(0x10);
+  fIndex.readBlock((char*)&pos, sizeof(unsigned long));
+  fIndex.at(pos);
 
-    dictList->setAutoUpdate(FALSE);
+  dictList->setAutoUpdate(FALSE);
   /* read index table */
   do {
-	if ((current % 200)==0) { g->setProgress(current / 200); };
-	fIndex.at(fIndex.at()+4);
-	fIndex.readBlock((char*)&indexes[current], sizeof(unsigned long));
+    if ((current % 200)==0) { g->setProgress(current / 200); };
+    fIndex.at(fIndex.at()+4);
+    fIndex.readBlock((char*)&indexes[current], sizeof(unsigned long));
 
     bp=0;
     do {
@@ -206,17 +207,18 @@ void ydpDictionary::FillWordList()
     buf[bp]=0;
 
     p = convert_cp1250(buf,bp-1);
-    p = p.fromLocal8Bit(p.latin1());
+    p = codec->toUnicode(p.fromAscii(p));
     dictList->insertItem(p);
   } while (++current < wordCount);
 
   delete g;
 
+  /* omijanie bledow w slowniku... */
   QListBoxItem *result;
   if((result = dictList->findItem("Proven<")))
   	dictList->changeItem(QString("Provencial"), dictList->index(result));
+
   dictList->setCurrentItem(0);
-  
   dictList->setAutoUpdate(TRUE);
   dictList->repaint();
 }
@@ -579,7 +581,6 @@ QString ydpDictionary::insertTip(QString raw_input)
 		for(int i = 0; i < 121; i++) {
 			if (!QString::compare(tmp, input_tip[i])) {
 				number.sprintf("%d", i);
-//				proposition = "<a href=\"" + cnf->tipsFName + "#" + number + "\">" + tmp + "</a>";
 				proposition = "<a href=\"tips.html#" + number + "\">" + tmp + "</a>";
 				break;
 			}

@@ -18,8 +18,7 @@ public:
 	kydpConfig();
 	~kydpConfig();
 	
-	QString cdPath;
-	QString topPath;
+	QString cdPath, topPath, tipsPath;
 	QString player;
 	QString kFontKolor1;
 	QString kFontKolor2;
@@ -28,10 +27,9 @@ public:
 	QString kBckgrndPix;
 	QString indexFName;
 	QString dataFName;
-	QString tipsFName;
 	bool	toPolish, useEnglish;
 	int kGeometryX, kGeometryY, kGeometryW, kGeometryH;
-	int spH1, spH2;
+	int spH1, spH2, spV1, spV2;
 	bool clipTracking, italicFont, toolTips, autoPlay;
 
 	void load(void);

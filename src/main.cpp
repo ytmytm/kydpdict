@@ -7,6 +7,7 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <stdlib.h>
 #include <qfont.h>
 #include <qtranslator.h>
 #include <qtextcodec.h>
@@ -37,5 +38,9 @@ int main (int argc, char *argv[])
 	Kydpdict *kydpdict = new Kydpdict ();
 	a->setMainWidget (kydpdict);
 
-	return a->exec ();
+	QTextCodec::setCodecForCStrings(QTextCodec::codecForName("ISO8859-2"));
+
+	a->exec ();
+	kydpdict->flushConfig();
+	return 0;
 }

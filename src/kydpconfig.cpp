@@ -30,6 +30,7 @@ void kydpConfig::setDefaultConfiguration(void)
 {
 	topPath =  "/usr/share/ydpdict";
 	cdPath = "/mnt/cdrom";
+	tipsPath = KYDPDATADIR ;
 	toPolish = true;
 	useEnglish = true;
 	kGeometryX = 1;
@@ -44,12 +45,12 @@ void kydpConfig::setDefaultConfiguration(void)
 	player = "/usr/bin/play";
 	spH1 = 200;
 	spH2 = 300;
+	spV1 = 1;
+	spV2 = 100;
 	clipTracking = true;
 	italicFont = false;
 	toolTips = true;
 	autoPlay= false;
-	tipsFName = KYDPDATADIR ;
-	tipsFName += "tips.html";
 }
 
 void kydpConfig::load(void)
@@ -82,6 +83,12 @@ void kydpConfig::load(void)
 					pos = line.find('=');
 					value = line.mid(pos+1);
 					cdPath = value.stripWhiteSpace();
+				}
+				pos = line.find("tipspath");
+				if (pos==0) {
+					pos = line.find('=');
+					value = line.mid(pos+1);
+					tipsPath = value.stripWhiteSpace();
 				}
 				pos = line.find("topolish");
 				if (pos==0) {
@@ -167,6 +174,18 @@ void kydpConfig::load(void)
 					value = line.mid(pos+1);
 					spH2 = value.toInt();
 				}
+				pos=line.find("splitterV_1");
+				if (pos==0) {
+					pos = line.find('=');
+					value = line.mid(pos+1);
+					spV1 = value.toInt();
+				}
+				pos=line.find("splitterV_2");
+				if (pos==0) {
+					pos = line.find('=');
+					value = line.mid(pos+1);
+					spV2 = value.toInt();
+				}
 				pos = line.find("clipTracking");
 				if (pos==0) {
 					pos = line.find('=');
@@ -218,6 +237,8 @@ void kydpConfig::save(void)
 	line += topPath;
 	line += "\ncdpath\t=\t";
 	line += cdPath;
+	line += "\ntipspath\t=\t";
+	line += tipsPath;
 	line += "\ntopolish\t=\t";
 	if (toPolish) { line+="1"; } else { line+="0"; };
 
@@ -260,7 +281,14 @@ void kydpConfig::save(void)
 	line += "\nsplitterH_2\t=\t";
 	tmp.sprintf("%d",spH2);
 	line += tmp;
-	
+
+	line += "\nsplitterV_1\t=\t";
+	tmp.sprintf("%d",spV1);
+	line += tmp;
+	line += "\nsplitterV_2\t=\t";
+	tmp.sprintf("%d",spV2);
+	line += tmp;
+
 	line += "\nclipTracking\t=\t";
 	if (clipTracking) { line+="1"; } else { line+="0"; };
 	line += "\nitalicFont\t=\t";

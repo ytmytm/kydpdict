@@ -24,6 +24,7 @@
 #include <qmainwindow.h>
 #include <qvaluelist.h>
 #include <qapplication.h>
+#include <qtextcodec.h>
 
 #include "../icons/exit.xpm"
 #include "../icons/tux.xpm"
@@ -45,21 +46,16 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 {
 	QFrame *centralFrame = new QFrame(this);
 	splitterH = new QSplitter(centralFrame, "splitter");
-	QSplitter *splitter2 = new QSplitter(Qt::Vertical, splitterH);
-	QHBox *hbox1 = new QHBox(splitter2);
+	splitterV = new QSplitter(Qt::Vertical, splitterH);
+	QHBox *hbox1 = new QHBox(splitterV);
 	wordInput = new QLineEdit( hbox1, "wordInput");
 	listclear = new QPushButton(tr("Clear"), hbox1, "Clear");
 	listclear->setMaximumWidth(40);
 	hbox1->setMinimumHeight(20);
-	dictList = new QListBox( splitter2, "dictList" );
+	dictList = new QListBox( splitterV, "dictList" );
 	RTFOutput = new QTextBrowser (splitterH, "RTFOutput");
 	listclear->setAccel( QKeySequence( tr("Ctrl+X", "Clear") ) );
 	setCentralWidget(centralFrame);
-
-	QValueList<int> splittersizes2;
-	splittersizes2.append(1);
-	splittersizes2.append(100);
-	splitter2->setSizes(splittersizes2);
 
 	RTFOutput->setTextFormat( RichText );
 	RTFOutput->setReadOnly(TRUE);
@@ -84,11 +80,14 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 	setGeometry (config->kGeometryX, config->kGeometryY, config->kGeometryW, config->kGeometryH);
 
 	QValueList<int> splittersizes;
-
 	splittersizes.append(config->spH1);
 	splittersizes.append(config->spH2);
-
 	splitterH->setSizes(splittersizes);
+
+	QValueList<int> splittersizesV;
+	splittersizesV.append(config->spV1);
+	splittersizesV.append(config->spV2);
+	splitterV->setSizes(splittersizesV);
 
 	int a;
 
@@ -159,34 +158,43 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 
 	UpdateLook();
 
-
-	RTFOutput->mimeSourceFactory()->setFilePath( "./" );
+	RTFOutput->mimeSourceFactory()->setFilePath( config->tipsPath );
 	RTFOutput->mimeSourceFactory()->setExtensionType("html", "text/html;charset=iso8859-2");
 }
 
 Kydpdict::~Kydpdict()
 {
-	myDict->CloseDictionary();
+    	myDict->CloseDictionary();
  	delete t;
  	t = 0;
  	delete m_checkTimer;
 	delete splitterH;
 }
 
-void Kydpdict::resizeEvent(QResizeEvent *)
+void Kydpdict::flushConfig(void)
 {
-	QSize aRozmiar;
-
-	aRozmiar = this->size();
-	config->kGeometryW = aRozmiar.width();
-	config->kGeometryH = aRozmiar.height();
-
 	QValueList<int> list = splitterH->sizes();
     	QValueList<int>::Iterator it = list.begin();
 	config->spH1 = *it;
 	it++;
-	config->spH2 = *it; //sa tylko 2, to nie ma co kombinowac z petla
+	config->spH2 = *it;
+
+	QValueList<int> list2 = splitterV->sizes();
+    	QValueList<int>::Iterator it2 = list2.begin();
+	config->spV1 = *it2;
+	it2++;
+	config->spV2 = *it2;
+
 	config->save();
+}
+
+void Kydpdict::resizeEvent(QResizeEvent *)
+{
+ 	QSize aRozmiar;
+
+	aRozmiar = this->size();
+	config->kGeometryW = aRozmiar.width();
+	config->kGeometryH = aRozmiar.height();
 }
 
 void Kydpdict::moveEvent(QMoveEvent *)
@@ -196,7 +204,6 @@ void Kydpdict::moveEvent(QMoveEvent *)
 	aPosition = this->pos();
 	config->kGeometryX = aPosition.x();
 	config->kGeometryY = aPosition.y();
-	config->save();
 }
 
 void Kydpdict::clipboardSignalArrived( bool selectionMode )
@@ -214,7 +221,7 @@ void Kydpdict::checkClipData( const QString& text )
 	if (text != m_lastString) {
 		m_lastString = text;
 		if(config->clipTracking)
-			PasteClippboard(m_lastString);
+			PasteClipboard(m_lastString);
 	}
 }
 
@@ -226,7 +233,7 @@ void Kydpdict::newClipData()
 	checkClipData( clipContents );
 }
 
-void Kydpdict::PasteClippboard(QString haslo)
+void Kydpdict::PasteClipboard(QString haslo)
 {
 	int index;
 	QListBoxItem *result, *tmp_result;
@@ -273,7 +280,11 @@ void Kydpdict::PasteClippboard(QString haslo)
 void Kydpdict::NewDefinition (int index)
 {
 	QString def = myDict->GetDefinition(index);
-	RTFOutput->setText(def.fromLocal8Bit(def));
+/* to jest wlasciwie potrzebne tylko dla prawidlowego pokazania pierwszej def. */
+	QTextCodec *codec = QTextCodec::codecForName("ISO8859-2");
+	def = codec->toUnicode(def.fromAscii(def));
+/* z wyj±tkiem tej definicji dzia³a prawid³owo */
+	RTFOutput->setText(def);
 }
 
 void Kydpdict::NewFromLine (const QString &newText)
@@ -335,7 +346,6 @@ void Kydpdict::SwapLang (bool direction, int lang ) //dir==1 toPolish
 			a=myDict->OpenDictionary(config);
 			if (a) Configure(TRUE);
 		} while (a);
-
 		UpdateLook();
 	}
 }
@@ -380,7 +390,7 @@ void Kydpdict::Configure(bool status)
 		"Good bye!"));
 		if(myConf)
   			delete myConf;
-		exit(0);
+		qApp->quit();
 	}
 
 	if(myConf)

@@ -1,10 +1,5 @@
-- jesli interface nie jest po polsku (LANG=C ./kydpdict) to nigdzie w programie
-  nie widaæ prawid³owo polskich liter
 - podpowiedzi
     - niemieckie
-    - plik tips.html - po kliknieciu przeskakuje do wlasciwej podpowiedzi tylko za
-      pierwszym razem jezeli jest podana pelna sciezka (szukaj zakomentowanej linii
-      z tips.html w ydpdictionary.cpp); ew. wywalic tipsfname z ydpconfig
     - wywalic tips.html i generowac go sobie z tabelki tips'ow na starcie
     - jesli podpowiedz znajduje sie w ostatniej linijce tekstu, to jest aktywna w
       pionie az do dolnej krawedzi okna
@@ -12,13 +7,11 @@
       'Fiji' - sprawdzic podpowiedzi
 - konfiguracja:
     - konfiguracja czcionek i/lub ich stylu
-    - wartosci qsplitterow z pliku konf nie sa ustawiane na starcie (?) (przynajmniej
-      tak to wyglada)
+    - ustawienie drugiej sciezki .wav dla drugiego slownika
+    - mozliwosc wylaczenia sprawdzania schowka (albo info, zeby zminimalizowac)
 - szukanie hasla w zasobach slownika
 - optymalizacja ladowania indeksu
 - przejscie z tlumaczeniem na gettext
     - makra, ¿eby nic w kodzie nie zmieniæ
     - makefiles (.po, .mo; sciezki;)
 - testy z wlasna implementacja wyszukiwania w indeksie
-
-- pamietac o uaktualnieniu .spec o tips.html !

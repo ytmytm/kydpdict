@@ -164,3 +164,14 @@ Kydpdict 0.5.2pre2 (8.3.2003)
 - uaktualnione tips.html (AP)
 - szukanie tips.html w sciezce tipsFName z kydpconf (wylaczone teraz z powodu bledu)
 - naprawiony make install
+
+=====================================================================
+Kydpdict 0.5.2pre3 (27.6.2003)
+- przy dowolnych locale widaæ prawid³owo polskie znaki w oknie definicji
+- literówki w nazwach funkcji
+- usuniête ostrze¿enia przy getenv (brak #include <stdlib.h>)
+- ustawienia splitterow sa zapisywane poprawnie
+- ustawienia obu splitterow sa zapisywane
+- naprawiona obsluga tips.html w dowolnej sciezce (KYDPDATAPATH)
+- zapisywana/odczytywana zmienna tipsPath (nie ma mozliwosci jej edycji poza
+  plikiem konfiguracyjnym)

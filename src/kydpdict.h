@@ -33,6 +33,7 @@ class Kydpdict : public QMainWindow
     Kydpdict(QWidget* parent=0, const char *name=0);
     /** destructor */
     ~Kydpdict();
+    void flushConfig(void);
 
     private:
 		void resizeEvent (QResizeEvent *);
@@ -40,7 +41,7 @@ class Kydpdict : public QMainWindow
 		void Configure(bool status);
 		void UpdateLook ();
 		void SwapLang(bool direction, int lang);
-		void PasteClippboard (QString haslo);
+		void PasteClipboard (QString haslo);
 
 		// global configuration
 		kydpConfig *config;
@@ -60,7 +61,7 @@ class Kydpdict : public QMainWindow
 		QClipboard  *cb;
 		QTimer *m_checkTimer;
 		DynamicTip * t;
-		QSplitter *splitterH;
+		QSplitter *splitterH, *splitterV;
 
     private slots:
 		void NewDefinition (int index);       		/* word list highlited */
