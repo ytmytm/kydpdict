@@ -425,6 +425,9 @@ void Kydpdict::newFromSelection()
     // do nothing if clipboard tracking is disabled
     if (!(config->clipTracking))
 	return;
+    // do nothing if it comes from us
+    if (((RTFOutput->hasSelectedText())||(wordInput->lineEdit()->hasSelectedText())) && (config->ignoreOwnSelection))
+        return;
     if (eventLock)
 	return;
 
