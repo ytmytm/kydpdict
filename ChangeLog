@@ -307,3 +307,4 @@ Kydpdict 0.5.9 (xx.xx.xxxx)
 - nowe opcje - dock i kolor t³a (je¶li nie jest aktywne)
 - tray icon jako opcja
 - jezeli t³o nie jest aktywne, to guzik wybiera kolor t³a
+- historia combo ma limit na 25 wyrazow. moze teraz nie bedzie sprawiac problemow

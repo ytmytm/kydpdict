@@ -25,6 +25,8 @@
 #include <qtextcodec.h>
 #include <qgrid.h>
 
+#define COMBO_HISTORY_SIZE	25
+
 /* 16x16 */
 #include "../icons/conf.xpm"
 #include "../icons/exit.xpm"
@@ -350,13 +352,8 @@ void Kydpdict::PasteClipboard(QString haslo)
 		this->setFocus();
 	}
 
-	wordInput->blockSignals( TRUE );
-	if (((wordInput->listBox())->findItem(contents, Qt::ExactMatch) == 0)
-	    && (contents.length()>0)) {
-	    wordInput->insertItem(contents);
-	}
+	UpdateHistory(index);
 	wordInput->setEditText(contents);
-	wordInput->blockSignals( FALSE );
 
 	if(config->autoPlay)
 		PlaySelected (index);
@@ -400,12 +397,22 @@ void Kydpdict::PlayCurrent ()
 
 void Kydpdict::UpdateHistory(int index)
 {
+    int i;
     QString content = (dictList->currentText()).simplifyWhiteSpace();
 
+    if (content.length()<1)
+	return;
+    if ((wordInput->listBox())->findItem(content, Qt::ExactMatch) != 0)
+	return;
+
     wordInput->blockSignals( TRUE );
-    if (((wordInput->listBox())->findItem(content, Qt::ExactMatch) == 0)
-       && (content.length()>0)) {
-	    wordInput->insertItem(content);
+
+    if ((wordInput->listBox())->count() < COMBO_HISTORY_SIZE) {
+        wordInput->insertItem(content);
+    } else {
+	for (i=0;i<COMBO_HISTORY_SIZE;i++)
+	    (wordInput->listBox())->changeItem( (wordInput->listBox())->text(i+1), i );
+	(wordInput->listBox())->changeItem( content, COMBO_HISTORY_SIZE-1 );
     }
     wordInput->blockSignals( FALSE );
 }
