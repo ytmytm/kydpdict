@@ -273,3 +273,7 @@ Kydpdict 0.5.7pre1 (7.8.2003)
 Kydpdict 0.5.7pre2 (3.10.2003)
 - informacja w README o Qt >=3.1
 - uaktualnione TODO: refleksje i przemyslenia
+
+=====================================================================
+Kydpdict 0.5.7pre2 (3.10.2003)
+- uaktualnione TODO: nowy blad (wpisywanie z klawiatury na liscie wyrazow)
