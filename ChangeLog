@@ -414,3 +414,6 @@ Kydpdict 0.6.6 (27.09.2004)
 - wyszukiwanie rozmyte - wzglêdem odleg³o¶ci redakcyjnej (edit distance), pomys³: M. Pilichowski
 - nowa opcja: transkrypcja fonetyczna via unicode (wymaga odpowiedniego fontu!)
 - focus nie przeskakuje z listy wyrazów do linii edycji (u¿ywaæ TAB)
+
+=====================================================================
+Kydpdict 0.6.7 (xx.xx.2004)
