@@ -285,6 +285,19 @@ Kydpdict::~Kydpdict()
 
 void Kydpdict::flushConfig(void)
 {
+	QSize aSize;
+	QPoint aPosition;
+
+	config->kMaximized = this->isMaximized();
+
+	aSize = this->size();
+	config->kGeometryW = aSize.width();
+	config->kGeometryH = aSize.height();
+
+	aPosition = this->pos();
+	config->kGeometryX = aPosition.x();
+	config->kGeometryY = aPosition.y();
+
 	QValueList<int> list = splitterH->sizes();
     	QValueList<int>::Iterator it = list.begin();
 	config->spH1 = *it;
@@ -302,30 +315,12 @@ void Kydpdict::flushConfig(void)
 
 void Kydpdict::resizeEvent(QResizeEvent *)
 {
- 	QSize aRozmiar;
 	int item;
-
-	config->kMaximized = this->isMaximized();
-
-	if (! config->kMaximized) {
-	    aRozmiar = this->size();
-	    config->kGeometryW = aRozmiar.width();
-	    config->kGeometryH = aRozmiar.height();
-	}
 
 	item=dictList->currentItem();
 	myDict->ListRefresh(myDict->topitem);
 	dictList->setCurrentItem(item);
 	scrollBar->setPageStep(dictList->numItemsVisible());
-}
-
-void Kydpdict::moveEvent(QMoveEvent *)
-{
-	QPoint aPosition;
-
-	aPosition = this->pos();
-	config->kGeometryX = aPosition.x();
-	config->kGeometryY = aPosition.y();
 }
 
 void Kydpdict::onEscaped()

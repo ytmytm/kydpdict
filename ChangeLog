@@ -387,7 +387,7 @@ Kydpdict 0.6.3 (14.06.2004)
 
 =====================================================================
 Kydpdict 0.6.4 (xx.xx.2004)
-- zapamiêtuje maksymalizacjê
+- zapamiêtuje maksymalizacjê (+poprawka na metacity JJ)
 - word input ma ustawiane t³o na dany kolor (JJ)
 - uporz±dkowany kod obs³ugi nowego wyrazu (JJ)
 - nowy wyraz w combo jest zaznaczony - mo¿na od razu skasowaæ (JJ)

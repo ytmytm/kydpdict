@@ -40,7 +40,6 @@ class Kydpdict : public QMainWindow
 
     private:
 		void resizeEvent (QResizeEvent *);
-		void moveEvent (QMoveEvent *);
 		void Configure(bool status);
 		void UpdateLook ();
 		void SwapLang(bool direction, int lang);

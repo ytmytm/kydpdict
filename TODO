@@ -1,5 +1,8 @@
 - podpowiedzi
     - niemieckie
+- je¶li zrobiæ koszernie tj. w main.cpp wstawiæ 'delete kydpdict;' zamiast flushConfig,
+  a flushConfig w destruktor kydpdict to wpada w nieskoñczon± pêtlê je¿eli rozmiar w pionie
+  zmieni³ siê na mniejszy i widoczna lista zosta³a skrócona
 - dzielenie listy hase³ na grupy (np. 'run across', 'run away' itd. w grupie
   'run' wizualnie oddzielonej a¿ do 'runabout' które jest now± grup±
   (do zrobienia przy wpisywaniu nowych w ListRefresh je¿eli poprzedni zawiera³ jedn± spacjê,
