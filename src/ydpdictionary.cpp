@@ -368,7 +368,7 @@ void ydpDictionary::ListScrollUp(int offset) {
 	for (i=1;i<spacefor;i++)
 	    dictList->changeItem(dictList->text(i),i-1);
 
-	dictList->changeItem(codec->toUnicode(QString(words[topitem+spacefor])),i-1);
+	dictList->changeItem(codec->toUnicode(words[topitem+spacefor]),i-1);
 	topitem++;
 
 	dictList->setCurrentItem(spacefor-2);	// prepare to force highlight signal
@@ -401,7 +401,7 @@ void ydpDictionary::ListScrollDown(int offset) {
 	for (i=spacefor-1;i!=0;i--)
 	    dictList->changeItem(dictList->text(i-1),i);
 	topitem--;
-	dictList->changeItem(codec->toUnicode(QString(words[topitem])),0);
+	dictList->changeItem(codec->toUnicode(words[topitem]),0);
 
 	dictList->setCurrentItem(1);	// prepare to force highlight signal
 	dictList->setAutoUpdate(TRUE);
@@ -487,7 +487,7 @@ void ydpDictionary::ListRefresh(int index)
 
     dictList->blockSignals(TRUE);
     for (i=0;i<(int)dictList->count();i++)
-	dictList->changeItem(codec->toUnicode(QString(words[index+i])),i);
+	dictList->changeItem(codec->toUnicode(words[index+i]),i);
     dictList->blockSignals(FALSE);
 }
 
