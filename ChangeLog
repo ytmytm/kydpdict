@@ -207,3 +207,8 @@ Kydpdict 0.5.3pre3 (13.7.2003)
 =====================================================================
 Kydpdict 0.5.3 (22.7.2003)
 - znaleziony winowajca segfault przy 'backbencher' (AP)
+
+=====================================================================
+Kydpdict 0.5.4pre1 (26.7.2003)
+- poprawiony blad ktory powodowal segfault przy absolutnym braku konfiguracji (AP)
+- program zakoñczy siê przy braku konfiguracji i user nie chce jej podaæ

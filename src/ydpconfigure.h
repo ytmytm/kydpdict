@@ -41,7 +41,7 @@ private:
 
     QPushButton *changeDictionaryUrl;
     QPushButton *changeAudioUrl;
-	QPushButton *changeAudio2Url;
+    QPushButton *changeAudio2Url;
     QPushButton *changePlayerUrl;
     QPushButton *changeFont1;
     QPushButton *changeFont2;
@@ -68,7 +68,7 @@ private:
 
     QLineEdit *dictionaryUrl;
     QLineEdit *audioUrl;
-	QLineEdit *audio2Url;
+    QLineEdit *audio2Url;
     QLineEdit *playerUrl;
 
     QString cFontKolor1;
@@ -80,7 +80,7 @@ private:
 private slots:
     void NewDictUrl();
     void NewAudioUrl();
-	void NewAudio2Url();
+    void NewAudio2Url();
     void NewFontColor1();
     void NewFontColor2();
     void NewFontColor3();

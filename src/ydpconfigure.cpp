@@ -50,7 +50,7 @@ ydpConfigure::ydpConfigure( kydpConfig *globalconfig, QWidget* parent,  const ch
 	
     TabWidget1->insertTab( tab1, tr("Dictionary") );
 
-	tab4 = new QWidget( TabWidget1, "tab4" );
+    tab4 = new QWidget( TabWidget1, "tab4" );
 
     GroupBox2 = new QGroupBox( tab4, "GroupBox2" );
     GroupBox2->setTitle( tr("Path to English audio files") );
@@ -63,7 +63,7 @@ ydpConfigure::ydpConfigure( kydpConfig *globalconfig, QWidget* parent,  const ch
     changeAudioUrl = new QPushButton("...", GroupBox2, "changeAudioUrl");
     changeAudioUrl->setGeometry(310,17,40,22);
 
-	GroupBox4 = new QGroupBox( tab4, "GroupBox4" );
+    GroupBox4 = new QGroupBox( tab4, "GroupBox4" );
     GroupBox4->setTitle( tr("Path to Deutsch audio files") );
     GroupBox4->setGeometry(8,59,361,50);
 
@@ -87,7 +87,7 @@ ydpConfigure::ydpConfigure( kydpConfig *globalconfig, QWidget* parent,  const ch
 
     TabWidget1->insertTab( tab4, tr("Audio") );
 
-	tab2 = new QWidget( TabWidget1, "tab2" );
+    tab2 = new QWidget( TabWidget1, "tab2" );
 
     textLabel2 = new QLabel(tr("Choose qualificator color"), tab2, "textLabel2");
     textLabel2->setGeometry(6,36,150,22);
@@ -153,7 +153,7 @@ ydpConfigure::ydpConfigure( kydpConfig *globalconfig, QWidget* parent,  const ch
     playerUrl->setText(config->player);
     dictionaryUrl->setText(config->topPath);
     audioUrl->setText(config->cdPath);
-	audio2Url->setText(config->cd2Path);
+    audio2Url->setText(config->cd2Path);
     cFontKolor1 = config->kFontKolor1;
     cFontKolor2	= config->kFontKolor2;
     cFontKolor3 = config->kFontKolor3;
@@ -296,7 +296,7 @@ void ydpConfigure::WriteDefaults()
 
     dictionaryUrl->setText(cnf->topPath);
     audioUrl->setText(cnf->cdPath);
-	audio2Url->setText(cnf->cd2Path);
+    audio2Url->setText(cnf->cd2Path);
     playerUrl->setText(cnf->player);
     cFontKolor1 = cnf->kFontKolor1;
     cFontKolor2 = cnf->kFontKolor2;

@@ -89,6 +89,9 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 	splittersizesV.append(config->spV2);
 	splitterV->setSizes(splittersizesV);
 
+ 	m_checkTimer = new QTimer(this, "timer");
+	m_checkTimer->start(1000, FALSE);
+
 	int a;
 
 	do {
@@ -139,9 +142,6 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 	menu->insertItem(  tr("Help"), help );
 
  	t = new DynamicTip( this );
-
- 	m_checkTimer = new QTimer(this, "timer");
- 	m_checkTimer->start(1000, FALSE);
 
 	connect (dictList, SIGNAL(highlighted(int)), this, SLOT(NewDefinition(int)));
 	connect (dictList, SIGNAL(selected(int)), this, SLOT(PlayCurrent()));
@@ -392,7 +392,7 @@ void Kydpdict::Configure(bool status)
 		"Good bye!"));
 		if(myConf)
   			delete myConf;
-		qApp->exit(1);
+		exit(1);
 	}
 
 	if(myConf)
