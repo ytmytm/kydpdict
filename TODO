@@ -14,7 +14,5 @@
 - przejscie z tlumaczeniem na gettext
     - makra, ¿eby nic w kodzie nie zmieniæ
     - makefiles (.po, .mo; sciezki;)
-- F8 - cliboard tracking toggle
-- jesli zminimalizowany i jest ikona w tray - powinien dalej przechwytywac wyrazy i
-  wyskakiwac na wierzch (opcja?)
 - opcja: po przechwyceniu schowka - na wierzch ale bez focusa na siebie
+- przy wyszukiwaniu: problemy ze spacjami: np 'go_xxx' vs. goat, gobble etc.
