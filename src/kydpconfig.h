@@ -22,7 +22,7 @@ public:
 	kydpConfig();
 	~kydpConfig();
 	
-	QString cdPath, cd2Path, topPath, tipsPath;
+	QString cdPath, cd2Path, topPath;
 	QString player;
 	QString kFontKolor1;
 	QString kFontKolor2;

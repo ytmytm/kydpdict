@@ -71,7 +71,6 @@ void kydpConfig::load(void)
 	topPath	= settings.readEntry("/dictpath", topPath);
 	cdPath	= settings.readEntry("/cd1path", cdPath);
 	cd2Path = settings.readEntry("/cd2path", "/mnt/cdrom");
-	tipsPath= settings.readEntry("/tipspath", KYDPDATADIR );
 	player	= settings.readEntry("/player", player);
 	settings.endGroup();
 	settings.beginGroup("/language");
@@ -126,7 +125,6 @@ void kydpConfig::save(void)
 	settings.writeEntry("/dictpath", topPath);
 	settings.writeEntry("/cd1path", cdPath);
 	settings.writeEntry("/cd2path", cd2Path);
-	settings.writeEntry("/tipspath", tipsPath);
 	settings.writeEntry("/player", player);
 	settings.endGroup();
 	settings.beginGroup("/language");
