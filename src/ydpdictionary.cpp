@@ -571,6 +571,7 @@ int ydpDictionary::FindWord(QString word)
     int a,b;
     int middle,result;
     int lwordorig;
+    bool same;
 
     lwordorig = word.length();
 
@@ -580,6 +581,8 @@ int ydpDictionary::FindWord(QString word)
     wordorig = word.lower();
     word = stripDelimiters(word.lower());
     word.truncate(20);
+
+    same = (word.compare(wordorig) == 0);
 
     a = 0; b = wordCount;
 
@@ -619,19 +622,19 @@ int ydpDictionary::FindWord(QString word)
 	while ((i<150) && (a+i<wordCount) && (smax<100)) {
 	    bstring = codec->toUnicode(words[a+i]).lower();
 	    score  = ScoreWord(wordorig,bstring);
-	    scores = ScoreWord(word,stripDelimiters(bstring));
+	    if (!same) scores = ScoreWord(word,stripDelimiters(bstring));
 	    if (score > smax) {
 		smax = score; max = a+i;
 		if (lwordorig == smax)
 		    smax +=100;				// extra bonus for direct match - break while
 	    }
-	    if (scores > smaxs) {
+	    if ((!same)&&(scores > smaxs)) {
 		smaxs = scores; maxs = a+i;
 	    }
 	    ++i;
 	}
 	a = max;	// raw match preferred
-	if (smaxs > smax)
+	if ((!same)&&(smaxs > smax))
 	    a = maxs;	// unless stripped has better score
     }
 
