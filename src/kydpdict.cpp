@@ -290,12 +290,13 @@ void Kydpdict::moveEvent(QMoveEvent *)
 
 void Kydpdict::onEscaped()
 {
-    if(wordInput->currentText().isEmpty())
-	this->hide();
-    else {
-	wordInput->clearEdit();
+    if (!wordInput->hasFocus())
 	wordInput->setFocus();
-    }
+    else
+	if (wordInput->currentText().isEmpty())
+	    this->hide();
+	else
+	    wordInput->clearEdit();
 }
 
 void Kydpdict::windowActivationChange(bool oldActive)
