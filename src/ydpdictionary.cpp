@@ -125,25 +125,25 @@ int ydpDictionary::OpenDictionary(kydpConfig *config)
 
 int ydpDictionary::OpenDictionary(QString path, QString index, QString def)
 {
-    QString p;
     int i;
 
     /* open index and definition files */
-    p = path + "/" + index;
-    fIndex.setName(p);
+    fIndex.setName( path + "/" + index );
     if (!(fIndex.open(IO_ReadOnly))) {
-	p = tr( "Can't open index file!\n" ) + p;
-	QMessageBox::critical(0, "kydpdict", p );
-	return 1;
+	fIndex.setName(path + "/" + index.upper());
+	if (!(fIndex.open(IO_ReadOnly))) {
+	    QMessageBox::critical(0, "kydpdict", tr( "Can't open index file!\n" ) + fIndex.name() );
+	    return 1;
+	}
     }
 
-    p = path + "/" + def;
-    fData.setName(p);
-
+    fData.setName( path + "/" + def );
     if (!(fData.open(IO_ReadOnly))) {
-	p = tr( "Can't open data file!\n" ) + p;
-	QMessageBox::critical(0, "kydpdict", p );
-	return 1;
+	fData.setName(path + "/" + def.upper());
+	if (!(fData.open(IO_ReadOnly))) {
+	    QMessageBox::critical(0, "kydpdict", tr( "Can't open data file!\n" ) + fData.name() );
+	    return 1;
+	}
      }
 
     /* 0-english, eng->pol; 1-english, pol->eng; 2-german, ger->pol; 3-german, pol->ger */
@@ -182,11 +182,17 @@ int ydpDictionary::CheckDictionary(QString path, QString index, QString def)
     QFile f;
 
     f.setName( path + "/" + index);
-    if ( !(f.exists()) )
-	return 0;
+    if ( !(f.exists()) ) {
+	f.setName( path + "/" + index.upper() );
+        if ( !(f.exists()) )
+    	    return 0;
+    }
     f.setName( path + "/" + def);
-    if ( !(f.exists()) )
-	return 0;
+    if ( !(f.exists()) ) {
+	f.setName( path + "/" + index.upper() );
+	if ( !(f.exists()) )
+	    return 0;
+    }
     return 1;
 }
 

@@ -346,3 +346,4 @@ Kydpdict 0.6.0pre (xx.xx.2004)
 - clipboard tracking znowu honorowany
 - wordInput pusty na starcie
 - zaznaczenia/schowek ignorowane po w³±czeniu clipboard tracking i na starcie
+- potrafi znale¼æ i za³adowaæ pliki s³ownika o nazwach pisanych SAMYMY WIELKIMI LITERAMI
