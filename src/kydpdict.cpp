@@ -286,9 +286,8 @@ void Kydpdict::moveEvent(QMoveEvent *)
 
 void Kydpdict::windowActivationChange(bool oldActive)
 {
-    if (isActiveWindow()) {
+    if (isActiveWindow())
 	wordInput->setFocus();
-    }
 }
 
 void Kydpdict::clipboardSignalArrived( bool selectionMode )
