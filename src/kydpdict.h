@@ -100,6 +100,7 @@ class Kydpdict : public QMainWindow
     protected:
     		void clipboardSignalArrived( bool selectionMode );
 		void checkClipData( const QString& text );
+		void windowActivationChange( bool oldActive );
 
 };
 

@@ -284,6 +284,13 @@ void Kydpdict::moveEvent(QMoveEvent *)
 	config->kGeometryY = aPosition.y();
 }
 
+void Kydpdict::windowActivationChange(bool oldActive)
+{
+    if (isActiveWindow()) {
+	wordInput->setFocus();
+    }
+}
+
 void Kydpdict::clipboardSignalArrived( bool selectionMode )
 {
 	cb->setSelectionMode( selectionMode );
