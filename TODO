@@ -10,13 +10,12 @@
 - FindWord napisac ³adniej (potrzeba pomys³u! :)
     - wywalic zabawy z locale na rzecz wlasnej funkcji strcoll/localeAwareCompare?
 - mozliwosc zmiany ikony/ustawiania jej z poziomu aplikacji (to co kiedys AP wywalil)
-- wykrywanie juz uruchomionej instancji i ustawianie jej fokusa
-    - niewykonalne ³atwo? szukaæ okna klasy Kydpdict.Kydpdict? (niby jak?)
 - konfigurowalne klawisze z --with-kde
 - wczytywanie wszystkich slow, ze slownikow (wybranych) do jednej listy
-- pojawianie sie po zmianie pulpitu, autostick?
+- pojawianie sie po zmianie pulpitu, autostick? (zawsze widoczne/przypnij/whatever)
     - bah - minimalizacja<=>znikanie (dla kpwndict tez) (jak?)
 - skrót klawiaturowy na prze³±czanie ¶ledzenia schowka (jaki?!?)
     Ctrl+S? (polski, angielski - Ctrl+'T' like 'T'racking?)
-- skróty w dymkach nad toolbarem
-- 'provencial' - zrabane haslo
+- skróty klawiaturowe opisane w dymkach nad toolbarem
+- 'provencial' - zepsuta tre¶æ hasla - samo has³o ma ten sam b³±d, co jego wpis w indeksie
+- set (i inne nieregularne identyczno¶ciowe) - nie dzia³a link na formach czasownika
