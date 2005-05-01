@@ -31,3 +31,5 @@
     - zapamietywac w konfigu distance
     - zrobic do wyboru fuzzy/regexp - to jest w³a¶ciwie to, co ju¿ jest w yadict; mo¿e przepisaæ
       na tak samo?
+- crash przy s³owniku ger->pol
+- komunikat QMetaObjectCleanUp::setMetaObject: Double use of QMetaObjectCleanUp! - wystêpuje w mocach
