@@ -1,4 +1,4 @@
-*.moc.cpp
+*.moc
 .depend
 Makefile
 kydpdict

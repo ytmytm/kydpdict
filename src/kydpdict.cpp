@@ -67,7 +67,6 @@
 #include "../icons/clipboard.xpm"
 #include "../icons/babelfish.xpm"
 
-#include "kydpdict.h"
 #include "kydpconfig.h"
 #include "dock_widget.h"
 
@@ -79,6 +78,9 @@
 extern Time qt_x_user_time;	// this is from Qt
 #endif
 #endif
+
+#include "kydpdict.h"
+#include "kydpdict.moc"
 
 Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name)
 {

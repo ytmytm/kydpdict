@@ -21,6 +21,7 @@
 #include <qtextbrowser.h>
 
 #include "ydpconfigure.h"
+#include "ydpconfigure.moc"
 
 ydpConfigure::ydpConfigure( kydpConfig *globalconfig, QWidget* parent,  const char* name, bool modal )
     : QDialog( parent, name, modal )

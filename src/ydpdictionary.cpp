@@ -20,8 +20,10 @@
 
 #include <locale.h>
 
-#include "ydpdictionary.h"
 #include "kydpdict.h"
+
+#include "ydpdictionary.h"
+#include "ydpdictionary.moc"
 
 KeyEater* keyEater;
 

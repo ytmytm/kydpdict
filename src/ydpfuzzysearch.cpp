@@ -14,8 +14,10 @@
 #include <qtextcodec.h>
 #include <qlabel.h>
 
-#include "ydpfuzzysearch.h"
 #include "kydpdict.h"
+
+#include "ydpfuzzysearch.h"
+#include "ydpfuzzysearch.moc"
 
 ydpFuzzySearch::ydpFuzzySearch (QWidget *parent, const char* name, bool modal)
  : QDialog(parent, name, modal)

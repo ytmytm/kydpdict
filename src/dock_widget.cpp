@@ -15,13 +15,14 @@
 #include <qtextbrowser.h>
 #include <qstringlist.h>
 
-#include "dock_widget.h"
-
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
 #include <X11/Xatom.h>
 
 #include "../icons/babelfish.xpm"
+
+#include "dock_widget.h"
+#include "dock_widget.moc"
 
 #define kdebug printf
 

@@ -26,12 +26,12 @@ KYDPDATADIR=$(datadir)/$(PACKAGE_NAME)/
 
 OBJECTS = kdynamictip.cpp kydpconfig.cpp kydpdict.cpp main.cpp ydpdictionary.cpp ydpconfigure.cpp ydpfuzzysearch.cpp
 
-OOBJECTS = main.o kydpconfig.o kdynamictip.o kydpdict.o ydpdictionary.o ydpdictionary.moc.o \
-	ydpconfigure.o ydpconfigure.moc.o ydpfuzzysearch.o ydpfuzzysearch.moc.o kydpdict.moc.o
+OOBJECTS = main.o kydpconfig.o kdynamictip.o kydpdict.o ydpdictionary.o  \
+	ydpconfigure.o ydpfuzzysearch.o
 
 ifeq ($(HAVE_X11),yes)
 OBJECTS  += dock_widget.cpp
-OOBJECTS += dock_widget.o dock_widget.moc.o
+OOBJECTS += dock_widget.o
 endif
 
 ifeq (.depend,$(wildcard .depend))
@@ -45,9 +45,8 @@ endif
 main.o:
 		$(CXX) -c main.cpp $(QT_INCLUDE) $(CXXFLAGS) -DLOCALEDIR=\"$(LOCALEDIR)\"
 
-kydpdict.moc.o: kydpdict.h
-		$(MOC) kydpdict.h -o kydpdict.moc.cpp
-		$(CXX) -c kydpdict.moc.cpp $(QT_INCLUDE) $(CXXFLAGS)
+kydpdict.moc: kydpdict.h
+		$(MOC) kydpdict.h -o kydpdict.moc
 
 kydpdict.o:
 		$(CXX) -c kydpdict.cpp $(X_CFLAGS) $(QT_INCLUDE) $(CXXFLAGS)
@@ -55,23 +54,20 @@ kydpdict.o:
 ydpdictionary.o: tips.h
 		$(CXX) -c ydpdictionary.cpp $(QT_INCLUDE) $(CXXFLAGS)
 
-ydpdictionary.moc.o: ydpdictionary.h
-		$(MOC) ydpdictionary.h -o ydpdictionary.moc.cpp
-		$(CXX) -c ydpdictionary.moc.cpp $(QT_INCLUDE) $(CXXFLAGS)
+ydpdictionary.moc: ydpdictionary.h
+		$(MOC) ydpdictionary.h -o ydpdictionary.moc
 
 ydpconfigure.o:
 		$(CXX) -c ydpconfigure.cpp $(QT_INCLUDE) $(CXXFLAGS)
 
-ydpconfigure.moc.o: ydpconfigure.h
-		$(MOC) ydpconfigure.h -o ydpconfigure.moc.cpp
-		$(CXX) -c ydpconfigure.moc.cpp $(QT_INCLUDE) $(CXXFLAGS)
+ydpconfigure.moc: ydpconfigure.h
+		$(MOC) ydpconfigure.h -o ydpconfigure.moc
 
 ydpfuzzysearch.o:
 		$(CXX) -c ydpfuzzysearch.cpp $(QT_INCLUDE) $(CXXFLAGS)
 
-ydpfuzzysearch.moc.o: ydpfuzzysearch.h
-		$(MOC) ydpfuzzysearch.h -o ydpfuzzysearch.moc.cpp
-		$(CXX) -c ydpfuzzysearch.moc.cpp $(QT_INCLUDE) $(CXXFLAGS)
+ydpfuzzysearch.moc: ydpfuzzysearch.h
+		$(MOC) ydpfuzzysearch.h -o ydpfuzzysearch.moc
 
 kydpconfig.o:
 		$(CXX) -c kydpconfig.cpp $(QT_INCLUDE) $(CXXFLAGS) -DKYDPDATADIR=\"$(KYDPDATADIR)\"
@@ -83,9 +79,8 @@ ifeq ($(HAVE_X11),yes)
 dock_widget.o:
 		$(CXX) -c dock_widget.cpp $(X_CFLAGS) $(QT_INCLUDE) $(CXXFLAGS)
 
-dock_widget.moc.o: dock_widget.h
-		$(MOC) dock_widget.h -o dock_widget.moc.cpp
-		$(CXX) -c dock_widget.moc.cpp $(QT_INCLUDE) $(CXXFLAGS)
+dock_widget.moc: dock_widget.h
+		$(MOC) dock_widget.h -o dock_widget.moc
 endif
 
 kydpdict: 	$(OOBJECTS)
@@ -102,7 +97,7 @@ install: kydpdict
 		install -m 644 kydpdict_pl.qm $(DESTDIR)$(LOCALEDIR)
 
 clean:
-		-rm *.o *.moc.cpp *.qm .depend
+		-rm *.o *.moc *.qm .depend
 		-rm kydpdict
 
 distclean: clean
