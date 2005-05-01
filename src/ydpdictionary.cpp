@@ -582,7 +582,9 @@ void ydpDictionary::ListRefresh(int index)
 int ydpDictionary::ScoreWord(QString w1, QString w2)
 {
     unsigned int i = 0;
-    for (; (i<w1.length()) && (i<w2.length()); i++)
+    unsigned int len1 = w1.length();
+    unsigned int len2 = w2.length();
+    for (; (i<len1) && (i<len2); i++)
 	if (w1.at(i) != w2.at(i))
 	    break;
     return i;
@@ -591,9 +593,10 @@ int ydpDictionary::ScoreWord(QString w1, QString w2)
 QString ydpDictionary::stripDelimiters(QString word)
 {
     QString lstring;
-
     unsigned int i;
-    for (i=0; i<word.length(); i++) {
+    unsigned int wlen = word.length();
+
+    for (i=0; i<wlen; i++) {
 	if (word.at(i).isLetterOrNumber())
 	    lstring += word.at(i);
     }
@@ -1071,12 +1074,12 @@ QString ydpDictionary::insertHyperText(QString raw_input, int level)
 
 		if(tmp.endsWith(",")) {
 			tags |= T_CM;
-			tmp  = tmp.left(tmp.length()-1);
+			tmp = tmp.left(tmp.length()-1);
 		}
 
 		if(tmp.startsWith("+")) {
 			tags |= T_PL;
-			tmp  = tmp.right(tmp.length()-1);
+			tmp = tmp.right(tmp.length()-1);
 		}
 
 		pos2 = 0;
