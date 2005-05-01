@@ -7,6 +7,9 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <qlineedit.h>
+#include <qlistbox.h>
+#include <qslider.h>
 #include <qpushbutton.h>
 #include <qtextcodec.h>
 #include <qlabel.h>

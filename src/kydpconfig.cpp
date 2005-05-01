@@ -8,8 +8,12 @@
  ***************************************************************************/
 
 #include <stdlib.h>
+
 #include <qdir.h>
 #include <qfile.h>
+#include <qstring.h>
+#include <qfont.h>
+#include <qsettings.h>
 
 #include "kydpconfig.h"
 

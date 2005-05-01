@@ -3,9 +3,10 @@
 #define DOCKAPP_H
 
 #include <qlabel.h>
-#include <qtextbrowser.h>
-#include <qstringlist.h>
-#include <qpixmap.h>
+
+class QTextBrowser;
+class QStringList;
+class QPixmap;
 
 /**
 	Klasa reprezentuj±ca ikonkê w obszarze powiadamiania

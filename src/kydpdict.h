@@ -10,18 +10,19 @@
 #ifndef KYDPDICT_H
 #define KYDPDICT_H
 
-#include <qwidget.h>
-#include <qlistbox.h>
-#include <qcombobox.h>
-#include <qmenubar.h>
-#include <qpopupmenu.h>
-#include <qclipboard.h>
 #include <qmainwindow.h>
-#include <qtimer.h>
-#include <qsplitter.h>
-#include <qtoolbar.h>
-#include <qtoolbutton.h>
-#include <qscrollbar.h>
+
+class QListBox;
+class QComboBox;
+class QMenuBar;
+class QPopupMenu;
+class QClipboard;
+class QTimer;
+class QSplitter;
+class QToolBar;
+class QToolButton;
+class QTextBrowser;
+class QScrollBar;
 
 #include "ydpdictionary.h"
 #include "kydpconfig.h"

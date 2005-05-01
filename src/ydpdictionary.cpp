@@ -7,6 +7,7 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <qlistbox.h>
 #include <qmessagebox.h>
 #include <qprocess.h>
 #include <qtextcodec.h>

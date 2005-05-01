@@ -10,11 +10,12 @@
 #ifndef YDPFUZZYSEARCH_H
 #define YDPFUZZYSEARCH_H
 
-#include <qwidget.h>
 #include <qdialog.h>
-#include <qlineedit.h>
-#include <qlistbox.h>
-#include <qslider.h>
+
+class QLineEdit;
+class QListBox;
+class QListBoxItem;
+class QSlider;
 
 class ydpFuzzySearch : public QDialog
 {

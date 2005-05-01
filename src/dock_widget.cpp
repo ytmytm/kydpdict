@@ -8,11 +8,12 @@
  ***************************************************************************/
 
 #include <qapplication.h>
-#include <qobject.h>
 #include <qtimer.h>
 #include <qtooltip.h>
 #include <qimage.h>
 #include <qpixmap.h>
+#include <qtextbrowser.h>
+#include <qstringlist.h>
 
 #include "dock_widget.h"
 

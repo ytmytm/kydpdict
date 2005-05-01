@@ -7,7 +7,6 @@
  *                                                                         *
  ***************************************************************************/
 
-#include <qwidget.h>
 #include <qtooltip.h>
 
 class DynamicTip : public QToolTip
@@ -20,4 +19,3 @@ public:
 protected:
     void maybeTip( const QPoint & );
 };
-

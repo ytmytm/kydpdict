@@ -10,16 +10,16 @@
 #ifndef YDPCONFIGURE_H
 #define YDPCONFIGURE_H
 
-#include <qwidget.h>
-#include <qpushbutton.h>
 #include <qdialog.h>
-#include <qtextedit.h>
-#include <qtabwidget.h>
-#include <qgroupbox.h>
-#include <qlineedit.h>
-#include <qlabel.h>
-#include <qcheckbox.h>
-#include <qfont.h>
+
+class QPushButton;
+class QTextBrowser;
+class QTabWidget;
+class QGroupBox;
+class QLineEdit;
+class QLabel;
+class QCheckBox;
+class QFont;
 
 #include "kydpconfig.h"
 

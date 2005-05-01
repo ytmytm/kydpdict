@@ -7,7 +7,6 @@
  *                                                                         *
  ***************************************************************************/
 
-#include <qapplication.h>
 #include <qcursor.h>
 
 #include "kdynamictip.h"

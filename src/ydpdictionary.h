@@ -10,9 +10,12 @@
 #ifndef YDPDICTIONARY_H
 #define YDPDICTIONARY_H
 
-#include <qapplication.h>
-#include <qlistbox.h>
+#include <qobject.h>
 #include <qfile.h>
+#include <qstringlist.h>
+
+class QListBox;
+
 #include "kydpconfig.h"
 
 class ydpDictionary : public QObject {
@@ -50,7 +53,6 @@ private:
 
 	// configuration holder
 	kydpConfig *cnf;
-	void *kydpdic;
 
 	// GUI element holding index
 	QListBox	*dictList;

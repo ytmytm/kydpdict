@@ -7,6 +7,13 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <qpushbutton.h>
+#include <qtabwidget.h>
+#include <qgroupbox.h>
+#include <qlineedit.h>
+#include <qlabel.h>
+#include <qcheckbox.h>
+#include <qfont.h>
 #include <qpixmap.h>
 #include <qfiledialog.h>
 #include <qfontdialog.h>

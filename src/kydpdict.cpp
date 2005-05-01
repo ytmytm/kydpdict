@@ -8,6 +8,18 @@
  ***************************************************************************/
 
 #include <stdlib.h>
+
+#include <qlistbox.h>
+#include <qcombobox.h>
+#include <qmenubar.h>
+#include <qpopupmenu.h>
+#include <qclipboard.h>
+#include <qmainwindow.h>
+#include <qtimer.h>
+#include <qsplitter.h>
+#include <qtoolbar.h>
+#include <qtoolbutton.h>
+#include <qscrollbar.h>
 #include <qimage.h>
 #include <qpixmap.h>
 #include <qframe.h>
@@ -24,6 +36,7 @@
 #include <qgrid.h>
 #include <qaccel.h>
 #include <qcursor.h>
+#include <qlineedit.h>
 
 #define COMBO_HISTORY_SIZE	25
 #define TIMER_PERIOD		1000
@@ -673,13 +686,11 @@ void Kydpdict::Configure(bool status)
 		   "In order to use this program you have to have data files from Windows\n"
 		    "dictionary installation. For more information please read README.\n"
 		    "Good bye!"));
-		if(myConf)
-		    delete myConf;
+		delete myConf;
 		exit(1);
 	}
 
-	if(myConf)
-	    delete myConf;
+	delete myConf;
 
 	if (result == QDialog::Accepted)	// just a performance gain
 	    config->save();
