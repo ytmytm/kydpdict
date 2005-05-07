@@ -33,3 +33,4 @@
       na tak samo?
 - crash przy s³owniku ger->pol
 - komunikat QMetaObjectCleanUp::setMetaObject: Double use of QMetaObjectCleanUp! - wystêpuje w mocach
+- stoodi <stoodi@gmail.com>: z pl_PL.UTF-8 'robiæ' znajduje '¶wiergot'...
