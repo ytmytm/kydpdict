@@ -41,7 +41,7 @@ public:
 	void CloseDictionary(void);
 //	void ListScrollUp(int offset);
 //	void ListScrollDown(int offset);
-//	int FindWord(QString word);
+	int FindWord(QString word);
 //	int topitem;
 //	int wordCount;			/* number of words */
 

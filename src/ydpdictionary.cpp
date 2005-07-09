@@ -18,7 +18,7 @@
 //#include <unistd.h>
 //#include <ctype.h>
 
-#include <locale.h>
+//#include <locale.h>
 
 #include "kydpdict.h"
 #include "ydpconverter.h"
@@ -358,80 +358,25 @@ QString ydpDictionary::stripDelimiters(QString word)
     return lstring;
 }
 
+// naive search, fast if convertion is fast
 int ydpDictionary::FindWord(QString word)
 {
-    QString midstring, wordorig;
-    int a,b;
-    int middle,result;
-    int lwordorig;
-    bool same;
+    int i, score, maxscore=0, maxitem=0;
 
-    lwordorig = word.length();
-
-    if (lwordorig == 0)
+    if (word.length() == 0)
 	return 0;
 
-    wordorig = word.lower();
     word = stripDelimiters(word.lower());
     word.truncate(20);
 
-    same = (word.compare(wordorig) == 0);
-
-    a = 0; b = wordCount;
-
-    setlocale(LC_COLLATE,"pl_PL");	// otherwise '¶win'->'z...' on at least one system :(
-					// required for that localeAwareCompare below
-
-    /* najpierw wyszukiwanie binarne zawê¿a zakres do 30 hase³ (warto¶æ wziêta z g³owy (mojej - MW)) */
-
-    while (b-a >= 30) {	/* bez tego marginesu s± problemy np. z 'for' */
-	middle = a + (b-a)/2;
-	midstring = stripDelimiters(cvt->toUnicode(words[middle])).lower();
-	result = word.localeAwareCompare(midstring);
-	if (result==0) {
-	    a = middle; b = middle;
-	} else {
-	    if (result<0)
-		b = middle;
-	    else
-		a = middle;
+    for (i=0;i<wordCount;i++) {
+	score = ScoreWord(word, cvt->toUnicode(words[i]));
+	if (score>maxscore) {
+    	    maxscore = score;
+	    maxitem = i;
 	}
     }
-
-    /* poniewa¿ indeksy nie s± idealnie posortowane - teraz wyszukujemy naiwnie;
-       nastêpuje cofniêcie o 35 hase³ i w¶ród 150 nastêpnych znalezienie tego z najwy¿szym
-       wynikiem ze ScoreWord (najwiêcej wspólnych znaków z wyszukiwanym has³em) */
-
-    int i;
-    int max, maxs;	// index of max scored and max scored with strip delimiters
-    int smax, smaxs;	// scores of - '' -
-    int score, scores;
-    QString bstring;
-
-    if (a!=b) {		// what was not a direct match
-	a=a-35; if (a<0) a=0;
-	max=a; maxs=a; smax=0; smaxs=0; score=0; scores=0;
-	i=1;
-	while ((i<150) && (a+i<wordCount) && (smax<100)) {
-	    bstring = cvt->toUnicode(words[a+i]).lower();
-	    score  = ScoreWord(wordorig,bstring);
-	    if (!same) scores = ScoreWord(word,stripDelimiters(bstring));
-	    if (score > smax) {
-		smax = score; max = a+i;
-		if (lwordorig == smax)
-		    smax +=100;				// extra bonus for direct match - break while
-	    }
-	    if ((!same)&&(scores > smaxs)) {
-		smaxs = scores; maxs = a+i;
-	    }
-	    ++i;
-	}
-	a = max;	// raw match preferred
-	if ((!same)&&(smaxs > smax))
-	    a = maxs;	// unless stripped has better score
-    }
-
-    return a;
+    return maxitem;
 }
 
 int ydpDictionary::ReadDefinition(int index)

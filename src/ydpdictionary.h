@@ -47,7 +47,7 @@ public:
 //	void CloseDictionary(void);
 	void ListScrollUp(int offset);
 	void ListScrollDown(int offset);
-	int FindWord(QString word);
+	virtual int FindWord(QString word);
 
 	int topitem;
 	int wordCount;			/* number of words */
@@ -59,8 +59,6 @@ private:
 	virtual QString rtf2html (QString definition);
 //	void disableTag (int tag_code, int level);
 //	QString insertHyperText(QString raw_input, int level);
-	QString stripDelimiters(QString word);
-	int ScoreWord(QString w1, QString w2);
 	virtual QString SampleName(QString path, int index);
 
 	// GUI element holding index
@@ -72,6 +70,8 @@ private:
 protected:
 	unsigned short fix16(unsigned short x);
 	unsigned long fix32(unsigned long x);
+	QString stripDelimiters(QString word);
+	int ScoreWord(QString w1, QString w2);
 
 	// configuration holder
 	kydpConfig *cnf;
