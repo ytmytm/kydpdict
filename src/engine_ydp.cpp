@@ -9,7 +9,6 @@
 
 #include <qlistbox.h>
 #include <qmessagebox.h>
-//#include <qprocess.h>
 #include <qtextcodec.h>
 #include <qregexp.h>
 
@@ -72,25 +71,17 @@ static QString output_tip[] = OUTPUT_TIP;	// guess what happens with 'ñ' when th
 EngineYDP::EngineYDP(kydpConfig *config, QListBox *listBox, ydpConverter *converter) : ydpDictionary(config, listBox, converter)
 {
     for (int i=0;i<4;i++) {
-//        dictCache[i].wordCount = -1;
         dictCache_LL[i].indexes = NULL;
-//        dictCache[i].words = NULL;
     }
 }
 
 EngineYDP::~EngineYDP()
 {
-//    int i,j;
     int i;
 
     for (i=0;i<4;i++) {
 	if (dictCache[i].wordCount>0) {
 	    if (dictCache_LL[i].indexes) delete [] dictCache_LL[i].indexes;
-//	    if (dictCache[i].words) {
-//		for (j=0;j<dictCache[i].wordCount;j++)
-//		    delete [] dictCache[i].words[j];
-//		delete [] dictCache[i].words;
-//	    }
 	}
     }
 }
@@ -125,14 +116,10 @@ int EngineYDP::OpenDictionary(void)
     if (!(cnf->toPolish))
 	i++;
     if (dictCache[i].wordCount>0) {
-//	wordCount = dictCache[i].wordCount;	// caches are done below
 	indexes = dictCache_LL[i].indexes;
-//	words = dictCache[i].words;
     } else {
 	FillWordList();
-//	dictCache[i].wordCount = wordCount;
 	dictCache_LL[i].indexes = indexes;
-//	dictCache[i].words = words;
     }
     return ydpDictionary::OpenDictionary();	// required call
 }
@@ -158,7 +145,6 @@ int EngineYDP::CheckDictionary(void)
 
 void EngineYDP::CloseDictionary()
 {
-//    dictList->clear();
     fIndex.close();
     fData.close();
 }

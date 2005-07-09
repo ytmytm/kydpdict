@@ -11,8 +11,6 @@
 #define YDPDICTIONARY_H
 
 #include <qobject.h>
-//#include <qfile.h>
-//#include <qstringlist.h>
 
 class QListBox;
 class QString;
@@ -36,15 +34,10 @@ public:
 	virtual void CloseDictionary(void);
 
 	QString GetDefinition(int index);
-//	int OpenDictionary(kydpConfig *config);
-//	int OpenDictionary(QString path, QString index, QString def);
-//	int CheckDictionary(kydpConfig *config);
-//	int CheckDictionary(QString path, QString index, QString def);
 	int Play (int index, kydpConfig *config);
 	virtual int GetTipNumber(int type);
 	virtual QString GetInputTip(int index);
 	virtual QString GetOutputTip(int index);
-//	void CloseDictionary(void);
 	void ListScrollUp(int offset);
 	void ListScrollDown(int offset);
 	virtual int FindWord(QString word);
@@ -54,19 +47,12 @@ public:
 
 private:
 	virtual int ReadDefinition (int index);
-//	QString convert_cp1250 (char *tekst, int size);
-//	void FillWordList(void);
 	virtual QString rtf2html (QString definition);
-//	void disableTag (int tag_code, int level);
-//	QString insertHyperText(QString raw_input, int level);
 	virtual QString SampleName(QString path, int index);
 
 	// GUI element holding index
 	QListBox	*dictList;
 
-	// dictionary file variables
-//	QFile fIndex;			/* index file descriptor */
-//	QFile fData;			/* data file descriptor */
 protected:
 	unsigned short fix16(unsigned short x);
 	unsigned long fix32(unsigned long x);
@@ -78,21 +64,13 @@ protected:
 	// text converter
 	ydpConverter *cvt;
 
-//	QStringList::Iterator it;
-//	QStringList list;
-//	int tag_num[16];
-//	int direction_tab[16];
 	struct dictionaryCache {
 	    int wordCount;
 	    char **words;
-//	    unsigned long *indexes;	//XXX this is ydp-specific
 	} dictCache[4];
 
-//	unsigned long *indexes; 	/* indexes to definitions array */
 	char** words;			/* actual words */
 	QString curDefinition;		/* contains current definition (RTF)*/
-
-//	int broken_entry;		/* index of a broken "Provencial" entry */
 
 public slots:
 	void ListRefresh (int index);

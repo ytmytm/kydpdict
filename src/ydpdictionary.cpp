@@ -10,15 +10,6 @@
 #include <qlistbox.h>
 #include <qmessagebox.h>
 #include <qprocess.h>
-//#include <qtextcodec.h>
-//#include <qregexp.h>
-
-//#include <sys/mman.h>
-//#include <fcntl.h>
-//#include <unistd.h>
-//#include <ctype.h>
-
-//#include <locale.h>
 
 #include "kydpdict.h"
 #include "ydpconverter.h"
@@ -74,7 +65,6 @@ ydpDictionary::ydpDictionary(kydpConfig *config, QListBox *listBox, ydpConverter
     dictList->installEventFilter(keyEater);
     for (i=0;i<4;i++) {
         dictCache[i].wordCount = -1;
-//        dictCache[i].indexes = NULL;
         dictCache[i].words = NULL;
     }
 }
@@ -85,7 +75,6 @@ ydpDictionary::~ydpDictionary()
 
     for (i=0;i<4;i++) {
 	if (dictCache[i].wordCount>0) {
-//	    if (dictCache[i].indexes) delete [] dictCache[i].indexes;
 	    if (dictCache[i].words) {
 		for (j=0;j<dictCache[i].wordCount;j++)
 		    delete [] dictCache[i].words[j];
@@ -114,12 +103,9 @@ int ydpDictionary::OpenDictionary(void)
 	i++;
     if (dictCache[i].wordCount>0) {
 	wordCount = dictCache[i].wordCount;
-//	indexes = dictCache[i].indexes;
 	words = dictCache[i].words;
     } else {
-//	FillWordList();
 	dictCache[i].wordCount = wordCount;
-//	dictCache[i].indexes = indexes;
 	dictCache[i].words = words;
     }
     /* don't want to do ListRefresh yet and dictList can't be empty */
@@ -139,8 +125,6 @@ int ydpDictionary::CheckDictionary(void) {
 void ydpDictionary::CloseDictionary()
 {
     dictList->clear();
-//    fIndex.close();
-//    fData.close();
 }
 
 KeyEater::KeyEater(ydpDictionary *parent)
