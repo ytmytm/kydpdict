@@ -34,3 +34,5 @@
       na tak samo?
 - stoodi <stoodi@gmail.com>: z pl_PL.UTF-8 'robiæ' znajduje '¶wiergot'...
 - w³a¶ciwie ludzie maj± racjê: klik na 'X' powinien zostawiaæ rybkê w trayu
+
+- checkdictionary przy tworzeniu buttonów i menu K£AMIE!!! [ if(true)... ]
