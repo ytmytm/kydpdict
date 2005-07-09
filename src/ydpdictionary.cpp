@@ -31,7 +31,7 @@ struct dictionaryCache {
     int wordCount;
     char **words;
     unsigned long *indexes;
-} dictCache[3];
+} dictCache[4];
 
 #define color1 cnf->kFontKolor1
 #define color2 cnf->kFontKolor2

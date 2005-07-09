@@ -434,3 +434,5 @@ Kydpdict 0.6.8 (xx.xx.200x)
     - przed delete nie trzeba sprawdzaæ czy wska¼nik to NULL
     - .moc w³±czany do pliku .cpp zamiast kompilowanego osobno
     - cache na foo.length() w pêtlach
+- nie wywala siê przy s³owniku pol->ger (b³±d gdzie¶ zosta³ - dostêp do struktury cache poza
+  tablic±, jednak te dane nie s± u¿yte)
