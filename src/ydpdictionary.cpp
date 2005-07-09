@@ -11,12 +11,12 @@
 #include <qmessagebox.h>
 #include <qprocess.h>
 #include <qtextcodec.h>
-#include <qregexp.h>
+//#include <qregexp.h>
 
-#include <sys/mman.h>
-#include <fcntl.h>
-#include <unistd.h>
-#include <ctype.h>
+//#include <sys/mman.h>
+//#include <fcntl.h>
+//#include <unistd.h>
+//#include <ctype.h>
 
 #include <locale.h>
 

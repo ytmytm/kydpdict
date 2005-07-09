@@ -11,10 +11,11 @@
 #define YDPDICTIONARY_H
 
 #include <qobject.h>
-#include <qfile.h>
-#include <qstringlist.h>
+//#include <qfile.h>
+//#include <qstringlist.h>
 
 class QListBox;
+class QString;
 
 #include "kydpconfig.h"
 

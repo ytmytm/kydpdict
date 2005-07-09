@@ -12,9 +12,11 @@
 
 #include <qobject.h>
 #include <qfile.h>
-#include <qstringlist.h>
+//#include <qstringlist.h>
 
 //class QListBox;
+
+class QStringList;
 
 #include "kydpconfig.h"
 #include "ydpdictionary.h"

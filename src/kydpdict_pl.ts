@@ -1,5 +1,20 @@
 <!DOCTYPE TS><TS>
 <context>
+    <name>EngineYDP</name>
+    <message>
+        <source>Can&apos;t open index file!
+</source>
+        <translation>Nie można otworzyć pliku indeksu!
+</translation>
+    </message>
+    <message>
+        <source>Can&apos;t open data file!
+</source>
+        <translation>Nie można otworzyć pliku danych!
+</translation>
+    </message>
+</context>
+<context>
     <name>Kydpdict</name>
     <message>
         <source>&amp;Quit</source>
@@ -306,18 +321,6 @@ Prawy - otwórz menu</translation>
     <message>
         <source>Error reading data file!</source>
         <translation>Błąd przy czytaniu pliku danych!</translation>
-    </message>
-    <message>
-        <source>Can&apos;t open index file!
-</source>
-        <translation type="obsolete">Nie można otworzyć pliku indeksu!
-</translation>
-    </message>
-    <message>
-        <source>Can&apos;t open data file!
-</source>
-        <translation type="obsolete">Nie można otworzyć pliku danych!
-</translation>
     </message>
 </context>
 <context>
