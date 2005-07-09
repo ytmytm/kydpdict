@@ -213,8 +213,6 @@ void EngineYDP::FillWordList()
     munmap((void*)filedata, length);
     close(f);
 
-    topitem = 0;
-
     /* omijanie bledow w slowniku... */
     if ((cnf->language==LANG_ENGLISH) && (cnf->toPolish)) {
 	current = FindWord(QString("Proven"));
