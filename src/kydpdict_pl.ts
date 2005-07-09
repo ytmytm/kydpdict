@@ -310,13 +310,13 @@ Prawy - otwórz menu</translation>
     <message>
         <source>Can&apos;t open index file!
 </source>
-        <translation>Nie można otworzyć pliku indeksu!
+        <translation type="obsolete">Nie można otworzyć pliku indeksu!
 </translation>
     </message>
     <message>
         <source>Can&apos;t open data file!
 </source>
-        <translation>Nie można otworzyć pliku danych!
+        <translation type="obsolete">Nie można otworzyć pliku danych!
 </translation>
     </message>
 </context>

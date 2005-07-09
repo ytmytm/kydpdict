@@ -69,6 +69,7 @@
 
 #include "kydpconfig.h"
 #include "dock_widget.h"
+#include "engine_ydp.h"
 
 #ifndef WITHOUT_X11
 // this is for updateUserTimestamp
@@ -128,7 +129,8 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 	config = new kydpConfig;
 	config->load();
 
- 	myDict = new ydpDictionary(config,dictList);
+//XXX 	myDict = new ydpDictionary(config,dictList);
+	myDict = new EngineYDP(config,dictList);
 
 	mySearch = new ydpFuzzySearch(parent);	// if exchanged with 'this' -> is always over kydpdict window
 	// this has to be before OpenDictionary so the notification will be passed
@@ -160,13 +162,15 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 
 	do {
 		testagain:
-		if(!myDict->CheckDictionary(config)) {
+//XXX		if(!myDict->CheckDictionary(config)) {
+		if(!myDict->CheckDictionary()) {
 		//jesli nie ma tego co chcemy, to sprawdzamy drugi jezyk
 			config->language++;
 			if (config->language >= LANG_LAST)
 				config->language = LANG_ENGLISH;
 			config->save();
-			if(!myDict->CheckDictionary(config)) {
+//XXX			if(!myDict->CheckDictionary(config)) {
+			if(!myDict->CheckDictionary()) {
 			// buu, drugiego jezyka tez nie ma; moze user bedzie cos wiedzial na ten temat...
 			    QMessageBox::critical( this, tr("Error"),
 				tr( "Kydpdict can't work with incorrect path to dictionary files.\n"
@@ -177,7 +181,8 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 			    goto testagain;	// z³o¿y³em ofiarê z jagniêcia i wolno mi u¿yæ goto
 			}
 		}
-		a=myDict->OpenDictionary(config);
+//XXX		a=myDict->OpenDictionary(config);
+		a=myDict->OpenDictionary();
 	}
 	while (a);
 	wordInput->clear();
@@ -194,13 +199,17 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 	settings->insertSeparator();
 	but_PlEn = NULL; but_PlDe = NULL;
 	but_EnPl = NULL; but_DePl = NULL;
-	if(myDict->CheckDictionary(config->topPath, "dict100.idx", "dict100.dat") && myDict->CheckDictionary(config->topPath, "dict101.idx", "dict101.dat")) {
+// set language and test
+//XXX	if(myDict->CheckDictionary(config->topPath, "dict100.idx", "dict100.dat") && myDict->CheckDictionary(config->topPath, "dict101.idx", "dict101.dat")) {
+	if (true) {
 		polToEng = settings->insertItem("POL --> ENG", this, SLOT(SwapPolToEng()), QKeySequence( tr("Ctrl+;", "Options|POL --> ENG") ) );
 		engToPol = settings->insertItem("ENG --> POL", this, SLOT(SwapEngToPol()), QKeySequence( tr("Ctrl+.", "Options|ENG --> POL") ) );
 		but_PlEn = new QToolButton(QIconSet(QPixmap(pl_en_xpm)), "POL --> ENG", QString::null, this, SLOT(SwapPolToEng()), toolBar, "butPlEn" );
 		but_EnPl = new QToolButton(QIconSet(QPixmap(en_pl_xpm)), "ENG --> POL", QString::null, this, SLOT(SwapEngToPol()), toolBar, "butEnPl" );
 	}
-	if(myDict->CheckDictionary(config->topPath, "dict200.idx", "dict200.dat") && myDict->CheckDictionary(config->topPath, "dict201.idx", "dict201.dat")) {
+// set language and test
+//XXX	if(myDict->CheckDictionary(config->topPath, "dict200.idx", "dict200.dat") && myDict->CheckDictionary(config->topPath, "dict201.idx", "dict201.dat")) {
+	if (true) {
 		settings->insertSeparator();
 		polToGer = settings->insertItem("POL --> GER", this, SLOT(SwapPolToGer()), QKeySequence( tr("Ctrl+:", "Options|POL --> GER") ) );
 		gerToPol = settings->insertItem("GER --> POL", this, SLOT(SwapGerToPol()), QKeySequence( tr("Ctrl+>", "Options|GER --> POL") ) );
@@ -603,7 +612,8 @@ void Kydpdict::SwapLang (bool direction, int language ) //dir==1 toPolish
 		config->language = language;
 		config->save();
 		do {
-			a=myDict->OpenDictionary(config);
+//XXX			a=myDict->OpenDictionary(config);
+			a=myDict->OpenDictionary();
 			if (a) Configure(TRUE);
 		} while (a);
 		UpdateLook();
