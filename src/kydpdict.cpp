@@ -130,7 +130,8 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 	config->load();
 
 //XXX 	myDict = new ydpDictionary(config,dictList);
-	myDict = new EngineYDP(config,dictList);
+	myConvert = new ConvertYDP();
+	myDict = new EngineYDP(config,dictList,myConvert);
 
 	mySearch = new ydpFuzzySearch(parent);	// if exchanged with 'this' -> is always over kydpdict window
 	// this has to be before OpenDictionary so the notification will be passed

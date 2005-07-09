@@ -10,7 +10,7 @@
 #include <qlistbox.h>
 #include <qmessagebox.h>
 #include <qprocess.h>
-#include <qtextcodec.h>
+//#include <qtextcodec.h>
 //#include <qregexp.h>
 
 //#include <sys/mman.h>
@@ -21,7 +21,7 @@
 #include <locale.h>
 
 #include "kydpdict.h"
-
+#include "ydpconverter.h"
 #include "ydpdictionary.h"
 #include "ydpdictionary.moc"
 
@@ -63,14 +63,13 @@ unsigned short ydpDictionary::fix16(unsigned short x)
 #endif
 }
 
-// XXX add convertor here
-ydpDictionary::ydpDictionary(kydpConfig *config, QListBox *listBox)
+ydpDictionary::ydpDictionary(kydpConfig *config, QListBox *listBox, ydpConverter *converter)
 {
     int i;
 
     dictList = listBox;
     cnf = config;
-//    cvt = converter;
+    cvt = converter;
     keyEater = new KeyEater(this);
     dictList->installEventFilter(keyEater);
     for (i=0;i<4;i++) {
@@ -207,14 +206,13 @@ void ydpDictionary::ListScrollUp(int offset) {
 	dictList->blockSignals(FALSE);
 	dictList->setCurrentItem(spacefor-1);	// restore correct item
     } else {
-	static QTextCodec *codec = QTextCodec::codecForName("CP1250");
 	dictList->setAutoUpdate(FALSE);
 	dictList->blockSignals(TRUE);
 	// przepisac o 1 w gore, w ostatni wpisac nowy, current ustawic na przedostatni
 	for (i=1;i<spacefor;i++)
 	    dictList->changeItem(dictList->text(i),i-1);
 
-	dictList->changeItem(codec->toUnicode(words[topitem+spacefor]),i-1);
+	dictList->changeItem(cvt->toUnicode(words[topitem+spacefor]),i-1);
 	topitem++;
 
 	dictList->setCurrentItem(spacefor-2);	// prepare to force highlight signal
@@ -241,13 +239,12 @@ void ydpDictionary::ListScrollDown(int offset) {
 	ListRefresh(topitem-spacefor);
 	dictList->setCurrentItem(0);
     } else {
-	static QTextCodec *codec = QTextCodec::codecForName("CP1250");
 	dictList->setAutoUpdate(FALSE);
 	dictList->blockSignals(TRUE);
 	for (i=spacefor-1;i!=0;i--)
 	    dictList->changeItem(dictList->text(i-1),i);
 	topitem--;
-	dictList->changeItem(codec->toUnicode(words[topitem]),0);
+	dictList->changeItem(cvt->toUnicode(words[topitem]),0);
 
 	dictList->setCurrentItem(1);	// prepare to force highlight signal
 	dictList->setAutoUpdate(TRUE);
@@ -287,7 +284,6 @@ void ydpDictionary::ListScrollPageDown()
 void ydpDictionary::ListRefresh(int index)
 {
 /* refresh list so index is visible and dictList length is correct */
-    static QTextCodec *codec = QTextCodec::codecForName("CP1250");
     unsigned int spacefor,itemh;
     bool needRefresh=false;
     static unsigned int lastspacefor;
@@ -333,7 +329,7 @@ void ydpDictionary::ListRefresh(int index)
 
     dictList->blockSignals(TRUE);
     for (i=0;i<(int)dictList->count();i++)
-	dictList->changeItem(codec->toUnicode(words[index+i]),i);
+	dictList->changeItem(cvt->toUnicode(words[index+i]),i);
     dictList->blockSignals(FALSE);
 }
 
@@ -343,7 +339,7 @@ int ydpDictionary::ScoreWord(QString w1, QString w2)
     unsigned int len1 = w1.length();
     unsigned int len2 = w2.length();
     for (; (i<len1) && (i<len2); i++)
-	if (w1.at(i) != w2.at(i))	// cvt->tolower e.g.
+	if (w1.at(i) != w2.at(i))
 	    break;
     return i;
 }
@@ -364,7 +360,6 @@ QString ydpDictionary::stripDelimiters(QString word)
 
 int ydpDictionary::FindWord(QString word)
 {
-    static QTextCodec *codec = QTextCodec::codecForName("CP1250");
     QString midstring, wordorig;
     int a,b;
     int middle,result;
@@ -391,7 +386,7 @@ int ydpDictionary::FindWord(QString word)
 
     while (b-a >= 30) {	/* bez tego marginesu s± problemy np. z 'for' */
 	middle = a + (b-a)/2;
-	midstring = stripDelimiters(codec->toUnicode(words[middle])).lower();
+	midstring = stripDelimiters(cvt->toUnicode(words[middle])).lower();
 	result = word.localeAwareCompare(midstring);
 	if (result==0) {
 	    a = middle; b = middle;
@@ -418,7 +413,7 @@ int ydpDictionary::FindWord(QString word)
 	max=a; maxs=a; smax=0; smaxs=0; score=0; scores=0;
 	i=1;
 	while ((i<150) && (a+i<wordCount) && (smax<100)) {
-	    bstring = codec->toUnicode(words[a+i]).lower();
+	    bstring = cvt->toUnicode(words[a+i]).lower();
 	    score  = ScoreWord(wordorig,bstring);
 	    if (!same) scores = ScoreWord(word,stripDelimiters(bstring));
 	    if (score > smax) {

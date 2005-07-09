@@ -24,7 +24,7 @@ class QStringList;
 class EngineYDP : public ydpDictionary {
 	Q_OBJECT
 public:
-	EngineYDP(kydpConfig *config, QListBox *listBox);
+	EngineYDP(kydpConfig *config, QListBox *listBox, ydpConverter *converter);
 	~EngineYDP();
 
 //	QString GetDefinition(int index);
@@ -47,7 +47,6 @@ public:
 
 private:
 	int ReadDefinition (int index);
-	QString convert_cp1250 (char *tekst, int size);
 	void FillWordList(void);
 	QString rtf2html (QString definition);
 	void disableTag (int tag_code, int level);
@@ -66,6 +65,8 @@ private:
 	QFile fIndex;			/* index file descriptor */
 	QFile fData;			/* data file descriptor */
 //	QString curDefinition;		/* contains current definition (RTF)*/
+
+	// shared between parsing routines
 	QStringList::Iterator it;
 	QStringList list;
 	int tag_num[16];
@@ -89,6 +90,21 @@ private:
 
 //signals:
 //	void dictionaryChanged(const int wordnum = -1, char **words = NULL);
+};
+
+/* converter class */
+
+class ConvertYDP : public ydpConverter {
+public:
+	ConvertYDP(void);
+	~ConvertYDP();
+//	char toLower(const char c);
+	QString toUnicode(const char *input);
+//	char *fromUnicode(QString input);
+	QString convertChunk(char *input, int size, bool unicodeFont);
+
+private:
+	QTextCodec *codec;
 };
 
 #endif

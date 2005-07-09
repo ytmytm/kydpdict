@@ -18,6 +18,7 @@ class QListBox;
 class QString;
 
 #include "kydpconfig.h"
+#include "ydpconverter.h"
 
 #define color1 cnf->kFontKolor1
 #define color2 cnf->kFontKolor2
@@ -27,7 +28,7 @@ class QString;
 class ydpDictionary : public QObject {
 	Q_OBJECT
 public:
-	ydpDictionary(kydpConfig *config, QListBox *listBox);
+	ydpDictionary(kydpConfig *config, QListBox *listBox, ydpConverter *converter);
 	virtual ~ydpDictionary();
 
 	virtual int OpenDictionary(void);
@@ -74,6 +75,8 @@ protected:
 
 	// configuration holder
 	kydpConfig *cnf;
+	// text converter
+	ydpConverter *cvt;
 
 //	QStringList::Iterator it;
 //	QStringList list;

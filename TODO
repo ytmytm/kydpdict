@@ -12,6 +12,7 @@
 - mozliwosc zmiany ikony/ustawiania jej z poziomu aplikacji (to co kiedys AP wywalil)
 - konfigurowalne klawisze z --with-kde
 - wczytywanie wszystkich slow, ze slownikow (wybranych) do jednej listy
+    - trzeba trzymaæ w strukturze - z którego s³ownika
 - pojawianie sie po zmianie pulpitu, autostick? (zawsze widoczne/przypnij/whatever)
     - bah - minimalizacja<=>znikanie (dla kpwndict tez) (jak?)
 - skróty klawiaturowe opisane w dymkach nad toolbarem
@@ -31,8 +32,7 @@
     - zapamietywac w konfigu distance
     - zrobic do wyboru fuzzy/regexp - to jest w³a¶ciwie to, co ju¿ jest w yadict; mo¿e przepisaæ
       na tak samo?
-- komunikat QMetaObjectCleanUp::setMetaObject: Double use of QMetaObjectCleanUp! - wystêpuje w mocach
 - stoodi <stoodi@gmail.com>: z pl_PL.UTF-8 'robiæ' znajduje '¶wiergot'...
 - w³a¶ciwie ludzie maj± racjê: klik na 'X' powinien zostawiaæ rybkê w trayu
 
-- odseparowaæ konwersjê cp1250<->utf16 w klasie engineydp
+- w ydpdictionary dac naiwny findword, a obecna rzezbe do engine?

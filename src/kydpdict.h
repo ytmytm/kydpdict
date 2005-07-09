@@ -25,6 +25,7 @@ class QTextBrowser;
 class QScrollBar;
 
 #include "ydpdictionary.h"
+#include "ydpconverter.h"
 #include "kydpconfig.h"
 #include "ydpconfigure.h"
 #include "kdynamictip.h"
@@ -67,6 +68,7 @@ class Kydpdict : public QMainWindow
 
 		// dictionary class
 		ydpDictionary *myDict;
+		ydpConverter *myConvert;
 		ydpFuzzySearch *mySearch;
 
 		// and others
