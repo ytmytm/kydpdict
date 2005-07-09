@@ -11,6 +11,7 @@
 #define YDPFUZZYSEARCH_H
 
 #include <qdialog.h>
+#include "ydpconverter.h"
 
 class QLineEdit;
 class QListBox;
@@ -28,6 +29,7 @@ public:
 private:
     int wordCount;
     char **wordList;
+    ydpConverter *cvt;
     QLineEdit *wordEdit;
     QListBox *listBox;
     QSlider *distSlider;
@@ -39,7 +41,7 @@ private slots:
     void newFromClick(QListBoxItem *lbi);
 
 public slots:
-    void updateDictionary(const int wordnum = -1, char **words = NULL);
+    void updateDictionary(const int wordnum = -1, char **words = NULL, ydpConverter *converter = NULL);
 
 signals:
     void textChanged(const QString &);

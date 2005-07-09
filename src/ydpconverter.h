@@ -11,6 +11,7 @@
 #define _YDPCONVERTER_H
 
 class QString;
+class QCString;
 
 	class ydpConverter {
 		public:
@@ -18,8 +19,8 @@ class QString;
 			virtual ~ydpConverter();
 			// dictionary-dependent convertion routines
 //			virtual char toLower(const char c);
-			virtual QString toUnicode(const char *line);
-//			virtual QString fromUnicode(const char *input);
+			virtual QString toUnicode(const char *input);
+			virtual QCString fromUnicode(QString input);
 			virtual QString convertChunk(char *input, int size, bool unicodeFont);
 	};
 

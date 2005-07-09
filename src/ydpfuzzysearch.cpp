@@ -11,7 +11,6 @@
 #include <qlistbox.h>
 #include <qslider.h>
 #include <qpushbutton.h>
-#include <qtextcodec.h>
 #include <qlabel.h>
 
 #include "kydpdict.h"
@@ -62,13 +61,14 @@ ydpFuzzySearch::~ydpFuzzySearch()
 
 }
 
-void ydpFuzzySearch::updateDictionary(const int wordnum, char **words)
+void ydpFuzzySearch::updateDictionary(const int wordnum, char **words, ydpConverter *converter)
 {
     if ((wordnum<0) || (words == NULL))
 	return;
 
     wordCount = wordnum;
     wordList = words;
+    cvt = converter;
 }
 
 void ydpFuzzySearch::doSearch()
@@ -77,15 +77,14 @@ void ydpFuzzySearch::doSearch()
     if ((wordCount<0) || (wordList == NULL))
 	return;
 
-    static QTextCodec *codec = QTextCodec::codecForName("CP1250");
     listBox->clear();
     int i;
     int distance = distSlider->value();
     int j=0, best=0, hiscore = distance, score;
-    QCString tekst = codec->fromUnicode(wordEdit->text());
+    QCString tekst = cvt->fromUnicode(wordEdit->text());
     for (i=0;i<wordCount;i++)
 	if ((score = editDistance(tekst,wordList[i])) < distance) {
-	    listBox->insertItem(codec->toUnicode(wordList[i]));
+	    listBox->insertItem(cvt->toUnicode(wordList[i]));
 	    j++;
 	    if (score<hiscore) {
 		best = j-1;

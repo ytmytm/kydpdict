@@ -768,9 +768,9 @@ QString ConvertYDP::toUnicode(const char *input) {
     return codec->toUnicode(input);
 }
 
-//char *ConvertYDP::fromUnicode(QString input) {
-//    return codec->fromUnicode(input);
-//}
+QCString ConvertYDP::fromUnicode(QString input) {
+    return codec->fromUnicode(input);
+}
 
 #define TABLE_PHONETIC_ISO { \
   ".", ".", "<img src=\"f2\">", "<img src=\"f3\">", ".", "<img src=\"f5\">", "e", "<img src=\"f6\">", \

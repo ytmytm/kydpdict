@@ -67,7 +67,7 @@ public:
 	~ConvertYDP();
 //	char toLower(const char c);
 	QString toUnicode(const char *input);
-//	char *fromUnicode(QString input);
+	QCString fromUnicode(QString input);
 	QString convertChunk(char *input, int size, bool unicodeFont);
 
 private:

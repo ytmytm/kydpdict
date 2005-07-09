@@ -80,7 +80,7 @@ public slots:
 	void ListScrollPageDown();
 
 signals:
-	void dictionaryChanged(const int wordnum = -1, char **words = NULL);
+	void dictionaryChanged(const int wordnum = -1, char **words = NULL, ydpConverter *converter = NULL);
 };
 
 class KeyEater : public QObject {

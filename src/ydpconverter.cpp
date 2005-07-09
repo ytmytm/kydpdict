@@ -10,6 +10,7 @@
 #include "ydpconverter.h"
 
 #include <qstring.h>
+#include <qcstring.h>
 
 /////////////////////
 // utf16 <-> anything convertion stuff below
@@ -29,9 +30,9 @@ QString ydpConverter::toUnicode(const char *input) {
 	return QString(input);
 }
 
-//QString bydpConverter::fromUnicode(const char *input) {
-//	return QString(input);
-//}
+QCString ydpConverter::fromUnicode(QString input) {
+	return input.ascii();
+}
 
 QString ydpConverter::convertChunk(char *input, int size, bool unicodeFont) {
 	return QString(input);

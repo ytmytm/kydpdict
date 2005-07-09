@@ -114,7 +114,7 @@ int ydpDictionary::OpenDictionary(void)
     dictList->insertItem(QString("dummy"));
     ListRefresh(0);
     dictList->blockSignals(FALSE);
-    emit dictionaryChanged(wordCount,words);
+    emit dictionaryChanged(wordCount,words,cvt);
     return 0;
 }
 
@@ -415,5 +415,5 @@ int ydpDictionary::Play(int index, kydpConfig *config)
 
 QString ydpDictionary::rtf2html (QString definition)
 {
-  return QString("");
+    return definition;
 }
