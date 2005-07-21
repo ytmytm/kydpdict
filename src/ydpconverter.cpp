@@ -34,6 +34,6 @@ QCString ydpConverter::fromUnicode(QString input) {
 	return input.ascii();
 }
 
-QString ydpConverter::convertChunk(char *input, int size, bool unicodeFont) {
+QString ydpConverter::convertChunk(const char *input, int size, bool unicodeFont) {
 	return QString(input);
 }

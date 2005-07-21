@@ -804,7 +804,7 @@ QCString ConvertYDP::fromUnicode(QString input) {
   "ð", "ñ", "ò", "ó", "ô", "õ", "ö", "÷", \
   "ø", "ù", "ú", "û", "ü", "ý", "þ", "ÿ" } \
 
-QString ConvertYDP::convertChunk(char *inp, int size, bool unicodeFont)
+QString ConvertYDP::convertChunk(const char *inp, int size, bool unicodeFont)
 {
     QString out;
     unsigned char *input = (unsigned char *)inp;

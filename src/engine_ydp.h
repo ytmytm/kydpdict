@@ -69,7 +69,7 @@ public:
 //	char toLower(const char c);
 	QString toUnicode(const char *input);
 	QCString fromUnicode(QString input);
-	QString convertChunk(char *input, int size, bool unicodeFont);
+	QString convertChunk(const char *inp, int size = 0, bool unicodeFont = false);
 
 private:
 	QTextCodec *codec;

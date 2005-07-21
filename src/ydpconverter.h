@@ -21,7 +21,8 @@ class QCString;
 //			virtual char toLower(const char c);
 			virtual QString toUnicode(const char *input);
 			virtual QCString fromUnicode(QString input);
-			virtual QString convertChunk(char *input, int size, bool unicodeFont);
+			virtual	QString convertChunk(const char *inp, int size = 0, bool unicodeFont = false);
+
 	};
 
 #endif

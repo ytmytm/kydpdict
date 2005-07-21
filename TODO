@@ -38,6 +38,8 @@
 
 - checkdictionary przy tworzeniu buttonów i menu K£AMIE!!! [ if(true)... ]
 - silnik PWN: tooltipy nie dzia³aj±, generowana strona nie dzia³a
+- wpisaæ s³owo, klikn±æ na listê -> wynik bez konwersji? (tylko pwn?)
+- brak wszystkich obrazków z kpwndict (non-unicode)
 - co¶ do wyboru silnika, test które s³owniki obecne
 - revert default to YDP (or even implement SAP and distribute with it)
 - wyszukiwanie YDP jako domy¶lne lub przepisaæ naiwne bez niepotrzebnych konwersji

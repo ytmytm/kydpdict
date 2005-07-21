@@ -25,10 +25,6 @@
 #include "engine_pwn.h"
 #include "engine_pwn.moc"
 
-unsigned int index_base, words_base, end_last_word, maxlength;
-unsigned int *offsets;
-char *wordbuffer;
-
 EnginePWN::EnginePWN(kydpConfig *config, QListBox *listBox, ydpConverter *converter) : ydpDictionary(config, listBox, converter)
 {
 
@@ -139,10 +135,8 @@ void EnginePWN::FillWordList()
 
   if ((int)filedata != -1) {
     for (i=0;i<wordCount;i++) {
-//	dictList->insertItem(ListItemConvert(QCString(&filedata[inioffset+fix32(offsets[i])+2+4+11])));
 	words[i] = new char [strlen(&filedata[inioffset+fix32(offsets[i])+2+4+11])+1];
 	strcpy(words[i],&filedata[inioffset+fix32(offsets[i])+2+4+11]);
-//	printf("%i:%s:%s\n",i,words[i],&filedata[inioffset+fix32(offsets[i])+2+4+11]);
     }
   } else {
 //	XXX THIS IS BROKEN!!!
@@ -175,12 +169,11 @@ int EnginePWN::ReadDefinition(int index)
 		memset(outbuffer,0,5*maxlength);
 		i += wordbuffer[i]+1;
 		unzipresult = uncompress((Bytef*)outbuffer,&destlen,(const Bytef*)&wordbuffer[i],maxlength);
-		curDefinition=pwnhtml2qthtml(outbuffer);
+		curDefinition=cvt->convertChunk(outbuffer);
 		delete [] outbuffer;
 	} else {
-		curDefinition=pwnhtml2qthtml(&wordbuffer[i]);
+		curDefinition=cvt->convertChunk(&wordbuffer[i]);
 	}
-
     return 0;
 }
 
@@ -280,12 +273,10 @@ void EnginePWN::DoToolTips(const QString regex, QString *tmp, const QString colo
     }
 }
 
-QString EnginePWN::pwnhtml2qthtml(char *definition) {
+QString EnginePWN::rtf2html(QString definition) {
 
-    static QTextCodec *codec = QTextCodec::codecForName("CP-1250");
-    QString tmp,itOn,itOff;
-
-    itOn = ""; itOff = "";
+    QString itOn = ""; QString itOff = "";
+    QString tmp = definition;
 
     /* prepare defaults */
     if (cnf->italicFont) {
@@ -293,10 +284,7 @@ QString EnginePWN::pwnhtml2qthtml(char *definition) {
 	itOff = "</I> ";
     }
 
-    tmp = codec->toUnicode(definition);
-
     /* first, convert phonetic and other symbols */
-
     if (cnf->unicodeFont) {
 	tmp.replace("<IMG SRC=\"IPA503.JPG\">",QChar(720));	// lengthtened, :
 	tmp.replace("&IPA502;",QChar(716));	// secondary stress (headquaters), ,
@@ -411,4 +399,9 @@ QString ConvertPWN::toUnicode(const char *input) {
 
 QCString ConvertPWN::fromUnicode(QString input) {
     return codec->fromUnicode(input);
+}
+
+QString ConvertPWN::convertChunk(const char *inp, int size, bool unicodeFont)
+{
+    return codec->toUnicode(inp);
 }

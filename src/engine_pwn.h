@@ -35,11 +35,9 @@ public:
 private:
 	int ReadDefinition (int index);
 	void FillWordList(void);
-//	QString rtf2html (QString definition);
-	QString pwnhtml2qthtml(char *definition);
+	QString rtf2html (QString definition);
 	void disableTag (int tag_code, int level);
 	QString insertHyperText(QString raw_input, int level);
-//	QString SampleName(QString path, int index);
 	void UpdateFName(void);
 
 	//
@@ -49,22 +47,16 @@ private:
 
 	// dictionary file variables
 	QFile fIndex;			/* index file descriptor */
-	QFile fData;			/* data file descriptor */
-
-	// shared between parsing routines
-	QStringList::Iterator it;
-	QStringList list;
-	int tag_num[16];
-	int direction_tab[16];
 
 	struct LL_dictionaryCache {
 	    unsigned int *offsets;	/* offsets in data file to word def's */
 	    unsigned int words_base;
 	} dictCache_LL[4];
 
-	unsigned long *indexes; 	/* indexes to definitions array */
-
-	int broken_entry;		/* index of a broken "Provencial" entry */
+	// dictionary loader stuff
+	unsigned int index_base, words_base, end_last_word, maxlength;
+	unsigned int *offsets;
+	char *wordbuffer;
 };
 
 /* converter class */
@@ -76,7 +68,7 @@ public:
 //	char toLower(const char c);
 	QString toUnicode(const char *input);
 	QCString fromUnicode(QString input);
-//	QString convertChunk(char *input, int size, bool unicodeFont);
+	QString convertChunk(const char *inp, int size = 0, bool unicodeFont = false);
 
 private:
 	QTextCodec *codec;
