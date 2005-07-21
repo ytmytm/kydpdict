@@ -56,6 +56,9 @@
 #include "../icons/f6.xpm"
 #include "../icons/f7.xpm"
 #include "../icons/f8.xpm"
+#include "../icons/f9.xpm"
+#include "../icons/f10.xpm"
+#include "../icons/f11.xpm"
 /* 22x22 */
 #include "../icons/en_pl.xpm"
 #include "../icons/pl_en.xpm"
@@ -792,6 +795,9 @@ void Kydpdict::UpdateLook()
 	f6_xpm[2] = tst;
 	f7_xpm[2] = tst;
 	f8_xpm[2] = tst;
+	f9_xpm[2] = tst;
+	f10_xpm[2] = tst;
+	f11_xpm[2] = tst;
 
 	QMimeSourceFactory::defaultFactory()->setImage( "f1", QImage(f1_xpm) );
 	QMimeSourceFactory::defaultFactory()->setImage( "f2", QImage(f2_xpm) );
@@ -801,6 +807,9 @@ void Kydpdict::UpdateLook()
 	QMimeSourceFactory::defaultFactory()->setImage( "f6", QImage(f6_xpm) );
 	QMimeSourceFactory::defaultFactory()->setImage( "f7", QImage(f7_xpm) );
 	QMimeSourceFactory::defaultFactory()->setImage( "f8", QImage(f8_xpm) );
+	QMimeSourceFactory::defaultFactory()->setImage( "f9", QImage(f9_xpm) );
+	QMimeSourceFactory::defaultFactory()->setImage( "f10", QImage(f10_xpm) );
+	QMimeSourceFactory::defaultFactory()->setImage( "f11", QImage(f11_xpm) );
 
 	RTFOutput->setFont(config->fontTransFont);
 	dictList->setFont(config->fontTransFont);
