@@ -37,8 +37,10 @@
 - tipy zrobiæ tak samo, jak w pwn? '[kod]:[eng] - [pol]'
 
 - checkdictionary przy tworzeniu buttonów i menu K£AMIE!!! [ if(true)... ]
-- silnik PWN: tooltipy nie dzia³aj±, generowana strona nie dzia³a
-- wpisaæ s³owo, klikn±æ na listê -> wynik bez konwersji? (tylko pwn?)
+- silnik PWN: 'go' -> tooltip '3rd person sg' jako wyj±tek rozbity na dwa?
+- lista tooltipów - nieoddzielona gramatyka od kategorii
+- wpisaæ s³owo, klikn±æ na listê -> wynik bez konwersji?, to samo po zmianie i powrocie focusu
+    co¶ z uncompress, zale¿y od d³ugo¶ci poprzedniego
 - brak wszystkich obrazków z kpwndict (non-unicode)
 - co¶ do wyboru silnika, test które s³owniki obecne
 - revert default to YDP (or even implement SAP and distribute with it)

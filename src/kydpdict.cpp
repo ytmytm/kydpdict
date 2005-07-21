@@ -857,7 +857,12 @@ void Kydpdict::handleLink( const QString & href )
 
 void Kydpdict::handleTip( const QString & href )
 {
-    QString tmp = href;
+    static QString tmp;
+    
+    if ((href.length() == 0) && (tmp.length() == 0))
+	return;
+
+    tmp = href;
 
     if (tmp.startsWith("2")) {
 	tmp = tmp.remove(0,1);

@@ -225,24 +225,19 @@ QString EnginePWN::GetOutputTip(int index) {
 
 QString EnginePWN::MatchToolTips(const QString input) {
 
-    QString output = input;
-    int i=0, tpos=0, pos=0;
+    int i;
+    QString tmp, num;
 
-    QRegExp rx("[\\.\\w]+\\s[\\.\\w]+");
-    while (pos>=0) {
-        pos = rx.search(output,pos);
-	if (pos>-1) {
-	    for (i=0; i<GetTipNumber(0); i++) {
-		tpos = GetTip(i).find(rx.cap(0));
-		if (tpos==0) {
-		    output.replace(pos,rx.matchedLength(),"<a href=\""+rx.cap(0)+"\">"+rx.cap(0)+"</a>");
-		    return output;		// optymistycznie!
-		}
-	    }
-	    pos+=rx.matchedLength();
-        }
+    tmp = input; tmp.append(":");
+
+    for (i=0; i<GetTipNumber(0); i++) {
+	if (GetTip(i).startsWith(tmp)) {
+	    num.setNum(i);
+	    tmp = "<a href=\"2"+num+"\">"+input+"</a>";
+	    return tmp;
+	}
     }
-    return output.replace(QRegExp("(([.\\w]+)[,\\s]*)"),"<a href=\"\\2\">\\1</a>");
+    return input;
 }
 
 void EnginePWN::DoToolTips(const QString regex, QString *tmp, const QString color, const int n) {
