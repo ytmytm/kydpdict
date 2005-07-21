@@ -91,32 +91,6 @@ void EnginePWN::UpdateFName()
 	cnf->indexFName= cnf->toPolish ? "angpol.win" : "polang.win";
 }
 
-// XXX converter
-QString ListItemConvert(QCString input)
-{
-  static QTextCodec *codec = QTextCodec::codecForName("ISO8859-2");	// static here *MAKES* a difference!
-  QString stmp;
-  bool mark=false;
-
-    if (input.find('&')>=0) {
-	mark = true;
-	input.replace("&amp;","&");
-	input.replace("&rsquo;","'");
-    }
-    if (input.find('<')>=0) {
-	input.replace(QRegExp("<SUP>([^<]*)</SUP>")," \\1");
-    }
-    stmp = codec->toUnicode(input);
-    if (mark) {
-	stmp.replace("&agrave;",QChar(224));	// tetchy, tete-a-tete, a`
-	stmp.replace("&egrave;",QChar(232));	// finder, fin de siecle, e`
-	stmp.replace("&eacute;",QChar(233));	// eclair, e'
-	stmp.replace("&ecirc;", QChar(234));	// tetchy, tete-a-tete, e^
-	stmp.replace("&reg;",   QChar(174));	// Alar, (R)
-    }
-    return stmp;
-}
-
 void EnginePWN::FillWordList()
 {
 
