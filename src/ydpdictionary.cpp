@@ -328,7 +328,7 @@ int ydpDictionary::ScoreWord(QString w1, QString w2)
     unsigned int len1 = w1.length();
     unsigned int len2 = w2.length();
     for (; (i<len1) && (i<len2); i++)
-	if (w1.at(i) != w2.at(i))
+	if (w1.at(i).lower() != w2.at(i).lower())
 	    break;
     return i;
 }

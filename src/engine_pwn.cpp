@@ -120,7 +120,7 @@ QString ListItemConvert(QCString input)
 void EnginePWN::FillWordList()
 {
 
-  int i, wordCount;
+  int i;
   // for mmap
   int f;
   char *filedata;

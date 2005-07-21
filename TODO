@@ -37,6 +37,7 @@
 - tipy zrobiæ tak samo, jak w pwn? '[kod]:[eng] - [pol]'
 
 - checkdictionary przy tworzeniu buttonów i menu K£AMIE!!! [ if(true)... ]
-- silnik PWN: tooltipy nie dzia³aj±, generowana strona nie dzia³a, wyszukiwanie wywala
+- silnik PWN: tooltipy nie dzia³aj±, generowana strona nie dzia³a
 - co¶ do wyboru silnika, test które s³owniki obecne
 - revert default to YDP (or even implement SAP and distribute with it)
+- wyszukiwanie YDP jako domy¶lne lub przepisaæ naiwne bez niepotrzebnych konwersji
