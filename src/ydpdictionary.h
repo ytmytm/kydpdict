@@ -49,6 +49,7 @@ private:
 	virtual int ReadDefinition (int index);
 	virtual QString rtf2html (QString definition);
 	virtual QString SampleName(QString path, int index);
+	virtual void UpdateFName(void);
 
 	// GUI element holding index
 	QListBox	*dictList;

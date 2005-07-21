@@ -7,8 +7,8 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef ENGINE_YDP_H
-#define ENGINE_YDP_H
+#ifndef ENGINE_PWN_H
+#define ENGINE_PWN_H
 
 #include <qobject.h>
 #include <qfile.h>
@@ -18,11 +18,11 @@ class QStringList;
 #include "kydpconfig.h"
 #include "ydpdictionary.h"
 
-class EngineYDP : public ydpDictionary {
+class EnginePWN : public ydpDictionary {
 	Q_OBJECT
 public:
-	EngineYDP(kydpConfig *config, QListBox *listBox, ydpConverter *converter);
-	~EngineYDP();
+	EnginePWN(kydpConfig *config, QListBox *listBox, ydpConverter *converter);
+	~EnginePWN();
 
 	int GetTipNumber(int type);
 	QString GetInputTip(int index);
@@ -30,16 +30,22 @@ public:
 	int OpenDictionary(void);
 	int CheckDictionary(void);
 	void CloseDictionary(void);
-	int FindWord(QString word);
+//	int FindWord(QString word);
 
 private:
 	int ReadDefinition (int index);
 	void FillWordList(void);
-	QString rtf2html (QString definition);
+//	QString rtf2html (QString definition);
+	QString pwnhtml2qthtml(char *definition);
 	void disableTag (int tag_code, int level);
 	QString insertHyperText(QString raw_input, int level);
-	QString SampleName(QString path, int index);
+//	QString SampleName(QString path, int index);
 	void UpdateFName(void);
+
+	//
+	void DoToolTips(const QString regex, QString *tmp, const QString color, const int n);
+	QString MatchToolTips(const QString input);
+	QString GetTip(int index);
 
 	// dictionary file variables
 	QFile fIndex;			/* index file descriptor */
@@ -52,7 +58,8 @@ private:
 	int direction_tab[16];
 
 	struct LL_dictionaryCache {
-	    unsigned long *indexes;	/* indexes to definitions array */
+	    unsigned int *offsets;	/* offsets in data file to word def's */
+	    unsigned int words_base;
 	} dictCache_LL[4];
 
 	unsigned long *indexes; 	/* indexes to definitions array */
@@ -62,14 +69,14 @@ private:
 
 /* converter class */
 
-class ConvertYDP : public ydpConverter {
+class ConvertPWN : public ydpConverter {
 public:
-	ConvertYDP(void);
-	~ConvertYDP();
+	ConvertPWN(void);
+	~ConvertPWN();
 //	char toLower(const char c);
 	QString toUnicode(const char *input);
 	QCString fromUnicode(QString input);
-	QString convertChunk(char *input, int size, bool unicodeFont);
+//	QString convertChunk(char *input, int size, bool unicodeFont);
 
 private:
 	QTextCodec *codec;

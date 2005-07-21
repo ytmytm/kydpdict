@@ -15,6 +15,7 @@ class QFont;
 #include <qfont.h>
 
 enum { LANG_ENGLISH, LANG_DEUTSCH, LANG_LAST };
+enum { ENGINE_PWN, ENGINE_YDP, ENGINE_LAST };
 
 class kydpConfig
 {
@@ -38,6 +39,7 @@ public:
 	bool	toolBarVisible;
 	bool	unicodeFont;
 	int language;
+	int engine;
 	int kGeometryX, kGeometryY, kGeometryW, kGeometryH;
 	bool kMaximized;
 	int spH1, spH2, spV1, spV2;
@@ -51,7 +53,6 @@ private:
 	QString cfgname;
 
 	void readYDPConfig(void);
-	void updateFName(void);
 	QString fixColour(const QString);
 };
 

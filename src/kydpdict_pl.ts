@@ -1,5 +1,15 @@
 <!DOCTYPE TS><TS>
 <context>
+    <name>EnginePWN</name>
+    <message>
+        <source>Can&apos;t open dictionary data file!
+Make sure you have copied the following file
+from Windows installation:
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>EngineYDP</name>
     <message>
         <source>Can&apos;t open index file!

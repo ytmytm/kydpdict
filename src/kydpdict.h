@@ -13,6 +13,7 @@
 #include <qmainwindow.h>
 
 class QListBox;
+class QListBoxItem;
 class QComboBox;
 class QMenuBar;
 class QPopupMenu;
@@ -24,12 +25,12 @@ class QToolButton;
 class QTextBrowser;
 class QScrollBar;
 
-#include "ydpdictionary.h"
-#include "ydpconverter.h"
-#include "kydpconfig.h"
-#include "ydpconfigure.h"
-#include "kdynamictip.h"
-#include "ydpfuzzysearch.h"
+class ydpDictionary;
+class ydpConverter;
+class kydpConfig;
+class ydpConfigure;
+class ydpFuzzySearch;
+class DynamicTip;
 
 class Kydpdict : public QMainWindow
 {

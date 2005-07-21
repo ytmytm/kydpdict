@@ -91,6 +91,7 @@ int EngineYDP::OpenDictionary(void)
     int i;
 
     /* open index and definition files */
+    UpdateFName();
     fIndex.setName( cnf->topPath + "/" + cnf->indexFName );
     if (!(fIndex.open(IO_ReadOnly))) {
 	fIndex.setName( cnf->topPath + "/" + cnf->indexFName.upper());
@@ -128,6 +129,7 @@ int EngineYDP::CheckDictionary(void)
 {
     QFile f;
 
+    UpdateFName();
     f.setName( cnf->topPath + "/" + cnf->indexFName );
     if ( !(f.exists()) ) {
 	f.setName( cnf->topPath + "/" + cnf->indexFName.upper() );
@@ -149,6 +151,18 @@ void EngineYDP::CloseDictionary()
     fData.close();
 }
 
+void EngineYDP::UpdateFName(void) {
+    switch (cnf->language) {
+	case LANG_ENGLISH:
+	    cnf->indexFName= cnf->toPolish ? "dict100.idx" : "dict101.idx";
+	    cnf->dataFName = cnf->toPolish ? "dict100.dat" : "dict101.dat";
+	    break;
+	case LANG_DEUTSCH:
+	    cnf->indexFName= cnf->toPolish ? "dict200.idx" : "dict201.idx";
+	    cnf->dataFName = cnf->toPolish ? "dict200.dat" : "dict201.dat";
+	    break;
+	}
+}
 
 void EngineYDP::FillWordList()
 {
@@ -212,6 +226,8 @@ void EngineYDP::FillWordList()
     }
     munmap((void*)filedata, length);
     close(f);
+
+    topitem = 0;
 
     /* omijanie bledow w slowniku... */
     if ((cnf->language==LANG_ENGLISH) && (cnf->toPolish)) {

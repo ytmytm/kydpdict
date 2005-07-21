@@ -67,8 +67,14 @@
 #include "../icons/clipboard.xpm"
 #include "../icons/babelfish.xpm"
 
+#include "ydpdictionary.h"
+#include "ydpconverter.h"
 #include "kydpconfig.h"
+#include "ydpconfigure.h"
+#include "kdynamictip.h"
+#include "ydpfuzzysearch.h"
 #include "dock_widget.h"
+#include "engine_pwn.h"
 #include "engine_ydp.h"
 
 #ifndef WITHOUT_X11
@@ -129,9 +135,13 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 	config = new kydpConfig;
 	config->load();
 
-//XXX 	myDict = new ydpDictionary(config,dictList);
-	myConvert = new ConvertYDP();
-	myDict = new EngineYDP(config,dictList,myConvert);
+	if (config->engine == ENGINE_YDP) {
+	    myConvert = new ConvertYDP();
+	    myDict = new EngineYDP(config,dictList,myConvert);
+	} else {
+	    myConvert = new ConvertPWN();
+	    myDict = new EnginePWN(config,dictList,myConvert);
+	}
 
 	mySearch = new ydpFuzzySearch(parent);	// if exchanged with 'this' -> is always over kydpdict window
 	// this has to be before OpenDictionary so the notification will be passed
@@ -163,14 +173,12 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 
 	do {
 		testagain:
-//XXX		if(!myDict->CheckDictionary(config)) {
 		if(!myDict->CheckDictionary()) {
 		//jesli nie ma tego co chcemy, to sprawdzamy drugi jezyk
 			config->language++;
 			if (config->language >= LANG_LAST)
 				config->language = LANG_ENGLISH;
 			config->save();
-//XXX			if(!myDict->CheckDictionary(config)) {
 			if(!myDict->CheckDictionary()) {
 			// buu, drugiego jezyka tez nie ma; moze user bedzie cos wiedzial na ten temat...
 			    QMessageBox::critical( this, tr("Error"),
@@ -182,7 +190,6 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 			    goto testagain;	// z³o¿y³em ofiarê z jagniêcia i wolno mi u¿yæ goto
 			}
 		}
-//XXX		a=myDict->OpenDictionary(config);
 		a=myDict->OpenDictionary();
 	}
 	while (a);
@@ -613,7 +620,6 @@ void Kydpdict::SwapLang (bool direction, int language ) //dir==1 toPolish
 		config->language = language;
 		config->save();
 		do {
-//XXX			a=myDict->OpenDictionary(config);
 			a=myDict->OpenDictionary();
 			if (a) Configure(TRUE);
 		} while (a);

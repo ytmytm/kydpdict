@@ -108,7 +108,6 @@ int ydpDictionary::OpenDictionary(void)
 	dictCache[i].wordCount = wordCount;
 	dictCache[i].words = words;
     }
-    topitem = 0;
     /* don't want to do ListRefresh yet and dictList can't be empty */
     dictList->blockSignals(TRUE);
     dictList->insertItem(QString("dummy"));
@@ -126,6 +125,11 @@ int ydpDictionary::CheckDictionary(void) {
 void ydpDictionary::CloseDictionary()
 {
     dictList->clear();
+}
+
+void ydpDictionary::UpdateFName(void)
+{
+
 }
 
 KeyEater::KeyEater(ydpDictionary *parent)

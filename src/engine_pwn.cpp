@@ -1,0 +1,440 @@
+/***************************************************************************
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ ***************************************************************************/
+
+#include <qlistbox.h>
+#include <qmessagebox.h>
+#include <qtextcodec.h>
+#include <qregexp.h>
+
+// for memset
+#include <string.h>
+// for uncompress
+#include <zlib.h>
+
+// for mmap
+#include <sys/mman.h>
+#include <fcntl.h>
+#include <unistd.h>
+
+#include "engine_pwn.h"
+#include "engine_pwn.moc"
+
+unsigned int index_base, words_base, end_last_word, maxlength;
+unsigned int *offsets;
+char *wordbuffer;
+
+EnginePWN::EnginePWN(kydpConfig *config, QListBox *listBox, ydpConverter *converter) : ydpDictionary(config, listBox, converter)
+{
+
+}
+
+EnginePWN::~EnginePWN()
+{
+
+}
+
+int EnginePWN::OpenDictionary(void)
+{
+    QString p;
+    int i;
+
+    /* open index and definition files */
+    UpdateFName();
+    p = cnf->topPath + "/" + cnf->indexFName;
+    fIndex.setName(p);
+    if (!(fIndex.open(IO_ReadOnly))) {
+	  	p = tr( "Can't open dictionary data file!\n"
+			"Make sure you have copied the following file\n"
+			"from Windows installation:\n" ) + cnf->indexFName;
+		QMessageBox::critical(0, "kpwndict", p );
+		return 1; };
+
+    i = 0;
+    if (dictCache[i].wordCount>0) {
+	offsets = dictCache_LL[i].offsets;
+	words_base = dictCache_LL[i].words_base;
+    } else {
+	FillWordList();
+	dictCache_LL[i].offsets = offsets;
+	dictCache_LL[i].words_base = words_base;
+    }
+    return ydpDictionary::OpenDictionary();	// required call
+}
+
+int EnginePWN::CheckDictionary(void)
+{
+    QFile f;
+
+    UpdateFName();
+    f.setName( cnf->topPath + "/" + cnf->indexFName );
+    if ( !(f.exists()) )
+    	return 0;
+    return 1;
+}
+
+void EnginePWN::CloseDictionary()
+{
+	fIndex.close();
+// this should be here???
+	delete [] offsets;
+	delete [] wordbuffer;
+}
+
+void EnginePWN::UpdateFName()
+{
+	cnf->indexFName= cnf->toPolish ? "angpol.win" : "polang.win";
+}
+
+// XXX converter
+QString ListItemConvert(QCString input)
+{
+  static QTextCodec *codec = QTextCodec::codecForName("ISO8859-2");	// static here *MAKES* a difference!
+  QString stmp;
+  bool mark=false;
+
+    if (input.find('&')>=0) {
+	mark = true;
+	input.replace("&amp;","&");
+	input.replace("&rsquo;","'");
+    }
+    if (input.find('<')>=0) {
+	input.replace(QRegExp("<SUP>([^<]*)</SUP>")," \\1");
+    }
+    stmp = codec->toUnicode(input);
+    if (mark) {
+	stmp.replace("&agrave;",QChar(224));	// tetchy, tete-a-tete, a`
+	stmp.replace("&egrave;",QChar(232));	// finder, fin de siecle, e`
+	stmp.replace("&eacute;",QChar(233));	// eclair, e'
+	stmp.replace("&ecirc;", QChar(234));	// tetchy, tete-a-tete, e^
+	stmp.replace("&reg;",   QChar(174));	// Alar, (R)
+    }
+    return stmp;
+}
+
+void EnginePWN::FillWordList()
+{
+
+  int i, wordCount;
+  // for mmap
+  int f;
+  char *filedata;
+  size_t page_size;
+  unsigned int inioffset,mmapbase,endbase;
+
+  fIndex.at(0x18);
+  fIndex.readBlock((char*)&wordCount,4);	wordCount=fix32(wordCount);
+  fIndex.readBlock((char*)&index_base,4);	index_base=fix32(index_base);
+  fIndex.readBlock((char*)&words_base,4);	words_base=fix32(words_base);
+  fIndex.readBlock((char*)&end_last_word,4);	end_last_word=fix32(end_last_word);
+
+  // use nonalphabetical index to get 1st offset (->words_base, max length)
+  offsets = new unsigned int[wordCount+1];
+  words = new char* [wordCount+1];
+  words[wordCount] = 0;
+  fIndex.at(index_base+wordCount*4);
+  fIndex.readBlock((char*)offsets,4*wordCount);
+  words_base = words_base + 1 - fix32(offsets[0]);
+
+  // maxlength
+  maxlength = 0;
+  for (i=0;i<wordCount-2;i++)
+	  if (fix32(offsets[i+1])-fix32(offsets[i]) > maxlength)
+	  	maxlength = fix32(offsets[i+1])-fix32(offsets[i]);
+
+  // now read alphabetical index
+  fIndex.at(index_base);
+  fIndex.readBlock((char*)offsets,4*wordCount);
+  for (i=0;i<wordCount;i++)
+	  offsets[i] = fix32(offsets[i]) & 0x00ffffff;
+
+  wordbuffer = new char[maxlength+1];
+
+  /* read index table */
+  f = open(fIndex.name(), O_RDONLY);
+  page_size = (size_t)sysconf(_SC_PAGESIZE);
+  mmapbase  = (words_base/page_size)*page_size;
+  inioffset = words_base - mmapbase;
+  endbase   = ((end_last_word/page_size)+1)*page_size;
+  filedata  = (char*)mmap(NULL, endbase, PROT_READ, MAP_PRIVATE, f, mmapbase);
+
+  if ((int)filedata != -1) {
+    for (i=0;i<wordCount;i++) {
+//	dictList->insertItem(ListItemConvert(QCString(&filedata[inioffset+fix32(offsets[i])+2+4+11])));
+	words[i] = new char [strlen(&filedata[inioffset+fix32(offsets[i])+2+4+11])+1];
+	strcpy(words[i],&filedata[inioffset+fix32(offsets[i])+2+4+11]);
+//	printf("%i:%s:%s\n",i,words[i],&filedata[inioffset+fix32(offsets[i])+2+4+11]);
+    }
+  } else {
+//	XXX THIS IS BROKEN!!!
+//    printf("no mmap: %i\n",filedata);	// XXX
+//    for (i=0;i<wordCount-1;i++) {
+//	fIndex.at(words_base+fix32(offsets[i]));
+//	fIndex.readBlock((char*)wordbuffer,maxlength);
+////	dictList->insertItem(ListItemConvert(QCString(&wordbuffer[2+4+11])));
+//	words[i] = new char [strlen(wordbuffer)+1];
+//	strcpy(words[i],wordbuffer);
+//	printf("%i:%s:%s:%s\n",i,words[i],wordbuffer,&filedata[inioffset+fix32(offsets[i])+2+4+11]);
+//    }
+  }
+  munmap((void*)filedata, endbase);
+  close(f);
+}
+
+int EnginePWN::ReadDefinition(int index)
+{
+    int i;
+
+	fIndex.at(words_base+fix32(offsets[index]));
+	fIndex.readBlock(wordbuffer, maxlength);
+
+	i = 2+4+11+strlen(&wordbuffer[2+4+11])+2;
+	if (wordbuffer[i]<20) {
+		int unzipresult;
+		uLongf destlen;
+		char *outbuffer = new char[5*maxlength];
+		memset(outbuffer,0,5*maxlength);
+		i += wordbuffer[i]+1;
+		unzipresult = uncompress((Bytef*)outbuffer,&destlen,(const Bytef*)&wordbuffer[i],maxlength);
+		curDefinition=pwnhtml2qthtml(outbuffer);
+		delete [] outbuffer;
+	} else {
+		curDefinition=pwnhtml2qthtml(&wordbuffer[i]);
+	}
+
+    return 0;
+}
+
+QString EnginePWN::GetTip(int index) {
+    #include "pwn-tooltips.h"
+    return tab[index];
+}
+
+int EnginePWN::GetTipNumber(int type) {
+
+static int gram,dom,flag=-1;
+int i;
+
+    if (flag<0) {
+	gram = 0; dom = 0;
+	for (i=0;!(GetTip(i).startsWith("XXXYYYZZZ"));i++) {
+	    if (GetInputTip(i)[0].category() == QChar::Letter_Uppercase)
+		dom++;
+	    else
+		gram++;
+	}
+	flag = 0;
+    }
+    switch (type) {
+	case 0:
+	    return gram+dom;
+	    break;
+	case 1:
+	    return gram;
+	    break;
+	case 2:
+	    return dom;
+	    break;
+	default:
+	    return -1;
+	    break;
+    }
+}
+
+QString EnginePWN::GetInputTip(int index) {
+    QString tmp = GetTip(index);
+    return tmp.mid(0,tmp.find(':'));
+}
+
+QString EnginePWN::GetOutputTip(int index) {
+    QString tmp = GetTip(index);
+    return tmp.mid(tmp.find(':')+1);
+}
+
+QString EnginePWN::MatchToolTips(const QString input) {
+
+    QString output = input;
+    int i=0, tpos=0, pos=0;
+
+    QRegExp rx("[\\.\\w]+\\s[\\.\\w]+");
+    while (pos>=0) {
+        pos = rx.search(output,pos);
+	if (pos>-1) {
+	    for (i=0; i<GetTipNumber(0); i++) {
+		tpos = GetTip(i).find(rx.cap(0));
+		if (tpos==0) {
+		    output.replace(pos,rx.matchedLength(),"<a href=\""+rx.cap(0)+"\">"+rx.cap(0)+"</a>");
+		    return output;		// optymistycznie!
+		}
+	    }
+	    pos+=rx.matchedLength();
+        }
+    }
+    return output.replace(QRegExp("(([.\\w]+)[,\\s]*)"),"<a href=\"\\2\">\\1</a>");
+}
+
+void EnginePWN::DoToolTips(const QString regex, QString *tmp, const QString color, const int n) {
+
+    QString itOn = ""; QString itOff = "";
+
+    /* prepare defaults */
+    if (cnf->italicFont) {
+	itOn = "<I>";
+	itOff = "</I> ";
+    }
+
+    QRegExp rx(regex);
+    QString newval;
+    int pos = 0;
+
+    while (pos>=0) {
+	pos = rx.search(*tmp,pos);
+	if (pos>-1) {
+	    newval = MatchToolTips(rx.cap(n));
+	    if (n==1)
+		newval = itOn+"<font color="+color+">"+newval+"</font>"+itOff;
+	    if (n==2)
+		newval = rx.cap(1)+"<font color="+color+">"+newval+"</font>";
+	    tmp->replace(pos,rx.matchedLength(),newval);
+	    pos+=rx.matchedLength();
+	}
+    }
+}
+
+QString EnginePWN::pwnhtml2qthtml(char *definition) {
+
+    static QTextCodec *codec = QTextCodec::codecForName("CP-1250");
+    QString tmp,itOn,itOff;
+
+    itOn = ""; itOff = "";
+
+    /* prepare defaults */
+    if (cnf->italicFont) {
+	itOn = "<I>";
+	itOff = "</I> ";
+    }
+
+    tmp = codec->toUnicode(definition);
+
+    /* first, convert phonetic and other symbols */
+
+    if (cnf->unicodeFont) {
+	tmp.replace("<IMG SRC=\"IPA503.JPG\">",QChar(720));	// lengthtened, :
+	tmp.replace("&IPA502;",QChar(716));	// secondary stress (headquaters), ,
+	tmp.replace("&idot;",QChar(618));			// high front lax (bit), f4
+	tmp.replace("<IMG SRC=\"schwa.JPG\">",QChar(601));	// schwa (about), f1
+	tmp.replace("<IMG SRC=\"IPA306.JPG\">",QChar(596));	// mid back lax (boy), f2
+	tmp.replace("<IMG SRC=\"IPA313.JPG\">",QChar(594));	// (dog,about), f9
+	tmp.replace("<IMG SRC=\"IPA314.JPG\">",QChar(652));	// central low (but), f6
+	tmp.replace("<IMG SRC=\"IPA321.JPG\">",QChar(650));	// high back lax (put), f10
+	tmp.replace("<IMG SRC=\"IPA305.JPG\">",QChar(593));	// low back (father), f7
+	tmp.replace("<IMG SRC=\"IPA326.JPG\">",QChar(604));	// (bird), f3
+	tmp.replace("&#952;",QChar(952));	// voiceless interdental fricative (thing), f8
+	tmp.replace("&##952;",QChar(952));	// voiceless interdental fricative (thing), f8
+	tmp.replace("&##8747;",QChar(643));	// voiceless palatal fricative (ship), f5
+	tmp.replace("<SUB><IMG SRC=\"IPA135.JPG\"></SUB>",QChar(658));	// voiced palatal fricative (pleasure), f11
+	tmp.replace("&eng;",QChar(331));	// velar nasal (sung), &#331;
+// these are handled by Qt anyway
+//	tmp.replace("&aelig;",QChar(230));	// low front (cat)
+//	tmp.replace("&eth;",QChar(240));	// voiced interdental fricative (then)
+    } else {
+// old stuff - no Unicode font
+	tmp.replace("<IMG SRC=\"IPA503.JPG\">",":");
+	tmp.replace("&IPA502;",",");
+	tmp.replace("&idot;","<IMG SRC=\"f4\">");
+	tmp.replace("schwa.JPG","f1");
+	tmp.replace("IPA306.JPG","f2");
+	tmp.replace("IPA313.JPG","f9");
+	tmp.replace("IPA314.JPG","f6");
+	tmp.replace("IPA321.JPG","f10");
+	tmp.replace("IPA305.JPG","f7");
+	tmp.replace("IPA326.JPG","f3");
+	tmp.replace("&#952;","<IMG SRC=\"f8\">");
+	tmp.replace("&##952;","<IMG SRC=\"f8\">");
+	tmp.replace("&##8747;","<IMG SRC=\"f5\">");
+	tmp.replace("IPA135.JPG","f11");
+	tmp.replace("&eng;","&#331;");
+    }
+    tmp.replace("<IMG SRC=\"idioms.JPG\">","IDIOMS:");
+    tmp.replace("&ap;~","&asymp;");
+    tmp.replace("&ap;","&asymp;");
+    tmp.replace("&squareb;","&bull;");
+    tmp.replace("&hfpause;","-");
+    tmp.replace("&tilde;","~");
+
+    /* now beautification */
+    // english examples - bolds
+    tmp.replace(QRegExp(";<B>([^<]*)</B>"),";<B><font color="+color3+">\\1</font></B>");
+    tmp.replace(QRegExp("/I><B>([^<]*)</B>"),"/I><B><font color="+color3+">\\1</font></B>");
+    tmp.replace(QRegExp("<TEXTSECTION ID=0><B>([^<]*)</B>"),"<TEXTSECTION ID=0><B><font color="+color3+">\\1</font></B>");
+    // english examples - italics with [ ]
+    tmp.replace(QRegExp("<I>( [^<]*)</I>"),itOn+"<font color="+color3+">\\1</font>"+itOff);
+    if (cnf->toolTips) {
+	// qualifiers - italics, but not those with [ .. ]
+	DoToolTips("<I>([^<\[]*)</I>",&tmp,color2,1);
+	// qualifier - SMALL not in ( )
+	DoToolTips("([^(])<SMALL>([^<]*)</SMALL>",&tmp,color1,2);
+    } else {
+    	tmp.replace(QRegExp("<I>([^<\[]*)</I>"),itOn+"<font color="+color2+">\\1</font>"+itOff);
+	tmp.replace(QRegExp("([^(])<SMALL>([^<]*)</SMALL>"),"\\1<font color="+color1+">\\2</font>");
+    }
+    // additional context info - (<SMALL...SMALL> - (letter))
+
+    /* finally qml wrap */
+    tmp = "<qt type=\"page\"><font color=" + color4 + ">" + tmp + "</font></qt>";
+
+    return tmp;
+}
+
+////////////
+
+ConvertPWN::ConvertPWN(void) {
+    codec = QTextCodec::codecForName("CP1250");
+}
+
+ConvertPWN::~ConvertPWN() {
+
+}
+
+//char ConvertYDP::toLower(const char c) {
+//    const static char upper_cp[] = "A•BC∆DE FGHIJKL£MN—O”PQRSåTUVWXYZØè";
+//    const static char lower_cp[] = "aπbcÊdeÍfghijkl≥mnÒoÛpqrsútuvwxyzøü";
+//
+//    unsigned int i;
+//    for (i=0;i<sizeof(upper_cp);i++)
+//	if (c == upper_cp[i])
+//	    return lower_cp[i];
+//    return c;
+//}
+
+QString ConvertPWN::toUnicode(const char *input) {
+    QString stmp;
+    bool mark=false;
+    stmp = codec->toUnicode(input);
+
+    if (stmp.find('&')>=0) {
+	mark = true;
+	stmp.replace("&amp;","&");
+	stmp.replace("&rsquo;","'");
+    }
+    if (stmp.find('<')>=0) {
+	stmp.replace(QRegExp("<SUP>([^<]*)</SUP>")," \\1");
+    }
+    if (mark) {
+	stmp.replace("&agrave;",QChar(224));	// tetchy, tete-a-tete, a`
+	stmp.replace("&egrave;",QChar(232));	// finder, fin de siecle, e`
+	stmp.replace("&eacute;",QChar(233));	// eclair, e'
+	stmp.replace("&ecirc;", QChar(234));	// tetchy, tete-a-tete, e^
+	stmp.replace("&reg;",   QChar(174));	// Alar, (R)
+    }
+    return stmp;
+}
+
+QCString ConvertPWN::fromUnicode(QString input) {
+    return codec->fromUnicode(input);
+}

@@ -24,10 +24,10 @@ KYDPDATADIR=$(datadir)/$(PACKAGE_NAME)/
 
 # Do not touch below and above this line
 
-OBJECTS = kdynamictip.cpp kydpconfig.cpp kydpdict.cpp main.cpp ydpdictionary.cpp ydpconfigure.cpp ydpfuzzysearch.cpp engine_ydp.cpp ydpconverter.cpp
+OBJECTS = kdynamictip.cpp kydpconfig.cpp kydpdict.cpp main.cpp ydpdictionary.cpp ydpconfigure.cpp ydpfuzzysearch.cpp engine_pwn.o engine_ydp.cpp ydpconverter.cpp
 
 OOBJECTS = main.o kydpconfig.o kdynamictip.o kydpdict.o ydpdictionary.o  \
-	ydpconfigure.o ydpfuzzysearch.o engine_ydp.o ydpconverter.o
+	ydpconfigure.o ydpfuzzysearch.o engine_pwn.o engine_ydp.o ydpconverter.o
 
 ifeq ($(HAVE_X11),yes)
 OBJECTS  += dock_widget.cpp
@@ -51,7 +51,13 @@ kydpdict.moc: kydpdict.h
 kydpdict.o:
 		$(CXX) -c kydpdict.cpp $(X_CFLAGS) $(QT_INCLUDE) $(CXXFLAGS)
 
-engine_ydp.o: tips.h
+engine_pwn.o:
+		$(CXX) -c engine_pwn.cpp $(QT_INCLUDE) $(CXXFLAGS)
+
+engine_pwn.moc: engine_pwn.h
+		$(MOC) engine_pwn.h -o engine_pwn.moc
+
+engine_ydp.o:
 		$(CXX) -c engine_ydp.cpp $(QT_INCLUDE) $(CXXFLAGS)
 
 engine_ydp.moc: engine_ydp.h

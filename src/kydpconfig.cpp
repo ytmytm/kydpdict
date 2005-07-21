@@ -76,6 +76,7 @@ void kydpConfig::load(void)
 	cdPath	= settings.readEntry("/cd1path", cdPath);
 	cd2Path = settings.readEntry("/cd2path", "/mnt/cdrom");
 	player	= settings.readEntry("/player", player);
+	engine	= settings.readNumEntry("/engine", ENGINE_PWN);
 	settings.endGroup();
 	settings.beginGroup("/language");
 	toPolish= settings.readBoolEntry("/toPolish", TRUE );
@@ -114,14 +115,10 @@ void kydpConfig::load(void)
 
 	fontTransFont.fromString(transFont);
 	transFont = fontTransFont.toString();
-
-	updateFName();
 }
 
 void kydpConfig::save(void)
 {
-	updateFName();
-
 	QSettings settings;
 	settings.setPath("ytm","kydpdict");
 	settings.insertSearchPath(QSettings::Unix, cfgname);
@@ -131,6 +128,7 @@ void kydpConfig::save(void)
 	settings.writeEntry("/cd1path", cdPath);
 	settings.writeEntry("/cd2path", cd2Path);
 	settings.writeEntry("/player", player);
+	settings.writeEntry("/engine", engine);
 	settings.endGroup();
 	settings.beginGroup("/language");
 	settings.writeEntry("/toPolish", toPolish);
@@ -202,20 +200,6 @@ void kydpConfig::readYDPConfig(void)
 		}
 	}
 	fd.close();
-}
-
-void kydpConfig::updateFName(void)
-{
-	switch (language) {
-		case LANG_ENGLISH:
-		  indexFName= toPolish ? "dict100.idx" : "dict101.idx";
-		  dataFName = toPolish ? "dict100.dat" : "dict101.dat";
-		  break;
-		case LANG_DEUTSCH:
-		  indexFName= toPolish ? "dict200.idx" : "dict201.idx";
-		  dataFName = toPolish ? "dict200.dat" : "dict201.dat";
-		  break;
-	}
 }
 
 // this is here due to fact that if link's colour is set to black, Qt ignores that
