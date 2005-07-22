@@ -827,7 +827,6 @@ void Kydpdict::UpdateLook()
 void Kydpdict::handleLink( const QString & href )
 {
 	QString link = href;
-	QString tmp;
 
 	tipsVisible = true;
 
