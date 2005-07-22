@@ -40,7 +40,6 @@
     - test które s³owniki obecne, zwróciæ capabilities lub sth
     - sprawdzac integralnosc danych (przynajmniej podstawowo - czy to taki plik)
 - co¶ do wyboru silnika
-- silnik PWN: 'go' -> tooltip '3rd person sg' jako wyj±tek rozbity na dwa?
 - revert default to YDP (or even implement SAP and distribute with it)
 - wyszukiwanie YDP jako domy¶lne lub przepisaæ naiwne bez niepotrzebnych konwersji
     - jedna konwersja: utf->native lowercase i native->nativelowercase
