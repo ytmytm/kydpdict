@@ -34,15 +34,13 @@
       na tak samo?
 - stoodi <stoodi@gmail.com>: z pl_PL.UTF-8 'robiæ' znajduje '¶wiergot'...
 - w³a¶ciwie ludzie maj± racjê: klik na 'X' powinien zostawiaæ rybkê w trayu
-- tipy zrobiæ tak samo, jak w pwn? '[kod]:[eng] - [pol]'
+- tipy w YDP zrobiæ tak samo, jak w pwn? '[kod]:[eng] - [pol]'
 
 - checkdictionary przy tworzeniu buttonów i menu K£AMIE!!! [ if(true)... ]
     - wyrzuciæ to do klasy s³ownika?
     - test które s³owniki obecne, zwróciæ capabilities lub sth
 - co¶ do wyboru silnika
 - silnik PWN: 'go' -> tooltip '3rd person sg' jako wyj±tek rozbity na dwa?
-- wpisaæ s³owo, klikn±æ na listê -> uciêty wynik, to samo po zmianie i powrocie focusu
-    co¶ z uncompress?, zale¿y od d³ugo¶ci poprzedniego
 - revert default to YDP (or even implement SAP and distribute with it)
 - wyszukiwanie YDP jako domy¶lne lub przepisaæ naiwne bez niepotrzebnych konwersji
     - jedna konwersja: utf->native lowercase i native->nativelowercase

@@ -158,20 +158,24 @@ void EnginePWN::FillWordList()
 int EnginePWN::ReadDefinition(int index)
 {
     int i;
+    static char *outbuffer = NULL;
+
+    if (outbuffer==NULL)
+	outbuffer = new char [5*maxlength];	// XXX is this memleak?
+    else
+	memset(outbuffer,0,5*maxlength);	// 5*maxlength is arbitrary, based on zip performance
 
 	fIndex.at(words_base+fix32(offsets[index]));
 	fIndex.readBlock(wordbuffer, maxlength);
 
 	i = 2+4+11+strlen(&wordbuffer[2+4+11])+2;
-	if (wordbuffer[i]<20) {
+	if (wordbuffer[i]<20) {			// not a character -> must be compressed
 		int unzipresult;
 		uLongf destlen;
-		char *outbuffer = new char[5*maxlength];
-		memset(outbuffer,0,5*maxlength);
 		i += wordbuffer[i]+1;
+		destlen = 5*maxlength;
 		unzipresult = uncompress((Bytef*)outbuffer,&destlen,(const Bytef*)&wordbuffer[i],maxlength);
 		curDefinition=cvt->convertChunk(outbuffer);
-		delete [] outbuffer;
 	} else {
 		curDefinition=cvt->convertChunk(&wordbuffer[i]);
 	}
