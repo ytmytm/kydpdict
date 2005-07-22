@@ -830,9 +830,9 @@ void Kydpdict::handleLink( const QString & href )
 
 	tipsVisible = true;
 
-	if (link.startsWith("2")) {
+	if (!((link.startsWith("0") || link.startsWith("1")))) {
 		RTFOutput->setText(myDict->GetInfoPage());
-		RTFOutput->scrollToAnchor(link.remove(0,1));
+		RTFOutput->scrollToAnchor(link);
 	} else {
 		if (link.startsWith("1"))
 			SwapLanguages();
@@ -849,19 +849,21 @@ void Kydpdict::handleLink( const QString & href )
 
 void Kydpdict::handleTip( const QString & href )
 {
-    static QString tmp;
-    
-    if ((href.length() == 0) && (tmp.length() == 0))
+    static QString lastone;
+    int i;
+
+    if ((href.length() == 0) && (lastone.length() == 0))
 	return;
 
-    tmp = href;
+    lastone = href;
 
-    if (tmp.startsWith("2")) {
-	tmp = tmp.remove(0,1);
-	if(tmp.toInt() >= 0 && tmp.toInt() < myDict->GetTipNumber(0))
-	    myDynamicTip->tekst = myDict->GetOutputTip(tmp.toInt());
-    } else
-	myDynamicTip->tekst = "";
+    for (i=0; i< myDict->GetTipNumber(0); i++) {
+	if (myDict->GetInputTip(i).compare(href)==0) {
+	    myDynamicTip->tekst = myDict->GetOutputTip(i);
+	    return;
+	}
+    }
+    myDynamicTip->tekst = "";
 }
 
 void Kydpdict::updateUserTimestamp(void) {

@@ -26,10 +26,6 @@ public:
 	EnginePWN(kydpConfig *config, QListBox *listBox, ydpConverter *converter);
 	~EnginePWN();
 
-	int GetTipNumber(int type);
-	QString GetInputTip(int index);
-	QString GetOutputTip(int index);
-	QString GetInfoPage(void);
 	int OpenDictionary(void);
 	int CheckDictionary(void);
 	void CloseDictionary(void);

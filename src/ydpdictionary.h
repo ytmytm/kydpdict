@@ -51,6 +51,7 @@ private:
 	virtual QString rtf2html (QString definition);
 	virtual QString SampleName(QString path, int index);
 	virtual void UpdateFName(void);
+	virtual QString GetTip(int index);
 
 	// GUI element holding index
 	QListBox	*dictList;

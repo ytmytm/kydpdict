@@ -19,20 +19,69 @@
 
 KeyEater* keyEater;
 
+QString ydpDictionary::GetTip(int index) {
+    return QString("XXXYYYZZZ");
+}
+
 int ydpDictionary::GetTipNumber(int type) {
-    return -1;
+
+static int gram,dom,flag=-1;
+int i;
+
+    if (flag<0) {
+	gram = 0; dom = 0;
+	for (i=0;!(GetTip(i).startsWith("XXXYYYZZZ"));i++) {
+	    if (GetInputTip(i)[0].category() == QChar::Letter_Uppercase)
+		dom++;
+	    else
+		gram++;
+	}
+	flag = 0;
+    }
+    switch (type) {
+	case 0:
+	    return gram+dom;
+	    break;
+	case 1:
+	    return gram;
+	    break;
+	case 2:
+	    return dom;
+	    break;
+	default:
+	    return -1;
+	    break;
+    }
 }
 
 QString ydpDictionary::GetInputTip(int index) {
-	return QString("");
+    QString tmp = GetTip(index);
+    return tmp.mid(0,tmp.find(':'));
 }
 
 QString ydpDictionary::GetOutputTip(int index) {
-	return QString("");
+    QString tmp = GetTip(index);
+    return tmp.mid(tmp.find(':')+1);
 }
 
 QString ydpDictionary::GetInfoPage(void) {
-	return QString("");
+    QString gram, dom;
+
+    for (int i=0; i<GetTipNumber(0); i++) {
+	if (GetInputTip(i)[0].category() == QChar::Letter_Uppercase) {
+	    dom  += "<a name=\""+ GetInputTip(i) + "\"></a><h4><font color=\"red\">"+ GetInputTip(i) + "</font></h4>" + GetOutputTip(i) + "<hr>";
+	} else {
+	    gram += "<a name=\""+ GetInputTip(i) + "\"></a><h4><font color=\"red\">"+ GetInputTip(i) + "</font></h4>" + GetOutputTip(i) + "<hr>";
+	}
+    }
+
+    QString output = "<h2>Skróty wystêpuj±ce w t³umaczeniach</h2>";
+    output += "<h3>Czê¶æ I - GRAMATYKA</h3>";
+    output += gram;
+    output += "<h3>Czê¶æ II - DZIEDZINY</h3>";
+    output += dom;
+
+    return output;
 }
 
 unsigned long ydpDictionary::fix32(unsigned long x)

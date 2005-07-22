@@ -437,4 +437,5 @@ Kydpdict 0.6.8 (xx.xx.200x)
 - nie wywala siê przy s³owniku pol->ger (b³±d gdzie¶ zosta³ - dostêp do struktury cache poza
   tablic±, jednak te dane nie s± u¿yte)
 - silnik YDP wydzielony do osobnej klasy potomnej, razem z procedurami konwersji znaków
-- dodany silnik PWN, piewsza wersja
+- dodany silnik PWN
+- zmiana sk³adni pliku z tooltips na tê z kpwndict

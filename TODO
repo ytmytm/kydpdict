@@ -13,6 +13,7 @@
 - konfigurowalne klawisze z --with-kde
 - wczytywanie wszystkich slow, ze slownikow (wybranych) do jednej listy
     - trzeba trzymaæ w strukturze - z którego s³ownika
+    - trzeba sortowaæ przy wczytywaniu - TRUDNE! (ma³e/du¿e, specjalne znaki jak z pwn etc.)
 - pojawianie sie po zmianie pulpitu, autostick? (zawsze widoczne/przypnij/whatever)
     - bah - minimalizacja<=>znikanie (dla kpwndict tez) (jak?)
 - skróty klawiaturowe opisane w dymkach nad toolbarem
@@ -27,18 +28,17 @@
 - a co je¶li wy¶wietlaæ zamiast pe³nej listy tylko wyrazy podobne/wyrazy blisko?
     - wróciæ do listboxa, przy fuzzy - wszystkie (automatyczny scrollbar), przy li¶cie
       tylko tyle, ile widac, bez scrollbara - zmiana w edit, klik - centruje widok na wyrazie
-- sprawdzac integralnosc danych (przynajmniej podstawowo)
 - fuzzysearch (M. Zaj±czkowski)
     - zapamietywac w konfigu distance
     - zrobic do wyboru fuzzy/regexp - to jest w³a¶ciwie to, co ju¿ jest w yadict; mo¿e przepisaæ
       na tak samo?
 - stoodi <stoodi@gmail.com>: z pl_PL.UTF-8 'robiæ' znajduje '¶wiergot'...
 - w³a¶ciwie ludzie maj± racjê: klik na 'X' powinien zostawiaæ rybkê w trayu
-- tipy w YDP zrobiæ tak samo, jak w pwn? '[kod]:[eng] - [pol]'
 
 - checkdictionary przy tworzeniu buttonów i menu K£AMIE!!! [ if(true)... ]
     - wyrzuciæ to do klasy s³ownika?
     - test które s³owniki obecne, zwróciæ capabilities lub sth
+    - sprawdzac integralnosc danych (przynajmniej podstawowo - czy to taki plik)
 - co¶ do wyboru silnika
 - silnik PWN: 'go' -> tooltip '3rd person sg' jako wyj±tek rozbity na dwa?
 - revert default to YDP (or even implement SAP and distribute with it)
