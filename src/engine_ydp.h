@@ -43,6 +43,7 @@ private:
 	QString insertHyperText(QString raw_input, int level);
 	QString SampleName(QString path, int index);
 	void UpdateFName(void);
+	QString GetTip(int index);
 
 	// dictionary file variables
 	QFile fIndex;			/* index file descriptor */

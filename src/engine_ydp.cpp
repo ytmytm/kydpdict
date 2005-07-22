@@ -33,18 +33,35 @@
 #define _native 0
 #define _foreign 1
 
-#include "tips.h"
+QString EngineYDP::GetTip(int index) {
+    #include "ydp-tooltips.h"
+    return tab[index];
+}
 
 int EngineYDP::GetTipNumber(int type) {
+
+static int gram,dom,flag=-1;
+int i;
+
+    if (flag<0) {
+	gram = 0; dom = 0;
+	for (i=0;!(GetTip(i).startsWith("XXXYYYZZZ"));i++) {
+	    if (GetInputTip(i)[0].category() == QChar::Letter_Uppercase)
+		dom++;
+	    else
+		gram++;
+	}
+	flag = 0;
+    }
     switch (type) {
 	case 0:
-	    return I_size+II_size;
+	    return gram+dom;
 	    break;
 	case 1:
-	    return I_size;
+	    return gram;
 	    break;
 	case 2:
-	    return II_size;
+	    return dom;
 	    break;
 	default:
 	    return -1;
@@ -53,35 +70,34 @@ int EngineYDP::GetTipNumber(int type) {
 }
 
 QString EngineYDP::GetInputTip(int index) {
-static QString input_tip[] = INPUT_TIP;
-    if (index <= GetTipNumber(0))
-	return input_tip[index];
-    else
-	return QString("");
+    QString tmp = GetTip(index);
+    return tmp.mid(0,tmp.find(':'));
 }
 
 QString EngineYDP::GetOutputTip(int index) {
-static QString output_tip[] = OUTPUT_TIP;	// guess what happens with 'ñ' when this is not private...
-    if (index <= GetTipNumber(0))
-	return output_tip[index];
-    else
-	return QString("");
+    QString tmp = GetTip(index);
+    return tmp.mid(tmp.find(':')+1);
 }
 
 QString EngineYDP::GetInfoPage(void) {
     int i;
-    QString tmp;
-    QString output = "<h2>Skróty wystêpuj±ce w t³umaczeniach</h2><h3>Czê¶æ I - GRAMATYKA</h3>";
+    QString tmp, gram, dom;
 
-    for (i=0; i<GetTipNumber(1); i++) {
+    for (i=0; i<GetTipNumber(0); i++) {
 	tmp.setNum(i);
-	output += "<a name=\""+ tmp + "\"></a><h4><font color=\"red\">"+ GetInputTip(i) + "</font></h4>" + GetOutputTip(i) + "<hr>";
+	if (GetInputTip(i)[0].category() == QChar::Letter_Uppercase) {
+	    dom  += "<a name=\""+ tmp + "\"></a><h4><font color=\"red\">"+ GetInputTip(i) + "</font></h4>" + GetOutputTip(i) + "<hr>";
+	} else {
+	    gram += "<a name=\""+ tmp + "\"></a><h4><font color=\"red\">"+ GetInputTip(i) + "</font></h4>" + GetOutputTip(i) + "<hr>";
+	}
     }
+
+    QString output = "<h2>Skróty wystêpuj±ce w t³umaczeniach</h2>";
+    output += "<h3>Czê¶æ I - GRAMATYKA</h3>";
+    output += gram;
     output += "<h3>Czê¶æ II - DZIEDZINY</h3>";
-    for (i=GetTipNumber(1); i<GetTipNumber(0); i++) {
-	tmp.setNum(i);
-	output += "<a name=\""+ tmp + "\"></a><h4><font color=\"red\">"+ GetInputTip(i) + "</font></h4>" + GetOutputTip(i) + "<hr>";
-    }
+    output += dom;
+
     return output;
 }
 
@@ -638,7 +654,7 @@ QString EngineYDP::insertHyperText(QString raw_input, int level)
 
 			proposition = tmp2;
 
-			for(int i = 0; i < I_size+II_size; i++) {
+			for (int i=0; i<GetTipNumber(0); i++) {
 				if (!QString::compare(tmp2, GetInputTip(i))) {
 					number.sprintf("%d", i);
 					proposition = "<a href=2" + number +">" + tmp2 + "</a>";
