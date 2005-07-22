@@ -14,13 +14,16 @@
 #include <qlabel.h>
 
 #include "kydpdict.h"
+#include "kydpconfig.h"
+#include "ydpconverter.h"
 
 #include "ydpfuzzysearch.h"
 #include "ydpfuzzysearch.moc"
 
-ydpFuzzySearch::ydpFuzzySearch (QWidget *parent, const char* name, bool modal)
+ydpFuzzySearch::ydpFuzzySearch (kydpConfig *config, QWidget *parent, const char* name, bool modal)
  : QDialog(parent, name, modal)
 {
+    cfg = config;
     setFixedSize(400,260);
     setCaption(tr("Fuzzy search"));
 
@@ -47,6 +50,7 @@ ydpFuzzySearch::ydpFuzzySearch (QWidget *parent, const char* name, bool modal)
     distSlider->setTracking(FALSE);
     distSlider->setTickmarks(QSlider::Left);
     distSlider->setTickInterval(1);
+    distSlider->setValue(cfg->fuzzyDistance);
 
     QLabel *maxV = new QLabel(tr("high"), this, "maxV");
     QLabel *minV = new QLabel(tr("low"), this, "minV");
@@ -80,6 +84,8 @@ void ydpFuzzySearch::doSearch()
     listBox->clear();
     int i;
     int distance = distSlider->value();
+    cfg->fuzzyDistance = distance;
+    cfg->save();
     int j=0, best=0, hiscore = distance, score;
     QCString tekst = cvt->fromUnicode(wordEdit->text());
     for (i=0;i<wordCount;i++)

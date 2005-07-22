@@ -11,25 +11,28 @@
 #define YDPFUZZYSEARCH_H
 
 #include <qdialog.h>
-#include "ydpconverter.h"
 
 class QLineEdit;
 class QListBox;
 class QListBoxItem;
 class QSlider;
 
+class ydpConverter;
+class kydpConfig;
+
 class ydpFuzzySearch : public QDialog
 {
 	Q_OBJECT
 
 public:
-    ydpFuzzySearch(QWidget *parent = 0, const char* name = 0, bool modal = FALSE);
+    ydpFuzzySearch(kydpConfig *config, QWidget *parent = 0, const char* name = 0, bool modal = FALSE);
     ~ydpFuzzySearch();
 
 private:
     int wordCount;
     char **wordList;
     ydpConverter *cvt;
+    kydpConfig *cfg;
     QLineEdit *wordEdit;
     QListBox *listBox;
     QSlider *distSlider;

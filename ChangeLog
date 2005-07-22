@@ -439,3 +439,4 @@ Kydpdict 0.6.8 (xx.xx.200x)
 - silnik YDP wydzielony do osobnej klasy potomnej, razem z procedurami konwersji znaków
 - dodany silnik PWN
 - zmiana sk³adni pliku z tooltips na tê z kpwndict
+- zapamiêtywane podobieñstwo przy wyszukiwaniu rozmytym
