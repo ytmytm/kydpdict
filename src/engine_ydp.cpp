@@ -19,7 +19,7 @@
 
 #include <locale.h>
 
-#include "kydpdict.h"
+#include "kydpconfig.h"
 #include "engine_ydp.h"
 #include "engine_ydp.moc"
 
@@ -66,6 +66,23 @@ static QString output_tip[] = OUTPUT_TIP;	// guess what happens with 'ñ' when th
 	return output_tip[index];
     else
 	return QString("");
+}
+
+QString EngineYDP::GetInfoPage(void) {
+    int i;
+    QString tmp;
+    QString output = "<h2>Skróty wystêpuj±ce w t³umaczeniach</h2><h3>Czê¶æ I - GRAMATYKA</h3>";
+
+    for (i=0; i<GetTipNumber(1); i++) {
+	tmp.setNum(i);
+	output += "<a name=\""+ tmp + "\"></a><h4><font color=\"red\">"+ GetInputTip(i) + "</font></h4>" + GetOutputTip(i) + "<hr>";
+    }
+    output += "<h3>Czê¶æ II - DZIEDZINY</h3>";
+    for (i=GetTipNumber(1); i<GetTipNumber(0); i++) {
+	tmp.setNum(i);
+	output += "<a name=\""+ tmp + "\"></a><h4><font color=\"red\">"+ GetInputTip(i) + "</font></h4>" + GetOutputTip(i) + "<hr>";
+    }
+    return output;
 }
 
 EngineYDP::EngineYDP(kydpConfig *config, QListBox *listBox, ydpConverter *converter) : ydpDictionary(config, listBox, converter)

@@ -12,6 +12,7 @@
 #include <qprocess.h>
 
 #include "kydpdict.h"
+#include "kydpconfig.h"
 #include "ydpconverter.h"
 #include "ydpdictionary.h"
 #include "ydpdictionary.moc"
@@ -27,6 +28,10 @@ QString ydpDictionary::GetInputTip(int index) {
 }
 
 QString ydpDictionary::GetOutputTip(int index) {
+	return QString("");
+}
+
+QString ydpDictionary::GetInfoPage(void) {
 	return QString("");
 }
 

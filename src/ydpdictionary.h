@@ -15,8 +15,8 @@
 class QListBox;
 class QString;
 
-#include "kydpconfig.h"
-#include "ydpconverter.h"
+class kydpConfig;
+class ydpConverter;
 
 #define color1 cnf->kFontKolor1
 #define color2 cnf->kFontKolor2
@@ -38,6 +38,7 @@ public:
 	virtual int GetTipNumber(int type);
 	virtual QString GetInputTip(int index);
 	virtual QString GetOutputTip(int index);
+	virtual QString GetInfoPage(void);
 	void ListScrollUp(int offset);
 	void ListScrollDown(int offset);
 	virtual int FindWord(QString word);

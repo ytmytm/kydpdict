@@ -22,6 +22,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 
+#include "kydpconfig.h"
 #include "engine_pwn.h"
 #include "engine_pwn.moc"
 
@@ -221,6 +222,28 @@ QString EnginePWN::GetInputTip(int index) {
 QString EnginePWN::GetOutputTip(int index) {
     QString tmp = GetTip(index);
     return tmp.mid(tmp.find(':')+1);
+}
+
+QString EnginePWN::GetInfoPage(void) {
+    int i;
+    QString tmp, gram, dom;
+
+    for (i=0; i<GetTipNumber(0); i++) {
+	tmp.setNum(i);
+	if (GetInputTip(i)[0].category() == QChar::Letter_Uppercase) {
+	    dom  += "<a name=\""+ tmp + "\"></a><h4><font color=\"red\">"+ GetInputTip(i) + "</font></h4>" + GetOutputTip(i) + "<hr>";
+	} else {
+	    gram += "<a name=\""+ tmp + "\"></a><h4><font color=\"red\">"+ GetInputTip(i) + "</font></h4>" + GetOutputTip(i) + "<hr>";
+	}
+    }
+
+    QString output = "<h2>Skróty wystêpuj±ce w t³umaczeniach</h2>";
+    output += "<h3>Czê¶æ I - GRAMATYKA</h3>";
+    output += gram;
+    output += "<h3>Czê¶æ II - DZIEDZINY</h3>";
+    output += dom;
+
+    return output;
 }
 
 QString EnginePWN::MatchToolTips(const QString input) {

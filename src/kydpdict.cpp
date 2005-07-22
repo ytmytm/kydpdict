@@ -833,22 +833,7 @@ void Kydpdict::handleLink( const QString & href )
 	tipsVisible = true;
 
 	if (link.startsWith("2")) {
-		QString output = "<h2>Skróty wystêpuj±ce w t³umaczeniach</h2>";
-		output += "<h3>Czê¶æ I - GRAMATYKA</h3>";
-
-		for(i=0; i<myDict->GetTipNumber(1); i++) {
-			tmp.sprintf("%d", i);
-			output += "<a name=\""+ tmp + "\"></a><h4><font color=\"red\">"+ myDict->GetInputTip(i) + "</font></h4>" + myDict->GetOutputTip(i) + "<hr>";
-		}
-
-		output += "<h3>Czê¶æ II - DZIEDZINY</h3>";
-
-		for(i=myDict->GetTipNumber(1); i<myDict->GetTipNumber(0); i++) {
-			tmp.sprintf("%d", i);
-			output += "<a name=\""+ tmp + "\"></a><h4><font color=\"red\">"+ myDict->GetInputTip(i) + "</font></h4>" + myDict->GetOutputTip(i) + "<hr>";
-		}
-
-		RTFOutput->setText(output);
+		RTFOutput->setText(myDict->GetInfoPage());
 		RTFOutput->scrollToAnchor(link.remove(0,1));
 	} else {
 		if (link.startsWith("1"))
