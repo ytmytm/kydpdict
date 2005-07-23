@@ -10,8 +10,6 @@
 #ifndef KYDPCONFIG_H
 #define KYDPCONFIG_H
 
-class QString;
-class QFont;
 #include <qfont.h>
 
 enum { LANG_ENGLISH, LANG_DEUTSCH, LANG_LAST };
