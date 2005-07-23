@@ -112,6 +112,11 @@ int EngineYDP::CheckDictionary(void)
     return 1;
 }
 
+int EngineYDP::GetDictionaryInfo(void)
+{
+    return (hasEnglish2Polish | hasPolish2English | hasGerman2Polish | hasPolish2German);
+}
+
 void EngineYDP::CloseDictionary()
 {
     fIndex.close();

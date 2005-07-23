@@ -75,6 +75,11 @@ int EnginePWN::CheckDictionary(void)
     return 1;
 }
 
+int EnginePWN::GetDictionaryInfo(void)
+{
+    return hasEnglish2Polish;
+}
+
 void EnginePWN::CloseDictionary()
 {
 	fIndex.close();

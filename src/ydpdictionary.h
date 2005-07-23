@@ -18,10 +18,17 @@ class QString;
 class kydpConfig;
 class ydpConverter;
 
+// shortcuts
 #define color1 cnf->kFontKolor1
 #define color2 cnf->kFontKolor2
 #define color3 cnf->kFontKolor3
 #define color4 cnf->kFontKolor4
+
+// capabilities bits
+#define hasEnglish2Polish	0x00000001
+#define hasPolish2English	0x00000002
+#define hasGerman2Polish	0x00000004
+#define hasPolish2German	0x00000008
 
 class ydpDictionary : public QObject {
 	Q_OBJECT
@@ -32,6 +39,8 @@ public:
 	virtual int OpenDictionary(void);
 	virtual int CheckDictionary(void);
 	virtual void CloseDictionary(void);
+	// return capabilities bits
+	virtual int GetDictionaryInfo(void);
 
 	QString GetDefinition(int index);
 	int Play (int index, kydpConfig *config);

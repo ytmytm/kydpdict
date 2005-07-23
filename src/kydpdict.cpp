@@ -208,23 +208,22 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 	settings->insertItem(QPixmap(conf_xpm), tr("&Settings"), this, SLOT(ConfigureKydpdict()), QKeySequence( tr("Ctrl+S", "Options|Settings") ) );
 	toolBarMenuItem = settings->insertItem(tr("Show &toolbar"), this, SLOT(ShowToolbar()), QKeySequence( tr("Ctrl+T", "Options|Settings") ) );
 	settings->insertSeparator();
-	but_PlEn = NULL; but_PlDe = NULL;
-	but_EnPl = NULL; but_DePl = NULL;
-// set language and test
-//XXX	if(myDict->CheckDictionary(config->topPath, "dict100.idx", "dict100.dat") && myDict->CheckDictionary(config->topPath, "dict101.idx", "dict101.dat")) {
-	if (true) {
+	but_PlEn = NULL; but_PlDe = NULL; polToEng = 0; engToPol = 0;
+	but_EnPl = NULL; but_DePl = NULL; polToGer = 0; gerToPol = 0;
+	if (myDict->GetDictionaryInfo() & hasPolish2English) {
 		polToEng = settings->insertItem("POL --> ENG", this, SLOT(SwapPolToEng()), QKeySequence( tr("Ctrl+;", "Options|POL --> ENG") ) );
-		engToPol = settings->insertItem("ENG --> POL", this, SLOT(SwapEngToPol()), QKeySequence( tr("Ctrl+.", "Options|ENG --> POL") ) );
 		but_PlEn = new QToolButton(QIconSet(QPixmap(pl_en_xpm)), "POL --> ENG", QString::null, this, SLOT(SwapPolToEng()), toolBar, "butPlEn" );
+	}
+	if (myDict->GetDictionaryInfo() & hasEnglish2Polish) {
+		engToPol = settings->insertItem("ENG --> POL", this, SLOT(SwapEngToPol()), QKeySequence( tr("Ctrl+.", "Options|ENG --> POL") ) );
 		but_EnPl = new QToolButton(QIconSet(QPixmap(en_pl_xpm)), "ENG --> POL", QString::null, this, SLOT(SwapEngToPol()), toolBar, "butEnPl" );
 	}
-// set language and test
-//XXX	if(myDict->CheckDictionary(config->topPath, "dict200.idx", "dict200.dat") && myDict->CheckDictionary(config->topPath, "dict201.idx", "dict201.dat")) {
-	if (true) {
-		settings->insertSeparator();
+	if (myDict->GetDictionaryInfo() & hasPolish2German) {
 		polToGer = settings->insertItem("POL --> GER", this, SLOT(SwapPolToGer()), QKeySequence( tr("Ctrl+:", "Options|POL --> GER") ) );
-		gerToPol = settings->insertItem("GER --> POL", this, SLOT(SwapGerToPol()), QKeySequence( tr("Ctrl+>", "Options|GER --> POL") ) );
 		but_PlDe = new QToolButton(QIconSet(QPixmap(pl_de_xpm)), "POL --> GER", QString::null, this, SLOT(SwapPolToGer()), toolBar, "butPlDe" );
+	}
+	if (myDict->GetDictionaryInfo() & hasGerman2Polish) {
+		gerToPol = settings->insertItem("GER --> POL", this, SLOT(SwapGerToPol()), QKeySequence( tr("Ctrl+>", "Options|GER --> POL") ) );
 		but_DePl = new QToolButton(QIconSet(QPixmap(de_pl_xpm)), "GER --> POL", QString::null, this, SLOT(SwapGerToPol()), toolBar, "butDePl" );
 	}
 	settings->insertSeparator();
@@ -289,7 +288,6 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 
 	QAccel *accel = new QAccel(this);
 	accel->connectItem(accel->insertItem(Key_Escape), this, SLOT(onEscaped()));
-
 	UpdateLook();
 
 	if (!config->toolBarVisible)
@@ -617,19 +615,30 @@ void Kydpdict::SwapPolToGer ()
 	SwapLang(0, LANG_DEUTSCH);
 }
 
-void Kydpdict::SwapLang (bool direction, int language ) //dir==1 toPolish
+void Kydpdict::SwapLang (bool toPolish, int language)
 {
 	int a;
-	QString word;
 
-	if(! ((config->toPolish == direction) && (config->language == language)) ) {
-		word=wordInput->currentText();
+	switch (language) {
+	    case LANG_ENGLISH:
+		if (((toPolish) && (!(myDict->GetDictionaryInfo() & hasEnglish2Polish))) ||
+		   ((!toPolish) && (!(myDict->GetDictionaryInfo() & hasPolish2English))))
+		   return;
+		break;
+	    case LANG_DEUTSCH:
+		if (((toPolish) && (!(myDict->GetDictionaryInfo() & hasGerman2Polish))) ||
+		   ((!toPolish) && (!(myDict->GetDictionaryInfo() & hasPolish2German))))
+		break;
+	}
+
+	if (!((config->toPolish == toPolish) && (config->language == language))) {
+		QString word = wordInput->currentText();
 		myDict->CloseDictionary();
-		config->toPolish=direction;
+		config->toPolish = toPolish;
 		config->language = language;
 		config->save();
 		do {
-			a=myDict->OpenDictionary();
+			a = myDict->OpenDictionary();
 			if (a) Configure(TRUE);
 		} while (a);
 		UpdateLook();
@@ -749,41 +758,38 @@ void Kydpdict::UpdateLook()
 	}
 
 	dictList->setPaletteForegroundColor ( QColor(config->kFontKolor4) );
-
-	if (but_EnPl!=NULL) but_EnPl->setEnabled(TRUE);
-	if (but_PlEn!=NULL) but_PlEn->setEnabled(TRUE);
-	if (but_DePl!=NULL) but_DePl->setEnabled(TRUE);
-	if (but_PlDe!=NULL) but_PlDe->setEnabled(TRUE);
-
+	if (but_EnPl) but_EnPl->setEnabled(TRUE);
+	if (but_PlEn) but_PlEn->setEnabled(TRUE);
+	if (but_DePl) but_DePl->setEnabled(TRUE);
+	if (but_PlDe) but_PlDe->setEnabled(TRUE);
 	but_Clipboard->setOn(config->clipTracking);
 	trayMenu->setItemChecked(trayMenuItemClipTrack, config->clipTracking);
 
 	switch (config->language) { //mozna dopisac kolejne case'y dla kolejnych jezykow
 		case LANG_DEUTSCH:
-			menu->setItemChecked(gerToPol, config->toPolish);
-			menu->setItemChecked(polToGer, !config->toPolish);
-			menu->setItemChecked(polToEng, FALSE);
-			menu->setItemChecked(engToPol, FALSE);
+			if (gerToPol) menu->setItemChecked(gerToPol, config->toPolish);
+			if (polToGer) menu->setItemChecked(polToGer, !config->toPolish);
+			if (polToEng) menu->setItemChecked(polToEng, FALSE);
+			if (engToPol) menu->setItemChecked(engToPol, FALSE);
 			if(config->toPolish) {
 				this->setCaption("De --> Pl - Kydpdict");
-				but_DePl->setEnabled(FALSE);
-			
+				if (but_DePl) but_DePl->setEnabled(FALSE);
 			} else {
 				this->setCaption("Pl --> De - Kydpdict");
-				but_PlDe->setEnabled(FALSE);
+				if (but_PlDe) but_PlDe->setEnabled(FALSE);
 			}
 			break;
 		case LANG_ENGLISH:
-			menu->setItemChecked(engToPol, config->toPolish);
-			menu->setItemChecked(polToEng, !config->toPolish);
-			menu->setItemChecked(gerToPol, FALSE);
-			menu->setItemChecked(polToGer, FALSE);
+			if (engToPol) menu->setItemChecked(engToPol, config->toPolish);
+			if (polToEng) menu->setItemChecked(polToEng, !config->toPolish);
+			if (gerToPol) menu->setItemChecked(gerToPol, FALSE);
+			if (polToGer) menu->setItemChecked(polToGer, FALSE);
 			if(config->toPolish) {
 				this->setCaption("En --> Pl - Kydpdict");
-				but_EnPl->setEnabled(FALSE);
+				if (but_EnPl) but_EnPl->setEnabled(FALSE);
 			} else {
 				this->setCaption("Pl --> En - Kydpdict");
-				but_PlEn->setEnabled(FALSE);
+				if (but_PlEn) but_PlEn->setEnabled(FALSE);
 			}
 			break;
 		default:

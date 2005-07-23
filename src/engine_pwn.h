@@ -29,6 +29,7 @@ public:
 	int OpenDictionary(void);
 	int CheckDictionary(void);
 	void CloseDictionary(void);
+	int GetDictionaryInfo(void);
 
 private:
 	int ReadDefinition (int index);

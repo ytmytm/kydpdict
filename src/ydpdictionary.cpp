@@ -176,6 +176,10 @@ int ydpDictionary::CheckDictionary(void) {
     return 1;	// always fail
 }
 
+int ydpDictionary::GetDictionaryInfo(void) {
+    return 0;	// no dictionaries available
+}
+
 void ydpDictionary::CloseDictionary()
 {
     dictList->clear();

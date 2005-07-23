@@ -29,8 +29,7 @@
       tylko tyle, ile widac, bez scrollbara - zmiana w edit, klik - centruje widok na wyrazie
 
 - checkdictionary przy tworzeniu buttonów i menu K£AMIE!!! [ if(true)... ]
-    - wyrzuciæ to do klasy s³ownika?
-    - test które s³owniki obecne, zwróciæ capabilities lub sth
+    - prawdziwy test które s³owniki obecne
     - sprawdzac integralnosc danych (przynajmniej podstawowo - czy to taki plik)
 - co¶ do wyboru silnika
 - revert default to YDP (or even implement SAP and distribute with it)
