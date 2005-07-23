@@ -345,6 +345,8 @@ int EnginePWN::FindWord(QString word)
     	    maxscore = score;
 	    maxitem = i;
 	}
+	if ((maxscore>1) && (i>maxitem+2000)) // found an extremum? [0,max+2000] should have new one
+	    break;
     }
     return maxitem;
 }
@@ -402,7 +404,7 @@ char *ConvertPWN::toLocal(const char *input) {
 		buffer[j++] = 'e';
 	    while (input[i++] != ';');	// hit end of entity
 	} else
-	if ((input[i] != ' ') && (input[i] != '\t') && (input[i] != '-'))
+	if ((input[i] != ' ') && (input[i] != '\t') && (input[i] != '-') && (input[i] !=','))
 	    buffer[j++] = toLower(input[i++]);
 	else
 	    ++i;
