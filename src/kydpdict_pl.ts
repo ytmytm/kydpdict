@@ -6,7 +6,10 @@
 Make sure you have copied the following file
 from Windows installation:
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Nie można otworzyć pliku danych!
+Proszę się upewnić, że następujący plik został
+skopiowany z aplikacji zainstalowanej pod Windows:
+</translation>
     </message>
 </context>
 <context>
@@ -60,14 +63,6 @@ from Windows installation:
     <message>
         <source>About Qt</source>
         <translation>Informacje o Qt</translation>
-    </message>
-    <message>
-        <source>This is frontend to YDP Collins dictionary.
-Authors: Andrzej Para , Maciej Witkowiak.
-Program based on ydpdict by Wojtek Kaniewski</source>
-        <translation>To jest nakładka na słownik YDP Collins.
-Autorzy: Andrzej Para, Maciej Witkowiak.
-Program oparty na ydpdict Wojtka Kaniewskiego</translation>
     </message>
     <message>
         <source>Error</source>
@@ -129,16 +124,6 @@ Program oparty na ydpdict Wojtka Kaniewskiego</translation>
         <source>Kydpdict can&apos;t work with incorrect path to dictionary files.
 In order to use this program you have to have data files from Windows
 dictionary installation. For more information please read README.
-A configuration window will be opened now, so you can set the path.</source>
-        <translation>Kydpdict nie może działać z nieprawidłową ścieżką do plików słownika
-Aby korzystać z programu musisz mieć pliki danych z programu dla Windows.
-Przeczytaj README, aby dowiedzieć się więcej.
-Teraz zostanie otwarte okno konfiguracji, aby można było ustawić ścieżki.</translation>
-    </message>
-    <message>
-        <source>Kydpdict can&apos;t work with incorrect path to dictionary files.
-In order to use this program you have to have data files from Windows
-dictionary installation. For more information please read README.
 Good bye!</source>
         <translation>Kydpdict nie może działać z nieprawidłową ścieżką do plików słownika
 Aby korzystać z programu musisz mieć pliki danych z programu dla Windows.
@@ -176,6 +161,28 @@ Do zobaczenia!</translation>
         <source>Ctrl+F</source>
         <comment>File|Fuzzy search</comment>
         <translation>Ctrl+F</translation>
+    </message>
+    <message>
+        <source>Kydpdict couldn&apos;t open or find dictionary data files.
+This is a problem with current configuration. For more information
+please read README distributed with this program.
+A configuration window will be opened now so you can do setup.</source>
+        <translation>Kydpdict nie był w stanie otworzyć plików danych słownika.
+To jest problem z obecną konfiguracją. Proszę przeczytać README
+dołączone do programu po więcej informacji.
+Teraz zostanie otwarte okno, w którym można dokonać zmiany ustawień.</translation>
+    </message>
+    <message>
+        <source>This is frontend to various dictionaries.
+Author: Maciej Witkowiak.
+YDP Engine by Maciej Witkowiak, Andrzej Para
+(based on ydpdict by Wojtek Kaniewski)
+PWN Oxford 2003 Engine by Maciej Witkowiak</source>
+        <translation>To jest nakladka na różne słowniki.
+Autor: Maciej Witkowiak
+Moduł YDP: Maciej Witkowiak, Andrzej Para
+(oparty na ydpdict Wojtka Kaniewskiego)
+Moduł PWN Oxford 2003: Maciej Witkowiak</translation>
     </message>
 </context>
 <context>
@@ -327,15 +334,15 @@ Prawy - otwórz menu</translation>
     </message>
     <message>
         <source>Dictionary Engine</source>
-        <translation type="unfinished"></translation>
+        <translation>Moduł słownika</translation>
     </message>
     <message>
         <source>Information</source>
-        <translation type="unfinished"></translation>
+        <translation>Informacja</translation>
     </message>
     <message>
         <source>New dictionary engine will be enabled after you restart Kydpdict.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nowy słownik będzie aktywny dopiero po restarcie Kydpdict.</translation>
     </message>
 </context>
 <context>

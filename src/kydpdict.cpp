@@ -177,11 +177,10 @@ testagain:
 	caps = myDict->GetDictionaryInfo();
 	if (caps == 0) {
 	    QMessageBox::critical( this, tr("Error"),
-	    // XXX zmienic komunikat ¿e nie ma ¿adnych plików s³ownika, co¶ o engine itd.
-		tr( "Kydpdict can't work with incorrect path to dictionary files.\n"
-		    "In order to use this program you have to have data files from Windows\n"
-		    "dictionary installation. For more information please read README.\n"
-		    "A configuration window will be opened now, so you can set the path."));
+		tr( "Kydpdict couldn't open or find dictionary data files.\n"
+		    "This is a problem with current configuration. For more information\n"
+		    "please read README distributed with this program.\n"
+		    "A configuration window will be opened now so you can do setup."));
 		Configure(TRUE);
 		goto testagain;
 	}
@@ -659,9 +658,11 @@ void Kydpdict::ShowAbout()
 
 	aboutBox.setCaption("Kydpdict " VERSION);
 	aboutBox.setText(
-	    tr("This is frontend to YDP Collins dictionary.\n"
-	    "Authors: Andrzej Para , Maciej Witkowiak.\n"
-	    "Program based on ydpdict by Wojtek Kaniewski"));
+	    tr("This is frontend to various dictionaries.\n"
+	    "Author: Maciej Witkowiak.\n"
+	    "YDP Engine by Maciej Witkowiak, Andrzej Para\n"
+	    "(based on ydpdict by Wojtek Kaniewski)\n"
+	    "PWN Oxford 2003 Engine by Maciej Witkowiak"));
 	aboutBox.setIconPixmap(QPixmap(babelfish_xpm));
 	aboutBox.exec();
 
