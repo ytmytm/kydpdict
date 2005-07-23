@@ -78,6 +78,7 @@
 #include "ydpfuzzysearch.h"
 #include "dock_widget.h"
 #include "engine_pwn.h"
+#include "engine_sap.h"
 #include "engine_ydp.h"
 
 #ifndef WITHOUT_X11
@@ -138,12 +139,23 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 	config = new kydpConfig;
 	config->load();
 
-	if (config->engine == ENGINE_YDP) {
-	    myConvert = new ConvertYDP();
-	    myDict = new EngineYDP(config,dictList,myConvert);
-	} else {
-	    myConvert = new ConvertPWN();
-	    myDict = new EnginePWN(config,dictList,myConvert);
+	switch (config->engine) {
+	    case ENGINE_SAP:
+		myConvert = new ConvertSAP();
+		myDict = new EngineSAP(config,dictList,myConvert);
+		break;
+	    case ENGINE_PWN:
+		myConvert = new ConvertPWN();
+		myDict = new EnginePWN(config,dictList,myConvert);
+		break;
+	    case ENGINE_YDP:
+		myConvert = new ConvertYDP();
+		myDict = new EngineYDP(config,dictList,myConvert);
+		break;
+	    default:
+	    // XXX this is terrible, warn user
+		exit(1);
+		break;
 	}
 
 	mySearch = new ydpFuzzySearch(config, parent);	// if exchanged with 'this' -> is always over kydpdict window

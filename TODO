@@ -27,4 +27,7 @@
 
 - uaktualniæ info je¶li nie znajdzie ¿adnych plików s³ownika
 - uaktualniæ dokumentacjê, t³umaczenia
+    - info o pochodzeniu SAP
 - revert default to YDP (or even implement SAP and distribute with it)
+    - port SAP rtf2html
+    - make install sap dicts

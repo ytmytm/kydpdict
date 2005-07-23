@@ -76,7 +76,7 @@ void kydpConfig::load(void)
 	cdPath	= settings.readEntry("/cd1path", cdPath);
 	cd2Path = settings.readEntry("/cd2path", "/mnt/cdrom");
 	player	= settings.readEntry("/player", player);
-	engine	= settings.readNumEntry("/engine", ENGINE_PWN);
+	engine	= settings.readNumEntry("/engine", ENGINE_SAP);
 	settings.endGroup();
 	settings.beginGroup("/language");
 	toPolish= settings.readBoolEntry("/toPolish", TRUE );

@@ -65,6 +65,7 @@ ydpConfigure::ydpConfigure( kydpConfig *globalconfig, QWidget* parent,  const ch
     engineCombo = new QComboBox( GroupBox5, "engineCombo" );
     engineCombo->setGeometry( 10, 17, 290, 22 );
     // this must be done in order of ENGINE_* enums!
+    engineCombo->insertItem("SAP", ENGINE_SAP);
     engineCombo->insertItem("PWN Oxford 2003", ENGINE_PWN);
     engineCombo->insertItem("YDP Collins", ENGINE_YDP);
     engineCombo->setEditable(false);
