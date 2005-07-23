@@ -193,7 +193,9 @@ struct okreslenia { char *nazwa; int flagi; int maska; } okreslenia[]={
 {0,0}};
 
 QString EngineSAP::rtf2html(QString definition) {
-    return curWord;
+    QString tmp;
+    tmp = curWord + " - ";
+    return tmp;
 }
 
 ////////////
