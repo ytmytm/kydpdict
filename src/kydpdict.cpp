@@ -172,30 +172,35 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 	lastClipboard = "";
 	eventLock = false;
 
-	int a;
-
-	do {
-		testagain:
-		if(!myDict->CheckDictionary()) {
-		//jesli nie ma tego co chcemy, to sprawdzamy drugi jezyk
-			config->language++;
-			if (config->language >= LANG_LAST)
-				config->language = LANG_ENGLISH;
-			config->save();
-			if(!myDict->CheckDictionary()) {
-			// buu, drugiego jezyka tez nie ma; moze user bedzie cos wiedzial na ten temat...
-			    QMessageBox::critical( this, tr("Error"),
-				tr( "Kydpdict can't work with incorrect path to dictionary files.\n"
-				    "In order to use this program you have to have data files from Windows\n"
-				    "dictionary installation. For more information please read README.\n"
-				    "A configuration window will be opened now, so you can set the path."));
-			    Configure(TRUE);
-			    goto testagain;	// z³o¿y³em ofiarê z jagniêcia i wolno mi u¿yæ goto
-			}
-		}
-		a=myDict->OpenDictionary();
+	int caps;
+testagain:
+	caps = myDict->GetDictionaryInfo();
+	if (caps == 0) {
+	    QMessageBox::critical( this, tr("Error"),
+	    // XXX zmienic komunikat ¿e nie ma ¿adnych plików s³ownika, co¶ o engine itd.
+		tr( "Kydpdict can't work with incorrect path to dictionary files.\n"
+		    "In order to use this program you have to have data files from Windows\n"
+		    "dictionary installation. For more information please read README.\n"
+		    "A configuration window will be opened now, so you can set the path."));
+		Configure(TRUE);
+		goto testagain;
 	}
-	while (a);
+	// let's try with last config first
+	// compare last config to current caps, if failed - find useful config
+	if (!myDict->CheckDictionary()) {
+	    config->language = LANG_ENGLISH;
+testagain2:
+	    if (!myDict->CheckDictionary()) {
+		config->toPolish = !config->toPolish;
+		if (!myDict->CheckDictionary()) {
+		    config->language++;
+		}
+		goto testagain2;
+	    }
+	}
+	config->save();
+	myDict->OpenDictionary();
+
 	wordInput->clear();
 
 	QPopupMenu *file = new QPopupMenu( this );

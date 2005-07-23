@@ -95,6 +95,7 @@ int EngineYDP::OpenDictionary(void)
 int EngineYDP::CheckDictionary(void)
 {
     QFile f;
+    unsigned int test = 0;
 
     UpdateFName();
     f.setName( cnf->topPath + "/" + cnf->indexFName );
@@ -103,6 +104,11 @@ int EngineYDP::CheckDictionary(void)
         if ( !(f.exists()) )
     	    return 0;
     }
+    f.open(IO_ReadOnly);
+    f.readBlock((char*)&test, 4);		// read magic
+    f.close();
+    if (fix32(test) != fix32(0x8d4e11d5))	// magic test
+	return 0;
     f.setName( cnf->topPath + "/" + cnf->dataFName );
     if ( !(f.exists()) ) {
 	f.setName( cnf->topPath + "/" + cnf->dataFName.upper() );

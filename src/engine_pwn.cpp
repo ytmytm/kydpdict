@@ -67,6 +67,7 @@ int EnginePWN::OpenDictionary(void)
 int EnginePWN::CheckDictionary(void)
 {
     QFile f;
+    unsigned int test = 0;
 
     if (cnf->language != LANG_ENGLISH)
 	return 0;
@@ -75,6 +76,11 @@ int EnginePWN::CheckDictionary(void)
     f.setName( cnf->topPath + "/" + cnf->indexFName );
     if ( !(f.exists()) )
     	return 0;
+    f.open(IO_ReadOnly);
+    f.readBlock((char*)&test, 4);		// read magic
+    f.close();
+    if (fix32(test)!=fix32(0x81115747))
+	return 0;
     return 1;
 }
 
