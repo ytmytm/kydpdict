@@ -671,10 +671,12 @@ void Kydpdict::ShowAbout()
 	aboutBox.setCaption("Kydpdict " VERSION);
 	aboutBox.setText(
 	    tr("This is frontend to various dictionaries.\n"
-	    "Author: Maciej Witkowiak.\n"
+	    "Author: Maciej Witkowiak.\n\n"
 	    "YDP Engine by Maciej Witkowiak, Andrzej Para\n"
-	    "(based on ydpdict by Wojtek Kaniewski)\n"
-	    "PWN Oxford 2003 Engine by Maciej Witkowiak"));
+	    "(based on ydpdict by Wojtek Kaniewski)\n\n"
+	    "PWN Oxford 2003 Engine by Maciej Witkowiak\n\n"
+	    "SAP Engine by Maciej Witkowiak\n"
+	    "(based on sap by Bohdan R. Rau)"));
 	aboutBox.setIconPixmap(QPixmap(babelfish_xpm));
 	aboutBox.exec();
 

@@ -17,7 +17,9 @@ skopiowany z aplikacji zainstalowanej pod Windows:
     <message>
         <source>Can&apos;t open dictionary data file!
 Make sure your installation is OK!</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie można otworzyć pliku danych!
+Proszę się upewnić, że program został prawidłowo zainstalowany!
+</translation>
     </message>
 </context>
 <context>
@@ -183,14 +185,24 @@ Teraz zostanie otwarte okno, w którym można dokonać zmiany ustawień.</transl
     <message>
         <source>This is frontend to various dictionaries.
 Author: Maciej Witkowiak.
+
 YDP Engine by Maciej Witkowiak, Andrzej Para
 (based on ydpdict by Wojtek Kaniewski)
-PWN Oxford 2003 Engine by Maciej Witkowiak</source>
+
+PWN Oxford 2003 Engine by Maciej Witkowiak
+
+SAP Engine by Maciej Witkowiak
+(based on sap by Bohdan R. Rau)</source>
         <translation>To jest nakladka na różne słowniki.
 Autor: Maciej Witkowiak
+
 Moduł YDP: Maciej Witkowiak, Andrzej Para
 (oparty na ydpdict Wojtka Kaniewskiego)
-Moduł PWN Oxford 2003: Maciej Witkowiak</translation>
+
+Moduł PWN Oxford 2003: Maciej Witkowiak
+
+Moduł SAP: Maciej Witkowiak
+(oparty na sap Bohdana R. Rau)</translation>
     </message>
 </context>
 <context>

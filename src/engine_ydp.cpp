@@ -63,7 +63,7 @@ int EngineYDP::OpenDictionary(void)
     if (!(fIndex.open(IO_ReadOnly))) {
 	fIndex.setName( cnf->topPath + "/" + cnf->indexFName.upper());
 	if (!(fIndex.open(IO_ReadOnly))) {
-	    QMessageBox::critical(0, "kydpdict", tr( "Can't open index file!\n" ) + fIndex.name() );
+	    QMessageBox::critical(0, "Kydpdict", tr( "Can't open index file!\n" ) + fIndex.name() );
 	    return 1;
 	}
     }
@@ -72,7 +72,7 @@ int EngineYDP::OpenDictionary(void)
     if (!(fData.open(IO_ReadOnly))) {
 	fData.setName( cnf->topPath + "/" + cnf->dataFName.upper());
 	if (!(fData.open(IO_ReadOnly))) {
-	    QMessageBox::critical(0, "kydpdict", tr( "Can't open data file!\n" ) + fData.name() );
+	    QMessageBox::critical(0, "Kydpdict", tr( "Can't open data file!\n" ) + fData.name() );
 	    return 1;
 	}
      }

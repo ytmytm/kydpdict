@@ -49,7 +49,7 @@ int EnginePWN::OpenDictionary(void)
 	  	p = tr( "Can't open dictionary data file!\n"
 			"Make sure you have copied the following file\n"
 			"from Windows installation:\n" ) + cnf->indexFName;
-		QMessageBox::critical(0, "kydpdict", p );
+		QMessageBox::critical(0, "Kydpdict", p );
 		return 1; };
 
     i = 0;
