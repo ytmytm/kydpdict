@@ -317,6 +317,38 @@ QString EnginePWN::rtf2html(QString definition) {
     return tmp;
 }
 
+int EnginePWN::ScoreWord(const char *w1, const char *w2) {
+	int i = 0;
+	int len1 = strlen(w1);
+	int len2 = strlen(w2);
+	for (; ((i<len1) && (i<len2)); i++)
+		if (w1[i] != w2[i])
+			break;
+	return i;
+}
+
+// naive search, fast if convertion is fast
+int EnginePWN::FindWord(QString word)
+{
+    int i, score, maxscore=0, maxitem=0;
+
+    if (word.length() == 0)
+	return 0;
+
+    word = stripDelimiters(word.lower());
+    word.truncate(20);
+    QCString newWord = cvt->fromUnicode(word);
+
+    for (i=0;i<wordCount;i++) {
+	score = ScoreWord(newWord, cvt->toLocal(words[i]));
+	if (score>maxscore) {
+    	    maxscore = score;
+	    maxitem = i;
+	}
+    }
+    return maxitem;
+}
+
 ////////////
 
 ConvertPWN::ConvertPWN(void) {
@@ -327,16 +359,57 @@ ConvertPWN::~ConvertPWN() {
 
 }
 
-//char ConvertYDP::toLower(const char c) {
-//    const static char upper_cp[] = "A•BC∆DE FGHIJKL£MN—O”PQRSåTUVWXYZØè";
-//    const static char lower_cp[] = "aπbcÊdeÍfghijkl≥mnÒoÛpqrsútuvwxyzøü";
-//
-//    unsigned int i;
-//    for (i=0;i<sizeof(upper_cp);i++)
-//	if (c == upper_cp[i])
-//	    return lower_cp[i];
-//    return c;
-//}
+char ConvertPWN::toLower(const char c) {
+    const static char upper_cp[] = "A•BC∆DE FGHIJKL£MN—O”PQRSåTUVWXYZØè";
+    const static char lower_cp[] = "aπbcÊdeÍfghijkl≥mnÒoÛpqrsútuvwxyzøü";
+
+    unsigned int i;
+    for (i=0;i<sizeof(upper_cp);i++)
+	if (c == upper_cp[i])
+	    return lower_cp[i];
+    return c;
+}
+
+char *ConvertPWN::toLocal(const char *input) {
+    // convert input to encoding suitable for plain text matching
+    // (remove spaces, tags, replace accents by letters etc.)
+    // tolowercase
+    int i, j, len;
+    static char buffer[256];		// ugly? maybe
+    #define issubstr(a,b) (!(memcmp(a,b,strlen(a))))
+
+    len = strlen(input);
+    j = 0;
+    memset(buffer,0,sizeof(buffer));
+
+    for (i=0;i!=len;) {
+	if (input[i] == '<') {		// opening tag
+	    while (input[i++] != '>');	// hit closing brace of open tag
+	    while (input[i++] != '>');	// hit closing brace of close tag
+	} else
+	if (input[i] == '&') {		// entity
+	    i++;
+	    if (issubstr("rsquo;",&input[i]))
+		buffer[j++] = '\'';
+	    else
+	    if (issubstr("amp;",&input[i]))
+		buffer[j++] = '&';
+	    else
+	    if (issubstr("agrave;",&input[i]))
+		buffer[j++] = 'a';
+	    else
+	    if ((issubstr("eacute;",&input[i])) || (issubstr("egrave;",&input[i])) || (issubstr("ecirc;",&input[i])))
+		buffer[j++] = 'e';
+	    while (input[i++] != ';');	// hit end of entity
+	} else
+	if ((input[i] != ' ') && (input[i] != '\t') && (input[i] != '-'))
+	    buffer[j++] = toLower(input[i++]);
+	else
+	    ++i;
+    }
+    #undef issubstr
+    return buffer;
+}
 
 QString ConvertPWN::toUnicode(const char *input) {
     QString stmp;

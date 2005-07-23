@@ -35,22 +35,32 @@ public:
 
 	QString GetDefinition(int index);
 	int Play (int index, kydpConfig *config);
+	// return number of all/grammar/category tips
 	virtual int GetTipNumber(int type);
+	// return abbreviated part of tip
 	virtual QString GetInputTip(int index);
+	// return description part of tip
 	virtual QString GetOutputTip(int index);
+	// create a page with tips and their meanings
 	virtual QString GetInfoPage(void);
 	void ListScrollUp(int offset);
 	void ListScrollDown(int offset);
+	// find best match
 	virtual int FindWord(QString word);
 
 	int topitem;
 	int wordCount;			/* number of words */
 
 private:
+	// read a definition, convert from local encoding, store in curDefinition
 	virtual int ReadDefinition (int index);
+	// convert definition into qt-html enriched text
 	virtual QString rtf2html (QString definition);
+	// return filename of audio sample
 	virtual QString SampleName(QString path, int index);
+	// update internal dictionary files names w/ respect to language and direction
 	virtual void UpdateFName(void);
+	// return a tip from tips table according to index, always override this if tips present
 	virtual QString GetTip(int index);
 
 	// GUI element holding index

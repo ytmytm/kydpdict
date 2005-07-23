@@ -18,11 +18,18 @@ class QCString;
 			ydpConverter(void);
 			virtual ~ydpConverter();
 			// dictionary-dependent convertion routines
-//			virtual char toLower(const char c);
-			virtual QString toUnicode(const char *input);
-			virtual QCString fromUnicode(QString input);
-			virtual	QString convertChunk(const char *inp, int size = 0, bool unicodeFont = false);
 
+			// convert a letter to lowercase
+			virtual char toLower(const char c);
+			// strip input (from dict. index, native) from any non-letter characters
+			// return lowercase
+			virtual	char *toLocal(const char *input);
+			// convert input (dict. index, native) to unicode, replace accents, remove tags etc.
+			virtual QString toUnicode(const char *input);
+			// convert input (unicode) to dict. index native encoding
+			virtual QCString fromUnicode(QString input);
+			// same as toUnicode but for dictionary data, not index
+			virtual	QString convertChunk(const char *inp, int size = 0, bool unicodeFont = false);
 	};
 
 #endif

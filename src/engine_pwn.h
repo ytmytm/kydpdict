@@ -29,7 +29,7 @@ public:
 	int OpenDictionary(void);
 	int CheckDictionary(void);
 	void CloseDictionary(void);
-//	int FindWord(QString word);
+	int FindWord(QString word);
 
 private:
 	int ReadDefinition (int index);
@@ -43,6 +43,7 @@ private:
 	void DoToolTips(const QString regex, QString *tmp, const QString color, const int n);
 	QString MatchToolTips(const QString input);
 	QString GetTip(int index);
+	int ScoreWord(const char *w1, const char *w2);
 
 	// dictionary file variables
 	QFile fIndex;			/* index file descriptor */
@@ -64,7 +65,8 @@ class ConvertPWN : public ydpConverter {
 public:
 	ConvertPWN(void);
 	~ConvertPWN();
-//	char toLower(const char c);
+	char toLower(const char c);
+	char *toLocal(const char *input);
 	QString toUnicode(const char *input);
 	QCString fromUnicode(QString input);
 	QString convertChunk(const char *inp, int size = 0, bool unicodeFont = false);

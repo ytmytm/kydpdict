@@ -22,9 +22,13 @@ ydpConverter::ydpConverter(void) {
 ydpConverter::~ydpConverter() {
 }
 
-//char ydpConverter::toLower(const char c) {
-//	return c;
-//}
+char ydpConverter::toLower(const char c) {
+	return c;
+}
+
+char *ydpConverter::toLocal(const char *input) {
+	return (char*)input;
+}
 
 QString ydpConverter::toUnicode(const char *input) {
 	return QString(input);

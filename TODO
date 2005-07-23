@@ -37,6 +37,5 @@
     - sprawdzac integralnosc danych (przynajmniej podstawowo - czy to taki plik)
 - co¶ do wyboru silnika
 - revert default to YDP (or even implement SAP and distribute with it)
-- wyszukiwanie YDP jako domy¶lne lub przepisaæ naiwne bez niepotrzebnych konwersji
-    - jedna konwersja: utf->native lowercase i native->nativelowercase
-    (PWN - stripowaæ encje)
+- wyszukiwanie z PWN jest ³adne, mo¿e zrobiæ jako default do klasy s³ownika, sprawdziæ na YDP z
+  localami
