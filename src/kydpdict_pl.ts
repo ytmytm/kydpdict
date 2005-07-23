@@ -13,6 +13,14 @@ skopiowany z aplikacji zainstalowanej pod Windows:
     </message>
 </context>
 <context>
+    <name>EngineSAP</name>
+    <message>
+        <source>Can&apos;t open dictionary data file!
+Make sure your installation is OK!</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>EngineYDP</name>
     <message>
         <source>Can&apos;t open index file!
