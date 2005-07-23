@@ -325,6 +325,18 @@ Prawy - otwórz menu</translation>
         <source>Use Unicode characters</source>
         <translation>Wyświetlaj znaki Unicode</translation>
     </message>
+    <message>
+        <source>Dictionary Engine</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Information</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New dictionary engine will be enabled after you restart Kydpdict.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ydpDictionary</name>

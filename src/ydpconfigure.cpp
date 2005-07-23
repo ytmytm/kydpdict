@@ -19,6 +19,8 @@
 #include <qfontdialog.h>
 #include <qcolordialog.h>
 #include <qtextbrowser.h>
+#include <qcombobox.h>
+#include <qmessagebox.h>
 
 #include "ydpconfigure.h"
 #include "ydpconfigure.moc"
@@ -48,7 +50,7 @@ ydpConfigure::ydpConfigure( kydpConfig *globalconfig, QWidget* parent,  const ch
 
     GroupBox1 = new QGroupBox( tab1, "GroupBox1" );
     GroupBox1->setTitle( tr("Path to dictionary files") );
-    GroupBox1->setGeometry(8,59,361,50);
+    GroupBox1->setGeometry(8,5,361,50);
 
     dictionaryUrl = new QLineEdit( GroupBox1, "dictionaryUrl" );
     dictionaryUrl->setFrameStyle( QFrame::Sunken | QFrame::Panel);
@@ -56,7 +58,17 @@ ydpConfigure::ydpConfigure( kydpConfig *globalconfig, QWidget* parent,  const ch
     dictionaryUrl->setGeometry( 10, 17, 290, 22 );
     changeDictionaryUrl = new QPushButton("...", GroupBox1, "changeDictionaryUrl");
     changeDictionaryUrl->setGeometry(310,17,40,22);
-	
+
+    GroupBox5 = new QGroupBox( tab1, "GroupBox5" );
+    GroupBox5->setTitle( tr("Dictionary Engine") );
+    GroupBox5->setGeometry(8,59,361,50);
+    engineCombo = new QComboBox( GroupBox5, "engineCombo" );
+    engineCombo->setGeometry( 10, 17, 290, 22 );
+    // this must be done in order of ENGINE_* enums!
+    engineCombo->insertItem("PWN Oxford 2003", ENGINE_PWN);
+    engineCombo->insertItem("YDP Collins", ENGINE_YDP);
+    engineCombo->setEditable(false);
+
     TabWidget1->insertTab( tab1, tr("Dictionary") );
 
     tab4 = new QWidget( TabWidget1, "tab4" );
@@ -189,6 +201,7 @@ ydpConfigure::ydpConfigure( kydpConfig *globalconfig, QWidget* parent,  const ch
     cBckgrnd = config->kBckgrndPix;
     cBckgrndKol = config->kBckgrndKol;
     cFont = config->fontTransFont;
+    engineCombo->setCurrentItem(config->engine);
 
     exampleLabel1->setFont(cFont);
 
@@ -364,6 +377,7 @@ void ydpConfigure::WriteDefaults()
     checkBox5->setChecked(cnf->autoPlay);
     checkBox8->setChecked(cnf->setFocusOnSelf);
     checkBox9->setChecked(cnf->unicodeFont);
+    engineCombo->setCurrentItem(cnf->engine);
     UpdateLabels();
     delete cnf;
 }
@@ -412,5 +426,10 @@ ydpConfigure::~ydpConfigure()
 		config->setFocusOnSelf = checkBox8->isChecked();
 		config->unicodeFont = checkBox9->isChecked();
 		config->fontTransFont = cFont;
+		if (config->engine != engineCombo->currentItem()) {
+		    QMessageBox::information( this, tr("Information"),
+		    tr( "New dictionary engine will be enabled after you restart Kydpdict." ));
+		}
+		config->engine = engineCombo->currentItem();
 	}
 }

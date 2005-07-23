@@ -19,6 +19,7 @@ class QGroupBox;
 class QLineEdit;
 class QLabel;
 class QCheckBox;
+class QComboBox;
 class QFont;
 
 #include "kydpconfig.h"
@@ -38,7 +39,7 @@ private:
 
     QTabWidget *TabWidget1;
     QWidget *tab1, *tab2, *tab3, *tab4, *tab5;
-    QGroupBox *GroupBox1, *GroupBox2, *GroupBox3, *GroupBox4;
+    QGroupBox *GroupBox1, *GroupBox2, *GroupBox3, *GroupBox4, *GroupBox5;
 
     QPushButton *changeDictionaryUrl;
     QPushButton *changeAudioUrl;
@@ -76,6 +77,8 @@ private:
     QLineEdit *audioUrl;
     QLineEdit *audio2Url;
     QLineEdit *playerUrl;
+
+    QComboBox *engineCombo;
 
     QString cFontKolor1;
     QString cFontKolor2;

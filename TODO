@@ -26,6 +26,5 @@
 - sta³e 'przerysowywanie' ikonki w tray'u we fluxboksie, porównaæ z kadu
 
 - uaktualniæ info je¶li nie znajdzie ¿adnych plików s³ownika
-- uaktualniæ dokumentacjê
-- co¶ do wyboru silnika (te¿ z dialogu konfiguracji -> otwiera siê przy b³êdnym starcie)
+- uaktualniæ dokumentacjê, t³umaczenia
 - revert default to YDP (or even implement SAP and distribute with it)

@@ -15,7 +15,7 @@ class QFont;
 #include <qfont.h>
 
 enum { LANG_ENGLISH, LANG_DEUTSCH, LANG_LAST };
-enum { ENGINE_PWN, ENGINE_YDP, ENGINE_LAST };
+enum { ENGINE_PWN=0, ENGINE_YDP, ENGINE_LAST };
 
 class kydpConfig
 {
