@@ -42,6 +42,7 @@ public:
 	// return description part of tip
 	virtual QString GetOutputTip(int index);
 	// create a page with tips and their meanings
+	// assumed: abbr. with lowercase - grammar, UPPERCASE - category
 	virtual QString GetInfoPage(void);
 	void ListScrollUp(int offset);
 	void ListScrollDown(int offset);
