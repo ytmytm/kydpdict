@@ -68,16 +68,14 @@ int EnginePWN::CheckDictionary(void)
 {
     QFile f;
 
+    if (cnf->language != LANG_ENGLISH)
+	return 0;
+
     UpdateFName();
     f.setName( cnf->topPath + "/" + cnf->indexFName );
     if ( !(f.exists()) )
     	return 0;
     return 1;
-}
-
-int EnginePWN::GetDictionaryInfo(void)
-{
-    return hasEnglish2Polish;
 }
 
 void EnginePWN::CloseDictionary()
@@ -90,7 +88,7 @@ void EnginePWN::CloseDictionary()
 
 void EnginePWN::UpdateFName()
 {
-	cnf->indexFName= cnf->toPolish ? "angpol.win" : "polang.win";
+	cnf->indexFName = cnf->toPolish ? "angpol.win" : "polang.win";
 }
 
 void EnginePWN::FillWordList()

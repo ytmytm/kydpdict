@@ -28,8 +28,6 @@
     - wróciæ do listboxa, przy fuzzy - wszystkie (automatyczny scrollbar), przy li¶cie
       tylko tyle, ile widac, bez scrollbara - zmiana w edit, klik - centruje widok na wyrazie
 
-- checkdictionary przy tworzeniu buttonów i menu K£AMIE!!! [ if(true)... ]
-    - prawdziwy test które s³owniki obecne
-    - sprawdzac integralnosc danych (przynajmniej podstawowo - czy to taki plik)
+- sprawdzac integralnosc danych (przynajmniej podstawowo - czy to taki plik)
 - co¶ do wyboru silnika
 - revert default to YDP (or even implement SAP and distribute with it)

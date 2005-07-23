@@ -177,7 +177,26 @@ int ydpDictionary::CheckDictionary(void) {
 }
 
 int ydpDictionary::GetDictionaryInfo(void) {
-    return 0;	// no dictionaries available
+    bool toPolish = cnf->toPolish;
+    int language = cnf->language;
+    int bits = 0;
+
+    cnf->language = LANG_ENGLISH;
+    cnf->toPolish = true;
+    if (CheckDictionary())
+	bits |= hasEnglish2Polish;
+    cnf->toPolish = false;
+    if (CheckDictionary())
+	bits |= hasPolish2English;
+    cnf->language = LANG_DEUTSCH;
+    cnf->toPolish = true;
+    if (CheckDictionary())
+	bits |= hasGerman2Polish;
+    cnf->toPolish = false;
+    if (CheckDictionary())
+	bits |= hasPolish2German;
+    cnf->language = language; cnf->toPolish = toPolish;
+    return bits;
 }
 
 void ydpDictionary::CloseDictionary()

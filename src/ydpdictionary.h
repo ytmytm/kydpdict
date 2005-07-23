@@ -40,7 +40,7 @@ public:
 	virtual int CheckDictionary(void);
 	virtual void CloseDictionary(void);
 	// return capabilities bits
-	virtual int GetDictionaryInfo(void);
+	int GetDictionaryInfo(void);
 
 	QString GetDefinition(int index);
 	int Play (int index, kydpConfig *config);
