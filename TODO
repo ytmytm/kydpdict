@@ -29,5 +29,6 @@
 - uaktualniæ dokumentacjê, t³umaczenia
     - info o pochodzeniu SAP
 - revert default to YDP (or even implement SAP and distribute with it)
+    - SAP magic (w oryginalnych ¼ródlach)
     - port SAP rtf2html
     - make install sap dicts
