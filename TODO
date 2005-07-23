@@ -28,6 +28,8 @@
     - wróciæ do listboxa, przy fuzzy - wszystkie (automatyczny scrollbar), przy li¶cie
       tylko tyle, ile widac, bez scrollbara - zmiana w edit, klik - centruje widok na wyrazie
 
+- na podstawie dictionaryinfo!=0 znalezc dzia³aj±cy konfig, w przeciwnym wypadku -> info o b³êdzie
+  w konfiguracji i braku plików s³ownika
 - sprawdzac integralnosc danych (przynajmniej podstawowo - czy to taki plik)
 - co¶ do wyboru silnika
 - revert default to YDP (or even implement SAP and distribute with it)
