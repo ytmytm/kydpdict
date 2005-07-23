@@ -320,7 +320,7 @@ QString EnginePWN::rtf2html(QString definition) {
 ////////////
 
 ConvertPWN::ConvertPWN(void) {
-    codec = QTextCodec::codecForName("ISO8859-2");
+    codec = QTextCodec::codecForName("CP1250");
 }
 
 ConvertPWN::~ConvertPWN() {
@@ -328,8 +328,8 @@ ConvertPWN::~ConvertPWN() {
 }
 
 char ConvertPWN::toLower(const char c) {
-    const static char upper_cp[] = "A°BC∆DE FGHIJKL£MN—O”PQRS¶TUVWXYZ¨Ø";
-    const static char lower_cp[] = "a±bcÊdeÍfghijkl≥mnÒoÛpqrs∂tuvwxyzºø";
+    const static char upper_cp[] = "A•BC∆DE FGHIJKL£MN—O”PQRSåTUVWXYZèØ";
+    const static char lower_cp[] = "aπbcÊdeÍfghijkl≥mnÒoÛpqrsútuvwxyzüø";
 
     unsigned int i;
     for (i=0;i<sizeof(upper_cp);i++)
@@ -339,7 +339,7 @@ char ConvertPWN::toLower(const char c) {
 }
 
 int ConvertPWN::charIndex(const char c) {
-    const static char lower_cp[] = "a±bcÊdeÍfghijkl≥mnÒoÛpqrs∂tuvwxyzºø";
+    const static char lower_cp[] = "aπbcÊdeÍfghijkl≥mnÒoÛpqrsútuvwxyzüø";
     unsigned int i;
     for (i=0;i<sizeof(lower_cp);i++)
 	if (c == lower_cp[i])
