@@ -51,6 +51,8 @@ class Kydpdict : public QMainWindow
 		void PasteClipboard (QString haslo);
 		void showEvent(QShowEvent *ashowEvent);
 		void hideEvent(QHideEvent *ahideEvent);
+		void closeEvent(QCloseEvent *acloseEvent);
+
 		void updateUserTimestamp(void);
 
 		// global configuration

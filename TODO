@@ -27,7 +27,6 @@
 - a co je¶li wy¶wietlaæ zamiast pe³nej listy tylko wyrazy podobne/wyrazy blisko?
     - wróciæ do listboxa, przy fuzzy - wszystkie (automatyczny scrollbar), przy li¶cie
       tylko tyle, ile widac, bez scrollbara - zmiana w edit, klik - centruje widok na wyrazie
-- w³a¶ciwie ludzie maj± racjê: klik na 'X' powinien zostawiaæ rybkê w trayu
 
 - checkdictionary przy tworzeniu buttonów i menu K£AMIE!!! [ if(true)... ]
     - wyrzuciæ to do klasy s³ownika?

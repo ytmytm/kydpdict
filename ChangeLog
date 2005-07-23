@@ -442,3 +442,4 @@ Kydpdict 0.6.8 (xx.xx.200x)
 - zapamiêtywane podobieñstwo przy wyszukiwaniu rozmytym
 - funkcja wyszukiwania napisana od nowa (który to ju¿ raz :), mo¿e dzia³aæ b³êdnie, ale jaka jest
   elegancka teraz! w koñcu u¿ywamy w³asnego odpowiednika strcoll niezale¿nego od aktualnego locale
+- zamkniêcie okna zostawia program w tray'u, typowe wspó³czesne zachowanie dla app. z ikon± w tray

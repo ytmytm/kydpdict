@@ -421,6 +421,12 @@ void Kydpdict::hideEvent( QHideEvent *ahideEvent)
     m_checkTimer->stop();
 }
 
+void Kydpdict::closeEvent( QCloseEvent *acloseEvent )
+{
+    this->hide();
+    acloseEvent->ignore();
+}
+
 void Kydpdict::showEntry(QString *aEntry, int aindex)
 {
 // when aindex is set aEntity is ignored (only for performance reason)
