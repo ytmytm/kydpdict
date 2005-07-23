@@ -140,16 +140,12 @@ void EnginePWN::FillWordList()
 	strcpy(words[i],&filedata[inioffset+fix32(offsets[i])+2+4+11]);
     }
   } else {
-//	XXX THIS IS BROKEN!!!
-//    printf("no mmap: %i\n",filedata);	// XXX
-//    for (i=0;i<wordCount-1;i++) {
-//	fIndex.at(words_base+fix32(offsets[i]));
-//	fIndex.readBlock((char*)wordbuffer,maxlength);
-////	dictList->insertItem(ListItemConvert(QCString(&wordbuffer[2+4+11])));
-//	words[i] = new char [strlen(wordbuffer)+1];
-//	strcpy(words[i],wordbuffer);
-//	printf("%i:%s:%s:%s\n",i,words[i],wordbuffer,&filedata[inioffset+fix32(offsets[i])+2+4+11]);
-//    }
+    for (i=0;i<wordCount;i++) {
+	fIndex.at(words_base+fix32(offsets[i]));
+	fIndex.readBlock((char*)wordbuffer,maxlength);
+	words[i] = new char [strlen(&wordbuffer[2+4+11])+1];
+	strcpy(words[i],&wordbuffer[2+4+11]);
+    }
   }
   munmap((void*)filedata, endbase);
   close(f);
