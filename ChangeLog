@@ -428,7 +428,7 @@ Kydpdict 0.6.7 (25.12.2004)
 - wyszukiwanie rozmyte zaznacza najlepiej pasuj±cy element
 
 =====================================================================
-Kydpdict 0.6.8 (xx.xx.200x)
+Kydpdict 0.9.0 (xx.xx.200x)
 - przyspieszenie kompilacji, zgodnie z wytycznymi KDE:
     - w nag³ówkach w³±czanie nag³ówków zamienione na deklaracjê klas (gdzie mo¿liwe)
     - przed delete nie trzeba sprawdzaæ czy wska¼nik to NULL
