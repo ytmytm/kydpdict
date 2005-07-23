@@ -122,6 +122,8 @@ void EngineYDP::CloseDictionary()
 {
     fIndex.close();
     fData.close();
+    // free some stuff allocated elsewhere???
+    ydpDictionary::CloseDictionary();	// required call
 }
 
 void EngineYDP::UpdateFName(void) {

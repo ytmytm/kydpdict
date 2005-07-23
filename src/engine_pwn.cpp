@@ -90,6 +90,7 @@ void EnginePWN::CloseDictionary()
 // this should be here???
 	delete [] offsets;
 	delete [] wordbuffer;
+	ydpDictionary::CloseDictionary();	// required call
 }
 
 void EnginePWN::UpdateFName()
