@@ -7,8 +7,6 @@
   'run' wizualnie oddzielonej a¿ do 'runabout' które jest now± grup±
   (do zrobienia przy wpisywaniu nowych w ListRefresh je¿eli poprzedni zawiera³ jedn± spacjê,
    to... co? jak to mia³oby wygl±daæ?)
-- FindWord napisac ³adniej (potrzeba pomys³u! :)
-    - wywalic zabawy z locale na rzecz wlasnej funkcji strcoll/localeAwareCompare?
 - mozliwosc zmiany ikony/ustawiania jej z poziomu aplikacji (to co kiedys AP wywalil)
 - konfigurowalne klawisze z --with-kde
 - wczytywanie wszystkich slow, ze slownikow (wybranych) do jednej listy
@@ -28,7 +26,6 @@
 - a co je¶li wy¶wietlaæ zamiast pe³nej listy tylko wyrazy podobne/wyrazy blisko?
     - wróciæ do listboxa, przy fuzzy - wszystkie (automatyczny scrollbar), przy li¶cie
       tylko tyle, ile widac, bez scrollbara - zmiana w edit, klik - centruje widok na wyrazie
-- stoodi <stoodi@gmail.com>: z pl_PL.UTF-8 'robiæ' znajduje '¶wiergot'...
 - w³a¶ciwie ludzie maj± racjê: klik na 'X' powinien zostawiaæ rybkê w trayu
 
 - checkdictionary przy tworzeniu buttonów i menu K£AMIE!!! [ if(true)... ]
@@ -37,5 +34,3 @@
     - sprawdzac integralnosc danych (przynajmniej podstawowo - czy to taki plik)
 - co¶ do wyboru silnika
 - revert default to YDP (or even implement SAP and distribute with it)
-- wyszukiwanie z PWN jest ³adne, mo¿e zrobiæ jako default do klasy s³ownika, sprawdziæ na YDP z
-  localami

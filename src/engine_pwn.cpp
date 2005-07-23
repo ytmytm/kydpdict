@@ -317,44 +317,10 @@ QString EnginePWN::rtf2html(QString definition) {
     return tmp;
 }
 
-int EnginePWN::ScoreWord(const char *w1, const char *w2) {
-	int i = 0;
-	int len1 = strlen(w1);
-	int len2 = strlen(w2);
-	for (; ((i<len1) && (i<len2)); i++)
-		if (w1[i] != w2[i])
-			break;
-	return i;
-}
-
-// naive search, fast if convertion is fast
-int EnginePWN::FindWord(QString word)
-{
-    int i, score, maxscore=0, maxitem=0;
-
-    if (word.length() == 0)
-	return 0;
-
-    word = stripDelimiters(word.lower());
-    word.truncate(20);
-    QCString newWord = cvt->fromUnicode(word);
-
-    for (i=0;i<wordCount;i++) {
-	score = ScoreWord(newWord, cvt->toLocal(words[i]));
-	if (score>maxscore) {
-    	    maxscore = score;
-	    maxitem = i;
-	}
-	if ((maxscore>1) && (i>maxitem+2000)) // found an extremum? [0,max+2000] should have new one
-	    break;
-    }
-    return maxitem;
-}
-
 ////////////
 
 ConvertPWN::ConvertPWN(void) {
-    codec = QTextCodec::codecForName("CP1250");
+    codec = QTextCodec::codecForName("ISO8859-2");
 }
 
 ConvertPWN::~ConvertPWN() {
@@ -370,6 +336,15 @@ char ConvertPWN::toLower(const char c) {
 	if (c == upper_cp[i])
 	    return lower_cp[i];
     return c;
+}
+
+int ConvertPWN::charIndex(const char c) {
+    const static char lower_cp[] = "a±bcædeêfghijkl³mnñoópqrs¶tuvwxyz¼¿";
+    unsigned int i;
+    for (i=0;i<sizeof(lower_cp);i++)
+	if (c == lower_cp[i])
+	    return i;
+    return sizeof(lower_cp)+1;
 }
 
 char *ConvertPWN::toLocal(const char *input) {

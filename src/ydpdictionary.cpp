@@ -376,17 +376,6 @@ void ydpDictionary::ListRefresh(int index)
     dictList->blockSignals(FALSE);
 }
 
-int ydpDictionary::ScoreWord(QString w1, QString w2)
-{
-    unsigned int i = 0;
-    unsigned int len1 = w1.length();
-    unsigned int len2 = w2.length();
-    for (; (i<len1) && (i<len2); i++)
-	if (w1.at(i).lower() != w2.at(i).lower())
-	    break;
-    return i;
-}
-
 QString ydpDictionary::stripDelimiters(QString word)
 {
     QString lstring;
@@ -401,7 +390,8 @@ QString ydpDictionary::stripDelimiters(QString word)
     return lstring;
 }
 
-// naive search, fast if convertion is fast
+/*
+// naive search, moderately fast if convertion is fast
 int ydpDictionary::FindWord(QString word)
 {
     int i, score, maxscore=0, maxitem=0;
@@ -418,6 +408,51 @@ int ydpDictionary::FindWord(QString word)
     	    maxscore = score;
 	    maxitem = i;
 	}
+    }
+    return maxitem;
+}
+*/
+int ydpDictionary::FindWord(QString word) {
+
+    int a, b, middle, result;
+    int i, score, maxscore=0, maxitem=0;
+
+    if (word.length() == 0)
+	return 0;
+
+    word = stripDelimiters(word.lower());
+    word.truncate(20);
+    QCString newWord = cvt->fromUnicode(word);
+
+    a = 0; b = wordCount;
+
+    // binary search to narrow range to 30 (arbitrary)
+    while (b-a >= 30) {	/* there are problems with 'for', 'f.o.r.' etc. without margin */
+	middle = a + (b-a)/2;
+	result = cvt->localeCompare(newWord, cvt->toLocal(words[middle]));
+	if (result==0) {
+	    a = middle; b = middle;
+	} else {
+	    if (result<0)
+		b = middle;
+	    else
+		a = middle;
+	}
+    }
+
+    // lower and upper bounds for naive search
+    a = a - 150; if (a<0) a = 0;
+    b = a + 2000; if (b>wordCount) b = wordCount;
+
+    // now a naive search
+    for (i=a;i<b;i++) {
+	score = cvt->scoreWord(newWord, cvt->toLocal(words[i]));
+	if (score>maxscore) {
+    	    maxscore = score;
+	    maxitem = i;
+	}
+	if ((maxscore>1) && (i>maxitem+2000))
+	    break;
     }
     return maxitem;
 }

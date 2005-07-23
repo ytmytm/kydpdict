@@ -70,7 +70,6 @@ protected:
 	unsigned short fix16(unsigned short x);
 	unsigned long fix32(unsigned long x);
 	QString stripDelimiters(QString word);
-	int ScoreWord(QString w1, QString w2);
 
 	// configuration holder
 	kydpConfig *cnf;

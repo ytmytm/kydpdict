@@ -8,7 +8,6 @@
  ***************************************************************************/
 
 #include <stdlib.h>
-#include <locale.h>
 #include <qapplication.h>
 #include <qtranslator.h>
 #include <qtextcodec.h>
@@ -24,8 +23,6 @@ QApplication *a;
 int main (int argc, char *argv[])
 {
 	QString locname;
-
-	putenv("LANG=pl_PL.ISO-8859-2");	// otherwise '¶'->'a' right at the start
 
 	a = new QApplication(argc, argv, "Kydpdict");
 

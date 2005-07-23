@@ -41,3 +41,32 @@ QCString ydpConverter::fromUnicode(QString input) {
 QString ydpConverter::convertChunk(const char *input, int size, bool unicodeFont) {
 	return QString(input);
 }
+
+int ydpConverter::charIndex(const char c) {
+	return c;
+}
+
+int ydpConverter::localeCompare(const char *w1, const char *w2) {
+	int i = 0;
+	int len1 = strlen(w1);
+	int len2 = strlen(w2);
+	int c1, c2;
+	for (; ((i<len1) && (i<len2)); i++) {
+		c1 = charIndex(w1[i]); c2 = charIndex(w2[i]);
+		if (c1!=c2) {
+		    return c1-c2;
+		}
+	}
+	// identical substrings so longer is bigger
+	return len1-len2;
+}
+
+int ydpConverter::scoreWord(const char *w1, const char *w2) {
+	int i = 0;
+	int len1 = strlen(w1);
+	int len2 = strlen(w2);
+	for (; ((i<len1) && (i<len2)); i++)
+		if (w1[i] != w2[i])
+			break;
+	return i;
+}

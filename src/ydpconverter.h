@@ -30,6 +30,12 @@ class QCString;
 			virtual QCString fromUnicode(QString input);
 			// same as toUnicode but for dictionary data, not index
 			virtual	QString convertChunk(const char *inp, int size = 0, bool unicodeFont = false);
+			// return character index in dict. index native encoding alphabet
+			virtual int charIndex(const char c);
+			// number of letters common to both words, starting from left
+			int scoreWord(const char *w1, const char *w2);
+			// same as strcoll but dict. index native, not related to current locale
+			int localeCompare(const char *w1, const char *w2);
 	};
 
 #endif

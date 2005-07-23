@@ -29,7 +29,6 @@ public:
 	int OpenDictionary(void);
 	int CheckDictionary(void);
 	void CloseDictionary(void);
-	int FindWord(QString word);
 
 private:
 	int ReadDefinition (int index);
@@ -66,7 +65,9 @@ class ConvertYDP : public ydpConverter {
 public:
 	ConvertYDP(void);
 	~ConvertYDP();
-//	char toLower(const char c);
+	char toLower(const char c);
+	char *toLocal(const char *input);
+	int charIndex(const char c);
 	QString toUnicode(const char *input);
 	QCString fromUnicode(QString input);
 	QString convertChunk(const char *inp, int size = 0, bool unicodeFont = false);
