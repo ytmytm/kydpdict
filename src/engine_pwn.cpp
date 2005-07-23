@@ -362,8 +362,8 @@ ConvertPWN::~ConvertPWN() {
 }
 
 char ConvertPWN::toLower(const char c) {
-    const static char upper_cp[] = "A¥BCÆDEÊFGHIJKL£MNÑOÓPQRSŒTUVWXYZ¯";
-    const static char lower_cp[] = "a¹bcædeêfghijkl³mnñoópqrsœtuvwxyz¿Ÿ";
+    const static char upper_cp[] = "A¡BCÆDEÊFGHIJKL£MNÑOÓPQRS¦TUVWXYZ¬¯";
+    const static char lower_cp[] = "a±bcædeêfghijkl³mnñoópqrs¶tuvwxyz¼¿";
 
     unsigned int i;
     for (i=0;i<sizeof(upper_cp);i++)
