@@ -216,8 +216,8 @@ testagain2:
 
 	QPopupMenu *file = new QPopupMenu( this );
 	Q_CHECK_PTR( file );
-	file->insertItem(QPixmap(exit_xpm), tr("&Quit"), qApp, SLOT(quit()), QKeySequence( tr("Ctrl+Q", "File|Quit") ) );
 	file->insertItem(tr("&Fuzzy search"), this, SLOT(FuzzySearch()), QKeySequence( tr("Ctrl+F", "File|Fuzzy search") ) );
+	file->insertItem(QPixmap(exit_xpm), tr("&Quit"), qApp, SLOT(quit()), QKeySequence( tr("Ctrl+Q", "File|Quit") ) );
 
 	QPopupMenu *settings = new QPopupMenu( this );
 	Q_CHECK_PTR( settings );
