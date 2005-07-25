@@ -20,12 +20,12 @@
 #include "engine_ydp.h"
 #include "engine_ydp.moc"
 
-#define T_PL 1
-#define T_CM 2
-#define T_PN_L 4
-#define T_PN_R 8
-#define T_SL_L 16
-#define T_SL_R 32
+#define T_PL		0x00000001
+#define T_CM		0x00000002
+#define T_PN_L		0x00000004
+#define T_PN_R		0x00000008
+#define T_SL_L		0x00000010
+#define T_SL_R		0x00000020
 
 #define _native 0
 #define _foreign 1
