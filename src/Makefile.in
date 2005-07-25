@@ -116,6 +116,7 @@ install: kydpdict
 		install -m 755 -d $(DESTDIR)$(LOCALEDIR)
 		install -m 755 -d $(DESTDIR)$(KYDPDATADIR)
 		install -m 644 kydpdict_pl.qm $(DESTDIR)$(LOCALEDIR)
+		install -m 644 ../lib/dvp_1.dic ../lib/dvp_2.dic $(DESTDIR)$(KYDPDATADIR)
 
 clean:
 		-rm *.o *.moc *.qm .depend

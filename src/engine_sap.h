@@ -35,6 +35,7 @@ private:
 	void FillWordList(void);
 	QString rtf2html (QString definition);
 	void UpdateFName(void);
+	QString UpdateAttr(int newattr);
 
 	// dictionary file variables
 	QFile fData;			/* index file descriptor */
@@ -45,6 +46,8 @@ private:
 	} dictCache_LL[4];
 
 	QString curWord;
+	QCString curLine;
+	int curIndex;
 };
 
 /* converter class */

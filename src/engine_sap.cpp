@@ -18,6 +18,14 @@
 #include "engine_sap.h"
 #include "engine_sap.moc"
 
+#define A_BOLD 		0x00000001
+#define A_ITALIC	0x00000002
+#define A_COLOR1	0x00000004
+#define A_COLOR2	0x00000008
+#define A_COLOR3	0x00000010
+#define A_COLOR4	0x00000020
+#define A_SUPER		0x00000040
+
 EngineSAP::EngineSAP(kydpConfig *config, QListBox *listBox, ydpConverter *converter) : ydpDictionary(config, listBox, converter)
 {
     for (int i=0; i<2; i++)
@@ -112,7 +120,7 @@ void EngineSAP::FillWordList()
 	npages = this->fix32(npages);
 	magic = this->fix32(magic);
 	this->words = new char* [this->wordCount];
-	definitions = new char* [this->wordCount];
+	definitions = new char* [this->wordCount+1];
 	pages_offsets = new int [4*npages];
 	fData.readBlock((char*)pages_offsets,4*npages);
 
@@ -149,7 +157,7 @@ void EngineSAP::FillWordList()
 int EngineSAP::ReadDefinition(int index)
 {
     curWord = cvt->toUnicode(words[index]);
-    curDefinition = cvt->convertChunk(definitions[index]);
+    curIndex = index;
     return 0;
 }
 
@@ -190,9 +198,119 @@ struct okreslenia { char *nazwa; int flagi; int maska; } okreslenia[]={
 {"stopieñ wy¿szy",16384|8192,2048|4096|8192|16384},
 {0,0}};
 
+QString EngineSAP::UpdateAttr(int newattr) {
+
+    if (curLine.length() == 0)
+	return QString("");
+
+    QString tmp = cvt->convertChunk(curLine);
+    QString tmp2;
+    curLine = "";
+
+    if (newattr & A_BOLD)
+	tmp = "<b>" + tmp + "</b>";
+    if ((newattr & A_ITALIC) && cnf->italicFont)
+	tmp = "<i>" + tmp + "</i>";
+    if (newattr & A_SUPER)
+	tmp = "<sup>" + tmp + "</sup>";
+    if (newattr & A_COLOR1)
+	tmp = "<font color=" + color1 + ">" + tmp + "</font>";
+    if (newattr & A_COLOR2)
+	tmp = "<font color=" + color2 + ">" + tmp + "</font>";
+    if (newattr & A_COLOR3)
+	tmp = "<font color=" + color3 + ">" + tmp + "</font>";
+    if (newattr & A_COLOR4)
+	tmp = "<font color=" + color4 + ">" + tmp + "</font>";
+
+    return tmp;
+}
+
 QString EngineSAP::rtf2html(QString definition) {
     QString tmp;
-    tmp = curWord + " - ";
+    QCString num;
+    char *c = definitions[curIndex];
+    int cdoll = 0;
+    int level = 0;
+    int attr[16];
+
+    attr[level] = 0;
+    curLine = curWord;
+    tmp += UpdateAttr(A_BOLD|A_COLOR4);
+    tmp += " - ";
+
+    curLine = "";
+    while ((*c)&&(c!=definitions[curIndex+1])) {
+	switch (*c) {
+	    case ',':
+	    case '.':
+	    case ')':
+		curLine += *c++;
+		if (!strchr(".,",*c)) curLine += ' ';
+		continue;
+	    case '(':
+		curLine += *c++;
+		tmp += UpdateAttr(attr[level]);
+		continue;
+	    case '$':
+		if (cdoll) curLine += "; "; else curLine += "<br>";
+		tmp += UpdateAttr(attr[level]);
+		curLine += "<br>";
+		cdoll++;
+		num.setNum(cdoll);
+		curLine += num;
+		curLine += ")<br>&nbsp;";
+		tmp += UpdateAttr(A_ITALIC | A_BOLD | A_COLOR3);
+		c++;
+		continue;
+	    case '-':
+	    	curLine += " - ";
+		c++;
+		tmp += UpdateAttr(0);	// color1
+		continue;
+	    case '{':
+		level++;
+		attr[level]=attr[level-1];
+		curLine += "<br>&nbsp;";
+		c++;
+		continue;
+	    case '}':
+		cdoll = 0;
+		tmp += UpdateAttr(0);	// color3
+		curLine += " - ";
+		level--;
+		tmp += UpdateAttr(attr[level]);
+		c++;
+		continue;
+	    case '*':
+		curLine += curWord;
+		tmp += UpdateAttr(attr[level]);
+		c++;
+		continue;
+	    case '=':
+		curLine += "&asymp;";
+		tmp += UpdateAttr(A_COLOR3);
+		c++;
+		continue;
+	    case '#':
+		c++;
+		tmp += UpdateAttr(0);
+		int v, mc, i;
+		v = ((*c++)<<8) & 0xff00;
+		v |= (*c++)&255;
+		for (i=mc=0; okreslenia[i].nazwa; i++)
+		    if ((v & okreslenia[i].maska)==okreslenia[i].flagi) {
+			if (mc) curLine+= ',';
+			curLine += okreslenia[i].nazwa;
+			curLine += "<br>&nbsp;";
+			mc = 1;
+		    }
+		tmp += UpdateAttr(A_COLOR2);
+		continue;
+	}
+	curLine += *c++;
+    }
+    tmp += UpdateAttr(0);
+    tmp = "<qt type=\"page\"><font color=" + color4 + ">" + tmp + "</font></qt>";
     return tmp;
 }
 

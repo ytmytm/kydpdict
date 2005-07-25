@@ -24,10 +24,9 @@
 - w starej tablicy: 0x83 to '3' (f3), ale nie chodzi o '3' jak w 'bird' (bo w s³owniku YDP jest
   tam schwa) tylko o '¿' (jak w pleasure), na obrazku inny ogonek; ten z kpwndict jest zbyt brzydki
 - sta³e 'przerysowywanie' ikonki w tray'u we fluxboksie, porównaæ z kadu
+- kolory w SAP nie s± zbyt dobrze robione, ca³y parsing kuleje...
+    - zmiany (te¿ wykrywanie koñca def.) przenie¶æ do BSAP
+- okre¶lenia z SAP mog± byæ tipsami...
 
-- uaktualniæ info je¶li nie znajdzie ¿adnych plików s³ownika
 - uaktualniæ dokumentacjê, t³umaczenia
     - info o pochodzeniu SAP, mirror
-- revert default to YDP (or even implement SAP and distribute with it)
-    - port SAP rtf2html
-    - make install sap dicts
