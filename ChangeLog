@@ -428,7 +428,7 @@ Kydpdict 0.6.7 (25.12.2004)
 - wyszukiwanie rozmyte zaznacza najlepiej pasuj±cy element
 
 =====================================================================
-Kydpdict 0.9.0 (xx.xx.200x)
+Kydpdict 0.9.0 (26.07.2005)
 - przyspieszenie kompilacji, zgodnie z wytycznymi KDE:
     - w nag³ówkach w³±czanie nag³ówków zamienione na deklaracjê klas (gdzie mo¿liwe)
     - przed delete nie trzeba sprawdzaæ czy wska¼nik to NULL
@@ -441,7 +441,9 @@ Kydpdict 0.9.0 (xx.xx.200x)
 - zmiana sk³adni pliku z tooltips na tê z kpwndict
 - zapamiêtywane podobieñstwo przy wyszukiwaniu rozmytym
 - funkcja wyszukiwania napisana od nowa (który to ju¿ raz :), mo¿e dzia³aæ b³êdnie, ale jaka jest
-  elegancka teraz! w koñcu u¿ywamy w³asnego odpowiednika strcoll niezale¿nego od aktualnego locale
-- zamkniêcie okna zostawia program w tray'u, typowe wspó³czesne zachowanie dla app. z ikon± w tray
-- sprawdzanie integralno¶ci danych (odrzuci PWN Oxford 2004)
+  teraz elegancka! w koñcu u¿ywamy w³asnego odpowiednika strcoll niezale¿nego od aktualnego locale.
+  stare b³êdy z tym zwi±zane powinny znikn±æ
+- zamkniêcie okna zostawia program w tray'u, typowe wspó³czesne zachowanie dla applikacji
+  z ikon± w tray
+- sprawdzanie integralno¶ci danych (m.in. odrzuci PWN Oxford 2004)
 - dodany silnik SAP

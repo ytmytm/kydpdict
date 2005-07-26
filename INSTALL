@@ -31,7 +31,3 @@ Program zostanie zainstalowany domy¶lnie do /usr/local lub innego drzewa okre¶lo
 opcjê --prefix skryptu ./configure.
 Domy¶lnym katalogiem danych (z plikami s³ownika) jest /usr/local/share/kydpdict lub inny
 wskazany przez opcjê --datadir do ./configure (dla --datadir DIR bêdzie to DIR/kydpdict).
-
-UWAGA! Do dzia³ania programu niezbêdne jest posiadanie plików z danymi s³ownika z oryginalnej
-p³yty YDP. Chodzi o pliki dict*.idx i dict*.dat. Nale¿y je umie¶ciæ gdzie¶ w dostêpnym miejscu
-(np. /usr/share/ydpdict/ lub /usr/share/kydpdict/ )
