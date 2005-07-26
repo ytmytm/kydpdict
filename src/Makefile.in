@@ -3,7 +3,6 @@ PACKAGE_NAME=@PACKAGE_NAME@
 PACKAGE_VERSION=@PACKAGE_VERSION@
 CC=@CC@
 CXX=@CXX@
-CXXFLAGS=@CXXFLAGS@ -Wall -DVERSION=\"$(PACKAGE_VERSION)\"
 MOC=@MOC@
 LUPDATE=@LUPDATE@
 LRELEASE=@LRELEASE@
@@ -18,20 +17,16 @@ prefix=@prefix@
 exec_prefix=@exec_prefix@
 bindir=@bindir@
 datadir=@datadir@
-
 LOCALEDIR=$(datadir)/$(PACKAGE_NAME)
 KYDPDATADIR=$(datadir)/$(PACKAGE_NAME)/
+CXXFLAGS=@CXXFLAGS@ -Wall -DVERSION=\"$(PACKAGE_VERSION)\" -DLOCALEDIR=\"$(LOCALEDIR)\" -DKYDPDATADIR=\"$(KYDPDATADIR)\"
 
 # Do not touch below and above this line
 
-OBJECTS = kdynamictip.cpp kydpconfig.cpp kydpdict.cpp main.cpp ydpdictionary.cpp ydpconfigure.cpp ydpfuzzysearch.cpp engine_pwn.cpp engine_sap.cpp engine_ydp.cpp ydpconverter.cpp
-
-OOBJECTS = main.o kydpconfig.o kdynamictip.o kydpdict.o ydpdictionary.o  \
-	ydpconfigure.o ydpfuzzysearch.o engine_pwn.o engine_sap.o engine_ydp.o ydpconverter.o
+OBJECTS = main.o kydpconfig.o kdynamictip.o kydpdict.o ydpdictionary.o ydpconfigure.o ydpfuzzysearch.o engine_pwn.o engine_sap.o engine_ydp.o ydpconverter.o
 
 ifeq ($(HAVE_X11),yes)
-OBJECTS  += dock_widget.cpp
-OOBJECTS += dock_widget.o
+OBJECTS += dock_widget.o
 endif
 
 ifeq (.depend,$(wildcard .depend))
@@ -42,74 +37,18 @@ all:	depend
 	@$(MAKE) all
 endif
 
-main.o:
-		$(CXX) -c main.cpp $(QT_INCLUDE) $(CXXFLAGS) -DLOCALEDIR=\"$(LOCALEDIR)\"
+%.o: %.cpp
+		$(CXX) -c $< -o $@ $(QT_INCLUDE) $(X_CFLAGS) $(CXXFLAGS)
 
-kydpdict.moc: kydpdict.h
-		$(MOC) kydpdict.h -o kydpdict.moc
+%.moc: %.h
+		$(MOC) $< -o $@
 
-kydpdict.o:
-		$(CXX) -c kydpdict.cpp $(X_CFLAGS) $(QT_INCLUDE) $(CXXFLAGS)
-
-engine_pwn.o:
-		$(CXX) -c engine_pwn.cpp $(QT_INCLUDE) $(CXXFLAGS)
-
-engine_pwn.moc: engine_pwn.h
-		$(MOC) engine_pwn.h -o engine_pwn.moc
-
-engine_sap.o:
-		$(CXX) -c engine_sap.cpp $(QT_INCLUDE) $(CXXFLAGS)
-
-engine_sap.moc: engine_sap.h
-		$(MOC) engine_sap.h -o engine_sap.moc
-
-engine_ydp.o:
-		$(CXX) -c engine_ydp.cpp $(QT_INCLUDE) $(CXXFLAGS)
-
-engine_ydp.moc: engine_ydp.h
-		$(MOC) engine_ydp.h -o engine_ydp.moc
-
-ydpconverter.o:
-		$(CXX) -c ydpconverter.cpp $(QT_INCLUDE) $(CXXFLAGS)
-
-ydpdictionary.o:
-		$(CXX) -c ydpdictionary.cpp $(QT_INCLUDE) $(CXXFLAGS)
-
-ydpdictionary.moc: ydpdictionary.h
-		$(MOC) ydpdictionary.h -o ydpdictionary.moc
-
-ydpconfigure.o:
-		$(CXX) -c ydpconfigure.cpp $(QT_INCLUDE) $(CXXFLAGS)
-
-ydpconfigure.moc: ydpconfigure.h
-		$(MOC) ydpconfigure.h -o ydpconfigure.moc
-
-ydpfuzzysearch.o:
-		$(CXX) -c ydpfuzzysearch.cpp $(QT_INCLUDE) $(CXXFLAGS)
-
-ydpfuzzysearch.moc: ydpfuzzysearch.h
-		$(MOC) ydpfuzzysearch.h -o ydpfuzzysearch.moc
-
-kydpconfig.o:
-		$(CXX) -c kydpconfig.cpp $(QT_INCLUDE) $(CXXFLAGS) -DKYDPDATADIR=\"$(KYDPDATADIR)\"
-
-kdynamictip.o:
-		$(CXX) -c kdynamictip.cpp $(QT_INCLUDE) $(CXXFLAGS)
-
-ifeq ($(HAVE_X11),yes)
-dock_widget.o:
-		$(CXX) -c dock_widget.cpp $(X_CFLAGS) $(QT_INCLUDE) $(CXXFLAGS)
-
-dock_widget.moc: dock_widget.h
-		$(MOC) dock_widget.h -o dock_widget.moc
-endif
-
-kydpdict: 	$(OOBJECTS)
-		$(CXX) $(OOBJECTS) $(QT_LIBS) $(QT_LIB) $(X_LIBS) $(X_LIB) $(CXXFLAGS) -o kydpdict
+kydpdict: 	$(OBJECTS)
+		$(CXX) $(OBJECTS) $(QT_LIBS) $(QT_LIB) $(X_LIBS) $(X_LIB) $(CXXFLAGS) -o kydpdict
 
 translation: kydpdict.pro
-	$(LUPDATE) kydpdict.pro
-	$(LRELEASE) kydpdict.pro
+		$(LUPDATE) kydpdict.pro
+		$(LRELEASE) kydpdict.pro
 
 install: kydpdict
 		install -s -m 755 kydpdict $(DESTDIR)$(bindir)
@@ -126,5 +65,5 @@ distclean: clean
 		-rm Makefile
 
 depend dep:	$(OBJECTS:.o=.cpp)
-	@echo "Creating dependency information"
-	$(CC) -MM -MG $(X_CFLAGS) $(QT_INCLUDE) $^ > .depend
+		@echo "Creating dependency information"
+		$(CC) -MM -MG $(X_CFLAGS) $(QT_INCLUDE) $^ > .depend
