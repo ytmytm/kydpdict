@@ -50,7 +50,7 @@ translation: kydpdict.pro
 		$(LUPDATE) kydpdict.pro
 		$(LRELEASE) kydpdict.pro
 
-install: kydpdict
+install: all
 		install -s -m 755 kydpdict $(DESTDIR)$(bindir)
 		install -m 755 -d $(DESTDIR)$(LOCALEDIR)
 		install -m 755 -d $(DESTDIR)$(KYDPDATADIR)
