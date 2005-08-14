@@ -228,6 +228,7 @@ bool KeyEater::eventFilter(QObject *o, QEvent *e) {
 		myDict->ListScrollPageUp();
 	    else
 		myDict->ListScrollPageDown();
+	    return true;	// don't pass this down
 	}
     }
     if ( e->type() == QEvent::KeyPress ) {
