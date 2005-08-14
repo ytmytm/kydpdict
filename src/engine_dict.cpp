@@ -10,6 +10,7 @@
 #include <qlistbox.h>
 #include <qmessagebox.h>
 #include <qtextcodec.h>
+#include <qregexp.h>
 
 // for memset
 #include <string.h>
@@ -199,6 +200,8 @@ int EngineDICT::ReadDefinition(int index)
 QString EngineDICT::rtf2html(QString definition) {
     QString tmp = definition;
     tmp.replace("\n","<br>");
+    tmp.replace(QRegExp("^(\\w+)"),"<b>\\1</b>");
+    tmp.replace(" ","&nbsp;");
     tmp = "<qt type=\"page\"><font color=" + color4 + ">" + tmp + "</font></qt>";
     return tmp;
 }
