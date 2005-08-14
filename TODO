@@ -1,5 +1,3 @@
-- podpowiedzi
-    - niemieckie
 - je¶li zrobiæ koszernie tj. w main.cpp wstawiæ 'delete kydpdict;' zamiast flushConfig,
   a flushConfig w destruktor kydpdict to wpada w nieskoñczon± pêtlê je¿eli rozmiar w pionie
   zmieni³ siê na mniejszy i widoczna lista zosta³a skrócona
@@ -21,12 +19,19 @@
     - poprawic uk³ad geometryczny dialogu?
     - niskie podobieñstwo chyba jest zbyt niskie (10 zmian ³apie chyba ca³y s³ownik)
     - zrezygnowaæ z dialogu, przenie¶æ ustawianie distance do menu, zrobiæ jak w BSAP
-- w starej tablicy: 0x83 to '3' (f3), ale nie chodzi o '3' jak w 'bird' (bo w s³owniku YDP jest
-  tam schwa) tylko o '¿' (jak w pleasure), na obrazku inny ogonek; ten z kpwndict jest zbyt brzydki
 - sta³e 'przerysowywanie' ikonki w tray'u we fluxboksie, porównaæ z kadu
+
+MODU£Y
 - modu³ s³ownika korzystaj±cy z bazy SQL, s³owników online...
 - s³owniki w formacie dictd - kowersja do sql lub natywny klient (indeks+zip?)
+
+YDP
+- w starej tablicy: 0x83 to '3' (f3), ale nie chodzi o '3' jak w 'bird' (bo w s³owniku YDP jest
+  tam schwa) tylko o '¿' (jak w pleasure), na obrazku inny ogonek; ten z kpwndict jest zbyt brzydki
+- podpowiedzi niemieckie
+
+SAP:
 - kolory w SAP nie s± zbyt dobrze robione, ca³y parsing kuleje...
-    - abdicate chwyta abdication...
-    - zmiany (te¿ wykrywanie koñca def.) przenie¶æ do BSAP
 - okre¶lenia z SAP mog± byæ tipsami...
+- ³apie czasem dwa wyrazy, to samo robi orygina³; je¶li to wywaliæ przez warunek (*c)!='\n' we
+  wiadomym miejscu, to usuwa dodatkowe okre¶lenia np. przyk³ady do 'a' z pl->en
