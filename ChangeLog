@@ -451,3 +451,4 @@ Kydpdict 0.9.0 (26.07.2005)
 =====================================================================
 Kydpdict 0.9.1 (xx.xx.2005)
 - uproszczony Makefile w src/
+- czê¶ciowo zrobiony modu³ DICT (bazy danych dictd)

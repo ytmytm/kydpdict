@@ -20,12 +20,18 @@
     - niskie podobieñstwo chyba jest zbyt niskie (10 zmian ³apie chyba ca³y s³ownik)
     - zrezygnowaæ z dialogu, przenie¶æ ustawianie distance do menu, zrobiæ jak w BSAP
 - sta³e 'przerysowywanie' ikonki w tray'u we fluxboksie, porównaæ z kadu
+- upro¶ciæ funkcje List* z ydpdictionary, zawsze od¶wie¿aæ ca³o¶æ, pilnowaæ tylko offsetów
 - Open sprawdza name i upper(name), ale Check tylko pierwsze
 - pomys³ na trzymanie i dialog prywatnych konfiguracji modu³ów
 
 MODU£Y
 - modu³ s³ownika korzystaj±cy z bazy SQL, s³owników online...
-- s³owniki w formacie dictd - kowersja do sql lub natywny klient (indeks+zip?)
+
+DICT
+- wywala siê przy przewijaniu myszk± (jaka ró¿nica z PgUp/Down???)
+    - tylko gdy myDict przypisany najpierw do ConvertSAP, potem do ConvertDICT,
+      czy to mo¿e mieæ wp³yw na jednoczesn± obecno¶æ wielu s³owników?
+- konfiguracja, pliki
 
 YDP
 - w starej tablicy: 0x83 to '3' (f3), ale nie chodzi o '3' jak w 'bird' (bo w s³owniku YDP jest

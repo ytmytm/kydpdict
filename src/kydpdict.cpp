@@ -77,6 +77,7 @@
 #include "kdynamictip.h"
 #include "ydpfuzzysearch.h"
 #include "dock_widget.h"
+#include "engine_dict.h"
 #include "engine_pwn.h"
 #include "engine_sap.h"
 #include "engine_ydp.h"
@@ -157,6 +158,10 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 		exit(1);
 		break;
 	}
+
+// XXX enable later
+//	myConvert = new ConvertDICT();
+//	myDict = new EngineDICT(config,dictList,myConvert);
 
 	mySearch = new ydpFuzzySearch(config, parent);	// if exchanged with 'this' -> is always over kydpdict window
 	// this has to be before OpenDictionary so the notification will be passed
