@@ -20,6 +20,7 @@
     - niskie podobieñstwo chyba jest zbyt niskie (10 zmian ³apie chyba ca³y s³ownik)
     - zrezygnowaæ z dialogu, przenie¶æ ustawianie distance do menu, zrobiæ jak w BSAP
 - sta³e 'przerysowywanie' ikonki w tray'u we fluxboksie, porównaæ z kadu
+- Open sprawdza name i upper(name), ale Check tylko pierwsze
 
 MODU£Y
 - modu³ s³ownika korzystaj±cy z bazy SQL, s³owników online...
@@ -35,3 +36,4 @@ SAP:
 - okre¶lenia z SAP mog± byæ tipsami...
 - ³apie czasem dwa wyrazy, to samo robi orygina³; je¶li to wywaliæ przez warunek (*c)!='\n' we
   wiadomym miejscu, to usuwa dodatkowe okre¶lenia np. przyk³ady do 'a' z pl->en
+  przenie¶æ warunek do BSAP?
