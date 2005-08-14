@@ -89,14 +89,22 @@ int EngineDICT::CheckDictionary(void)
 
     if (cnf->language != LANG_ENGLISH)
 	return 0;
+    if (! cnf->toPolish)
+	return 0;
 
     UpdateFName();
     f.setName( cnf->topPath + "/" + cnf->indexFName );
-    if ( !(f.exists()) )
-    	return 0;
+    if ( !(f.exists()) ) {
+    	f.setName( cnf->topPath + "/" + cnf->indexFName.upper() );
+	if ( !(f.exists()) )
+    	    return 0;
+    }
     f.setName( cnf->topPath + "/" + cnf->dataFName );
-    if ( !(f.exists()) )
-    	return 0;
+    if ( !(f.exists()) ) {
+	f.setName( cnf->topPath + "/" + cnf->dataFName.upper() );
+	if ( !(f.exists()) )
+    	    return 0;
+    }
     return 1;
 }
 

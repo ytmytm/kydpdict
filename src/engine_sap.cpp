@@ -81,8 +81,11 @@ int EngineSAP::CheckDictionary(void)
 
     UpdateFName();
     f.setName( cnf->topPath + "/" + cnf->indexFName );
-    if ( !(f.exists()) )
-    	return 0;
+    if ( !(f.exists()) ) {
+    	f.setName( cnf->topPath + "/" + cnf->indexFName.upper() );
+	if ( !(f.exists()) )
+    	    return 0;
+    }
     f.open(IO_ReadOnly);
     f.readBlock((char*)&test, 4);		// read magic
     f.close();
