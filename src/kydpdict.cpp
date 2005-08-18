@@ -442,8 +442,11 @@ void Kydpdict::hideEvent( QHideEvent *ahideEvent)
 
 void Kydpdict::closeEvent( QCloseEvent *acloseEvent )
 {
-    this->hide();
-    acloseEvent->ignore();
+    if (config->dock) {
+	this->hide();
+	acloseEvent->ignore();
+    } else
+	qApp->quit();
 }
 
 void Kydpdict::showEntry(QString *aEntry, int aindex)

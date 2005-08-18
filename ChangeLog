@@ -443,7 +443,7 @@ Kydpdict 0.9.0 (26.07.2005)
 - funkcja wyszukiwania napisana od nowa (który to ju¿ raz :), mo¿e dzia³aæ b³êdnie, ale jaka jest
   teraz elegancka! w koñcu u¿ywamy w³asnego odpowiednika strcoll niezale¿nego od aktualnego locale.
   stare b³êdy z tym zwi±zane powinny znikn±æ
-- zamkniêcie okna zostawia program w tray'u, typowe wspó³czesne zachowanie dla applikacji
+- zamkniêcie okna zostawia program w tray'u, typowe wspó³czesne zachowanie dla aplikacji
   z ikon± w tray
 - sprawdzanie integralno¶ci danych (m.in. odrzuci PWN Oxford 2004)
 - dodany silnik SAP
@@ -452,4 +452,5 @@ Kydpdict 0.9.0 (26.07.2005)
 Kydpdict 0.9.1 (xx.xx.2005)
 - uproszczony Makefile w src/
 - czê¶ciowo zrobiony modu³ DICT (bazy danych dictd)
-- modu³y PWN i SAP powinny radziæ sobie z plikami na partycji FAT32 (ANGPOL.WIN)
+- modu³y PWN i SAP powinny radziæ sobie z plikami na partycji FAT32 (du¿e litery ANGPOL.WIN)
+- je¶li ikona w tray'u jest wy³±czona, to zamkniêcie okna koñczy program <amdfanatyk@wp.pl>
