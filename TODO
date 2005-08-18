@@ -29,6 +29,9 @@ MODU£Y
 DICT
 - konfiguracja, pliki
 
+PWN
+- fa\ccedil{}ade (nastêpne po fabulously) - c avec cedilla, dodaæ zamianê na unicode
+
 YDP
 - w starej tablicy: 0x83 to '3' (f3), ale nie chodzi o '3' jak w 'bird' (bo w s³owniku YDP jest
   tam schwa) tylko o '¿' (jak w pleasure), na obrazku inny ogonek; ten z kpwndict jest zbyt brzydki
