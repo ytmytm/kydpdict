@@ -173,6 +173,7 @@ http://www.phon.ucl.ac.uk/home/wells/lsansuni.ttf
 
 Doulos:
 http://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=DoulosSILfont
+
 W poni¿szych brakuje znaku strza³ki w prawo - odsy³acza, poza tym s± bez zarzutu:
 
 Caslon:
@@ -200,6 +201,9 @@ A: Ja. Je¶li masz pomys³ na ³atwiejsze, nie koliduj±ce z domy¶lnymi skrótami
 Q: Co jest do zrobienia, jakie s± znane b³êdy?
 A: Program jest doskona³y, nie ma b³êdów. Co mo¿na by³oby jeszcze dopisaæ,
    znajdziesz w pliku TODO.
+
+Q: Nie dzia³a na x86_64!
+A: Popraw sam lub daj dostêp do tej architektury.
 
 Q: Co na tacce robi ryba?
 A: Kolejne wersje Kydpdict bêd± wyposa¿one nie tylko w rybê na tacce ale i

@@ -31,6 +31,7 @@ DICT
 
 PWN
 - fa\ccedil{}ade (nastêpne po fabulously) - c avec cedilla, dodaæ zamianê na unicode
+- usuwaæ ca³kowicie <sup>\d</sup> z wielokrotnych hase³?
 
 YDP
 - w starej tablicy: 0x83 to '3' (f3), ale nie chodzi o '3' jak w 'bird' (bo w s³owniku YDP jest
