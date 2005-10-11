@@ -89,7 +89,7 @@ int EngineSAP::CheckDictionary(void)
     f.open(IO_ReadOnly);
     f.readBlock((char*)&test, 4);		// read magic
     f.close();
-    if (fix32(test)!=fix32(0xfadeabba))
+    if (fix32(test)!=0xfadeabba)
 	return 0;
     return 1;
 }

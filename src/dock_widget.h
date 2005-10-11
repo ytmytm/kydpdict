@@ -7,6 +7,7 @@
 class QTextBrowser;
 class QStringList;
 class QPixmap;
+class TrayHint;
 
 /**
 	Klasa reprezentuj±ca ikonkê w obszarze powiadamiania
