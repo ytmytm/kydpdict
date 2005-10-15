@@ -853,7 +853,10 @@ void Kydpdict::UpdateLook()
 
 	RTFOutput->setFont(config->fontTransFont);
 	dictList->setFont(config->fontTransFont);
+// XXX seems to be a bug in MacOS Qt - drop-down arrow is overwritten with combo contents
+#ifndef Q_WS_MACX
 	wordInput->setFont(config->fontTransFont);
+#endif
 
 	// this refresh is required for font update
 	int item;

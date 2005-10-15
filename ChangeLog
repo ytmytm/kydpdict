@@ -454,5 +454,8 @@ Kydpdict 0.9.1 (xx.xx.2005)
 - czê¶ciowo zrobiony modu³ DICT (bazy danych dictd)
 - modu³y PWN i SAP powinny radziæ sobie z plikami na partycji FAT32 (du¿e litery ANGPOL.WIN)
 - je¶li ikona w tray'u jest wy³±czona, to zamkniêcie okna koñczy program <amdfanatyk@wp.pl>
-- warto¶ci magic prawid³owe na Macu (Pawel Piecuch <pawel.piecuch@allegro.pl>)
+- MacOS X (Pawel Piecuch <pawel.piecuch@allegro.pl>)
+    - warto¶ci magic prawid³owo obs³u¿one
+    - nie ustawiaæ fontu dla wordInput
+    - skrypt do kompilacji
 - poprawka deklaracji w dock_widget.h (luk@chybie.net)
