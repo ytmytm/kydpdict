@@ -37,6 +37,8 @@ YDP
 - w starej tablicy: 0x83 to '3' (f3), ale nie chodzi o '3' jak w 'bird' (bo w s³owniku YDP jest
   tam schwa) tylko o '¿' (jak w pleasure), na obrazku inny ogonek; ten z kpwndict jest zbyt brzydki
 - podpowiedzi niemieckie
+- na x86_64 nie dzia³a mmap (za duzy length, zly pagesize?), wymuszac czytanie
+  z pliku? (jakiekolwiek rozwiazanie - powtorzyc w PWN)
 
 SAP:
 - kolory w SAP nie s± zbyt dobrze robione, ca³y parsing kuleje...
