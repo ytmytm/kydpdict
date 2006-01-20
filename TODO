@@ -22,11 +22,6 @@
 - sta³e 'przerysowywanie' ikonki w tray'u we fluxboksie, porównaæ z kadu
 - upro¶ciæ funkcje List* z ydpdictionary, zawsze od¶wie¿aæ ca³o¶æ, pilnowaæ tylko offsetów
 - pomys³ na trzymanie i dialog prywatnych konfiguracji modu³ów
-- wyszukiwanie (Collins, w PWN nie ma takiego przypadku): "god" --> "go down"
-- <tomasz_rysz@poczta.onet.pl>:
-    - "comet" -> "come through"
-    - problem z gcc 4.0?
-    - brak odtwarzania dzwiêku dla slowa busy ,settle, wallet
 
 MODU£Y
 - modu³ s³ownika korzystaj±cy z bazy SQL, s³owników online...
