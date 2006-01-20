@@ -141,8 +141,8 @@ void EngineYDP::UpdateFName(void) {
 
 void EngineYDP::FillWordList()
 {
-    unsigned long pos;
-    unsigned long index[2];
+    unsigned int pos;
+    unsigned int index[2];
     unsigned short wcount;
     int current=0;
     /* for mmap */
@@ -157,7 +157,7 @@ void EngineYDP::FillWordList()
     fIndex.readBlock((char*)&wcount,2);
     wordCount = (int)fix16(wcount);
 
-    indexes = new unsigned long [wordCount+2];
+    indexes = new unsigned int [wordCount+2];
 
     words = new char* [wordCount+1];
     words[wordCount] = 0;
@@ -178,7 +178,7 @@ void EngineYDP::FillWordList()
     length = ((fIndex.size() / page_size)+1)*page_size;
     filedata = (char*)mmap(NULL, length, PROT_READ, MAP_PRIVATE, f, 0);
 
-    if ((int)filedata > 0) {
+    if ((void *)filedata != MAP_FAILED) {
 	do {
 	    indexes[current] = *(int*)&filedata[pos+4];
 	    indexes[current] = fix32(indexes[current]);
@@ -216,12 +216,12 @@ void EngineYDP::FillWordList()
 
 int EngineYDP::ReadDefinition(int index)
 {
-    unsigned long dsize, size;
+    unsigned int dsize, size;
     char *def;
 
     dsize=0;
     fData.at(indexes[index]);
-    fData.readBlock((char*)&dsize, sizeof(unsigned long));
+    fData.readBlock((char*)&dsize, sizeof(unsigned int));
     dsize=fix32(dsize);
 
     def = new char[dsize+1];

@@ -147,7 +147,7 @@ void EnginePWN::FillWordList()
   endbase   = ((end_last_word/page_size)+1)*page_size;
   filedata  = (char*)mmap(NULL, endbase, PROT_READ, MAP_PRIVATE, f, mmapbase);
 
-  if ((int)filedata != -1) {
+  if ((void *)filedata != MAP_FAILED) {
     for (i=0;i<wordCount;i++) {
 	words[i] = new char [strlen(&filedata[inioffset+fix32(offsets[i])+2+4+11])+1];
 	strcpy(words[i],&filedata[inioffset+fix32(offsets[i])+2+4+11]);

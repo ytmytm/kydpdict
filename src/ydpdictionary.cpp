@@ -84,16 +84,16 @@ QString ydpDictionary::GetInfoPage(void) {
     return output;
 }
 
-unsigned long ydpDictionary::fix32(unsigned long x)
+unsigned int ydpDictionary::fix32(unsigned int x)
 {
 #ifndef WORDS_BIGENDIAN
 	return x;
 #else
-	return (unsigned long)
-		(((x & (unsigned long) 0x000000ffU) << 24) |
-                 ((x & (unsigned long) 0x0000ff00U) << 8) |
-                 ((x & (unsigned long) 0x00ff0000U) >> 8) |
-                 ((x & (unsigned long) 0xff000000U) >> 24));
+	return (unsigned int)
+		(((x & (unsigned int) 0x000000ffU) << 24) |
+                 ((x & (unsigned int) 0x0000ff00U) << 8) |
+                 ((x & (unsigned int) 0x00ff0000U) >> 8) |
+                 ((x & (unsigned int) 0xff000000U) >> 24));
 #endif		
 }
 

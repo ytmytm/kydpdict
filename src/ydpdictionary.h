@@ -78,7 +78,7 @@ private:
 
 protected:
 	unsigned short fix16(unsigned short x);
-	unsigned long fix32(unsigned long x);
+	unsigned int fix32(unsigned int x);
 	QString stripDelimiters(QString word);
 
 	// configuration holder

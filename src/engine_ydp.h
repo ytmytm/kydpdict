@@ -51,10 +51,10 @@ private:
 	int direction_tab[16];
 
 	struct LL_dictionaryCache {
-	    unsigned long *indexes;	/* indexes to definitions array */
+	    unsigned int *indexes;	/* indexes to definitions array */
 	} dictCache_LL[4];
 
-	unsigned long *indexes; 	/* indexes to definitions array */
+	unsigned int *indexes; 	/* indexes to definitions array */
 
 	int broken_entry;		/* index of a broken "Provencial" entry */
 };

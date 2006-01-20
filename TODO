@@ -23,6 +23,10 @@
 - upro¶ciæ funkcje List* z ydpdictionary, zawsze od¶wie¿aæ ca³o¶æ, pilnowaæ tylko offsetów
 - pomys³ na trzymanie i dialog prywatnych konfiguracji modu³ów
 - wyszukiwanie (Collins, w PWN nie ma takiego przypadku): "god" --> "go down"
+- <tomasz_rysz@poczta.onet.pl>:
+    - "comet" -> "come through"
+    - problem z gcc 4.0?
+    - brak odtwarzania dzwiêku dla slowa busy ,settle, wallet
 
 MODU£Y
 - modu³ s³ownika korzystaj±cy z bazy SQL, s³owników online...
@@ -38,8 +42,6 @@ YDP
 - w starej tablicy: 0x83 to '3' (f3), ale nie chodzi o '3' jak w 'bird' (bo w s³owniku YDP jest
   tam schwa) tylko o '¿' (jak w pleasure), na obrazku inny ogonek; ten z kpwndict jest zbyt brzydki
 - podpowiedzi niemieckie
-- na x86_64 nie dzia³a mmap (za duzy length, zly pagesize?), wymuszac czytanie
-  z pliku? (jakiekolwiek rozwiazanie - powtorzyc w PWN)
 
 SAP:
 - kolory w SAP nie s± zbyt dobrze robione, ca³y parsing kuleje...

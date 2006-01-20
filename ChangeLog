@@ -459,3 +459,5 @@ Kydpdict 0.9.1 (xx.xx.2005)
     - nie ustawiaæ fontu dla wordInput
     - skrypt do kompilacji
 - poprawka deklaracji w dock_widget.h (luk@chybie.net)
+- zgodno¶æ z x64 (Szymon Wasik <szymon.wasik@cs.put.poznan.pl>)
+- wywalenie nieu¿ywanego kodu TrayHint z dock_widget.h
