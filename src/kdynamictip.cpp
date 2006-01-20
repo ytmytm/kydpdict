@@ -7,15 +7,12 @@
  *                                                                         *
  ***************************************************************************/
 
-#include <qcursor.h>
-
 #include "kdynamictip.h"
 
 DynamicTip::DynamicTip( QWidget * parent ) : QToolTip( parent )
 {
 
 }
-
 
 void DynamicTip::maybeTip( const QPoint &pos )
 {
