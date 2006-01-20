@@ -213,10 +213,6 @@ Right click - open menu</source>
         <translation>Lewy - pokaż/schowaj okno
 Prawy - otwórz menu</translation>
     </message>
-    <message>
-        <source>Error: </source>
-        <translation>Błąd:</translation>
-    </message>
 </context>
 <context>
     <name>ydpConfigure</name>
