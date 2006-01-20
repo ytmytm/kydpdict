@@ -7,13 +7,9 @@
  *                                                                         *
  ***************************************************************************/
 
-#include <qapplication.h>
-#include <qtimer.h>
 #include <qtooltip.h>
 #include <qimage.h>
 #include <qpixmap.h>
-#include <qtextbrowser.h>
-#include <qstringlist.h>
 
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
@@ -23,8 +19,6 @@
 
 #include "dock_widget.h"
 #include "dock_widget.moc"
-
-#define kdebug printf
 
 extern Time qt_x_time;
 
@@ -147,9 +141,7 @@ TrayIcon::TrayIcon(QWidget *parent, const char *name)
 
 TrayIcon::~TrayIcon()
 {
-//	kdebug("TrayIcon::~TrayIcon()\n");
 	delete WMakerMasterWidget;
-	delete hint;
 }
 
 QPoint TrayIcon::trayPosition()
@@ -166,7 +158,6 @@ void TrayIcon::show()
 		WMakerMasterWidget->hide();
 		return;
 	}
-//	kdebug("show wmakermasterwidget\n");
 //	WMakerMasterWidget->setGeometry(-20,-20,1,1);
 	WMakerMasterWidget->show();
 	WMakerMasterWidget->setGeometry(-20,-20,1,1);
@@ -207,153 +198,18 @@ void TrayIcon::mousePressEvent(QMouseEvent * e) {
 
 	if (e->button() == MidButton) {
 		emit mousePressMidButton();
-//		kdebug("midbutton\n");
 		return;
 	}
 
 	if (e->button() == LeftButton) {
 		emit mousePressLeftButton();
-//		kdebug("left button\n");
 		return;
 	}
 
 	if (e->button() == RightButton) {
 		emit mousePressRightButton();
-//		kdebug("right button\n");
 		return;
 	}
-}
-
-/* Hint class below */
-//////////////////////////////////////////////
-
-void TrayIcon::showHint(const QString &str, const QString &nick, int index) {
-//	if (!config.trayhint || !config.dock)
-//		return;
-
-	kdebug("TrayIcon::showHint()\n");
-	hint->show_hint(str,nick,index);
-}
-
-void TrayIcon::reconfigHint() {
-	kdebug("TrayIcon::reconfigHint()\n");
-	hint->restart();
-}
-
-void TrayIcon::showErrorHint(const QString &str) {
-//	if (!config.hinterror)
-//		return;
-	kdebug("TrayIcon::showErrorHint()\n");
-	hint->show_hint(str, tr("Error: "), 1);
-}
-
-TrayHint::TrayHint(QWidget *parent, const char *name)
-	: QWidget(parent,"TrayHint",WStyle_NoBorder | WStyle_StaysOnTop | WStyle_Tool | WX11BypassWM | WWinOwnDC)
-{
-	kdebug("TrayHint::TrayHint\n");
-	
-	hint = new QTextBrowser(this);
-	hint->setVScrollBarMode(QScrollView::AlwaysOff);
-	hint->setHScrollBarMode(QScrollView::AlwaysOff);
-//	hint->setFont(config.fonts.trayhint);
-//	hint->setPaletteBackgroundColor(config.colors.trayhintBg);
-//	hint->setPaletteForegroundColor(config.colors.trayhintText);
-
-	hint_timer = new QTimer(this);
-	
-	QObject::connect(hint_timer,SIGNAL(timeout()),this,SLOT(remove_hint()));
-}
-
-void TrayHint::set_hint(void) {
-	QPoint pos_hint;
-	QSize size_hint;
-	QPoint pos_tray = trayicon->trayPosition();
-	QString text_hint; 
-	for (QStringList::Iterator points = hint_list.begin(); points != hint_list.end(); ++points)
-		text_hint.append(*points);
-//	size_hint = QFontMetrics(config.fonts.trayhint).size(Qt::ExpandTabs, text_hint);
-//	size_hint = QSize(size_hint.width()+35,size_hint.height()+10);
-//	resize(size_hint);
-//	hint->resize(size_hint);
-//	QSize size_desk = QApplication::desktop()->size();
-//	if (pos_tray.x() < size_desk.width()/2)
-//		pos_hint.setX(pos_tray.x()+32);
-//	else
-//		pos_hint.setX(pos_tray.x()-size_hint.width());
-//	if (pos_tray.y() < size_desk.height()/2)
-//		pos_hint.setY(pos_tray.y()+32);
-//	else
-//		pos_hint.setY(pos_tray.y()-size_hint.height());
-//	move(pos_hint);
-	kdebug("TrayHint::set_hint()\n");
-}
-
-void TrayHint::show_hint(const QString &str, const QString &nick, int index) {
-	kdebug("TrayHint::show_hint(%s,%s,%d)\n", 
-		 (const char *)str.local8Bit(), (const char *)nick.local8Bit(), index);
-	if (hint_list.last() == str + nick || hint_list.last() == "\n" + str + nick)
-		return;
-	QString text;
-	text.append("<CENTER>");
-	switch(index) {
-		case 0:
-			text.append(str);
-			text.append("<B>");
-			text.append(nick);
-			text.append("</B>");
-			break;
-
-		case 1:
-			text.append("<B>");
-			text.append(nick);
-			text.append("</B>");
-			text.append(str);
-			break;
-	}
-
-	text.append("</CENTER></FONT>");
-
-	if (hint->text()=="") {
-		hint->setText(text);
-		hint_list.append(str+nick);
-		}
-	else {
-		hint->setText(hint->text()+"\n"+text);
-		hint_list.append("\n"+str+nick);
-		}
-	set_hint();
-	show();
-//	if (!hint_timer->isActive())
-//		hint_timer->start(config.hinttime * 1000);
-}
-
-void TrayHint::remove_hint() {
-	int len = hint->text().find("\n");
-	if ( len > 0) {
-		hint->setText(hint->text().remove(0, len + 1));
-		hint_list.erase(hint_list.fromLast());
-		kdebug("TrayHint::remove_hint() hint_list counts=%d\n",hint_list.count());
-		}
-	else {
-		hide();
-		hint->clear();
-		hint_timer->stop();
-		hint_list.clear();
-		kdebug("TrayHint::remove_hint() hint and hint_list is cleared\n");
-		return;
-	}
-	set_hint();
-}
-
-void TrayHint::restart() {
-	hide();
-	hint->clear();
-	hint_timer->stop();
-	hint_list.clear();
-//	hint->setFont(config.fonts.trayhint);
-//	hint->setPaletteBackgroundColor(config.colors.trayhintBg);
-//	hint->setPaletteForegroundColor(config.colors.trayhintText);
-	kdebug("TrayHint::restart()\n");
 }
 
 TrayIcon *trayicon = NULL;
