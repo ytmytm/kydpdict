@@ -695,7 +695,7 @@ char *ConvertYDP::toLocal(const char *input) {
     memset(buffer,0,sizeof(buffer));
 
     for (i=0;i!=len;) {
-	if ((input[i] != ' ') && (input[i] != '\t') && (input[i] != '-') && (input[i] !=','))
+	if ((input[i] != '\t') && (input[i] != '-') && (input[i] !=','))
 	    buffer[j++] = toLower(input[i++]);
 	else
 	    ++i;

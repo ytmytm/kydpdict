@@ -407,7 +407,7 @@ QString ydpDictionary::stripDelimiters(QString word)
     unsigned int wlen = word.length();
 
     for (i=0; i<wlen; i++) {
-	if (word.at(i).isLetterOrNumber())
+	if (word.at(i).isLetterOrNumber() || word.at(i).isSpace())
 	    lstring += word.at(i);
     }
 
