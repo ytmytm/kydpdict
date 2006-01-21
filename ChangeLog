@@ -449,7 +449,7 @@ Kydpdict 0.9.0 (26.07.2005)
 - dodany silnik SAP
 
 =====================================================================
-Kydpdict 0.9.1 (xx.xx.2005)
+Kydpdict 0.9.1 (21.01.2006)
 - uproszczony Makefile w src/
 - czê¶ciowo zrobiony modu³ DICT (bazy danych dictd)
 - modu³y PWN i SAP powinny radziæ sobie z plikami na partycji FAT32 (du¿e litery ANGPOL.WIN)
