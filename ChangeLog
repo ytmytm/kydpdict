@@ -462,3 +462,4 @@ Kydpdict 0.9.1 (xx.xx.2005)
 - zgodno¶æ z x64 (Szymon Wasik <szymon.wasik@cs.put.poznan.pl>)
 - wywalenie nieu¿ywanego kodu TrayHint z dock_widget.h
 - wyszukiwanie nie ignoruje spacji
+- obs³uga &ccedilla; w PWN
