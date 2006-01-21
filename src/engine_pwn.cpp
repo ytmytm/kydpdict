@@ -384,6 +384,9 @@ char *ConvertPWN::toLocal(const char *input) {
 	    if (issubstr("agrave;",&input[i]))
 		buffer[j++] = 'a';
 	    else
+	    if (issubstr("ccedil;",&input[i]))
+		buffer[j++] = 'c';
+	    else
 	    if ((issubstr("eacute;",&input[i])) || (issubstr("egrave;",&input[i])) || (issubstr("ecirc;",&input[i])))
 		buffer[j++] = 'e';
 	    while (input[i++] != ';');	// hit end of entity
@@ -412,6 +415,7 @@ QString ConvertPWN::toUnicode(const char *input) {
     }
     if (mark) {
 	stmp.replace("&agrave;",QChar(224));	// tetchy, tete-a-tete, a`
+	stmp.replace("&ccedil;",QChar(231));	// fabulous, facade, c,
 	stmp.replace("&egrave;",QChar(232));	// finder, fin de siecle, e`
 	stmp.replace("&eacute;",QChar(233));	// eclair, e'
 	stmp.replace("&ecirc;", QChar(234));	// tetchy, tete-a-tete, e^
