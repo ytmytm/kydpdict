@@ -321,6 +321,9 @@ QString EnginePWN2004::rtf2html(QString definition) {
     tmp.replace("<SUB><IMG SRC=\"rzym4.jpg\"></SUB>","<B>IV</B>");
     tmp.replace("<SUB><IMG SRC=\"rzym5.jpg\"></SUB>","<B>V</B>");
     tmp.replace("<SUB><IMG SRC=\"rzym6.jpg\"></SUB>","<B>VI</B>");
+    tmp.replace("&square;", "&bull;");
+    tmp.replace("&quotlw;", "\"");
+    tmp.replace("&quotup;", "\"");
     //
     tmp.replace("<IMG SRC=\"idioms.JPG\">","IDIOMS:");
     tmp.replace("&ap;~","&asymp;");
