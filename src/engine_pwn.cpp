@@ -33,7 +33,8 @@ EnginePWN::EnginePWN(kydpConfig *config, QListBox *listBox, ydpConverter *conver
 
 EnginePWN::~EnginePWN()
 {
-
+	delete [] offsets;
+	delete [] wordbuffer;
 }
 
 int EnginePWN::OpenDictionary(void)
@@ -90,9 +91,6 @@ int EnginePWN::CheckDictionary(void)
 void EnginePWN::CloseDictionary()
 {
 	fIndex.close();
-// this should be here???
-	delete [] offsets;
-	delete [] wordbuffer;
 	ydpDictionary::CloseDictionary();	// required call
 }
 
@@ -149,12 +147,12 @@ void EnginePWN::FillWordList()
 
   if ((void *)filedata != MAP_FAILED) {
     for (i=0;i<wordCount;i++) {
-	words[i] = new char [strlen(&filedata[inioffset+fix32(offsets[i])+2+4+11])+1];
-	strcpy(words[i],&filedata[inioffset+fix32(offsets[i])+2+4+11]);
+	words[i] = new char [strlen(&filedata[inioffset+offsets[i]+2+4+11])+1];
+	strcpy(words[i],&filedata[inioffset+offsets[i]+2+4+11]);
     }
   } else {
     for (i=0;i<wordCount;i++) {
-	fIndex.at(words_base+fix32(offsets[i]));
+	fIndex.at(words_base+offsets[i]);
 	fIndex.readBlock((char*)wordbuffer,maxlength);
 	words[i] = new char [strlen(&wordbuffer[2+4+11])+1];
 	strcpy(words[i],&wordbuffer[2+4+11]);
@@ -174,7 +172,7 @@ int EnginePWN::ReadDefinition(int index)
     else
 	memset(outbuffer,0,5*maxlength);	// 5*maxlength is arbitrary, based on zip performance
 
-	fIndex.at(words_base+fix32(offsets[index]));
+	fIndex.at(words_base+offsets[index]);
 	fIndex.readBlock(wordbuffer, maxlength);
 
 	i = 2+4+11+strlen(&wordbuffer[2+4+11])+2;
