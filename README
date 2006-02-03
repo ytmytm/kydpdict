@@ -1,6 +1,6 @@
 
 Kydpdict
-(c) 2005 Maciej Witkowiak <ytm@elysium.pl>
+(c) 2006 Maciej Witkowiak <ytm@elysium.pl>
 http://members.elysium.pl/ytm/html/kydpdict.html
 http://ytm.bossstation.dnsalias.org/html/kydpdict.html
 
@@ -93,6 +93,14 @@ wydania s³ownika Oxford.
 Niezbêdne jest posiadanie pliku danych z ju¿ zainstalowanej aplikacji pod Windows.
 W tym wypadku chodzi o plik 'angpol.win'. Dalej nale¿y postêpowaæ podobnie, jak
 opisano dla modu³u YDP.
+
+
+2.4 PWN Oxford 2004
+
+Odmiana wersji z 2003 roku, obs³uguje s³owniki angielsko-polski i polsko-angielski.
+Niezbêdne jest posiadanie obu plików danych z ju¿ zainstalowanej aplikacji pod
+Windows. Chodzi o pliki 'angpol.win' oraz 'polang.win'. Dalej nale¿y postêpowaæ
+tak, jak opisano wy¿ej.
 
 
 
@@ -208,12 +216,12 @@ A: Kolejne wersje Kydpdict bêd± wyposa¿one nie tylko w rybê na tacce ale i
    ksiêgarni i poszukaj ksi±¿ek Douglasa Adamsa. Albo wybierz siê do kina.
 
 Q: A co ze s³ownikiem PWN Oxford 2004 w kartonowym pude³ku za dwie bañki?
-A: Odgadniêty format bazy z roku 2003 nie by³ do koñca prawid³owy i pe³na wersja
-   s³ownika zbytnio siê od niego ró¿ni. Na razie nie jest wiêc obs³ugiwana
-   przez program. Siedzenie nad wielomegabajtowymi plikami i ich
-   reverse-engineering jest zbyt nudnym i ma³o rozwijaj±cym zajêciem, ¿ebym
-   robi³ to z w³asnego zami³owania. Poza tym, nie wiem czy jest taka potrzeba i
-   zainteresowanie. Chcesz mnie do tego zmotywowaæ i zaokr±gliæ stan rachunku w
+A: Podstawowy s³ownik ju¿ dzia³a. Co do sampli z wymow±, to nie mam danych do
+   testowania. Podobnie z tabelami i dodatkowymi informacjami o gramatyce - niby
+   s±, ale nie bardzo wiem co z nimi zrobiæ w obecnej formie programu.
+   
+Q: Jak wyraziæ wdziêczno¶æ i zmotywowaæ do dalszej pracy?
+   W dobie bankowo¶ci elektronicznej to proste - chcesz zaokr±gliæ stan rachunku w
    dó³ :)? Jest mo¿liwo¶æ; oto numer mojego konta: 60 1140 2004 0000 3202 3234 6486
 
 

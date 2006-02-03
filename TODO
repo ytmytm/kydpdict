@@ -32,6 +32,14 @@ DICT
 PWN
 - usuwaæ ca³kowicie <sup>\d</sup> z wielokrotnych hase³?
 
+PWN2004
+- sprawdzic na nowo konwersje niby-html na qtml
+- sprawdzic na nowo uzupelnienia znaczkami ipa i innymi
+- tipsy w slowniku pl-en?
+- usuwac/ignorowac '|' w polskiej czesci przy wyszukiwaniu (lub traktowac jak koniec wyrazu)
+- informacja o samplu/ach jest w tresci hasla; odgrywac tylko pierwszy??
+- zawartosc tabel/dodatkowych stron jest ukryta (typ==0x49), co niby z nimi zrobiæ?
+
 YDP
 - w starej tablicy: 0x83 to '3' (f3), ale nie chodzi o '3' jak w 'bird' (bo w s³owniku YDP jest
   tam schwa) tylko o '¿' (jak w pleasure), na obrazku inny ogonek; ten z kpwndict jest zbyt brzydki

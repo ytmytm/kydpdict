@@ -67,6 +67,7 @@ ydpConfigure::ydpConfigure( kydpConfig *globalconfig, QWidget* parent,  const ch
     // this must be done in order of ENGINE_* enums!
     engineCombo->insertItem("SAP", ENGINE_SAP);
     engineCombo->insertItem("PWN Oxford 2003", ENGINE_PWN);
+    engineCombo->insertItem("PWN Oxford 2004", ENGINE_PWN2004);
     engineCombo->insertItem("YDP Collins", ENGINE_YDP);
     engineCombo->setEditable(false);
 

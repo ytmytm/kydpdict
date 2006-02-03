@@ -79,6 +79,7 @@
 #include "dock_widget.h"
 #include "engine_dict.h"
 #include "engine_pwn.h"
+#include "engine_pwn2004.h"
 #include "engine_sap.h"
 #include "engine_ydp.h"
 
@@ -148,6 +149,10 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 	    case ENGINE_PWN:
 		myConvert = new ConvertPWN();
 		myDict = new EnginePWN(config,dictList,myConvert);
+		break;
+	    case ENGINE_PWN2004:
+		myConvert = new ConvertPWN2004();
+		myDict = new EnginePWN2004(config,dictList,myConvert);
 		break;
 	    case ENGINE_YDP:
 		myConvert = new ConvertYDP();
