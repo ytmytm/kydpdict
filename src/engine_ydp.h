@@ -71,8 +71,12 @@ public:
 	QString toUnicode(const char *input);
 	QCString fromUnicode(QString input);
 	QString convertChunk(const char *inp, int size = 0, bool unicodeFont = false);
+	int localeCompare(const char *w1, const char *w2);
 
 private:
+	//Expands german ß to ss. 
+	void expandSS(char *dst, const char *src);
+	
 	QTextCodec *codec;
 };
 

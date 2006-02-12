@@ -668,8 +668,8 @@ ConvertYDP::~ConvertYDP() {
 }
 
 char ConvertYDP::toLower(const char c) {
-    const static char upper_cp[] = "A¥BCÆDEÊFGHIJKL£MNÑOÓPQRSŒTUVWXYZ¯";
-    const static char lower_cp[] = "a¹bcædeêfghijkl³mnñoópqrsœtuvwxyzŸ¿";
+    const static char upper_cp[] = "A¥BCÆDEÊFGHIJKL£MNÑOÓPQRSŒTUVWXYZ¯ÄÖÜ";
+    const static char lower_cp[] = "a¹bcædeêfghijkl³mnñoópqrsœtuvwxyzŸ¿äöü";
 
     unsigned int i;
     for (i=0;i<sizeof(upper_cp);i++)
@@ -680,9 +680,19 @@ char ConvertYDP::toLower(const char c) {
 
 int ConvertYDP::charIndex(const char c) {
     const static char lower_cp[] = "a¹bcædeêfghijkl³mnñoópqrsœtuvwxyzŸ¿";
-    unsigned int i;
+    
+	char lc = c;
+	
+	if (c == 'ä')
+		lc = 'a';
+	else if (c == 'ö')
+		lc = 'o';
+	else if (c == 'ü')
+		lc = 'u';
+
+		unsigned int i;
     for (i=0;i<sizeof(lower_cp);i++)
-	if (c == lower_cp[i])
+	if (lc == lower_cp[i])
 	    return i;
     return sizeof(lower_cp)+1;
 }
@@ -789,4 +799,55 @@ QString ConvertYDP::convertChunk(const char *inp, int size, bool unicodeFont)
 	}
     }
     return out;
+}
+
+int ConvertYDP::localeCompare(const char *w1, const char *w2) {
+	char lw1[128];
+	char lw2[128];
+	
+	expandSS(lw1, w1);
+	expandSS(lw2, w2);
+	
+	int i = 0;
+	int len1 = strlen(lw1);
+	int len2 = strlen(lw2);
+	int c1, c2;
+	for (; ((i<len1) && (i<len2)); i++) {
+		c1 = charIndex(lw1[i]); c2 = charIndex(lw2[i]);
+		if (c1!=c2) {
+		    return c1-c2;
+		}
+	}
+	
+	if (len1 != len2) {
+		// identical substrings so longer is bigger
+		return len1-len2;
+	} else {
+		//there are problems with german words like 'zahlen' and 'zählen' - 
+		//the word with umlaut is smaller
+		for (i=0; i<len1; ++i) {
+			if (lw1[i] != lw2[i]) {
+				if (lw1[i] == 'ä' || lw1[i] == 'ö' || lw1[i] == 'ü')
+					return -1;
+				else if (lw2[i] == 'ä' || lw2[i] == 'ö' || lw2[i] == 'ü')
+					return 1;
+			}
+		}
+	}
+	
+	return 0;
+}
+
+void ConvertYDP::expandSS(char *dst, const char *src)
+{
+	for (; *src; ++src, ++dst) {
+		if (*src == 'ß') {
+			*dst = 's';
+			*(++dst) = 's';
+		}
+		else
+			*dst = *src;
+	}
+	
+	*dst = '\0';
 }

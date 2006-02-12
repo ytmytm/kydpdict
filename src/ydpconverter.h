@@ -35,7 +35,7 @@ class QCString;
 			// number of letters common to both words, starting from left
 			int scoreWord(const char *w1, const char *w2);
 			// same as strcoll but dict. index native, not related to current locale
-			int localeCompare(const char *w1, const char *w2);
+			virtual int localeCompare(const char *w1, const char *w2);
 	};
 
 #endif
