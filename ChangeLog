@@ -471,3 +471,4 @@ Kydpdict 0.9.2 (03.02.2006)
 =====================================================================
 Kydpdict 0.9.3 (xx.xx.2006)
 - poprawna obs³uga umlautów (Rafa³ Kubina <rafkub@poczta.onet.pl>)
+- je¶li wy³±czone dokowanie, to ESC-ESC minimalizuje zmiast chowaæ okno

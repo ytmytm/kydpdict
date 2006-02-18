@@ -396,7 +396,10 @@ void Kydpdict::onEscaped()
 	wordInput->setFocus();
     else
 	if (wordInput->currentText().isEmpty() && (!(escTimer->isActive()))) {
-	    this->hide();
+	    if (config->dock)
+	        this->hide();
+	    else
+		this->showMinimized();
 	} else {
 	    wordInput->clearEdit();
 	    escTimer->start(LAST_ESC_PERIOD,TRUE);
