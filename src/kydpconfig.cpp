@@ -111,6 +111,7 @@ void kydpConfig::load(void)
 	dock = settings.readBoolEntry("/dock", TRUE);
 	setFocusOnSelf = settings.readBoolEntry("/set_focus_on_self", TRUE);
 	fuzzyDistance = settings.readNumEntry("/fuzzy_distance", 2);
+	startHidden = settings.readBoolEntry("/start_hidden", FALSE);
 	settings.endGroup();
 	settings.endGroup();
 
@@ -164,6 +165,7 @@ void kydpConfig::save(void)
 	settings.writeEntry("/dock", dock);
 	settings.writeEntry("/set_focus_on_self", setFocusOnSelf);
 	settings.writeEntry("/fuzzy_distance", fuzzyDistance);
+	settings.writeEntry("/start_hidden", startHidden);
 	settings.endGroup();
 	settings.endGroup();
 }

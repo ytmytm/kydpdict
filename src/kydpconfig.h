@@ -41,7 +41,7 @@ public:
 	int kGeometryX, kGeometryY, kGeometryW, kGeometryH;
 	bool kMaximized;
 	int spH1, spH2, spV1, spV2;
-	bool clipTracking, italicFont, toolTips, autoPlay, ignoreOwnSelection, dock, setFocusOnSelf;
+	bool clipTracking, italicFont, toolTips, autoPlay, ignoreOwnSelection, dock, setFocusOnSelf, startHidden;
 	int fuzzyDistance;
 
 	void load(void);

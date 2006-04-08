@@ -158,6 +158,8 @@ ydpConfigure::ydpConfigure( kydpConfig *globalconfig, QWidget* parent,  const ch
     checkBox7->setGeometry(10,66,350,20);
     checkBox9 = new QCheckBox(tr("Use Unicode characters"), tab3, "checkBox9");
     checkBox9->setGeometry(10,92,350,20);
+    checkBox10 = new QCheckBox(tr("Start hidden"), tab3, "checkBox10");
+    checkBox10->setGeometry(10,118,350,20);
 
     TabWidget1->insertTab( tab3, tr("Miscellaneous") );
 
@@ -379,6 +381,7 @@ void ydpConfigure::WriteDefaults()
     checkBox5->setChecked(cnf->autoPlay);
     checkBox8->setChecked(cnf->setFocusOnSelf);
     checkBox9->setChecked(cnf->unicodeFont);
+    checkBox10->setChecked(cnf->startHidden);
     engineCombo->setCurrentItem(cnf->engine);
     UpdateLabels();
     delete cnf;
@@ -402,6 +405,7 @@ void ydpConfigure::showEvent ( QShowEvent * )
     checkBox5->setChecked(config->autoPlay);
     checkBox8->setChecked(config->setFocusOnSelf);
     checkBox9->setChecked(config->unicodeFont);
+    checkBox10->setChecked(config->startHidden);
     UpdateLabels();
 }
 
@@ -427,6 +431,7 @@ ydpConfigure::~ydpConfigure()
 		config->autoPlay = checkBox5->isChecked();
 		config->setFocusOnSelf = checkBox8->isChecked();
 		config->unicodeFont = checkBox9->isChecked();
+		config->startHidden = checkBox10->isChecked();
 		config->fontTransFont = cFont;
 		if (config->engine != engineCombo->currentItem()) {
 		    QMessageBox::information( this, tr("Information"),

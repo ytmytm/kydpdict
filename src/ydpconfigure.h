@@ -66,6 +66,7 @@ private:
     QCheckBox *checkBox7;
     QCheckBox *checkBox8;
     QCheckBox *checkBox9;
+    QCheckBox *checkBox10;
 
     kydpConfig *config;
 

@@ -281,6 +281,10 @@ Prawy - otwórz menu</translation>
         <translation>Używaj pochyłej czcionki</translation>
     </message>
     <message>
+        <source>Start hidden</source>
+        <translation>Ukryj przy starcie</translation>
+    </message>
+    <message>
         <source>Enable tooltips</source>
         <translation>Włącz podpowiedzi</translation>
     </message>

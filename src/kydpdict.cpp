@@ -339,6 +339,9 @@ testagain2:
 
 	if (wasMaximized)
 	    this->showMaximized();
+
+	if (config->startHidden)
+	    this->hide();
 }
 
 Kydpdict::~Kydpdict()
