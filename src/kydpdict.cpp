@@ -341,7 +341,10 @@ testagain2:
 	    this->showMaximized();
 
 	if (config->startHidden)
-	    this->hide();
+	    if (config->dock)
+	        this->hide();
+	    else
+		this->showMinimized();
 }
 
 Kydpdict::~Kydpdict()
