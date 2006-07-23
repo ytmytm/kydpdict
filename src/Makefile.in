@@ -46,6 +46,10 @@ endif
 kydpdict: 	$(OBJECTS)
 		$(CXX) $(OBJECTS) $(QT_LIBS) $(QT_LIB) $(X_LIBS) $(X_LIB) $(CXXFLAGS) -o kydpdict
 
+# maybe works, may be not, nevertheless is a sort of starting point
+static:		$(OBJECTS)
+		$(CC) $(OBJECTS) $(X_LIBS) $(QT_LIBS) -Wl,-Bstatic -lqt-mt -Wl,-Bdynamic $(X_LIB) -lXext -lXft -lpng -lpthread -ljpeg -lmng -lXi -lXrandr -lXinerama -lSM -lICE -lXcursor -lstdc++
+
 translation: kydpdict.pro
 		$(LUPDATE) kydpdict.pro
 		$(LRELEASE) kydpdict.pro
