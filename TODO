@@ -23,6 +23,8 @@
 - upro¶ciæ funkcje List* z ydpdictionary, zawsze od¶wie¿aæ ca³o¶æ, pilnowaæ tylko offsetów
 - pomys³ na trzymanie i dialog prywatnych konfiguracji modu³ów
 - w tray/zminimalizowany (gdy nie u¿ywany tray) - wy³±cza timer -> nie dostaje info o zmianie
+- WA¯NE! sterowanie opcjami z linii komend (lub wskazywanie alternatywnego pliku konf.), pozwala
+  opcje: engine,¶cie¿ka
 
 MODU£Y
 - modu³ s³ownika korzystaj±cy z bazy SQL, s³owników online...
