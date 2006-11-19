@@ -25,6 +25,8 @@
 - w tray/zminimalizowany (gdy nie u¿ywany tray) - wy³±cza timer -> nie dostaje info o zmianie
 - WA¯NE! sterowanie opcjami z linii komend (lub wskazywanie alternatywnego pliku konf.), pozwala
   opcje: engine,¶cie¿ka
+- uporz±dkowanie kodu i zachowania tray/minimalizacja/¶ledzenie
+- popup do wprowadzania polskich znaków
 
 MODU£Y
 - modu³ s³ownika korzystaj±cy z bazy SQL, s³owników online...
