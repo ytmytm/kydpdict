@@ -139,7 +139,6 @@ Kydpdict::Kydpdict(QWidget *parent, const char *name) : QMainWindow(parent, name
 	menu = menuBar();
 
 	config = new kydpConfig;
-	config->load();
 
 	switch (config->engine) {
 	    case ENGINE_SAP:
