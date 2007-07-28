@@ -422,7 +422,7 @@ char *ConvertPWN2004::toLocal(const char *input) {
 		buffer[j++] = 'e';
 	    while (input[i++] != ';');	// hit end of entity
 	} else
-	if ((input[i] != '\t') && (input[i] != '-') && (input[i] !=','))
+	if ((input[i] != '\t') && (input[i] != '-') && (input[i] !=',') && (input[i] !='|'))
 	    buffer[j++] = toLower(input[i++]);
 	else
 	    ++i;
