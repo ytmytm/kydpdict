@@ -474,3 +474,7 @@ Kydpdict 0.9.3 (16.04.2006)
 - je¶li wy³±czone dokowanie, to ESC-ESC minimalizuje zmiast chowaæ okno
 - dodana opcja ukrycia na starcie (Jaroslaw Swierczynski <swiergot@juvepoland.com>); czekam
   na bugreporty o pojawiaj±cym siê na moment oknie :/
+
+=====================================================================
+Kydpdict 0.9.4 (??.??.2007)
+- ignorowanie '|' w polskiej czê¶ci PWN2004

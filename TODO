@@ -20,8 +20,10 @@
     - niskie podobieñstwo chyba jest zbyt niskie (10 zmian ³apie chyba ca³y s³ownik)
     - zrezygnowaæ z dialogu, przenie¶æ ustawianie distance do menu, zrobiæ jak w BSAP
 - sta³e 'przerysowywanie' ikonki w tray'u we fluxboksie, porównaæ z kadu
+    - pojawi³o siê w kolejnych raportach!
 - upro¶ciæ funkcje List* z ydpdictionary, zawsze od¶wie¿aæ ca³o¶æ, pilnowaæ tylko offsetów
 - pomys³ na trzymanie i dialog prywatnych konfiguracji modu³ów
+    - przekazywaæ QSettings do modu³ów? niech ustawi± sobie w³asn± pod¶cie¿kê
 - w tray/zminimalizowany (gdy nie u¿ywany tray) - wy³±cza timer -> nie dostaje info o zmianie
 - WA¯NE! sterowanie opcjami z linii komend (lub wskazywanie alternatywnego pliku konf.), pozwala
   opcje: engine,¶cie¿ka
@@ -41,7 +43,6 @@ PWN2004
 - sprawdzic na nowo konwersje niby-html na qtml
 - sprawdzic na nowo uzupelnienia znaczkami ipa i innymi
 - tipsy w slowniku pl-en?
-- usuwac/ignorowac '|' w polskiej czesci przy wyszukiwaniu (lub traktowac jak koniec wyrazu)
 - informacja o samplu/ach jest w tresci hasla; odgrywac tylko pierwszy??
 - zawartosc tabel/dodatkowych stron jest ukryta (typ==0x49), co niby z nimi zrobiæ?
 - contrib - d¼wiêki!
