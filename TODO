@@ -46,6 +46,7 @@ PWN2004
 - informacja o samplu/ach jest w tresci hasla; odgrywac tylko pierwszy??
 - zawartosc tabel/dodatkowych stron jest ukryta (typ==0x49), co niby z nimi zrobiæ?
 - contrib - d¼wiêki!
+- 'europejsko¶æ' - IPA182... jaki jest w³a¶ciwy znak unicode? brak obrazka!
 
 YDP
 - w starej tablicy: 0x83 to '3' (f3), ale nie chodzi o '3' jak w 'bird' (bo w s³owniku YDP jest

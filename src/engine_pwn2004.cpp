@@ -288,6 +288,7 @@ QString EnginePWN2004::rtf2html(QString definition) {
 	tmp.replace("<IMG SRC=\"ipa321.JPG\">",QChar(650));	// high back lax (put), f10
 	tmp.replace("<IMG SRC=\"ipa305.JPG\">",QChar(593));	// low back (father), f7
 	tmp.replace("<IMG SRC=\"ipa326.JPG\">",QChar(604));	// (bird), f3
+	tmp.replace("<IMG SRC=\"ipa182.JPG\">",QChar(597));	// europejsko¶æ
 	tmp.replace("&#952;",QChar(952));	// voiceless interdental fricative (thing), f8
 	tmp.replace("&##952;",QChar(952));	// voiceless interdental fricative (thing), f8
 	tmp.replace("&##8747;",QChar(643));	// voiceless palatal fricative (ship), f5
