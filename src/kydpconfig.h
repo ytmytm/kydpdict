@@ -51,7 +51,7 @@ public:
 private:
 	QString cfgname;
 
-	void readYDPConfig(void);
+	bool readYDPConfig(void);
 	QString fixColour(const QString);
 };
 

@@ -16,6 +16,7 @@
 #include <qsettings.h>
 
 #include "kydpconfig.h"
+#include "engine_ydp.h"
 
 // for those qmake stubborns...
 #ifndef KYDPDATADIR
@@ -58,12 +59,26 @@ kydpConfig::~kydpConfig()
 void kydpConfig::load(void)
 {
 	QString transFont;
+        int defaultEngine = ENGINE_SAP;
 
 	if (topPath=="xyz") {
 	    topPath = KYDPDATADIR;
 	    cdPath = "/mnt/cdrom";
 	    player = "/usr/bin/play";
-	    readYDPConfig();
+	    if (readYDPConfig()) {
+
+	        // if the path was read from the config, test if it's of any use
+                ConvertYDP *testConvert = new ConvertYDP();
+                EngineYDP *testDict = new EngineYDP(this,NULL,testConvert);
+
+		// if the YDP dict is not there, go back to package default
+                if (testDict->GetDictionaryInfo() == 0)
+                    topPath = KYDPDATADIR;
+		else
+                    defaultEngine = ENGINE_YDP;
+                delete testDict;
+		delete testConvert;
+            }
 	}
 
 	QSettings settings;
@@ -76,7 +91,7 @@ void kydpConfig::load(void)
 	cdPath	= settings.readEntry("/cd1path", cdPath);
 	cd2Path = settings.readEntry("/cd2path", "/mnt/cdrom");
 	player	= settings.readEntry("/player", player);
-	engine	= settings.readNumEntry("/engine", ENGINE_SAP);
+	engine	= settings.readNumEntry("/engine", defaultEngine);
 	settings.endGroup();
 	settings.beginGroup("/language");
 	toPolish= settings.readBoolEntry("/toPolish", TRUE );
@@ -170,15 +185,16 @@ void kydpConfig::save(void)
 	settings.endGroup();
 }
 
-void kydpConfig::readYDPConfig(void)
+bool kydpConfig::readYDPConfig(void)
 {
 	QFile fd;
 	QString line, value;
 	int pos;
+	bool ret = false;
 
 	fd.setName("/etc/ydpdict.conf");
 	if (!fd.exists())
-		return;
+		return ret;
 	fd.open(IO_ReadOnly);
 	while (!fd.atEnd()) {
 		fd.readLine(line,128);
@@ -194,6 +210,7 @@ void kydpConfig::readYDPConfig(void)
 				if (pos>=0) {
 					value = line.mid(pos+4);
 					topPath = value.stripWhiteSpace();
+					ret = true;
 				}
 			}
 			pos = line.find("Player");
@@ -204,6 +221,7 @@ void kydpConfig::readYDPConfig(void)
 		}
 	}
 	fd.close();
+	return ret;
 }
 
 // this is here due to fact that if link's colour is set to black, Qt ignores that

@@ -116,7 +116,8 @@ ydpDictionary::ydpDictionary(kydpConfig *config, QListBox *listBox, ydpConverter
     cnf = config;
     cvt = converter;
     keyEater = new KeyEater(this);
-    dictList->installEventFilter(keyEater);
+    if (dictList != NULL)
+        dictList->installEventFilter(keyEater);
     for (i=0;i<4;i++) {
         dictCache[i].wordCount = -1;
         dictCache[i].words = NULL;
