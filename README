@@ -46,7 +46,10 @@ chc± w ogóle niczego zwi±zanego z ryb± na tacce systemowej.
 Instalacja - wykonaj
     make install
 
+Na FreeBSD mo¿e byæ konieczne równie¿ jawne dodanie biblioteki pthread, mo¿na to zrobiæ
+nastêpuj±co:
 
+CXXFLAGS="$CXXFLAGS -lpthread" ./configure
 
 
 2. OBS£UGIWANE TYPY S£OWNIKÓW
