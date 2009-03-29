@@ -240,7 +240,7 @@ QString EngineYDP::SampleName(QString path, int index)
     QFile fd;
     QString name, myname;
 
-    name.sprintf("/s%.3d/%.6d.", index/1000, index+1);
+    name.sprintf("/s%.3d/%.6d.", (index+1)/1000, index+1);
 
     myname = name+"wav";
     fd.setName(path+myname);
