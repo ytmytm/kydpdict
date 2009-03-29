@@ -1,6 +1,6 @@
 #!/bin/bash
 QTDIR=/usr/local/qt3
-VERSION="0.9.4"
+VERSION="0.9.5"
 APPNAME=kYDPdict
 
 ../configure  --without-x --with-qt-dir=$QTDIR 
