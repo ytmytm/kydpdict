@@ -473,7 +473,7 @@ void Kydpdict::closeEvent( QCloseEvent *acloseEvent )
 	this->hide();
 	acloseEvent->ignore();
     } else
-	qApp->quit();
+	QMainWindow::closeEvent(acloseEvent);
 }
 
 void Kydpdict::showEntry(QString *aEntry, int aindex)

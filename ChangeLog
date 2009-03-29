@@ -487,8 +487,10 @@ Kydpdict 0.9.4 (29.12.2007)
     - nieco mniejszy rozmiar ikonki z ryb±
 
 =====================================================================
-Kydpdict 0.9.5 (??.??.2009)
+Kydpdict 0.9.5 (29.03.2009)
 - Tomasz Walach <tomasz_rysz@o2.pl>
-    - poprawka na odgrywanie .wav (b³±d w generowaniu ¶cie¿ki)
+    - poprawka na b³±d w generowaniu ¶cie¿ki do plików .wav ze s³ownika YDP
 - Dawid Stawiarski <neeo@xl.wp.pl>
     - ³adniejsze ikony w stylu disabled
+- Jacek Jaworski <jaworski777@wp.pl>
+    - propozycja do poprawki na prawid³ow± reakcjê na zamykanie programu przy zapisywaniu sesji
