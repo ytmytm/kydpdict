@@ -488,5 +488,7 @@ Kydpdict 0.9.4 (29.12.2007)
 
 =====================================================================
 Kydpdict 0.9.5 (??.??.2009)
-- Tomasz Walach <tomasz_rysz@o2.pl> - ³ata
+- Tomasz Walach <tomasz_rysz@o2.pl>
     - poprawka na odgrywanie .wav (b³±d w generowaniu ¶cie¿ki)
+- Dawid Stawiarski <neeo@xl.wp.pl>
+    - ³adniejsze ikony w stylu disabled

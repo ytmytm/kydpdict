@@ -37,6 +37,7 @@
 #include <qaccel.h>
 #include <qcursor.h>
 #include <qlineedit.h>
+#include <qiconset.h>
 
 #define COMBO_HISTORY_SIZE	25
 #define TIMER_PERIOD		1000
@@ -61,9 +62,13 @@
 #include "../icons/f11.xpm"
 /* 22x22 */
 #include "../icons/en_pl.xpm"
+#include "../icons/en_pl_dis.xpm"
 #include "../icons/pl_en.xpm"
+#include "../icons/pl_en_dis.xpm"
 #include "../icons/de_pl.xpm"
+#include "../icons/de_pl_dis.xpm"
 #include "../icons/pl_de.xpm"
+#include "../icons/pl_de_dis.xpm"
 #include "../icons/configure.xpm"
 #include "../icons/loop.xpm"
 #include "../icons/player_play.xpm"
@@ -235,21 +240,30 @@ testagain2:
 	settings->insertSeparator();
 	but_PlEn = NULL; but_PlDe = NULL; polToEng = 0; engToPol = 0;
 	but_EnPl = NULL; but_DePl = NULL; polToGer = 0; gerToPol = 0;
+	QIconSet but_IconSet;
 	if (myDict->GetDictionaryInfo() & hasPolish2English) {
 		polToEng = settings->insertItem("POL --> ENG", this, SLOT(SwapPolToEng()), QKeySequence( tr("Ctrl+;", "Options|POL --> ENG") ) );
-		but_PlEn = new QToolButton(QIconSet(QPixmap(pl_en_xpm)), "POL --> ENG", QString::null, this, SLOT(SwapPolToEng()), toolBar, "butPlEn" );
+		but_IconSet.setPixmap(QPixmap(pl_en_xpm), QIconSet::Automatic, QIconSet::Normal);
+    		but_IconSet.setPixmap(QPixmap(pl_en_dis_xpm), QIconSet::Automatic, QIconSet::Disabled);
+		but_PlEn = new QToolButton(but_IconSet, "POL --> ENG", QString::null, this, SLOT(SwapPolToEng()), toolBar, "butPlEn" );
 	}
 	if (myDict->GetDictionaryInfo() & hasEnglish2Polish) {
 		engToPol = settings->insertItem("ENG --> POL", this, SLOT(SwapEngToPol()), QKeySequence( tr("Ctrl+.", "Options|ENG --> POL") ) );
-		but_EnPl = new QToolButton(QIconSet(QPixmap(en_pl_xpm)), "ENG --> POL", QString::null, this, SLOT(SwapEngToPol()), toolBar, "butEnPl" );
+		but_IconSet.setPixmap(QPixmap(en_pl_xpm), QIconSet::Automatic, QIconSet::Normal);
+		but_IconSet.setPixmap(QPixmap(en_pl_dis_xpm), QIconSet::Automatic, QIconSet::Disabled);
+		but_EnPl = new QToolButton(but_IconSet, "ENG --> POL", QString::null, this, SLOT(SwapEngToPol()), toolBar, "butEnPl" );
 	}
 	if (myDict->GetDictionaryInfo() & hasPolish2German) {
 		polToGer = settings->insertItem("POL --> GER", this, SLOT(SwapPolToGer()), QKeySequence( tr("Ctrl+:", "Options|POL --> GER") ) );
-		but_PlDe = new QToolButton(QIconSet(QPixmap(pl_de_xpm)), "POL --> GER", QString::null, this, SLOT(SwapPolToGer()), toolBar, "butPlDe" );
+		but_IconSet.setPixmap(QPixmap(pl_de_xpm), QIconSet::Automatic, QIconSet::Normal);
+		but_IconSet.setPixmap(QPixmap(pl_de_dis_xpm), QIconSet::Automatic, QIconSet::Disabled);
+		but_PlDe = new QToolButton(but_IconSet, "POL --> GER", QString::null, this, SLOT(SwapPolToGer()), toolBar, "butPlDe" );
 	}
 	if (myDict->GetDictionaryInfo() & hasGerman2Polish) {
 		gerToPol = settings->insertItem("GER --> POL", this, SLOT(SwapGerToPol()), QKeySequence( tr("Ctrl+>", "Options|GER --> POL") ) );
-		but_DePl = new QToolButton(QIconSet(QPixmap(de_pl_xpm)), "GER --> POL", QString::null, this, SLOT(SwapGerToPol()), toolBar, "butDePl" );
+		but_IconSet.setPixmap(QPixmap(de_pl_xpm), QIconSet::Automatic, QIconSet::Normal);
+		but_IconSet.setPixmap(QPixmap(de_pl_dis_xpm), QIconSet::Automatic, QIconSet::Disabled);
+		but_DePl = new QToolButton(but_IconSet, "GER --> POL", QString::null, this, SLOT(SwapGerToPol()), toolBar, "butDePl" );
 	}
 	settings->insertSeparator();
 	settings->insertItem( tr("Swap direction"), this, SLOT(SwapLanguages()), QKeySequence( tr("Ctrl+`", "Options|Swap direction") ) );
