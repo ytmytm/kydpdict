@@ -1,3 +1,4 @@
+! wersja 1.0.0 w Qt4 :)
 - je¶li zrobiæ koszernie tj. w main.cpp wstawiæ 'delete kydpdict;' zamiast flushConfig,
   a flushConfig w destruktor kydpdict to wpada w nieskoñczon± pêtlê je¿eli rozmiar w pionie
   zmieni³ siê na mniejszy i widoczna lista zosta³a skrócona
@@ -41,6 +42,8 @@ PWN
 
 PWN2004
 - sprawdzic na nowo konwersje niby-html na qtml
+    Jacek Jaworski: sklejaæ, przywracaæ - jakie¶ liczby w linku <A HREF="[liczby]"> trafiaj± do linku
+    zamiast odno¶nika
 - sprawdzic na nowo uzupelnienia znaczkami ipa i innymi
 - tipsy w slowniku pl-en?
 - informacja o samplu/ach jest w tresci hasla; odgrywac tylko pierwszy??
