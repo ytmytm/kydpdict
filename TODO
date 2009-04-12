@@ -51,6 +51,16 @@ PWN2004
 - contrib - d¼wiêki!
 - 'europejsko¶æ' - IPA182... jaki jest w³a¶ciwy znak unicode? brak obrazka!
 
+PWN2005
+- zmiana magic i silnik 2004:
+    - na pocz±tku indeksu imieniny (why?)
+    - inne kodowanie znaków ipa
+    - inne kodowanie pliter
+    - w czê¶ci PL ¼ród³o i koñcówka has³a w tagach
+
+PWN2006
+- baza niby ta sama, ale co¶ jest przesuniête, pocz±tkowy seek do 0x18 to nie to :(
+
 YDP
 - w starej tablicy: 0x83 to '3' (f3), ale nie chodzi o '3' jak w 'bird' (bo w s³owniku YDP jest
   tam schwa) tylko o '¿' (jak w pleasure), na obrazku inny ogonek; ten z kpwndict jest zbyt brzydki
