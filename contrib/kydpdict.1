@@ -1,0 +1,36 @@
+.TH KYDPDICT 1 "26 July 2007" 
+.SH NAME
+kydpdict \- a front-end for several dictionaries
+.SH SYNOPSIS
+.B kydpdict
+
+.SH DESCRIPTION
+.B kydpdict
+is a graphical (Qt-based) front-end program for several dictionaries. The following dictionaries are supported:
+
+.TP
+.BI SAP
+\- a free English-Polish and Polish-English dictionary distributed with the program
+.TP
+.BI Collins
+(English-Polish and Polish-English) dictionary by YDP
+.TP
+.BI Langenscheidt
+(German-Polish and Polish-German) dictionary by YDP
+.TP
+.BI PWN\ Oxford
+(English-Polish and Polish-English) from year 2003 and 2004
+
+.SH FILES
+The program reads on start-up and writes on exit the
+.B ~/.kydpdict/kydpdictrc
+configuration file. Also, on first start, it reads some settings from the
+.B /etc/ydpdict.conf
+file, provided with the console dictionary front-end,
+.B ydpdict
+
+.SH AUTHOR
+.B kydpdict
+was written by Maciej Witkowiak. This manual page was created by Marcin Owsiany
+for Debian, but may be used by others.
+

@@ -1,0 +1,37 @@
+.TH KYDPDICT 1 "26 lipca 2007" 
+.SH NAZWA
+kydpdict \- interfejs do kilku s³owników
+.SH SK£ADNIA
+.B kydpdict
+
+.SH OPIS
+.B kydpdict
+jest graficznym (opartym na bibliotece Qt) programem do obs³ugi kilku s³owników. Obs³uguje nastêpuj±ce formaty:
+
+.TP
+.BI SAP
+\- darmowy s³ownik angielsko-polski i polsko-angielski dystrybuowany wraz z programem
+.TP
+.BI Collins
+(polsko-angielski i angielsko-polski) s³ownik wydany przez YDP
+.TP
+.BI Langenscheidt
+(niemiecko-polski i polsko-niemiecki) s³ownik wydany przez YDP
+.TP
+.BI PWN\ Oxford
+(polsko-angielski i angielsko-polski) z roku 2003 i 2004
+
+.SH PLIKI
+Program czyta przy starcie i zapisuje przy wy³±czaniu plik konfiguracyjny
+.B ~/.kydpdict/kydpdictrc
+Ponadto, przy pierwszym uruchomieniu, czyta niektóre ustawienia z pliku
+.B /etc/ydpdict.conf
+który jest instalowany wraz z tekstowym programem
+.B ydpdict
+
+.SH AUTOR
+Autorem
+.B kydpdict
+jest Maciej Witkowiak. Ta strona podrêcznika zosta³a napisana przez Marcina
+Owsianego dla dystrybucji Debian i mo¿e byæ u¿ywana przez innych.
+

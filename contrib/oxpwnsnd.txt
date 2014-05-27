@@ -1,0 +1,10 @@
+"Karol H." <karolh@o2.pl>
+
+0. Nalozyc patch ;)
+1. Kopiujemy wave.wol i wave.000 tam gdzie rezyduja slowniki.
+2. Uzywamy exwaves (exwaves.c) ktory rozpakuje te "archiwa", bedziemy mieli
+pliki wav w katalogu $(PATH_TO_DICTS)/wave/
+3. Ustawioamy katalog (dzwiekow) w kydp na  $(PATH_TO_DICTS)/wave/
+4. Ustawiamy jako audio player "mpg321" ("wavy" sa skompresowane)
+5. Usuwamy wave.wol i wave.000
+6. Cieszymy sie (lub nie ;) wymowa w PWN Ox 2004
