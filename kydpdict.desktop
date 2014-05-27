@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=Kydpdict
+Comment=English-Polish dictionary
+Comment[pl]=Słownik angielsko-polski
+Exec=kydpdict
+Terminal=false
+Icon=kydpdict.png
+Type=Application
+Encoding=UTF-8
+Categories=Qt;Office;Dictionary;
+# vi: encoding=utf-8
