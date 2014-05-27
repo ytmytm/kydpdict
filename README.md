@@ -1,0 +1,249 @@
+
+Kydpdict
+========
+
+(c) 2009 Maciej Witkowiak <ytm@elysium.pl>
+http://members.elysium.pl/ytm/html/kydpdict.html
+http://ytm.bossstation.dnsalias.org/html/kydpdict.html
+
+
+
+#1. CO TO JEST
+
+Program Kydpdict jest graficzn± nak³adk± pozwalaj±c± na ³atwe i efektywne
+korzystanie w ¶rodowisku graficznym z darmowego i komercyjnych s³owników
+dostêpnych pod Windows.
+Dzia³a pod systemem Linux i (prawdopodobnie nadal) MacOS X. Wbrew swojej
+nazwie nie jest programem zale¿nym od ¶rodowiska KDE. Od wersji 0.9.0
+równie¿ wbrew swojej nazwie nie jest li tylko nak³adk± na s³ownik YDP.
+
+##1.1 WYMAGANIA
+
+Konieczne jest posiadanie biblioteki Qt w wersji >=3.1, je¶li kompilujemy
+program konieczny bêdzie tak¿e pakiet Qt-devel.
+
+##1.2 KOMPILACJA
+
+Wykonaj
+```
+    ./configure
+```
+ewentualnie (zobacz ni¿ej komu mog³oby siê to przydaæ):
+```
+    ./configure --without-x
+```
+Wykonaj
+```
+    make
+```
+
+Je¶li skrypt ./configure zakoñczy siê b³êdem, to prawdopodobnie nie mo¿e znale¼æ ¶cie¿ek
+do Qt. Nale¿y wówczas jawnie je podaæ, np.
+```
+    ./configure --with-qt-includes=/usr/X11R6/include/qt --with-qt-libs=/usr/X11R6/lib
+```
+Je¶li Qt zosta³o zainstalowane bezpo¶rednio ze ¼róde³ to prawdopodobnie wystarczy co¶
+podobnego do:
+```
+    ./configure --with-qt-dir=/usr/local/qt
+```
+
+W razie k³opotów zajrzyj do dokumentacji Qt (to o $QTDIR te¿ przeczytaj :).
+
+Je¶li wywo³asz ./configure --without-x, to program bêdzie bezpo¶rednio zale¿a³ tylko
+od biblioteki Qt. Mo¿e mieæ to zastosowanie na systemach, na których nie ma X11, ale
+jest dostêpne Qt (MacOS X z natywnym Qt (nie-X11)?) oraz u tych purystów, którzy nie
+chc± w ogóle niczego zwi±zanego z ryb± na tacce systemowej.
+
+Instalacja - wykonaj
+```
+    make install
+```
+
+Na FreeBSD mo¿e byæ konieczne korzystanie z gmake oraz jawne dodanie biblioteki pthread,
+mo¿na to zrobiæ nastêpuj±co:
+
+```
+CXXFLAGS="$CXXFLAGS -lpthread" ./configure
+```
+
+
+#2. OBS£UGIWANE TYPY S£OWNIKÓW
+
+
+##2.1 SAP
+
+SAP, czyli s³ownik angielsko-polski (i polsko-angielski) to domy¶lny modu³
+s³ownikowy. Jest najm³odszy, dlatego jeszcze wymaga poprawek, jednak ju¿
+u¿yteczny. Pierwotna, konsolowa, wersja SAP nie ma dzia³aj±cej w³asnej strony
+domowej, mo¿na go pobraæ z zasobów PLD: http://www.pld-linux.org/ lub st±d:
+http://pbs.linux.net.pl/?op=pr&f=sap
+
+
+##2.2 YDP
+
+Ten modu³ obs³uguje pliki danych s³owników wydanych przez Young Digital Poland,
+czyli s³owników Collins i Langenscheidt. Do dzia³ania niezbêdne jest posiadanie
+plików z zainstalowanego pod Windows programu. Dla wersji angielskiej chodzi o
+pliki:
+    dict100.dat, dict101.dat, dict100.idx, dict101.idx
+a dla niemieckojêzycznej:
+    dict200.dat, dict201.dat, dict200.idx, dict201.idx.
+Najwygodniej skopiowaæ je do domy¶lnego katalogu danych, to jest:
+    /usr/share/kydpdict lub /usr/local/share/kydpdict
+albo umie¶ciæ tam tylko linki symboliczne do plików na partycji windowsowej.
+Nazwy plików powinny zawieraæ tylko ma³e litery.
+
+Do odtwarzania wymowy s³ów potrzebny bêdzie zewnêtrzny program. Mo¿e to byæ play
+do oryginalnych plików wav lub je¶li zosta³y przekodowane: mpg123, ogg123 i wiele
+innych.
+Odtwarzacz jest wspólny dla plików d¼wiêkowych obu jêzyków, wiêc musisz zadbaæ,
+aby by³y one w jednakowym formacie.
+Je¶li korzystasz z serwera d¼wiêku byæ mo¿e zamiast play trzeba bêdzie u¿yæ
+esdplay lub artsplay. (mplayer siê _nie nadaje_ - ¼le odtwarza krótkie pliki
+d¼wiêkowe)
+
+
+##2.3 PWN Oxford 2003
+
+Trzeci modu³ s³ownikowy pozwala na korzystanie ze s³ownika PWN Oxford 2003.
+Jest to tylko s³ownik angielsko-polski, który by³ do³±czany do papierowego
+wydania s³ownika Oxford.
+Niezbêdne jest posiadanie pliku danych z ju¿ zainstalowanej aplikacji pod Windows.
+W tym wypadku chodzi o plik 'angpol.win'. Dalej nale¿y postêpowaæ podobnie, jak
+opisano dla modu³u YDP.
+
+
+##2.4 PWN Oxford 2004
+
+Odmiana wersji z 2003 roku, obs³uguje s³owniki angielsko-polski i polsko-angielski.
+Niezbêdne jest posiadanie obu plików danych z ju¿ zainstalowanej aplikacji pod
+Windows. Chodzi o pliki 'angpol.win' oraz 'polang.win'. Dalej nale¿y postêpowaæ
+tak, jak opisano wy¿ej.
+
+
+
+#3. ZALETY PROGRAMU
+
+Korzystanie ze s³ownika nigdy nie by³o tak proste jak obecnie. W wiêkszo¶ci
+przypadków t³umaczymy teksty w postaci elektronicznej. Nie ma wiêc sensu wpisywaæ
+z klawiatury wyrazów (czas znacznie powy¿ej sekundy), ani nawet zaznaczaæ tekstu,
+naciskaæ Ctrl+C, zmieniaæ okno na okno s³ownika i wklejaæ tekst naciskaj±c Ctrl+V
+(czas rzêdu sekundy). Teraz pracuj±c z tekstem obcojêzycznym (np w przegl±darce www)
+wystarczy tylko zaznaczyæ wyraz (w wiêkszo¶ci aplikacji zaznacza siê tekst dwukrotnym
+klikniêciem na wyrazie) aby pojawi³o siê "na górze" okno s³ownika z t³umaczeniem
+(czas rzêdu u³amka sekundy!). Je¶li wyrazu, który zaznaczy³e¶ nie ma w s³owniku,
+pojawi siê t³umaczenie wyrazu mu najbli¿szego (np: wyrazu "investigations" nie
+ma w s³owniku, ale najbli¿szy mu podobny to "investigation").
+
+Od tej chwili wszystko co zaznaczysz pojawi siê przet³umaczone, je¶li zacznie
+Ci to przeszkadzaæ po prostu wy³±cz opcjê ¶ledzenia schowka - przez pasek ikon
+lub menu z ryby.
+
+Jedn± z zalet jest tak¿e ³atwa konfiguracja programu: ¶cie¿ek dostêpu do plików
+s³ownika, ¶cie¿ki do plików z wymow± (oryginalne pliki wav lub zakodowane do
+mp3/ogg), a tak¿e kolorów tekstu t³umaczenia i t³a aplikacji. Te i inne parametry
+programu (np pozycja na ekranie, wielko¶æ okna s± przechowywane w katalogu
+.kydpdict w Twoim katalogu konfiguracyjnym. Bêdzie to katalog okre¶lony przez
+bezwzglêdn± ¶cie¿kê ze zmiennej $HOME_ETC lub katalog domowy lub katalog poni¿ej
+niego okre¶lony przez zmienn± $CONFIG_DIR (testowane w tej kolejno¶ci).
+
+Kilka najwa¿niejszych skrótów klawiaturowych:
+- ESC pozwala szybko wpisaæ z klawiatury nowy wyraz - czy¶ci liniê edycji i przenosi tam kursor
+- kolejne naci¶niêcie ESC (ale dopiero po up³yniêciu co najmniej .5s) pozwala ukryæ s³ownik - jak przy klikniêciu na rybie
+- Ctrl+` (znak nad TAB) pozwala szybko zamieniæ kierunek t³umaczenia
+
+
+
+#4. KONFIGURACJA
+
+W razie problemów po prostu skasuj katalog z plikami konfiguracyjnymi.
+Program postara siê odtworzyæ go z domy¶lnych warto¶ci oraz korzystaj±c z
+/etc/ydpdict.conf je¶li korzystasz jednocze¶nie z konsolowego s³ownika ydpdict.
+
+Wyboru modu³u s³ownikowego i ¶cie¿ki do plików danych specyficznych dla
+tego s³ownika dokonujemy w zak³adce 'S³ownik'. Zmiany zostan± uwzglêdnione
+po ponownym uruchomieniu programu. W danej chwili mo¿na mieæ aktywny tylko
+jeden rodzaj s³ownika.
+
+Krótki opis opcji konfiguracyjnych z zak³adek 'Ró¿ne' i 'Schowek'
+- 'W³±cz ¶ledzenie schowka' - okno s³ownika wyskakuj±ce na wierzch mo¿e przeszkadzaæ,
+   w ten sposób mo¿na wy³±czyæ takie zachowanie
+- 'Ignoruj w³asne zaznaczenia' - je¶li zawarto¶æ schowka pochodzi z okna t³umaczeñ
+   kydpdict, to zostanie zignorowana (kto¶ ma lepszy pomys³ na nazwê tej opcji?)
+- 'U¿ywaj pochy³ej czcionki' - niektóre czcionki wygl±daj± brzydko w odmianie
+   pochy³ej; mo¿na nieco poprawiæ wygl±d i czytelno¶æ okna wy³±czaj±c je t± opcj±
+- 'W³±cz podpowiedzi' - opcja kontroluj±ca wy¶wietlanie wyja¶nieñ po najechaniu
+   myszk± na s³ownikowe skróty
+- 'W³±cz ikonê na tacce systemowej' - pozwala wy³±czyæ ikonê dla managerów okien,
+   z którymi sprawia to problemy
+- 'Autoodtwarzanie d¼wiêku' - dotyczy tylko tekstu przechwyconego ze schowka
+- 'Ustawiaj focus na siebie' - czasem wygodnie jest mieæ okno Kydpdict wyskakuj±ce
+   na wierzch z t³umaczeniem ale nie pozostawiaj±ce jako aktywne poprzednie okno - ta
+   opcja kontroluje takie zachowanie (wyj±tek: je¶li okno by³o niewidoczne - po
+   trzykrotnym ESC, to zawsze dostanie focus)
+
+D³u¿szego omówienia wymaga opcja 'Wy¶wietlaj znaki Unicode'. Po jej w³±czeniu,
+znaki transkrypcji fonetycznej zamiast pochodziæ z wbudowanych plików graficznych
+(które nie zmieniaj± rozmiaru wraz z fontem) bêd± konwertowane na odpowiednie kody
+Unicode.
+Oznacza to, ¿e do prawid³owego wy¶wietlania niezbêdne jest posiadanie fontu, który
+takie znaki posiada. Obecnie pod Linuksem nie ma ju¿ wiêkszego problemu z instalacj±
+nowych fontów TTF, dlatego opis instalacji pominê i nie bêdê odpowiada³ na pytania
+w tej sprawie :). Oto kilka adresów, z których mo¿na ¶ci±gn±æ darmowe fonty
+obs³uguj±ce potrzebny w s³owniku zakres znaków:
+
+Lucida Sans Unicode:
+http://www.phon.ucl.ac.uk/home/wells/lsansuni.ttf
+
+Doulos:
+http://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=DoulosSILfont
+
+W poni¿szych brakuje znaku strza³ki w prawo - odsy³acza, poza tym s± bez zarzutu:
+
+Caslon:
+http://bibliofile.mc.duke.edu/gww/fonts/Unicode.html
+
+Gentium:
+http://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=gentium
+
+
+
+#5. Q & A (jeszcze nie FAQ, bo to pierwsza edycja :)
+
+```
+Q: Program nie potrafi zapamiêtaæ swojego po³o¿enia na ekranie
+A: Najprawdopodobniej wymusza to twój manager okien, Kydpdict nic na to nie
+   poradzi.
+
+Q: W KDE program nie wyskakuje ponad inne okna po znaznaczeniu nowego wyrazu
+A: W Centrum Sterowania->Pulpit->Okna->Zaawansowane zmieñ poziom ochrony przed
+   zmian± aktywnego okna na 'Brak'.
+
+Q: Skróty klawiaturowe s± chore - kto to wymy¶la³?
+A: Ja. Je¶li masz pomys³ na ³atwiejsze, nie koliduj±ce z domy¶lnymi skrótami
+   najpopularniejszych managerów okien - daj mi znaæ.
+
+Q: Co jest do zrobienia, jakie s± znane b³êdy?
+A: Program jest doskona³y, nie ma b³êdów. Co mo¿na by³oby jeszcze dopisaæ,
+   znajdziesz w pliku TODO.
+
+Q: Co na tacce robi ryba?
+A: Kolejne wersje Kydpdict bêd± wyposa¿one nie tylko w rybê na tacce ale i
+   plastikowe sztuæce. Na serio: nie s³ysza³e¶ o babelfish? Id¼ do biblioteki,
+   ksiêgarni i poszukaj ksi±¿ek Douglasa Adamsa. Albo wybierz siê do kina.
+
+Q: A co ze s³ownikiem PWN Oxford 2004 w kartonowym pude³ku za dwie bañki?
+A: Podstawowy s³ownik ju¿ dzia³a. Co do sampli z wymow±, to nie mam danych do
+   testowania. Podobnie z tabelami i dodatkowymi informacjami o gramatyce - niby
+   s±, ale nie bardzo wiem co z nimi zrobiæ w obecnej formie programu.
+   
+Q: Jak wyraziæ wdziêczno¶æ i zmotywowaæ do dalszej pracy?
+   W dobie bankowo¶ci elektronicznej to proste - chcesz zaokr±gliæ stan rachunku w
+   dó³ :)? Jest mo¿liwo¶æ; oto numer mojego konta: 60 1140 2004 0000 3202 3234 6486
+```
+
+
+#6. KONTAKT
+Proszê pisaæ w sprawie programu na Berdy^W ytm@elysium.pl, sprawami zwi±zanymi
+z modu³em YDP mo¿e byæ równie¿ zainteresowany Andrzej Para <kulozik@op.pl>.
